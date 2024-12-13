@@ -277,6 +277,8 @@ const Header = ({ onData }) => {
             if (talentData?.adminApproved === true) {
               navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
             } else {
+              handleClose();
+
               setMessage(
                 "After your verification is approved, you can update your profile"
               );
@@ -401,7 +403,7 @@ const Header = ({ onData }) => {
     } else if (route === "/signup") {
       navigate(route);
     } else if (route === "/about-us") {
-      navigate(route);
+      navigate("/about-us");
     } else if (route === "/community-guidelines") {
       navigate(route);
     } else if (route === "/blogs") {
@@ -421,6 +423,7 @@ const Header = ({ onData }) => {
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
+      navigate("/login");
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
@@ -544,16 +547,18 @@ const Header = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/edit-talent-profile") {
-      if (!currentUserId || currentUser_type == "brand") {
+      if (talentData?.adminApproved === true) {
+        navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+      } else {
         handleClose();
-        setMessage("You must be logged in");
+
+        setMessage(
+          "After your verification is approved, you can update your profile"
+        );
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-      } else {
-        navigate(route);
+        }, 2000);
       }
     } else if (route === "/edit-brand-profile") {
       if (!currentUserId || currentUser_type == "talent") {
@@ -1205,6 +1210,13 @@ const Header = ({ onData }) => {
                                   </div>
                                 </>
                               ))}
+                            {filteredOptions.length == 0 && (
+                              <>
+                                <div className="invalid-fields">
+                                  No results found!
+                                </div>
+                              </>
+                            )}
                           </div>
                         </>
                       )}

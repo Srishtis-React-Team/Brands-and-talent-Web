@@ -562,9 +562,14 @@ const BrandTalents = () => {
     setCategories(selectedLanguages);
   };
 
-  const [showAllProfessions, setShowAllProfessions] = useState(false);
+  const [visibleProfessions, setVisibleProfessions] = useState(2); // Start by showing 2 professions
 
-  const toggleShowAll = () => setShowAllProfessions((prev) => !prev);
+  const toggleShowMore = (currentItem) => {
+    if (!currentItem?.profession) return;
+    setVisibleProfessions((prev) =>
+      Math.min(prev + 1, currentItem.profession.length)
+    );
+  };
 
   return (
     <>
@@ -599,7 +604,7 @@ const BrandTalents = () => {
                             Filters
                           </div>
                         </div>
-                        <div className="keyword-wrapper pt-4">
+                        {/* <div className="keyword-wrapper pt-4">
                           <div className="filter-items">Keyword</div>
                           <div className="filter-input-wrapper inpWid">
                             <input
@@ -648,7 +653,7 @@ const BrandTalents = () => {
                               </div>
                             </>
                           )}
-                        </div>
+                        </div> */}
                         <div className="keyword-wrapper">
                           <div className="filter-items">Name</div>
                           <div className="creators-filter-select inpWid">
@@ -1101,7 +1106,7 @@ const BrandTalents = () => {
                                               </div>
                                             </>
                                           )}
-                                          {item?.profession &&
+                                          {/* {item?.profession &&
                                             item.profession.length > 0 && (
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
@@ -1139,7 +1144,48 @@ const BrandTalents = () => {
                                                   )}
                                                 </div>
                                               </div>
+                                            )} */}
+
+                                          {item?.profession &&
+                                            item.profession.length > 0 && (
+                                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                                <div className="logo-fill-briefcase">
+                                                  <i className="bi bi-person-workspace model-job-icons"></i>
+                                                </div>
+                                                <div className="contSect profession-text">
+                                                  {item.profession
+                                                    .slice(
+                                                      0,
+                                                      visibleProfessions
+                                                    )
+                                                    .map((prof, index) => (
+                                                      <span key={prof.id}>
+                                                        {prof.value}
+                                                        {index <
+                                                          visibleProfessions -
+                                                            1 &&
+                                                          index <
+                                                            item.profession
+                                                              .length -
+                                                              1 &&
+                                                          ", "}
+                                                      </span>
+                                                    ))}
+                                                  {visibleProfessions <
+                                                    item.profession.length && (
+                                                    <span
+                                                      className="show-more"
+                                                      onClick={() =>
+                                                        toggleShowMore(item)
+                                                      } // Pass the current `item`
+                                                    >
+                                                      {" ..."}
+                                                    </span>
+                                                  )}
+                                                </div>
+                                              </div>
                                             )}
+
                                           <span className="job-company_dtls nweAlign pt-2 pb-0 d-flex">
                                             <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                             {item?.childCity &&

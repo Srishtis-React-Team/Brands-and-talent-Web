@@ -981,33 +981,40 @@ const TalentDashBoard = () => {
                                           <i className="bi bi-eye-fill"></i>
                                           <div>View Job</div>
                                         </div>
-                                        <div
-                                          className={
-                                            item?.isApplied === "Apply Now"
-                                              ? "apply-now-btn"
-                                              : "apply-now-btn applied-btn"
-                                          }
-                                          onClick={() => {
-                                            applyjobs(item);
-                                          }}
-                                        >
-                                          {item?.isApplied == "Applied" && (
-                                            <>
-                                              <i className="bi bi-check-circle-fill"></i>
-                                            </>
-                                          )}
-                                          {item?.isApplied == "Apply Now" && (
-                                            <>
-                                              <i className="bi bi-briefcase-fill"></i>
-                                            </>
-                                          )}
-                                          {item?.isApplied === "Apply Now" && (
-                                            <div>Apply Now</div>
-                                          )}
-                                          {item?.isApplied === "Applied" && (
-                                            <div>Applied</div>
-                                          )}
-                                        </div>
+                                        {(item?.howLikeToApply ===
+                                          "easy-apply" ||
+                                          item?.isApplied == "Applied") && (
+                                          <>
+                                            <div
+                                              className={
+                                                item?.isApplied === "Apply Now"
+                                                  ? "apply-now-btn"
+                                                  : "apply-now-btn applied-btn"
+                                              }
+                                              onClick={() => {
+                                                applyjobs(item);
+                                              }}
+                                            >
+                                              {item?.isApplied == "Applied" && (
+                                                <>
+                                                  <i className="bi bi-check-circle-fill"></i>
+                                                </>
+                                              )}
+                                              {item?.isApplied ==
+                                                "Apply Now" && (
+                                                <>
+                                                  <i className="bi bi-briefcase-fill"></i>
+                                                </>
+                                              )}
+                                              {item?.isApplied ===
+                                                "Apply Now" && (
+                                                <div>Apply Now</div>
+                                              )}
+                                              {item?.isApplied ===
+                                                "Applied" && <div>Applied</div>}
+                                            </div>
+                                          </>
+                                        )}
                                       </div>
                                     </div>
 

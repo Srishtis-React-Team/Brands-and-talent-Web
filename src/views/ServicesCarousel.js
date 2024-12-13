@@ -19,9 +19,15 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const toggleContent = () => {
-    setIsExpanded((prev) => !prev);
+  const [expandedItems, setExpandedItems] = useState({}); // Track expanded state by index
+
+  const toggleContent = (index) => {
+    setExpandedItems((prev) => ({
+      ...prev,
+      [index]: !prev[index], // Toggle the specific item's state
+    }));
   };
+
   const [isOwnTalent, setIsOwnTalent] = useState(null);
   const [isAdminApproved, setIsAdminApproved] = useState(null);
   const [showProfile, setShowProfile] = useState(null);
@@ -191,76 +197,12 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
   return (
     <>
-      {/* <div className="service-list-main">
-        {servicesList &&
-          servicesList.length > 0 &&
-          servicesList?.map((item, index) => {
-            return (
-              <>
-                <div className="service-list-wrapper">
-                  <div className="row">
-                    <div className="col-md-4">
-                      {item?.files[0]?.fileData && (
-                        <>
-                          <img
-                            className="service-image-style"
-                            src={`${API.userFilePath}${item?.files[0]?.fileData}`}
-                            alt=""
-                          />
-                        </>
-                      )}
-                      {!item?.files[0]?.fileData && (
-                        <>
-                          <img
-                            className="service-image-style"
-                            src={avatarImage}
-                            alt=""
-                          />
-                        </>
-                      )}
-                    </div>
-                    <div className="service-list-content col-md-8">
-                      <div className="service-title">{item?.serviceName}</div>
-                      <div
-                        className="service-description"
-                        dangerouslySetInnerHTML={{ __html: item?.editorState }}
-                      />
-                      <div className="starting-amount">
-                        ${item?.serviceAmount} per hour
-                      </div>
-                      <div className="text-btm mb-3">
-                        <div className="service-duration">
-                          <div className="service-duration-title">
-                            Delivery Time :
-                          </div>
-                          <div>
-                            {item?.serviceDuration} {item?.serviceTime}
-                          </div>
-                        </div>
-                      </div>
-                      <div onClick={() => messageNow()} className="enquire-btn">
-                        Inquire Now
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            );
-          })}
-
-        {!servicesList.length && (
-          <>
-            <div>No Services Available</div>
-          </>
-        )}
-      </div> */}
-
       <div className="service-list-main">
         {servicesList &&
           servicesList.length > 0 &&
           servicesList.map((item, index) => {
-            // Check if the service has a valid serviceName before rendering
             if (!item?.serviceName) return null;
+            const isExpanded = expandedItems[index]; // Check if this item is expanded
 
             return (
               <div className="service-list-wrapper" key={index}>
@@ -288,11 +230,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       }`}
                       dangerouslySetInnerHTML={{ __html: item?.editorState }}
                     />
-                    {item?.editorState && (
+                    {item?.editorState?.length > 50 && ( // Only show the button if content is long enough
                       <>
                         <button
                           className="toggle-button"
-                          onClick={toggleContent}
+                          onClick={() => toggleContent(index)} // Pass the index to toggle
                         >
                           {isExpanded ? "Show Less" : "Show More"}
                         </button>
@@ -331,7 +273,6 @@ const ServicesCarousel = ({ talentData, brandData }) => {
             );
           })}
 
-        {/* Display message if no services available or all services have empty serviceName */}
         {(!servicesList.length ||
           !servicesList.some((item) => item.serviceName)) && (
           <div>No Services Available</div>
