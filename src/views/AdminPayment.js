@@ -182,6 +182,7 @@ const AdminPayment = () => {
           setAppliedCouponCode={setAppliedCouponCode}
           // selectedPaymentPlan={}
           email={selectedEmail}
+          adminPayment={true}
           success_url='https://brandsandtalent.com/pricingadmin'
         />
       )}
