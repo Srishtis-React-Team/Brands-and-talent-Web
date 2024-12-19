@@ -229,7 +229,7 @@ const PaymentOptions = ({
         merchant_id: "brandsandtalent",
         tran_id: tran_id,
         amount: finalAmount ? finalAmount : amount,
-        email: userEmail,
+        email: userEmail?userEmail:email,
         payment_option: type,
         continue_success_url:
           currentUserType == "brand"
