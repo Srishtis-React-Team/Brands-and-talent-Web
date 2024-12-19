@@ -434,6 +434,7 @@ const Pricing = ({
 
   const handleRadioChange = (type, id, planname) => (event) => {
     setSelectedPlan(id);
+    console.log('planname',planname)
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
   };
