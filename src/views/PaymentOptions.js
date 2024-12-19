@@ -209,7 +209,7 @@ const PaymentOptions = ({
         return_params: subscriptionData,
       };
       // // Generate the hash using the dataObject and your public key
-      const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
+      const publicKey = "ea8234fb-33fa-487d-8967-f6dd436721ab";
       const hash = generateHash(dataObject, publicKey);
       if (!couponNotFound) {
         onConfirm(dataObject, hash);
