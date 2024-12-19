@@ -45,54 +45,38 @@ const AdminPayment = () => {
   const SUBSCRIPTION_PLAN = "adminSubscriptionPlan";
   const PLAN_NAME = "adminPlan";
 
-  const generateHash = (dataObject, publicKey) => {
-    console.log("---dataObject==",dataObject)
-    console.log('publicKey',publicKey)
-    const {
-      req_time,
-      merchant_id,
-      tran_id,
-      amount,
-      email,
-      payment_option,
-      continue_success_url,
-      return_params,
-    } = dataObject;
 
-    const hashString = `${req_time}${merchant_id}${tran_id}${amount}${email}${payment_option}${continue_success_url}${return_params}`;
-    console.log('hashString',hashString)
-    const hash = CryptoJS.HmacSHA512(hashString, publicKey);
-    return CryptoJS.enc.Base64.stringify(hash);
-  };
+  const handleFormSubmit = async (dataObject, hash) => {
+    // try {
+      setAbaFormData({ ...dataObject, hash });
+    setTimeout(() => {
+      document.getElementById("checkout_button").click();
+    }, 100);
+    //   // console.log('selectedEmail--',selectedEmail)
+    //   // // Extend dataObject with additional fields
+    //   // const extendedData = {
+    //   //   ...dataObject,
+    //   //   email:selectedEmail,
+    //   //   return_params: JSON.stringify({
+    //   //     subscriptionPlan: SUBSCRIPTION_PLAN,
+    //   //     planName: PLAN_NAME,
+    //   //   }),
+    //   // };
+    //   // console.log('extendedData',extendedData)
+    //   // setReturnParams(extendedData.return_params)
 
-  const handleFormSubmit = async (dataObject, hashData) => {
-    try {
-      
-      console.log('selectedEmail--',selectedEmail)
-      // Extend dataObject with additional fields
-      const extendedData = {
-        ...dataObject,
-        email:selectedEmail,
-        return_params: JSON.stringify({
-          subscriptionPlan: SUBSCRIPTION_PLAN,
-          planName: PLAN_NAME,
-        }),
-      };
-      console.log('extendedData',extendedData)
-      setReturnParams(extendedData.return_params)
+    //   // Generate hash
+    //   // const hash = await generateHash(extendedData, PUBLIC_KEY);
 
-      // Generate hash
-      const hash = await generateHash(extendedData, PUBLIC_KEY);
+    //   // Update form data with hash
+    //   setAbaFormData({ ...dataObject, hashData });
 
-      // Update form data with hash
-      setAbaFormData({ ...extendedData, hash });
-
-      // Simulate form submission
-      document.getElementById("checkout_button")?.click();
-    } catch (error) {
-      console.error("Error in handleFormSubmit:", error);
-      alert("Something went wrong. Please try again.");
-    }
+    //   // Simulate form submission
+    //   document.getElementById("checkout_button")?.click();
+    // } catch (error) {
+    //   console.error("Error in handleFormSubmit:", error);
+    //   alert("Something went wrong. Please try again.");
+    // }
   };
 
   useEffect(() => {
@@ -168,7 +152,6 @@ const AdminPayment = () => {
           <button onClick={handlePayNow}>Pay now</button>
         </div>
       </section>
-
       {paymentOptions && (
         <PaymentOptions
           onConfirm={handleFormSubmit}
@@ -178,10 +161,9 @@ const AdminPayment = () => {
           setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
-          selectedPaymentPlan={selectedPaymentPlan}
-          setAppliedCouponCode={setAppliedCouponCode}
-          // selectedPaymentPlan={}
+          selectedPaymentPlan={'Pro (Popular)'}
           email={selectedEmail}
+          selectedPaymentPeriod={'annual'}
           success_url='https://brandsandtalent.com/pricingadmin'
         />
       )}
@@ -215,7 +197,6 @@ const AdminPayment = () => {
           name="continue_success_url"
           value={abaFormData.continue_success_url || ""}
         />
-        {console.log('adminReturnParams>>>>',abaFormData)}
         <input
           type="hidden"
           name="return_params"
