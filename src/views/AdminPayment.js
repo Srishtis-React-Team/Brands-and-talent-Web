@@ -18,11 +18,56 @@ const AdminPayment = () => {
   const [abaFormData, setAbaFormData] = useState({});
   const [returnParams, setReturnParams] = useState({});
   const [adminReturnParams, setAdminReturnParams] = useState(`{\"subscriptionPlan\":\"adminSubscriptionPlan\",\"planName\":\"adminPlan\"}`)
+  const [error, setError] = useState(""); // Error message state
+  const [showPopup, setShowPopup] = useState(false); // State for showing popup
+  
+  // Email validation regex
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
-
+  // const handlePayNow = async () => {
+  //   if (!selectedAmount || selectedAmount <= 0) {
+  //     setError("Please enter a valid amount.");
+  //     return;
+  //   }
+  //   const email = selectedEmail.trim();
+  //   if (!email || !validateEmail(email)) 
+  //     setError("Please enter a valid email address.");
+  //     return;
+  //   }
+  //   setError("");
+  //   setShowPopup(true); // Show the popup when clicking Pay Now
+  //   setPaymentOption(true);
+  // };
   const handlePayNow = async () => {
+    if (!selectedAmount || selectedAmount <= 0) {
+      setError("Please enter a valid amount.");
+      return;
+    }
+    const email = selectedEmail.trim();
+    if (!email || !validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      setShowPopup(true); // Show popup if invalid email
+      setTimeout(() => {
+        setShowPopup(false); // Hide popup after 2 seconds
+      }, 2000); // Set time to 2000ms (2 seconds)
+      return;
+    }
+    setError(""); // Reset error message if the form is valid
+    setShowPopup(true); // Show the popup
+  
+    // Hide the popup after 2 seconds
+    setTimeout(() => {
+      setShowPopup(false); // Hide popup
+      setSelectedAmount(""); // Reset selectedAmount
+      setSelectedEmail("");  // Reset selectedEmail
+    }, 2000); // You can adjust the time as needed
+  
     setPaymentOption(true);
   };
+  
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
@@ -38,6 +83,8 @@ const AdminPayment = () => {
       setLoading(false);
     } catch (error) {
       console.error("Error during payment:", error);
+      setLoading(false);
+      setError("Payment initiation failed. Please try again.");
     }
   };
 
@@ -126,6 +173,32 @@ const AdminPayment = () => {
             border-radius: 5px;
             margin-right: 10px;
           }
+
+        
+           .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 150px;
+            padding: 30px;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+          }
+
+          .popup.hide {
+            opacity: 0;
+          }
         `}
       </style>
       <section className="">
@@ -145,11 +218,13 @@ const AdminPayment = () => {
             placeholder="Enter amount here"
           />
           <input
+           type="email"
             value={selectedEmail}
             onChange={(e) => setSelectedEmail(e.target.value)} // Update selectedAmount
             placeholder="Enter email here"
           />
           <button onClick={handlePayNow}>Pay now</button>
+          {showPopup && error && <div className="popup">{error}</div>}
         </div>
       </section>
       {paymentOptions && (
