@@ -763,9 +763,13 @@ const TalentProfile = () => {
                               src={`${API.userFilePath}${talentData?.image?.fileData}`}
                             ></img>
                           )}
-                          {!talentData && !talentData?.image && (
-                            <img className="talent-img" src={avatarImage}></img>
-                          )}
+                          {!talentData ||
+                            (!talentData?.image && (
+                              <img
+                                className="talent-img"
+                                src={avatarImage}
+                              ></img>
+                            ))}
                         </div>
                         {talentData?.planName != "Basic" && (
                           <>
