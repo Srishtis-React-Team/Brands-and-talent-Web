@@ -212,7 +212,6 @@ const AdminPayment = () => {
       <section className="button-container">
         <div className="input-group">
           <input
-            type="number" // Ensure it's a number input
             value={selectedAmount}
             onChange={(e) => setSelectedAmount(e.target.value)} // Update selectedAmount
             placeholder="Enter amount here"
