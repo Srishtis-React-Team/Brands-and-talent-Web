@@ -30,7 +30,8 @@ const PaymentOptions = ({
   appliedCouponCode,
   success_url,
   setGiftError,
-  userType
+  userType,
+  adminPayment
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,6 +48,7 @@ const PaymentOptions = ({
 
   const navigate = useNavigate();
   const location = useLocation();
+  console.log("adminPayment",adminPayment)
 
   useEffect(() => {
     setAmount(selectedAmount);
@@ -146,9 +148,13 @@ const PaymentOptions = ({
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
       }
       let plan;
+     
       if (giftSub) {
         plan = "giftsubscription";
       }
+      let paymentadmin = adminPayment ? true : null;
+      
+      
       let publicUrl;
       if (plan == "giftsubscription") {
         const giftObj = {
@@ -172,11 +178,30 @@ const PaymentOptions = ({
         if (resGiftSub.data.message == "coupon not found") {
           couponNotFound = true;
         }
-      } else {
+      }
+      else if (paymentadmin) {
+        console.log("testttttt")
+       
+        const userData = {
+        
+          email:email,
+          transId: tran_id,
+          paymentStatus: "Pending",
+        };
+
+        const responseSubscription = await ApiHelper.post(
+           API.adminSubscriptionPlan,
+           userData
+        );
+        console.log("responseSubscription",responseSubscription)
+        publicUrl = responseSubscription.data.publicUrl;
+      }
+      else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
           user_id: userId ? userId : currentUser,
+          email:email,
           transId: tran_id,
           paymentStatus: "Pending",
           coupon: appliedCouponCode ? appliedCouponCode : "",
@@ -188,11 +213,15 @@ const PaymentOptions = ({
         );
         publicUrl = responseSubscription.data.publicUrl;
       }
+      
 
       const subscriptionData = JSON.stringify({
         subscriptionPlan: selectedPaymentPeriod,
         planName: planType ? planType : selectedPaymentPlan,
       });
+
+ 
+      
 
       // // Create a data object for hash generation
       const dataObject = {
@@ -200,16 +229,16 @@ const PaymentOptions = ({
         merchant_id: "brandsandtalent",
         tran_id: tran_id,
         amount: finalAmount ? finalAmount : amount,
-        email: userEmail,
+        email: userEmail?userEmail:email,
         payment_option: type,
         continue_success_url:
           currentUserType == "brand"
             ? `https://brandsandtalent.com/client/${publicUrl}`
             : success_url,
-        return_params: subscriptionData,
+        return_params:subscriptionData,
       };
       // // Generate the hash using the dataObject and your public key
-      const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
+      const publicKey = "ea8234fb-33fa-487d-8967-f6dd436721ab";
       const hash = generateHash(dataObject, publicKey);
       if (!couponNotFound) {
         onConfirm(dataObject, hash);
