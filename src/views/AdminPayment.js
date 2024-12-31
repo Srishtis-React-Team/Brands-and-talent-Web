@@ -20,6 +20,22 @@ const AdminPayment = () => {
   const [adminReturnParams, setAdminReturnParams] = useState(`{\"subscriptionPlan\":\"adminSubscriptionPlan\",\"planName\":\"adminPlan\"}`)
   const [error, setError] = useState(""); // Error message state
   const [showPopup, setShowPopup] = useState(false); // State for showing popup
+
+
+  useEffect(() => {
+    const hasReloaded = localStorage.getItem("refresh");
+
+
+    // Check if the reload flag is not set for this component
+    if (!hasReloaded) {
+      console.log("refreshhhh")
+      localStorage.setItem("refresh", "true"); // Set the reload flag
+      window.location.reload(); // Reload the page
+    } else {
+      console.log("refreshhhh  notttttttttttttttttttttttt")
+      localStorage.removeItem("refresh"); // Clear the flag for the next mount
+    }
+  }, []);
   
   // Email validation regex
   const validateEmail = (email) => {
