@@ -659,77 +659,101 @@ const TalentProfile = () => {
     console.log(isAdminApproved, "isAdminApproved");
     console.log(talentData, "talentData");
   }, [talentData]);
-  const messageNow = () => {
-    if (isOwnTalent == true) {
-      if (talentData?.planName == "Basic") {
-        setMessage("Please upgrade to pro plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (
-        talentData?.planName != "Basic" &&
-        talentData?.accountBlock == false
-      ) {
-        navigate(`/message?${talentData?._id}`);
-      } else if (talentData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-    } else if (isOwnTalent == false && isAdminApproved == true) {
-      if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to pro plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (
-        brandData?.planName !== "Basic" &&
-        brandData?.accountBlock == false
-      ) {
-        navigate(`/message?${talentData?._id}`);
-      } else if (brandData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-      if (talentData?.planName != "Basic") {
-        // alert("block01");
-        navigate(`/message?${talentData?._id}`);
-      } else if (talentData?.planName == "Basic") {
-        navigate(`/pricing`);
-      }
-    } else if (currentUserType == "brand") {
-      if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to premium plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (
-        brandData?.planName !== "Basic" &&
-        brandData?.accountBlock == false
-      ) {
-        navigate(`/message?${talentData?._id}`);
-      } else if (brandData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-    }
+
+  const messageNow = async () => {
+    const formData = {
+      viewingUserId: talentData?._id,
+      loggedInUserId: localStorage.getItem("currentUser"),
+      viewingUserType: talentData?.userType,
+      loggedInUserType: localStorage.getItem("currentUserType"),
+    };
+
+    await ApiHelper.post(`${API.findPlan}`, formData)
+      .then((resData) => {
+        console.log(resData, "messageNow_response");
+        if (resData?.data?.status == true) {
+          navigate(`/message?${talentData?._id}`);
+        } else if (resData?.data?.status == false) {
+          setMessage(`${resData?.data?.message}`);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate(`/pricing`);
+          }, 3000);
+        }
+      })
+      .catch((err) => {});
+
+    // if (isOwnTalent == true) {
+    //   if (talentData?.planName == "Basic") {
+    //     setMessage("Please upgrade to pro plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     talentData?.planName != "Basic" &&
+    //     talentData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (talentData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    // } else if (isOwnTalent == false && isAdminApproved == true) {
+    //   if (brandData?.planName === "Basic") {
+    //     setMessage("Please upgrade to pro plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     brandData?.planName !== "Basic" &&
+    //     brandData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (brandData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    //   if (talentData?.planName != "Basic") {
+    //     // alert("block01");
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (talentData?.planName == "Basic") {
+    //     navigate(`/pricing`);
+    //   }
+    // } else if (currentUserType == "brand") {
+    //   if (brandData?.planName === "Basic") {
+    //     setMessage("Please upgrade to premium plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     brandData?.planName !== "Basic" &&
+    //     brandData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (brandData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    // }
   };
 
   return (

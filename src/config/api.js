@@ -69,7 +69,7 @@ export const API = {
   getPricingList: BASEURL + "pricing/pricingList",
   brandsPricingList: BASEURL + "pricing/brandsPricingList",
   subscriptionPlan: BASEURL + "users/subscriptionPlan",
-  adminSubscriptionPlan: BASEURL + "users/adminSubscriptionPlan",  //added
+  adminSubscriptionPlan: BASEURL + "users/adminSubscriptionPlan", //added
   createPayment: BASEURL + "pricing/create-payment",
   checktransaction: BASEURL + "pricing/check-transaction",
   createqrpayment: BASEURL + "pricing/createqrpayment",
@@ -159,6 +159,7 @@ export const API = {
   //new chat
   createChat: BASEURL + "chat/createChat",
   findPreviousChatUsers: BASEURL + "chat/findPreviousChatUsers/",
+  findPlan: BASEURL + "chat/findPlan",
   findUserChats: BASEURL + "chat/findUserChats/",
   findChat: BASEURL + "chat/findChat/",
   filterNames: BASEURL + "chat/filterNames/",
