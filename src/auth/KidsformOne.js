@@ -619,7 +619,9 @@ const KidsformOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
+        publicUrl: `${kidsPreferedFirstName.replace(/ /g, "-")}-${
+          Math.floor(Math.random() * 900) + 100
+        }`,
       };
       setIsLoading(true);
       if (!userId) {
