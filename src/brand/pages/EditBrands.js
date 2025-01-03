@@ -687,7 +687,7 @@ const EditBrands = () => {
                         </label>
                         <div className="image-upload-label">
                           ( Upload your company logo or your photo if signing up
-                          as an individual client )
+                        as an individual client )
                         </div>
                       </div>
                       {!editProfileImage && (
