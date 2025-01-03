@@ -334,8 +334,13 @@ const BrandSettings = () => {
     }
   };
 
+ 
+  
+  
+
   const updatePassword = async () => {
-    if (!allSamePasswordError && passwordMatch && passwordStatus) {
+ 
+    if (!allSamePasswordError && passwordMatch && !passwordStatus) {
       const formData = {
         brandId: brandId,
         password: oldPassword,
