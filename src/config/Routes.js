@@ -374,7 +374,7 @@ function Routing() {
             }
           />
           <Route
-            path="/adult-signup-plan-details"
+            path="/talent-signup-plan-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <AdultPricing />
