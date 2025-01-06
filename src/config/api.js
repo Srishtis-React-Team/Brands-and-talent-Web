@@ -1,5 +1,6 @@
 const BASEURL = "https://brandsandtalent.com/api/";
 
+
 export const API = {
   //common
   baseUrl: BASEURL,
