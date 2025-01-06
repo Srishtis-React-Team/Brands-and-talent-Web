@@ -221,7 +221,16 @@ const Header = ({ onData }) => {
         // );
       } else if (currentUser_type === "brand" && currentUserId) {
         setActiveMenu("find-talent"); // Update the active menu item
-        navigate("/find-talent");
+        if (brandData?.planName == "Basic") {
+          setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate("/pricing");
+          }, 3000);
+        } else {
+          navigate("/find-talents");
+        }
       } else if (
         currentUser_type === "talent" &&
         talentData?.planName == "Basic"
