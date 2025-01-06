@@ -32,6 +32,7 @@ const SearchHeaderComponent = ({ onData }) => {
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
   const searchPathOptions = SearchPaths(); // Call the function/component to get the options
+  const [brandData, setBrandData] = useState(null);
 
   console.log(searchPathOptions, "searchPathOptions"); // Use the dynamically generated options
   useEffect(() => {
@@ -66,6 +67,21 @@ const SearchHeaderComponent = ({ onData }) => {
       setBrand(false);
     }
   }
+  useEffect(() => {
+    getBrand();
+  }, []);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${localStorage.getItem("brandId")}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const handleRegister = () => {
     if (brand === true) {
@@ -134,6 +150,16 @@ const SearchHeaderComponent = ({ onData }) => {
           navigate("/login");
         }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
+        if (brandData?.planName == "Basic") {
+          setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate("/pricing");
+          }, 3000);
+        } else {
+          navigate("/find-talents");
+        }
         navigate("/find-talent");
       } else if (currentUser_type === "talent" && currentUserId) {
         setMessage("You need to sign Up as Brand to find talents");
