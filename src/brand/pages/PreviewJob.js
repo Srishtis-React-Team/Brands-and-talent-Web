@@ -438,7 +438,21 @@ const PreviewJob = ({ data, onButtonClick }) => {
                             </span>
                           </li>
                         )}
-                        {jobData?.gender && (
+                        {jobData?.gender && jobData.gender.length > 0 ? (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">Gender :</span>
+                            <span className="job-feature-values">
+                              {jobData.gender.join(", ")}
+                            </span>
+                          </li>
+                        ) : (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">Gender :</span>
+                            <span className="job-feature-values">No data added</span>
+                          </li>
+                        )}
+
+                        {/* {jobData?.gender && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
                               Gender :
@@ -448,7 +462,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                               {jobData?.gender && jobData.gender.join(", ")}
                             </span>
                           </li>
-                        )}
+                        )} */}
 
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (

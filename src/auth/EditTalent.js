@@ -6,6 +6,7 @@ import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
 import "../assets/css/createjobs.css";
 import "../assets/css/talent-profile.css";
+
 import {
   parsePhoneNumber,
   isValidPhoneNumber,
@@ -46,8 +47,10 @@ import EditSocialMedias from "../pages/EditSocialMedias";
 import "material-icons/iconfont/material-icons.css";
 import { tr } from "date-fns/locale";
 
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
+ 
   return (
     <div
       role="tabpanel"
