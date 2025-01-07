@@ -150,7 +150,8 @@ const SearchHeaderComponent = ({ onData }) => {
           navigate("/login");
         }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
-        if (brandData?.planName == "Basic") {
+        console.log("brandData?.planName",brandData?.planName)
+        if (brandData?.planName === "Pro" || brandData?.planName === "Premium"){
           setMessage("Upgrade Pro or Premium Plan to unlock this feature");
           setOpenPopUp(true);
           setTimeout(function () {

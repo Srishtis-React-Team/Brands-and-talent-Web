@@ -191,7 +191,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   const isActive = location.pathname.includes("/find-talents");
 
   const handleNavigationClick = () => {
-    if (brandData?.planName == "Basic") {
+    if (brandData?.planName === "Pro" || brandData?.planName === "Premium") {
       setMessage("Upgrade Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
       setTimeout(function () {
