@@ -221,27 +221,29 @@ const Header = ({ onData }) => {
         // );
       } else if (currentUser_type === "brand" && currentUserId) {
         setActiveMenu("find-talent"); // Update the active menu item
-        if (brandData?.planName == "Basic") {
-          setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-            navigate("/pricing");
-          }, 3000);
-        } else {
+        // if (brandData?.planName === "Pro" || brandData?.planName === "Premium"){
+        //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate("/pricing");
+        //   }, 3000);
+        // }else{
           navigate("/find-talents");
-        }
-      } else if (
-        currentUser_type === "talent" &&
-        talentData?.planName == "Basic"
-      ) {
-        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/pricing");
-        }, 3000);
-      } else if (
+       // }
+      } 
+      // else if (
+      //   currentUser_type === "talent" &&
+      //   talentData?.planName == "Basic"
+      // ) {
+      //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //     navigate("/pricing");
+      //   }, 3000);
+      // } 
+      else if (
         currentUser_type === "talent" &&
         talentData?.planName != "Basic"
       ) {

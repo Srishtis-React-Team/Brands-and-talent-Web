@@ -149,17 +149,20 @@ const SearchHeaderComponent = ({ onData }) => {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
-      } else if (currentUser_type === "brand" && currentUserId) {
-        if (brandData?.planName == "Basic") {
-          setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-            navigate("/pricing");
-          }, 3000);
-        } else {
+      }
+       else if (currentUser_type === "brand" && currentUserId) {
+       // console.log("brandData?.planName",brandData?.planName)
+        // if (brandData?.planName === "Pro" || brandData?.planName === "Premium"){
+        //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate("/pricing");
+        //   }, 3000);
+        // } 
+      //  else {
           navigate("/find-talents");
-        }
+       // }
         navigate("/find-talent");
       } else if (currentUser_type === "talent" && currentUserId) {
         setMessage("You need to sign Up as Brand to find talents");

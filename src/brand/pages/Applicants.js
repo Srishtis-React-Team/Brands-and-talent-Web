@@ -206,6 +206,7 @@ const Applicants = () => {
   const onlineInterviewCall = async () => {
     const formData = {
       talentId: alertpop?.talentId,
+      gigId:alertpop?.jobId,
       selectedLevel: "interviewInvitations",
       interviewType: "online",
       meetingLink: meetLink,
@@ -232,6 +233,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: level,
+      gigId: alertpop?.jobId,
     };
     setIsLoading(true);
     await ApiHelper.post(API.informSelectedLevel, formData)
@@ -269,6 +271,7 @@ const Applicants = () => {
   const offlineInviteCall = async () => {
     const formData = {
       talentId: alertpop?.talentId,
+      gigId: alertpop?.jobId,
       selectedLevel: "interviewInvitations",
       interviewType: "offline",
       officeAddress: address,

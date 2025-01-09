@@ -216,17 +216,19 @@ const Footer = (props) => {
       }, 1000);
     } else if (currentUserType === "brand" && currentUserId) {
       navigate("/find-talent");
-    } else if (
-      currentUserType === "talent" &&
-      talentData?.planName == "Basic"
-    ) {
-      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate("/pricing");
-      }, 3000);
-    } else if (
+    } 
+    // else if (
+    //   currentUserType === "talent" &&
+    //   talentData?.planName == "Basic"
+    // ) {
+    //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate("/pricing");
+    //   }, 3000);
+    // }
+     else if (
       currentUserType === "talent" &&
       talentData?.planName != "Basic"
     ) {
