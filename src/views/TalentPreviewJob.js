@@ -598,11 +598,11 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           jobData?.youTubeMin) && (
                           <>
                             <li className="job-features-li">
-                              <div className="d-flex">
+                              <div className="d-flex flex-column">
                                 <span className="job-feature-heading pr-1">
                                   Social Media Followers Count:
                                 </span>
-                                <ul>
+                                <ul className="mb-0 mt-2" >
                                   {jobData?.instaMin && (
                                     <li>
                                       Instagram Followers:{" "}
@@ -755,12 +755,12 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <div className="job-about-section">
                     <div className="job-feature-title">Project brief / TOR</div>
                     <div className="service-files-main">
-                      <div>
+                      <div className="w-100" >
                         {jobData?.workSamples?.length > 0 &&
                           jobData?.workSamples?.map((item) => {
                             return (
                               <>
-                                <div className="update-portfolio-cards">
+                                <div className="update-portfolio-cards project-file-wrapper">
                                   <div className="update-portfolio-icon">
                                     <div className="file-section">
                                       {item.type === "image" && (

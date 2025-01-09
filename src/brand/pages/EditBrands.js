@@ -678,14 +678,14 @@ const EditBrands = () => {
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="kids-main  p-0">
                 <div className="kids-form-row row">
-                  <div className="kids-form-section col-md-6">
+                  <div className="kids-form-section col-md-12">
                     <div className="profile-image-edit-section  p-0 mt-2 mx-0">
                       <div>
                         <label className="form-label">
                           Brand / Client logo
                         </label>
                         
-                        <div className="image-upload-label">
+                        <div className="image-upload-label mb-2">
                           ( Upload your company logo or your photo if signing up
                         as an individual client )
                         </div>

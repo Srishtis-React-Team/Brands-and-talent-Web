@@ -2230,6 +2230,55 @@ ul.MuiMenu-list li {
   height: fit-content !important;
   margin-top: 8% !important;
 }
+/* 9-1-25 css start  */
+
+
+.login-main.regPage {
+  width: 470px;
+}
+.talent-header-main {
+  z-index: 999999999 !important;
+}
+.messages-section {
+  width: 100% !important;
+}
+.message-user-image {
+  width: 50px !important;
+  height: 50px !important;
+}
+.offline-dot, .online-dot {
+  top: 38px !important;
+  right: 18px !important;
+  width: 12px;
+  height: 12px;
+}
+.message-userdetails-menu-wrapper {
+  margin-bottom: 8px !important;
+}
+.talent-details-wrapper {
+  align-items: center !important;
+}
+
+.notification-card-image {
+  height: 50px !important;
+}
+.project-file-wrapper {
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 9-1-25 css end*/
+
+/* media css start */
 
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
@@ -2355,6 +2404,14 @@ ul.MuiMenu-list li {
 }
 
 @media (max-width: 767px) {
+/* 9-1-25 css start  */
+.css-89200c-MuiFormControl-root-MuiTextField-root svg {
+  height: 1em;
+  position: absolute;
+  top: 0px;
+}
+
+ /* 9-1-25 css end  */ 
   .talentSet .edit-basicdetails-section-main {
     justify-content: center;
     width: 100%;
