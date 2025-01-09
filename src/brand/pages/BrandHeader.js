@@ -191,16 +191,16 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   const isActive = location.pathname.includes("/find-talents");
 
   const handleNavigationClick = () => {
-    if (brandData?.planName === "Pro" || brandData?.planName === "Premium") {
-      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate("/pricing");
-      }, 3000);
-    } else {
+    // if (brandData?.planName === "Pro" || brandData?.planName === "Premium") {
+    //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate("/pricing");
+    //   }, 3000);
+    // } else {
       navigate("/find-talents");
-    }
+   // }
   };
 
   return (

@@ -32,6 +32,8 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandData, setBrandData] = useState(null);
 
+  
+
   useEffect(() => {
     if (currentUserId) {
       getTalentById();
