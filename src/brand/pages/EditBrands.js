@@ -677,7 +677,7 @@ const EditBrands = () => {
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="kids-main  p-0">
-                <div className="kids-form-row row">favTalent
+                <div className="kids-form-row row">
                   <div className="kids-form-section col-md-12">
                     <div className="profile-image-edit-section  p-0 mt-2 mx-0">
                       <div>
