@@ -2498,7 +2498,10 @@ const TalentProfile = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              
             >
+              
+              
               <IconButton
                 sx={{
                   position: "absolute",
@@ -2521,6 +2524,7 @@ const TalentProfile = () => {
                 }}
                 className="big-slider-image"
               />
+              
               <IconButton
                 sx={{
                   position: "absolute",
@@ -2541,6 +2545,7 @@ const TalentProfile = () => {
                 }}
                 onClick={handleNext}
               >
+             
                 <ArrowForwardIos />
               </IconButton>
             </Box>
@@ -2556,6 +2561,7 @@ const TalentProfile = () => {
             <div className="modal-dialog  modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
+               
                   <button
                     type="button"
                     className="btn-close"

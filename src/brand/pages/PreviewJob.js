@@ -640,8 +640,29 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     </>
                   )}
               </div>
+              {jobData?.jobDescription && jobData?.jobDescription.length > 0 ? (
+                <>
+                  <div className="job-about-section">
+                    <div className="job-feature-title">Job Description</div>
+                    <div className="job-about-values">
+                      {jobData?.jobDescription.map((htmlContent, index) => (
+                        <div
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: htmlContent }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="job-about-section">
+                  <div className="job-feature-title">Job Description</div>
+                  <div className="job-about-values">No Data Added</div>
+                </div>
+              )}
 
-              {jobData?.jobDescription &&
+
+              {/* {jobData?.jobDescription &&
                 jobData?.jobDescription.length > 0 && (
                   <>
                     <div className="job-about-section">
@@ -657,7 +678,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       </div>
                     </div>
                   </>
-                )}
+                )} */}
 
               {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
                 <>
