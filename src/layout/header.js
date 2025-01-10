@@ -229,9 +229,9 @@ const Header = ({ onData }) => {
         //     navigate("/pricing");
         //   }, 3000);
         // }else{
-          navigate("/find-talents");
-       // }
-      } 
+        navigate("/find-talents");
+        // }
+      }
       // else if (
       //   currentUser_type === "talent" &&
       //   talentData?.planName == "Basic"
@@ -242,11 +242,8 @@ const Header = ({ onData }) => {
       //     setOpenPopUp(false);
       //     navigate("/pricing");
       //   }, 3000);
-      // } 
-      else if (
-        currentUser_type === "talent" &&
-        talentData?.planName != "Basic"
-      ) {
+      // }
+      else if (currentUser_type === "talent") {
         navigate("/find-talent");
         setActiveMenu("find-talent"); // Update the active menu item
       }
