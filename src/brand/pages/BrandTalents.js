@@ -1187,7 +1187,9 @@ const BrandTalents = () => {
                                             )}
 
                                           <span className="job-company_dtls nweAlign pt-2 pb-0 d-flex">
+                                          <div className="logo-fill-briefcase">
                                             <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                                            </div>
                                             {item?.childCity &&
                                               `${item.childCity}`}
                                             {item?.childCity &&
