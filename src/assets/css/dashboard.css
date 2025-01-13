@@ -2237,7 +2237,9 @@ ul.MuiMenu-list li {
   width: 470px;
 }
 .talent-header-main {
-  z-index: 999999999 !important;
+  /* z-index: 999999999 !important; */
+  z-index: 99999 !important;
+
 }
 .messages-section {
   width: 100% !important;
@@ -2264,6 +2266,10 @@ ul.MuiMenu-list li {
 }
 .project-file-wrapper {
   width: 100%;
+}
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open, .css-zw3mfo-MuiModal-root-MuiDialog-root, .modal {
+  z-index: 99999 !important;
 }
 
 
