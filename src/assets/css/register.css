@@ -391,6 +391,7 @@
   }
   .login-main.regPage {
     padding: 25px 15px;
+    width: 100% !important;
   }
   .dialog-body {
     min-height: 100%;
