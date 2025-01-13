@@ -809,7 +809,7 @@ const CreateJobs = () => {
   };
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, ""]);
+    setQuestions([...questions]);
     setTimeout(() => {
       const newQuestionIndex = questions.length;
       const input = document.getElementById(`question${newQuestionIndex}`);

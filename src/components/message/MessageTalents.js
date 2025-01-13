@@ -626,7 +626,7 @@ const MessageTalents = () => {
                               key={index}
                             >
                               <div className="message-images-position">
-                                {item?.brandImage &&
+                                {/* {item?.brandImage &&
                                   item?.brandImage.length > 0 && (
                                     <img
                                       className="message-user-image"
@@ -640,7 +640,29 @@ const MessageTalents = () => {
                                     src={`${API.userFilePath}${item?.image?.fileData}`}
                                     alt=""
                                   />
+                                )} */}
+
+                                {item?.brandImage &&
+                                item?.brandImage.length > 0 ? (
+                                  <img
+                                    className="message-user-image"
+                                    src={`${API.userFilePath}${item?.brandImage[0]?.fileData}`}
+                                    alt=""
+                                  />
+                                ) : item?.image && item?.image?.fileData ? (
+                                  <img
+                                    className="message-user-image"
+                                    src={`${API.userFilePath}${item?.image?.fileData}`}
+                                    alt=""
+                                  />
+                                ) : (
+                                  <img
+                                    className="message-user-image"
+                                    src={avatar}
+                                    alt=""
+                                  />
                                 )}
+
                                 {item?.isOnline === true && (
                                   <div className="online-dot"></div>
                                 )}
