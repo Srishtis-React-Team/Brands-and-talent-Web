@@ -24,7 +24,7 @@ import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import { ArrowBack, ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -2505,13 +2505,16 @@ const TalentProfile = () => {
               <IconButton
                 sx={{
                   position: "absolute",
-                  top: 5,
+                  top: "90px",
                   right: 5,
                   color: "#ffffff",
+                  left: "-95%",
                 }}
                 onClick={handleClose}
               >
-                <Close />
+                 <ArrowBack />
+             
+                {/* <Close /> */}
               </IconButton>
               <img
                 src={`${API.userFilePath}${photosList[currentIndex]}`}
