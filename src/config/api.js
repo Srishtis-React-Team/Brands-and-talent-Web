@@ -1,5 +1,6 @@
 const BASEURL = "https://brandsandtalent.com/api/";
 
+
 export const API = {
   //common
   baseUrl: BASEURL,
@@ -37,6 +38,7 @@ export const API = {
   adultFetch: BASEURL + "users/adultFetch/",
   typeChecking: BASEURL + "users/typeChecking",
   getDataByPublicUrl: BASEURL + "users/getDataByPublicUrl",
+
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
   brandsResetPassword: BASEURL + "brands/brandsResetPassword",
@@ -68,6 +70,7 @@ export const API = {
   getPricingList: BASEURL + "pricing/pricingList",
   brandsPricingList: BASEURL + "pricing/brandsPricingList",
   subscriptionPlan: BASEURL + "users/subscriptionPlan",
+  adminSubscriptionPlan: BASEURL + "users/adminSubscriptionPlan", //added
   createPayment: BASEURL + "pricing/create-payment",
   checktransaction: BASEURL + "pricing/check-transaction",
   createqrpayment: BASEURL + "pricing/createqrpayment",
@@ -81,6 +84,7 @@ export const API = {
   getFeatures: BASEURL + "features/getFeatures",
   getTopBrands: BASEURL + "brands/topBrands",
   getTalentList: BASEURL + "users/talentList",
+  getPopularTalent: BASEURL + "users/popularTalent",
   getKidsData: BASEURL + "users/kidsFetch/",
   unifiedDataFetch: BASEURL + "users/unifiedDataFetch/",
   getTalentById: BASEURL + "users/getTalentById/",
@@ -147,6 +151,7 @@ export const API = {
   listTalentsForChat: BASEURL + "message/listTalentsForChat",
   listBrandsForChat: BASEURL + "message/listBrandsForChat",
   addMessage: BASEURL + "message/addMessage",
+  allowPermission: BASEURL + "message/allowPermission",
 
   //conversation
   addConversation: BASEURL + "conversation/addConversation",
@@ -155,6 +160,7 @@ export const API = {
   //new chat
   createChat: BASEURL + "chat/createChat",
   findPreviousChatUsers: BASEURL + "chat/findPreviousChatUsers/",
+  findPlan: BASEURL + "chat/findPlan",
   findUserChats: BASEURL + "chat/findUserChats/",
   findChat: BASEURL + "chat/findChat/",
   filterNames: BASEURL + "chat/filterNames/",

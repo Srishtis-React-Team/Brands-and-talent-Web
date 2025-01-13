@@ -42,32 +42,40 @@ const Pricing = ({
   setSelectedPaymentStatus,
   setIsPaymentClicked,
   userType,
+  receivedData,
 }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
-  console.log(from, "from");
-  console.log(userType, "userType");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log("location.state", location.state);
   const brand_url = `https://brandsandtalent.com/client/${location?.state?.data?.publicUrl?.replace(
     /\s+/g,
     ""
   )}`;
-  console.log("brand_url", brand_url);
-  const [receivedData, setReceivedData] = useState(null);
+
   useEffect(() => {
-    if (location.state && location.state.data) {
-      setReceivedData(location.state.data);
+    const hasReloaded = localStorage.getItem("reloades");
+
+    // Check if the reload flag is not set for this component
+    if (!hasReloaded) {
+      localStorage.setItem("reloades", "true"); // Set the reload flag
+      window.location.reload(); // Reload the page
+    } else {
+      localStorage.removeItem("reloades"); // Clear the flag for the next mount
     }
-  }, [location.state]);
-  useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
+  }, []);
+  // const [receivedData, setReceivedData] = useState(null);
+  // useEffect(() => {
+  //   if (location.state && location.state.data) {
+  //     setReceivedData(location.state.data);
+  //   }
+  // }, [location.state]);
+  // useEffect(() => {
+  // }, [receivedData]);
 
   const paramsValues = window.location.search;
 
@@ -79,8 +87,6 @@ const Pricing = ({
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-
-  console.log(queryString, "queryString");
 
   const handleClickOpen = () => {
     if (currentUserType == "talent") {
@@ -161,6 +167,9 @@ const Pricing = ({
   const [pathFrom, setPathFrom] = useState("");
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
   const [success_url, setSuccess_url] = useState(``);
+  const [giftError, setGiftError] = useState(
+    `(Please fill out the form below to gift a subscription to someone special and support their creative journey).`
+  );
 
   const handleMobileChange = (value) => {
     isValidPhoneNumber(value);
@@ -191,6 +200,7 @@ const Pricing = ({
   const greenTick = require("../assets/icons/greenTick.png");
   const [pricing, setPricing] = useState("");
   const [isBillingForm, setIsBillingForm] = useState(true);
+  const [abaFormData, setAbaFormData] = useState({});
   const [formData, setFormData] = useState({
     billingFirstName: "",
     billingLastName: "",
@@ -217,7 +227,46 @@ const Pricing = ({
     // Add other states as needed
   });
 
+  const [activePlan, setActivePlan] = useState("");
+  const [activePeriod, setActivePeriod] = useState("");
+
+  useEffect(() => {
+    fetchPaymentDetails();
+  }, []);
+
+  const fetchPaymentDetails = async () => {
+    const userId = localStorage.getItem("currentUser");
+    const obj = {
+      user_id: userId,
+    };
+    const paymentDetailsData = await ApiHelper.post(
+      "https://brandsandtalent.com/api/users/fetchPaymentDetails",
+      obj
+    );
+    let activatedPlan;
+    let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
+    if (paymentDetailsData?.data?.data?.planName == "Pro") {
+      activatedPlan = "Pro (Popular)";
+    } else {
+      activatedPlan = paymentDetailsData?.data?.data?.planName;
+    }
+    setActivePlan(activatedPlan);
+    setActivePeriod(activatedPeriod);
+  };
+
   const [isChecked, setIsChecked] = useState(false);
+
+  const planHierarchy = {
+    "Pro (Popular)": { monthly: 1, annual: 2 },
+    Premium: { monthly: 3, annual: 4 },
+  };
+
+  const activePlanRank = planHierarchy[activePlan]?.[activePeriod] || 0;
+
+  const isPlanDisabled = (planName, period) => {
+    const planRank = planHierarchy[planName]?.[period] || 0;
+    return planRank <= activePlanRank; // Disable plans with a lower rank
+  };
 
   useEffect(() => {
     if (userType == "adults") {
@@ -241,10 +290,6 @@ const Pricing = ({
     setIsChecked(event.target.checked);
   };
 
-  useEffect(() => {
-    console.log(pricingList, "pricingList");
-  }, [pricingList]);
-
   useEffect(() => {}, [comment]);
 
   const getPricingList = async () => {
@@ -267,90 +312,63 @@ const Pricing = ({
       .catch((err) => {});
   };
 
-  // useEffect(() => {
-  //   console.log("inside useEffect");
-  //   checkTransaction();
-  // }, []);
-
-  // const checkTransaction = async () => {
-  //   console.log("useEffect action", pathFrom);
-  //   const paymenttrans_id = localStorage.getItem("paymenttrans_id");
-  //   const obj = { tranId: paymenttrans_id };
-  //   try {
-  //     const resData = await ApiHelper.post(
-  //       "https://brandsandtalent.com/api/pricing/check-transaction",
-  //       obj
-  //     );
-
-  //     if (resData) {
-  //       const giftData = localStorage.getItem("giftsubscription");
-  //       if (resData.data.status.message == "Success!") {
-  //         const paymentData = resData.data.data;
-  //         if (paymentData.payment_status == "APPROVED") {
-  //           localStorage.setItem("paymentData", JSON.stringify(paymentData));
-  //           console.log("paymentData", paymentData);
-  //           const userId = localStorage.getItem("userId");
-  //           // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
-  //           const userData = {
-  //             subscriptionPlan: selectedPaymentPeriod,
-  //             planName: selectedPaymentPlan,
-  //             user_id: userId,
-  //             transactionDate: paymentData?.transaction_date,
-  //             paymentStatus: paymentData?.payment_status,
-  //             paymentCurreny: paymentData?.payment_currency,
-  //             paymentAmount: paymentData?.payment_amount,
-  //           };
-  //           if (giftData == "true") {
-  //             giftSubCreationCall();
-  //           } else {
-  //             const responseSubscription = await ApiHelper.post(
-  //               API.subscriptionPlan,
-  //               userData
-  //             );
-  //             console.log("responseSubscription", responseSubscription);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.error("Error:", err);
-  //   }
-  // };
-
-  const handlePlanTypeChange = (type) => {
-    setSelectedType(type);
-  };
-
   const editKids = async () => {
-    console.log("currentPath", currentPath);
-    const userId = localStorage.getItem("userId");
-    if (currentPath == "/pricing") {
-      console.log("if");
-      navigate(``);
+    const userId = localStorage.getItem("currentUser");
+    if (userType == "adults") {
+      const userData = {
+        planName: "Basic",
+        user_id: userId,
+        paymentStatus: "Pending",
+      };
+      const responseSubscription = await ApiHelper.post(
+        API.subscriptionPlan,
+        userData
+      );
+      navigate(`/talent-kids-teen-signup-files-details?${userId}`);
+      // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+      //   state: { data: receivedData },
+      // });
     } else {
-      console.log("else");
-      navigate(`/adult-signup-files-details?userId=${userId}`);
+      const userData = {
+        planName: "Basic",
+        user_id: userId,
+        paymentStatus: "Pending",
+      };
+      const responseSubscription = await ApiHelper.post(
+        API.subscriptionPlan,
+        userData
+      );
+      navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+        state: { data: receivedData },
+      });
     }
-  };
-
-  const handleNext = () => {
-    // Handle form submission or transition to next form
-    // setIsBillingForm(false);
-    setIsPlanForm(false);
+    // if (currentPath == "/pricing") {
+    //   navigate(``);
+    // } else {
+    //   const userData = {
+    //     planName: 'Basic',
+    //     user_id: userId,
+    //     paymentStatus: "Pending",
+    //   };
+    //   const responseSubscription = await ApiHelper.post(
+    //     API.subscriptionPlan,
+    //     userData
+    //   );
+    //   navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+    //     state: { data: receivedData },
+    //   });
+    // }
   };
 
   const choosePlan = async (index, item, from) => {
-    console.log("inside chooseplan.....", from);
     if (index == 0) {
       editKids();
     } else {
       setPathFrom(from);
       if (from == "giftsubscription") {
-        console.log("inside the if case");
         setGiftSub(true);
         localStorage.setItem("giftsubscription", true);
       } else {
-        console.log("inside the else case");
         setGiftSub(false);
         localStorage.setItem("giftsubscription", false);
       }
@@ -361,13 +379,11 @@ const Pricing = ({
         item.plan_type_monthly.find(
           (plan) => `monthly-${item._id}` === selectedPlan
         );
-      console.log("selectedPlanItem", selectedPlanItem);
       const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
       const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
       const afterDiscount = selectedPlanItem
         ? selectedPlanItem.afterDiscount
         : "N/A";
-      console.log("afterDiscount", afterDiscount);
       const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
       const match = price.match(regex);
       if (match) {
@@ -382,8 +398,6 @@ const Pricing = ({
         }
         const currency = match[1].toUpperCase(); // "USD"
         const duration = match[3]; // "month"
-        console.log("currency", currency);
-        console.log("amount", amount);
         setSelectedCurrency(currency);
         setSelectedAmount(amount);
         // const type = 'https://brandsandtalent.com/create-jobs'
@@ -400,11 +414,6 @@ const Pricing = ({
   const handleSubmit = async () => {
     setShowBtn(false);
     if (isPlanForm === false) {
-      console.log("Sender Name: ", senderName);
-      console.log("Email: ", email);
-      console.log("Receiver's Email: ", recieverEmail);
-      console.log("Receiver's First Name: ", recieversFirstName);
-      console.log("Receiver's Last Name: ", recieversLastName);
       if (!senderName) setSenderNameError(true);
       if (!email) setEmailError(true);
       if (!recieverEmail) setRecieverEmailError(true);
@@ -422,161 +431,10 @@ const Pricing = ({
       setIsGiftPayment(true);
     }
   };
-  const giftSubCreationCall = async () => {
-    if (senderName && email && recieverEmail && recieversFirstName) {
-      setIsLoading(true);
-      try {
-        const payload = {
-          senderName: senderName,
-          email: email,
-          gift: [
-            {
-              receiversFirstName: recieversFirstName,
-              receiversLastName: recieversLastName,
-              address: recieversAddress,
-              mobile: mobile,
-              receiverEmail: recieverEmail,
-              message: enquiry,
-            },
-          ],
-        };
-
-        try {
-          const resData = await ApiHelper.post(
-            `${API.giftSubCreation}`,
-            payload
-          );
-          console.log(resData, "resData");
-          if (resData.data.status) {
-            setIsLoading(false);
-            setMessage("Form Submitted Successfully");
-            setOpenPopUp(true);
-            setTimeout(() => {
-              setSenderName("");
-              setEmail("");
-              setRecieversFirstName("");
-              setRecieversLastName("");
-              setRecieversAddress("");
-              setEnquiry("");
-              setMobile("");
-              setMessage("");
-              setOpenPopUp(false);
-
-              handleClose();
-            }, 2000);
-          }
-        } catch (err) {
-          setIsLoading(false);
-          // Handle error
-        }
-
-        // Handle successful submission,
-        // handleClose(); // Close the dialog
-      } catch (err) {
-        console.error("Error submitting form:", err);
-        // setError('There was an error submitting the form. Please try again.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  // const handlePayment = async (amount, currency, type, paymentOption, plan) => {
-  //   try {
-  //     console.log("plan----", plan);
-  //     const userId = localStorage.getItem("userId");
-  //     const brandId = localStorage.getItem("brandId");
-
-  //     let apiUrl =
-  //       paymentOption == "card" ? API.createPayment : API.createqrpayment;
-  //     const response = await ApiHelper.post(apiUrl, {
-  //       amount,
-  //       currency,
-  //       type,
-  //     });
-  //     setResponseUrl(response.data.url);
-  //     localStorage.setItem("paymenttrans_id", response.data.trans_id);
-  //     let planType;
-  //     if (selectedPaymentPlan == "Pro (Popular)") {
-  //       planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
-  //     }
-  //     if (plan == "giftsubscription") {
-  //       const giftObj = {
-  //         senderName: senderName,
-  //         email: email,
-  //         gift: [
-  //           {
-  //             receiversFirstName: recieversFirstName,
-  //             receiverEmail: recieverEmail,
-  //             message: enquiry,
-  //             subscriptionPlan: selectedPaymentPeriod,
-  //             planName: planType ? planType : selectedPaymentPlan,
-  //             transId: response.data.trans_id,
-  //             paymentStatus: "Pending",
-  //           },
-  //         ],
-  //         isActive: true,
-  //       };
-  //       // giftSubCreation
-  //       const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
-  //     } else {
-  //       const userData = {
-  //         subscriptionPlan: selectedPaymentPeriod,
-  //         planName: planType ? planType : selectedPaymentPlan,
-  //         user_id: userId,
-  //         brand_id: brandId,
-  //         transId: response.data.trans_id,
-  //         paymentStatus: "Pending",
-  //         coupon: appliedCouponCode ? appliedCouponCode : "",
-  //       };
-  //       const responseSubscription = await ApiHelper.post(
-  //         API.subscriptionPlan,
-  //         userData
-  //       );
-  //     }
-  //     setCheckout(true);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error during payment:", error);
-  //   }
-  // };
-
-  // const subscriptionHandler = async (trans_id) => {
-  //   const userId = localStorage.getItem("userId");
-  //   const giftObj = {
-  //       "user_id":userId
-  //   }
-  //   const giftRes = await ApiHelper.post(API.getGiftSubscriptionsByUser, giftObj);
-  //   console.log('giftRes',giftRes)
-  //   const obj = {
-  //     "senderName": senderName,
-  //     "email": email,
-  //     "gift": [
-  //       {
-  //         "receiversFirstName": recieversFirstName,
-  //         "receiverEmail": recieverEmail,
-  //         "message":enquiry,
-  //         "subscriptionPlan":selectedPaymentPeriod,
-  //         "planName":selectedPaymentPlan,
-  //         "paymentStatus":'Pending',
-  //         "transId":trans_id,
-  //         "transactionDate":'',
-  //         "paymentCurreny":'',
-  //         "paymentAmount":'',
-  //         "paymentPeriod":'',
-  //         "paymentPlan":'',
-  //     }
-  //     ],
-  //     "isActive": true
-  // }
-  // console.log('new obj',obj)
-  // // const response = await ApiHelper.post(API.giftSubCreation, obj);
-  // // console.log('gift response',response)
-  // }
 
   const handleRadioChange = (type, id, planname) => (event) => {
-    console.log("type, id, planname", type, id, planname);
     setSelectedPlan(id);
+    console.log('planname',planname)
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
   };
@@ -665,142 +523,14 @@ const Pricing = ({
   useEffect(() => {
     if (userType == "adults") {
       setSuccess_url(
-        `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
+        `https://brandsandtalent.com/talent-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
       setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);
     }
-    console.log("success_url", success_url);
   }, []);
-
-  // useEffect(() => {
-  //   if (userType == "adults") {
-  //     if (selectedPaymentOption == "qr") {
-  //       setLoading(true);
-  //       if (giftSub) {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/adult-signup-files-details?${queryString}`,
-  //           "qr",
-  //           "giftsubscription"
-  //         );
-  //       } else {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/adult-signup-files-details?${queryString}`,
-  //           "qr",
-  //           "normal"
-  //         );
-  //       }
-  //     } else if (selectedPaymentOption == "card") {
-  //       setLoading(true);
-  //       if (giftSub) {
-  //         console.log("correct...");
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/adult-signup-files-details?${queryString}`,
-  //           "card",
-  //           "giftsubscription"
-  //         );
-  //       } else {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/adult-signup-files-details?${queryString}`,
-  //           "card",
-  //           "normal"
-  //         );
-  //       }
-  //     }
-  //   } else if (userType == "brands") {
-  //     if (selectedPaymentOption == "qr") {
-  //       setLoading(true);
-  //       if (giftSub) {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-  //           "qr",
-  //           "giftsubscription"
-  //         );
-  //       } else {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-  //           "qr",
-  //           "normal"
-  //         );
-  //       }
-  //     } else if (selectedPaymentOption == "card") {
-  //       setLoading(true);
-  //       if (giftSub) {
-  //         console.log("correct...");
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-  //           "card",
-  //           "giftsubscription"
-  //         );
-  //       } else {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-  //           "card",
-  //           "normal"
-  //         );
-  //       }
-  //     }
-  //   } else {
-  //     if (selectedPaymentOption == "qr") {
-  //       setLoading(true);
-  //       if (giftSub) {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           "https://brandsandtalent.com/talent-settings",
-  //           "qr",
-  //           "giftsubscription"
-  //         );
-  //       } else {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           "https://brandsandtalent.com/talent-home",
-  //           "qr",
-  //           "normal"
-  //         );
-  //       }
-  //     } else if (selectedPaymentOption == "card") {
-  //       setLoading(true);
-  //       if (giftSub) {
-  //         console.log("correct...");
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           "https://brandsandtalent.com/talent-settings",
-  //           "card",
-  //           "giftsubscription"
-  //         );
-  //       } else {
-  //         handlePayment(
-  //           selectedAmount,
-  //           selectedCurrency,
-  //           "https://brandsandtalent.com/talent-home",
-  //           "card",
-  //           "normal"
-  //         );
-  //       }
-  //     }
-  //   }
-  // }, [selectedPaymentOption]);
 
   const modalRef = useRef(null);
 
@@ -864,9 +594,15 @@ const Pricing = ({
   const [talentData, setTalentData] = useState();
   const [brandData, setBrandData] = useState();
 
+  const handleCheckout = () => {
+    if (window.AbaPaywayLoaded && window.AbaPayway) {
+      window.AbaPayway.checkout();
+    } else {
+      console.error("PayWay checkout script not loaded");
+    }
+  };
+
   useEffect(() => {
-    console.log(currentUserId, "currentUserId");
-    console.log(currentUserType, "currentUserType");
     if (currentUserId) {
       if (currentUserType == "talent") {
         getTalentById();
@@ -900,12 +636,12 @@ const Pricing = ({
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
+  const handleFormSubmit = (dataObject, hash) => {
+    setAbaFormData({ ...dataObject, hash });
+    setTimeout(() => {
+      document.getElementById("checkout_button").click();
+    }, 100);
+  };
 
   return (
     <>
@@ -933,6 +669,54 @@ const Pricing = ({
           </div>
         </>
       )}
+      <form
+        id="aba_merchant_request"
+        target="aba_webservice"
+        method="POST"
+        action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+      >
+        <input
+          type="hidden"
+          name="merchant_id"
+          value={abaFormData.merchant_id || ""}
+        />
+        <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
+        <input type="hidden" name="amount" value={abaFormData.amount || ""} />
+        <input type="hidden" name="email" value={abaFormData.email || ""} />
+        <input
+          type="hidden"
+          name="payment_option"
+          value={abaFormData.payment_option || ""}
+        />
+        <input
+          type="hidden"
+          name="req_time"
+          value={abaFormData.req_time || ""}
+        />
+        <input
+          type="hidden"
+          name="continue_success_url"
+          value={abaFormData.continue_success_url || ""}
+        />
+        <input
+          type="hidden"
+          name="return_params"
+          value={abaFormData.return_params || ""}
+        />
+        <input type="hidden" name="hash" value={abaFormData.hash || ""} />
+        <button
+          type="button"
+          id="checkout_button"
+          style={{
+            opacity: "0",
+            height: "1px",
+            width: "1px",
+            position: "absolute",
+          }}
+        >
+          Pay Now
+        </button>
+      </form>
 
       <div
         className="plan-main"
@@ -991,6 +775,7 @@ const Pricing = ({
                             <div className="plan-validity">Forever</div>
                           </>
                         )}
+                        {console.log("activePlan", activePlan)}
 
                         {item.plan_type_annual.length >= 1 && (
                           <>
@@ -1000,14 +785,12 @@ const Pricing = ({
                                   type="radio"
                                   name={`annual-${item._id}`}
                                   id={`annual-${item._id}`}
-                                  checked={
-                                    selectedPlan === `annual-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "annual",
-                                    `annual-${item._id}`,
-                                    item.planname
-                                  )}
+                                  checked={selectedPlan === `annual-${item._id}`}
+                                  onChange={(e) => {
+                                    if (!isPlanDisabled(item.planname, "annual")) {
+                                      handleRadioChange("annual", `annual-${item._id}`, item.planname)(e);
+                                    }
+                                  }}
                                   className={
                                     item.planname === "Pro (Popular)"
                                       ? "pro-checkbox"
@@ -1016,25 +799,33 @@ const Pricing = ({
                                 />
                                 <label
                                   htmlFor={`annual-${item._id}`}
-                                  className="annual"
+                                  className={`annual ${item.planname === activePlan && activePeriod === "annual"
+                                    ? "checked-label"
+                                    : ""
+                                    }`}
                                 >
                                   {item.period}
+                                  {item.planname === activePlan && activePeriod === "annual" && (
+                                    <i className="bi bi-check-circle-fill active-icon"></i>
+                                  )}
                                 </label>
+                                {isPlanDisabled(item.planname, "annual") && (
+                                  <div className="info-icon-wrapper">
+                                    <i
+                                      className="bi bi-info-circle-fill info-icon"
+                                      title="Cannot downgrade plan"
+                                    ></i>
+                                    <div className="tooltip">Cannot downgrade plan</div>
+                                  </div>
+                                )}
                               </div>
-                              <div className="per-value">
-                                {item.annualTotalAmount}
-                              </div>
+                              <div className="per-value">{item.annualTotalAmount}</div>
                             </div>
 
                             {item.plan_type_annual.map((plan, index) => (
                               <>
                                 <div key={index} className="plan-amounts">
-                                  {/* <div className="previous-value">
-                                    {plan.beforeValue}
-                                  </div> */}
-                                  <div className="per-value">
-                                    {plan.afterDiscount}
-                                  </div>
+                                  <div className="per-value">{plan.afterDiscount}</div>
                                 </div>
                                 <div className="border-bottom"></div>
                               </>
@@ -1046,14 +837,12 @@ const Pricing = ({
                                   type="radio"
                                   name={`monthly-${item._id}`}
                                   id={`monthly-${item._id}`}
-                                  checked={
-                                    selectedPlan === `monthly-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "monthly",
-                                    `monthly-${item._id}`,
-                                    item.planname
-                                  )}
+                                  checked={selectedPlan === `monthly-${item._id}`}
+                                  onChange={(e) => {
+                                    if (!isPlanDisabled(item.planname, "monthly")) {
+                                      handleRadioChange("monthly", `monthly-${item._id}`, item.planname)(e);
+                                    }
+                                  }}
                                   className={
                                     item.planname === "Pro (Popular)"
                                       ? "pro-checkbox"
@@ -1062,10 +851,25 @@ const Pricing = ({
                                 />
                                 <label
                                   htmlFor={`monthly-${item._id}`}
-                                  className="monthly"
+                                  className={`monthly ${item.planname === activePlan && activePeriod === "monthly"
+                                    ? "checked-label"
+                                    : ""
+                                    }`}
                                 >
                                   Monthly
+                                  {item.planname === activePlan && activePeriod === "monthly" && (
+                                    <i className="bi bi-check-circle-fill active-icon"></i>
+                                  )}
                                 </label>
+                                {isPlanDisabled(item.planname, "monthly") && (
+                                  <div className="info-icon-wrapper">
+                                    <i
+                                      className="bi bi-info-circle-fill info-icon"
+                                      title="Cannot downgrade plan"
+                                    ></i>
+                                    <div className="tooltip">Cannot downgrade plan</div>
+                                  </div>
+                                )}
                               </div>
                               {item.plan_type_monthly.map((plan, index) => (
                                 <div key={index} className="monthly-amount">
@@ -1128,7 +932,7 @@ const Pricing = ({
                 ? isMobile
                   ? "90vw"
                   : "60vw" // If isPlanForm is true, always 90vw
-                : "60vw", // If isPlanForm is false, always 60vw regardless of mobile or desktop
+                : "90vw", // If isPlanForm is false, always 60vw regardless of mobile or desktop
               maxWidth: "90vw", // Ensure the dialog does not exceed the viewport width
             },
           }}
@@ -1146,8 +950,7 @@ const Pricing = ({
               className="plan-content-text-popup pb-2"
               style={{ color: "#c2114b" }}
             >
-              (Please fill out the form below to gift a subscription to someone
-              special and support their creative journey).
+              {giftError}
             </p>
           </div>
 
@@ -1287,7 +1090,7 @@ const Pricing = ({
             {isPlanForm == true && (
               <>
                 <div className="plan-main">
-                  <div className="container">
+                  <div className="container mobile-plan-container">
                     {pricingList.length > 0 && (
                       <div className="plans-section">
                         <div className="row">
@@ -1458,6 +1261,7 @@ const Pricing = ({
               <>
                 <div>
                   <PaymentOptions
+                    onConfirm={handleFormSubmit}
                     paymentFrom={paymentFrom}
                     selectedCurrency={selectedCurrency}
                     selectedAmount={selectedAmount}
@@ -1466,6 +1270,15 @@ const Pricing = ({
                     setPaymentOption={setPaymentOption}
                     selectedPaymentPlan={selectedPaymentPlan}
                     selectedPaymentPeriod={selectedPaymentPeriod}
+                    giftSub={giftSub}
+                    senderName={senderName}
+                    email={email}
+                    recieversFirstName={recieversFirstName}
+                    recieverEmail={recieverEmail}
+                    appliedCouponCode={appliedCouponCode}
+                    success_url={success_url}
+                    setGiftError={setGiftError}
+                    userType={userType}
                   />
                 </div>
               </>
@@ -1488,6 +1301,7 @@ const Pricing = ({
       </React.Fragment>
       {paymentOptions && (
         <PaymentOptions
+          onConfirm={handleFormSubmit}
           paymentFrom={paymentFrom}
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}

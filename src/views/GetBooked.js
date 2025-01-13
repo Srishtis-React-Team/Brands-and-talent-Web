@@ -685,7 +685,7 @@ const GetBooked = () => {
                                 </div>
                               </div>
                               <div className="recent-gig-favorite">
-                                {!item?.isFavorite && (
+                                {!item?.isFavourite && (
                                   <i
                                     className="bi bi-heart save-job-icon"
                                     onClick={() => {
@@ -693,7 +693,7 @@ const GetBooked = () => {
                                     }}
                                   ></i>
                                 )}
-                                {item?.isFavorite && (
+                                {item?.isFavourite && (
                                   <i
                                     className="bi bi-heart-fill remove-job-icon"
                                     onClick={() => {

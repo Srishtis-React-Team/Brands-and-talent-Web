@@ -6,6 +6,7 @@ import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
 import "../assets/css/createjobs.css";
 import "../assets/css/talent-profile.css";
+
 import {
   parsePhoneNumber,
   isValidPhoneNumber,
@@ -44,9 +45,12 @@ import useFieldDatas from "../config/useFieldDatas";
 import EditFeatures from "../pages/EditFeatures";
 import EditSocialMedias from "../pages/EditSocialMedias";
 import "material-icons/iconfont/material-icons.css";
+import { tr } from "date-fns/locale";
+
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
+ 
   return (
     <div
       role="tabpanel"
@@ -104,6 +108,7 @@ const EditTalent = () => {
   const [languages, setLanguages] = useState([]);
   const [nationality, setNationality] = useState("");
   const [mobileValidationError, setMobileValidationError] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [listOfLanguages, setListOfLanguages] = useState([]);
   const [listOfNationalities, setListOfNationalities] = useState([]);
@@ -341,13 +346,19 @@ const EditTalent = () => {
         }, 2000);
       }
     }
-
-    if (selectedCategories.length < 4) {
-      setCategoryError(true);
-    } else {
-      setCategoryError(false);
-    }
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log(selectedCategories, "selectedCategories");
+      console.log(selectedCategories.length, "selectedCategories.length");
+      if (selectedCategories.length === 0) {
+        setCategoryError(true);
+      } else {
+        setCategoryError(false);
+      }
+    }
+  }, [isSubmitted, selectedCategories]);
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
@@ -570,7 +581,6 @@ const EditTalent = () => {
                 );
               });
             setSelectedNationalityOptions(selectedNationalityOptions);
-
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -747,9 +757,10 @@ const EditTalent = () => {
   };
 
   const basicDetailsUpdate = async () => {
+    setIsSubmitted(true);
     setMyState(false);
     if (talentData?.type === "kids") {
-      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+      if (selectedCategories.length != 0 && selectedCategories.length <= 6) {
         const formData = {
           parentFirstName: parentFirstName,
           parentLastName: parentLastName,
@@ -807,7 +818,7 @@ const EditTalent = () => {
       }
     }
     if (talentData?.type === "adults") {
-      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+      if (selectedCategories.length !== 0 && selectedCategories.length <= 6) {
         let formData = {
           adultLegalFirstName: parentFirstName,
           adultLegalLastName: parentLastName,
@@ -1582,19 +1593,23 @@ const EditTalent = () => {
       });
   };
 
+  const viewIndex = async (index) => {
+    alert(index);
+  };
   const deleteServiceFile = async () => {
+    console.log(alertpop, "alertpop_deleteServiceFile");
     const formData = {
       talentId: talentData?._id,
       serviceUniqueId: alertpop?.eachService?.uniqueId,
       fileId: alertpop?.item?.id,
     };
+    console.log(formData, "formData");
     await ApiHelper.post(`${API.deleteService}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
           scrollToTop();
-
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1628,7 +1643,36 @@ const EditTalent = () => {
     ]);
   };
 
+  const [serviceNameError, setServiceNameError] = useState(false);
+  const [serviceAmountError, setServiceAmountError] = useState(false);
+
   const submitServices = async () => {
+    let hasError = false;
+
+    services.forEach((service, index) => {
+      if (!service.serviceName.trim()) {
+        setServiceNameError(true);
+        hasError = true;
+      } else {
+        setServiceNameError(false);
+      }
+      if (!service.serviceAmount.trim()) {
+        setServiceAmountError(true);
+        hasError = true;
+      } else {
+        setServiceAmountError(false);
+      }
+    });
+
+    if (hasError) {
+      setMessage("Please fill in all required fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+      return;
+    }
+
     let formData = {
       services: services,
     };
@@ -1644,7 +1688,6 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Services Updated Successfully");
           scrollToTop();
-
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -2246,16 +2289,20 @@ const EditTalent = () => {
 
   const serviceFileOpen = Boolean(serviceFileAnchor);
   const [selectedServiceItem, setSelectedServiceItem] = useState(null); // Track the selected item
+  const [selectedServiceObject, setSelectedServiceObject] = useState(null);
 
   // Single function to handle menu open
-  const handleServiceFileClickClick = (event, item) => {
+  const handleServiceFileClickClick = (event, item, eachService) => {
+    console.log(item, "itemhandleServiceFileClickClick");
     setServiceFileAnchor(event.currentTarget);
     setSelectedServiceItem(item); // Set the selected item
+    setSelectedServiceObject(eachService);
   };
 
-  const handleServiceFileClose = () => {
+  const handleServiceFileClose = (item, eachService) => {
     setServiceFileAnchor(null);
-    setSelectedServiceItem(null); // Reset the selected item when closing the menu
+    setSelectedServiceItem(item); // Reset the selected item when closing the menu
+    setSelectedServiceObject(eachService);
   };
   ////////////////////////////////////////////////////////////////////////////
 
@@ -2284,6 +2331,12 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(checkAudioUrl, "checkAudioUrl");
   }, [checkAudioUrl]);
+  useEffect(() => {
+    console.log(selectedServiceItem, "selectedServiceItem");
+  }, [selectedServiceItem]);
+  useEffect(() => {
+    console.log(selectedServiceObject, "selectedServiceObject");
+  }, [selectedServiceObject]);
 
   return (
     <>
@@ -3047,7 +3100,7 @@ const EditTalent = () => {
                   </div>
                 </div>
                 <div className="kids-form-title">
-                  Select 3 to 6 categories relevant to your profile
+                  Select 1 to 6 categories relevant to your profile
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">
@@ -3076,11 +3129,11 @@ const EditTalent = () => {
                 {/* {categoryError && (
                   <div className="invalid-fields">Please choose Categories</div>
                 )} */}
-                {(selectedCategories?.length < 3 ||
+                {(selectedCategories?.length == 0 ||
                   selectedCategories?.length > 6) &&
                   categoryError && (
                     <div className="invalid-fields">
-                      Please select 3 to 6 categories relevant to your profile
+                      Please select 1 to 6 categories relevant to your profile
                     </div>
                   )}
                 <div className="row">
@@ -3175,9 +3228,9 @@ const EditTalent = () => {
 
                   {talentData?.portfolio?.length === 0 && (
                     <>
-                      <div className="update-portfolio-label">
+                      {/* <div className="update-portfolio-label">
                         Add Your work samples here
-                      </div>
+                      </div> */}
 
                       {/* <div className="no-data">Please Add Files</div> */}
                     </>
@@ -3229,7 +3282,7 @@ const EditTalent = () => {
                                         </MenuItem>
                                         <MenuItem
                                           onClick={() => {
-                                            dropDownClose();
+                                            handlePortfolioClose();
                                             setAlertpop({
                                               status: true,
                                               item: selectedPortfolioItem,
@@ -3515,7 +3568,7 @@ const EditTalent = () => {
                                         </MenuItem>
                                         <MenuItem
                                           onClick={() => {
-                                            dropDownClose();
+                                            handleClose();
                                             deleteVideoUrls(item, index);
                                           }}
                                         >
@@ -3595,14 +3648,20 @@ const EditTalent = () => {
                                       className="form-control"
                                       placeholder="Custom Photoshoot"
                                       value={eachService.serviceName}
-                                      onChange={(e) =>
+                                      onChange={(e) => {
                                         handleInputChange(
                                           servicesIndex,
                                           "serviceName",
                                           e.target.value
-                                        )
-                                      }
+                                        );
+                                        setServiceNameError(false);
+                                      }}
                                     ></input>
+                                    {serviceNameError && (
+                                      <div className="invalid-fields">
+                                        Please enter service name
+                                      </div>
+                                    )}
                                   </div>
                                   <div className="kids-form-section col-md-6 mb-3">
                                     <label className="form-label">
@@ -3615,21 +3674,26 @@ const EditTalent = () => {
                                       className="form-control"
                                       placeholder="$200 per hour (negotiable)"
                                       value={eachService.serviceAmount}
-                                      onChange={(e) =>
+                                      onChange={(e) => {
                                         handleInputChange(
                                           servicesIndex,
                                           "serviceAmount",
                                           e.target.value
-                                        )
-                                      }
+                                        );
+                                        setServiceAmountError(false);
+                                      }}
                                     ></input>
+                                    {serviceAmountError && (
+                                      <div className="invalid-fields">
+                                        Please enter service amount
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                                 <div className="row">
                                   <div className="kids-form-section col-md-6 mb-2">
                                     <label className="form-label">
                                       Short Description
-                                      <span className="mandatory">*</span>
                                     </label>
                                     <RichTextEditor
                                       from={"service"}
@@ -3716,93 +3780,128 @@ const EditTalent = () => {
                                       <div className="col-md-6">
                                         <div>
                                           {eachService?.files?.length > 0 &&
-                                            eachService?.files?.map((item) => {
-                                              return (
-                                                <>
-                                                  <div className="update-portfolio-cards">
-                                                    <div className="update-portfolio-icon">
-                                                      <div className="file-section">
-                                                        {item.type ===
-                                                          "audio" && (
-                                                          <div className="fileType">
-                                                            <i className="bi bi-mic-fill"></i>
+                                            eachService?.files?.map(
+                                              (item, index) => {
+                                                return (
+                                                  <>
+                                                    <div className="update-portfolio-cards">
+                                                      <div className="update-portfolio-icon">
+                                                        <div className="file-section">
+                                                          {item.type ===
+                                                            "audio" && (
+                                                            <div className="fileType">
+                                                              <i className="bi bi-mic-fill"></i>
+                                                            </div>
+                                                          )}
+                                                          {item.type ===
+                                                            "video" && (
+                                                            <div className="fileType">
+                                                              <i className="bi bi-play-circle-fill"></i>
+                                                            </div>
+                                                          )}
+                                                          {item.type ===
+                                                            "document" && (
+                                                            <div className="fileType">
+                                                              <i className="bi bi-file-earmark-richtext"></i>
+                                                            </div>
+                                                          )}
+                                                          <div className="update-portfolio-fileName pl-0">
+                                                            {item.title}
                                                           </div>
-                                                        )}
-                                                        {item.type ===
-                                                          "video" && (
-                                                          <div className="fileType">
-                                                            <i className="bi bi-play-circle-fill"></i>
-                                                          </div>
-                                                        )}
-                                                        {item.type ===
-                                                          "document" && (
-                                                          <div className="fileType">
-                                                            <i className="bi bi-file-earmark-richtext"></i>
-                                                          </div>
-                                                        )}
-                                                        <div className="update-portfolio-fileName pl-0">
-                                                          {item.title}
-                                                        </div>
 
-                                                        <div className="ml-2">
-                                                          <IconButton
-                                                            aria-label="more"
-                                                            aria-controls={`dropdown-menu-${servicesIndex}`}
-                                                            aria-haspopup="true"
-                                                            onClick={(event) =>
-                                                              handleServiceFileClickClick(
-                                                                event,
-                                                                item
-                                                              )
-                                                            }
-                                                          >
-                                                            <MoreVertIcon />
-                                                          </IconButton>
-                                                          <Menu
-                                                            id={`dropdown-menu-${servicesIndex}`} // Use unique ID
-                                                            anchorEl={
-                                                              serviceFileAnchor
-                                                            } // Correct prop name
-                                                            open={
-                                                              serviceFileOpen
-                                                            } // Control visibility
-                                                            onClose={
-                                                              handleServiceFileClose
-                                                            }
-                                                          >
-                                                            <MenuItem
-                                                              onClick={() => {
-                                                                handleServiceFileClose();
-                                                                viewUpdateFile(
-                                                                  selectedServiceItem
-                                                                ); // Use selected item
+                                                          <div className="ml-2">
+                                                            <IconButton
+                                                              aria-label="more"
+                                                              aria-controls={`dropdown-menu-${servicesIndex}`}
+                                                              aria-haspopup="true"
+                                                              onClick={(
+                                                                event
+                                                              ) =>
+                                                                handleServiceFileClickClick(
+                                                                  event,
+                                                                  item,
+                                                                  eachService
+                                                                )
+                                                              }
+                                                            >
+                                                              <MoreVertIcon />
+                                                            </IconButton>
+                                                            <Menu
+                                                              id={`dropdown-menu-${servicesIndex}`} // Use unique ID
+                                                              anchorEl={
+                                                                serviceFileAnchor
+                                                              } // Correct prop name
+                                                              open={
+                                                                serviceFileOpen
+                                                              } // Control visibility
+                                                              onClose={() => {
+                                                                handleServiceFileClose(
+                                                                  selectedServiceItem,
+                                                                  selectedServiceObject
+                                                                );
                                                               }}
                                                             >
-                                                              View
-                                                            </MenuItem>
-                                                            <MenuItem
-                                                              onClick={(e) => {
-                                                                dropDownClose();
-                                                                setAlertpop({
-                                                                  status: true,
-                                                                  item: item,
-                                                                  label:
-                                                                    "delete-service",
-                                                                  eachService:
-                                                                    eachService,
-                                                                });
-                                                              }}
-                                                            >
-                                                              Delete
-                                                            </MenuItem>
-                                                          </Menu>
+                                                              <MenuItem
+                                                                onClick={() => {
+                                                                  {
+                                                                    handleServiceFileClose(
+                                                                      selectedServiceItem,
+                                                                      selectedServiceObject
+                                                                    );
+                                                                  }
+                                                                  viewUpdateFile(
+                                                                    selectedServiceItem
+                                                                  ); // Use selected item
+                                                                }}
+                                                              >
+                                                                View
+                                                              </MenuItem>
+                                                              <MenuItem
+                                                                onClick={(
+                                                                  e
+                                                                ) => {
+                                                                  {
+                                                                    handleServiceFileClose(
+                                                                      selectedServiceItem,
+                                                                      selectedServiceObject
+                                                                    );
+                                                                  }
+                                                                  setAlertpop({
+                                                                    status: true,
+                                                                    item: selectedServiceItem,
+                                                                    label:
+                                                                      "delete-service",
+                                                                    eachService:
+                                                                      selectedServiceObject,
+                                                                  });
+                                                                }}
+
+                                                                // onClick={(
+                                                                //   e
+                                                                // ) => {
+                                                                //   {
+                                                                //     handleServiceFileClose(
+                                                                //       selectedServiceItem,
+                                                                //       selectedServiceObject
+                                                                //     );
+                                                                //   }
+                                                                //   deleteServiceFile(
+                                                                //     selectedServiceItem,
+                                                                //     selectedServiceObject
+                                                                //   );
+                                                                // }}
+                                                              >
+                                                                Delete
+                                                              </MenuItem>
+                                                            </Menu>
+                                                          </div>
                                                         </div>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                                </>
-                                              );
-                                            })}
+                                                  </>
+                                                );
+                                              }
+                                            )}
                                         </div>
 
                                         <div className="add-service-section">
@@ -3833,7 +3932,7 @@ const EditTalent = () => {
                                                 variant="text"
                                               >
                                                 <i className="bi bi-plus-circle-fill"></i>{" "}
-                                                Add Files
+                                                Attach Sample
                                               </div>
                                             </div>
                                           </div>
@@ -3969,7 +4068,7 @@ const EditTalent = () => {
                                       </MenuItem>
                                       <MenuItem
                                         onClick={(e) => {
-                                          dropDownClose();
+                                          handleCVFileClose(index);
                                           setAlertpop({
                                             status: true,
                                             item: selectedCV,

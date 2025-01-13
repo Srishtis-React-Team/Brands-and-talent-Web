@@ -17,26 +17,12 @@ const BrandHome = () => {
   const girl1 = require("../../assets/images/girl1.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [mobileSideBar, setMobileSidebar] = useState(true);
-  const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
   const [myState, setMyState] = useState(false);
 
   const headsetLogo = require("../../assets/icons/headset.png");
-  const getTalentList = async () => {
-    await ApiHelper.get(API.getTalentList)
-      .then((resData) => {
-        if (resData) {
-          setTalentList(resData.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
-
-  const callList = () => {
-    getTalentList();
-  };
 
   useEffect(() => {
     if (brandId) {
@@ -60,7 +46,7 @@ const BrandHome = () => {
   useEffect(() => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
-    const name = pathParts[pathParts.length - 1];
+    const name = pathParts[pathParts?.length - 1];
     getDataByPublicUrl(name);
   }, [location]);
 
@@ -114,12 +100,7 @@ const BrandHome = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    getTalentList();
-  }, []);
-
   useEffect(() => {}, [jobsList]);
-  useEffect(() => {}, [talentList]);
 
   function PreviewJob(jobId) {
     navigate("/preview-job", {
@@ -190,7 +171,7 @@ const BrandHome = () => {
       >
         <div className="brand-content-main my-2">
           <div className="brand-home-main row">
-            <div className="brand-home-left-container col-md-8 col-lg-9">
+            <div className="brand-home-left-container col-md-8 col-lg-8">
               <div className="brand-home-one">
                 <div className="row">
                   <div className="col-md-8 col-lg-9">
@@ -228,10 +209,7 @@ const BrandHome = () => {
               <div className="photos-slider">
                 <div className="row">
                   <div className="col-lg-12">
-                    <Talentscarousel
-                      talentList={talentList}
-                      callList={callList}
-                    />
+                    <Talentscarousel />
                   </div>
                 </div>
                 {/* <TalentsSlider talentList={talentList} /> */}
@@ -382,7 +360,7 @@ const BrandHome = () => {
               )}
             </div>
 
-            <div className="brand-home-right-container col-md-4 col-lg-3">
+            <div className="brand-home-right-container col-md-4 col-lg-4">
               <div className="contact-section-main">
                 <div className="contact-wrapper">
                   <div className="contact-logo">
@@ -405,7 +383,7 @@ const BrandHome = () => {
                 <div className="my-plan-contents">
                   <p className="my-plan">My Plan</p>
                   <div className="my-plan-features scroll">
-                    {filteresPricingList && filteresPricingList.length > 0 && (
+                    {filteresPricingList && filteresPricingList?.length > 0 && (
                       <>
                         {filteresPricingList?.map((item, index) => {
                           return (

@@ -173,13 +173,13 @@ const Register = () => {
 
   useEffect(() => {
     if (routeData?.signupCategory == "kids") {
-      navigate(`/talent-signup-basic-details`);
+      navigate(`/talent-kids-teen-signup-basic-details`);
       // setKidsStep(1);
     } else if (routeData?.signupCategory == "brand") {
       navigate(`/brand-firstGig`);
     } else if (routeData?.signupCategory == "adults") {
       // setAdultsStep(1);
-      navigate(`/adult-signup`);
+      navigate(`/talent-signup`);
     }
   }, []);
 

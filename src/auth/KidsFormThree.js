@@ -97,7 +97,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
-  const [aboutYou, setAboutYou] = useState([]);
+  const [aboutYou, setAboutYou] = useState("");
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -166,9 +166,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   // };
 
   useEffect(() => {
-    if (profileFile === null || portofolioFile.length === 0) {
+    if (profileFile === null || portofolioFile?.length === 0) {
       setUpdateDisabled(true);
-    } else if (profileFile !== null || portofolioFile.length !== 0) {
+    } else if (profileFile !== null || portofolioFile?.length !== 0) {
       setUpdateDisabled(false);
     }
   }, [profileFile, portofolioFile]);
@@ -201,7 +201,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       (file) => !file.type.startsWith("image/")
     );
 
-    if (nonImageFiles.length > 0) {
+    if (nonImageFiles?.length > 0) {
       setMessage("You can only upload images");
       setOpenPopUp(true);
       setTimeout(() => {
@@ -231,7 +231,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       (file) => !isDocumentFile(file.type)
     );
 
-    if (nonDocumentFiles.length > 0) {
+    if (nonDocumentFiles?.length > 0) {
       setMessage("You may upload only PDF and Word documents");
       setOpenPopUp(true);
       setTimeout(() => {
@@ -264,7 +264,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         }
 
         // Check if adding the new URL exceeds the limit
-        if (urls.length >= maxUrls) {
+        if (urls?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
             upgradeMessage = "Upgrade to Pro to add more URLs.";
@@ -327,7 +327,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         }
 
         // Check if adding the new URL exceeds the limit
-        if (audioUrlsList.length >= maxUrls) {
+        if (audioUrlsList?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
             upgradeMessage = "Upgrade to Pro to add more URLs.";
@@ -530,7 +530,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event?.target?.files?.length > 0) {
       const filesArray = Array.from(event.target.files);
       const imageFiles = filesArray.filter((file) =>
         file.type.startsWith("image/")
@@ -539,7 +539,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         (file) => !file.type.startsWith("image/")
       );
       // Check for non-image files
-      if (nonImageFiles.length > 0) {
+      if (nonImageFiles?.length > 0) {
         setMessage("You can only upload images");
         setOpenPopUp(true);
         setTimeout(() => {
@@ -557,7 +557,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         maxFiles = Infinity; // Unlimited
       }
       // Check if the current count plus new uploads exceeds the limit
-      if (portofolioFile.length + imageFiles.length > maxFiles) {
+      if (portofolioFile?.length + imageFiles?.length > maxFiles) {
         let upgradeMessage;
         if (talentData?.planName === "Basic") {
           upgradeMessage = "Upgrade to Pro to add more files.";
@@ -584,7 +584,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const resumeUpload = (event) => {
     if (talentData?.planName != "Basic") {
-      if (event.target.files && event.target.files.length > 0) {
+      if (event?.target?.files && event?.target?.files?.length > 0) {
         const filesArray = Array.from(event.target.files);
         const documentFiles = filesArray.filter((file) =>
           isDocumentFile(file.type)
@@ -592,7 +592,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         const nonDocumentFiles = filesArray.filter(
           (file) => !isDocumentFile(file.type)
         );
-        if (nonDocumentFiles.length > 0) {
+        if (nonDocumentFiles?.length > 0) {
           setMessage("You may upload only PDF and Word documents");
           setOpenPopUp(true);
           setTimeout(() => {
@@ -840,7 +840,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   // };
 
   const handlePortofolioDelete = (index) => {
-    alert(index);
     setPortofolioFile((prevImages) => {
       // Filter out the item at the specified index
       const updatedImages = prevImages.filter((_, i) => i !== index);
@@ -953,7 +952,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           setTimeout(function () {
             setOpenPopUp(false);
             if (talentData?.planName !== "Basic") {
-              navigate(`/talent-signup-service-details?userId=${userId}`);
+              navigate(
+                `/talent-kids-teen-signup-service-details?userId=${userId}`
+              );
             } else {
               directKidsLogin(resData);
             }
@@ -1030,7 +1031,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         </div>
         <div className="dialog-body spaceTops">
           <div className="kidsform-one container">
-            <div className="kids-wrapper row">
+            <div className="kids-wrapper row kids-form-three-wrapper">
               <div className="kids-img col-md-4 col-lg-3">
                 <div className="fixImgs">
                   <img src={kidsImage} className="kids-image-sticky" alt="" />

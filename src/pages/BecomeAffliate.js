@@ -12,6 +12,7 @@ const BecomeAffliate = () => {
   const navigate = useNavigate();
 
   const [aboutusList, setAboutusList] = useState([]);
+  const [affiliateData, setaffiliateData] = useState("");
 
   useEffect(() => {
     fetchContentByType();
@@ -25,6 +26,7 @@ const BecomeAffliate = () => {
       .then((resData) => {
         if (resData) {
           setAboutusList(resData?.data?.data?.items);
+          setaffiliateData(resData?.data?.data?.items[0].description[0])
         }
       })
       .catch((err) => {});
@@ -53,11 +55,11 @@ const BecomeAffliate = () => {
 
               {/* <h2 className="maintitles">Become an Affiliate</h2> */}
               <div className="widthParg mb-3">
-                <p
-                  className="descp m-0">
-                    If you’re passionate about the creator industry and want to contribute your time by collaborating with us, we’d love to hear from you! As an affiliate, you’ll have the opportunity to play a key role in connecting talent with brands globally and helping creators thrive. <br/><br/>
-                    Email your CV to <strong><a href="mailto:brandsntalent@gmail.com">brandsntalent@gmail.com</a></strong> and let’s explore how we can work together to grow the future of the creator economy.
-                  </p>
+              <div
+                  dangerouslySetInnerHTML={{ __html: affiliateData }}
+                />
+
+              
               </div>
             </div>
 

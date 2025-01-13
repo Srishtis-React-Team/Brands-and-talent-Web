@@ -58,6 +58,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   let queryString = url.split("?")[1];
 
+  console.log(queryString, "queryString");
+
   const userId = urlParams.get("userId");
   const [talentData, setTalentData] = useState();
 
@@ -95,7 +97,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
-  const [aboutYou, setAboutYou] = useState([]);
+  const [aboutYou, setAboutYou] = useState("");
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -120,9 +122,9 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   const kidsImage = require("../../assets/images/kidsImage.png");
 
   useEffect(() => {
-    if (profileFile === null || portofolioFile.length === 0) {
+    if (profileFile === null || portofolioFile?.length === 0) {
       setUpdateDisabled(true);
-    } else if (profileFile !== null || portofolioFile.length !== 0) {
+    } else if (profileFile !== null || portofolioFile?.length !== 0) {
       setUpdateDisabled(false);
     }
   }, [profileFile, portofolioFile]);
@@ -155,7 +157,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
       (file) => !file.type.startsWith("image/")
     );
 
-    if (nonImageFiles.length > 0) {
+    if (nonImageFiles?.length > 0) {
       setMessage("You can only upload images");
       setOpenPopUp(true);
       setTimeout(() => {
@@ -189,7 +191,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
       (file) => !isDocumentFile(file.type)
     );
 
-    if (nonDocumentFiles.length > 0) {
+    if (nonDocumentFiles?.length > 0) {
       setMessage("You may upload only PDF and Word documents");
       setOpenPopUp(true);
       setTimeout(() => {
@@ -222,7 +224,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         }
 
         // Check if adding the new URL exceeds the limit
-        if (urls.length >= maxUrls) {
+        if (urls?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
             upgradeMessage = "Upgrade to Pro to add more URLs.";
@@ -284,7 +286,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         }
 
         // Check if adding the new URL exceeds the limit
-        if (audioUrlsList.length >= maxUrls) {
+        if (audioUrlsList?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
             upgradeMessage = "Upgrade to Pro to add more URLs.";
@@ -488,7 +490,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
+    if (event?.target?.files && event?.target?.files?.length > 0) {
       const filesArray = Array.from(event.target.files);
       const imageFiles = filesArray.filter((file) =>
         file.type.startsWith("image/")
@@ -497,7 +499,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         (file) => !file.type.startsWith("image/")
       );
       // Check for non-image files
-      if (nonImageFiles.length > 0) {
+      if (nonImageFiles?.length > 0) {
         setMessage("You can only upload images");
         setOpenPopUp(true);
         setTimeout(() => {
@@ -517,7 +519,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
       }
 
       // Check if the current count plus new uploads exceeds the limit
-      if (portofolioFile.length + imageFiles.length > maxFiles) {
+      if (portofolioFile?.length + imageFiles?.length > maxFiles) {
         let upgradeMessage;
         if (talentData?.planName === "Basic") {
           upgradeMessage = "Upgrade to Pro to add more files.";
@@ -543,7 +545,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   const resumeUpload = (event) => {
     if (talentData?.planName != "Basic") {
-      if (event.target.files && event.target.files.length > 0) {
+      if (event?.target?.files && event?.target?.files?.length > 0) {
         const filesArray = Array.from(event.target.files);
         const documentFiles = filesArray.filter((file) =>
           isDocumentFile(file.type)
@@ -551,7 +553,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         const nonDocumentFiles = filesArray.filter(
           (file) => !isDocumentFile(file.type)
         );
-        if (nonDocumentFiles.length > 0) {
+        if (nonDocumentFiles?.length > 0) {
           setMessage("You may upload only PDF and Word documents");
           setOpenPopUp(true);
           setTimeout(() => {
@@ -770,6 +772,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleView = (item) => {
+  
     let viewImage = `${API.userFilePath}${item.fileData}`;
     window.open(viewImage, "_blank");
   };
@@ -887,7 +890,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const updateAdultSignup = async () => {
-    // navigate(`/talent-signup-files-success`);
+    // navigate(`/talent-kids-teen-signup-files-success`);
     const formData = {
       image: profileFile,
       cv: resumeFile,
@@ -915,7 +918,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                 state: { talentData: talentData },
               });
             } else {
-              navigate(`/adult-signup-service-details?${queryString}`);
+              navigate(`/talent-signup-service-details?${queryString}`);
             }
           }, 1000);
         } else {
@@ -962,6 +965,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   return (
     <>
+    
       <div className="form-dialog">
         <div className="header-wrapper">
           <div className="step-wrapper">
@@ -1027,7 +1031,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
                   {profileFile && (
                     <>
-                      <div className="uploaded-file-wrapper">
+                      <div className="uploaded-file-wrapper ">
                         <div className="file-section">
                           {profileFile.type === "image" && (
                             <div className="fileType">
@@ -1612,7 +1616,10 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                       {verificationID.map((item, index) => {
                         return (
                           <>
-                            <div key={index} className="uploaded-file-wrapper">
+                            <div
+                              key={index}
+                              className="uploaded-file-wrapper id-upload"
+                            >
                               <div className="file-section">
                                 {item.type === "image" && (
                                   <div className="fileType">

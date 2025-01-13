@@ -162,27 +162,38 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
       } else if (menuItem === "dashboard") {
         navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
-        if (talentData?.adminApproved === true) {
-          navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
-        } else {
-          setMessage(
-            "After your verification is approved, you can update your profile"
-          );
+        if (talentData?.accountBlock == false) {
+          if (talentData?.adminApproved === true) {
+            navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+          } else {
+            setMessage(
+              "After your verification is approved, you can update your profile"
+            );
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 2000);
+          }
+        } else if (talentData?.accountBlock == true) {
+          setMessage("Please upgrade your plan to access your profile");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-          }, 2000);
+            navigate(`/pricing`);
+          }, 3000);
         }
-      } else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
-        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/pricing");
-        }, 3000);
-      } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
+      }
+      // else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
+      //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //     navigate("/pricing");
+      //   }, 3000);
+      // }
+      else if (menuItem == "find-talent") {
         setActiveMenu(menuItem); // Update the active menu item
-        navigate("/find-creators");
+        navigate("/find-talent");
       }
     };
   };
@@ -303,406 +314,6 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleLabelClick = (route) => {
-    if (route === "/find-creators") {
-      if (!currentUserId || currentUser_type != "brand") {
-        // window.open(
-        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        //   "_blank"
-        // );
-        handleClose();
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/logi n");
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/talent") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/pricing") {
-      // window.open(
-      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      //   "_blank"
-      // );
-      navigate(route);
-    } else if (route === "/resources") {
-      // navigate(route);
-      navigate("/about-us");
-    } else if (route === "/signup") {
-      navigate(route);
-    } else if (route === "/about-us") {
-      navigate(route);
-    } else if (route === "/community-guidelines") {
-      navigate(route);
-    } else if (route === "/blogs") {
-      navigate(route);
-    } else if (route === "/post-job") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-        // window.open(
-        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        //   "_blank"
-        // );
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/how-it-works") {
-      navigate(route);
-    } else if (route === "/login") {
-      navigate(route);
-      // window.open(
-      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      //   "_blank"
-      // );
-    } else if (route === "/talent-dashboard") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/brand") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/list-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/applied-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/saved-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/create-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/find-talents") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-        // window.open(
-        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        //   "_blank"
-        // );
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/favorite-talents") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        //   setMessage("You must be logged in");
-        //   setOpenPopUp(true);
-        //   setTimeout(function() {
-        //     setOpenPopUp(false);
-        //     navigate("/login");
-        //   }, 1000);
-        // } else {
-        //   navigate(route);
-      }
-    } else if (route === "/brand-help") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/applicants") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/edit-talent-profile") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/edit-brand-profile") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/talent-notification") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/talent-settings") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/brand-settings") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/talent-home") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/talent-help") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/brand-notification") {
-      if (!currentUserId || currentUser_type == "talent") {
-        handleClose();
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    } else if (route === "/get-booked") {
-      if (!currentUserId || currentUser_type == "brand") {
-        handleClose();
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
-      } else {
-        navigate(route);
-      }
-    }
-    if (route == "/talent-signup") {
-      handleClose();
-      handleRegister();
-    }
-    if (route == "/brand-firstGig") {
-      navigate(route);
-    }
-  };
-
   const handleRegister = () => {
     if (brand === true) {
       navigate("/signup", {
@@ -715,24 +326,6 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
       }, 800);
     }
   };
-
-  const conditionalNavigate = () => {
-    // window.open(
-    //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-    //   "_blank"
-    // );
-  };
-
-  const filteredOptions = Array.from(
-    new Set(
-      searchPathOptions
-        .filter(
-          (option) =>
-            option.label.toLowerCase().includes(searchTerm.toLowerCase()) // Changed startsWith to includes for partial matching
-        )
-        .map((option) => option.label)
-    )
-  ).map((label) => searchPathOptions.find((option) => option.label === label));
 
   useEffect(() => {}, [talentData, brandData]);
   const isLoginPage = location.pathname.includes("/login");
@@ -911,6 +504,13 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                         <div className="navTxt">
                           <NavLink to="/talent-settings">Settings</NavLink>
                         </div>
+
+                        {/* {talentData?.planName !== "Premium" && (
+                          <Link to="/pricing">
+                            <div className="upgrade-btn mt-2">Upgrade Now</div>
+                          </Link>
+                        )} */}
+
                         {/* <div className="navTxt">
                           <NavLink to="/pricing">Pricing</NavLink>
                         </div> */}
@@ -937,179 +537,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                       <SearchHeaderComponent />
                     </div>
                   </React.Fragment>
-                  <div className="mobile-search">
-                    <form className="d-flex" role="search">
-                      <input
-                        className="form-control me-2"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                      ></input>
-                    </form>
-                    {searchTerm && (
-                      <>
-                        <div className="search-path-options">
-                          {searchTerm &&
-                            filteredOptions.map((option) => (
-                              <>
-                                <div
-                                  className="search-path-wrapper"
-                                  onClick={() =>
-                                    handleLabelClick(option.routes)
-                                  }
-                                >
-                                  <i className="fas fa-search search-path-icon"></i>
-                                  <div
-                                    className="search-path-labels"
-                                    key={option.routes}
-                                  >
-                                    {option.label}
-                                  </div>
-                                </div>
-                              </>
-                            ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
                 </div>
-                {/* <div
-                        className="offcanvas offcanvas-top search-canvas-top"
-                        tabIndex="-1"
-                        id="offcanvasTop"
-                        aria-labelledby="offcanvasTopLabel"
-                      >
-                        <div className="offcanvas-header">
-                          <h5 id="offcanvasTopLabel">Search Anything</h5>
-                          <button
-                            type="button"
-                            className="btn-close text-reset"
-                            data-bs-dismiss="offcanvas"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div className="offcanvas-body">
-                          <form className="d-flex search-bootstrap">
-                            <input
-                              className="form-control me-2"
-                              type="search"
-                              placeholder="Search"
-                              aria-label="Search"
-                            ></input>
-                            <button
-                              className="btn btn-outline-success search-bootstrap-btn"
-                              type="submit"
-                            >
-                              Search
-                            </button>
-                          </form>
-                        </div>
-                      </div> */}
-
-                {/* <div className="notification-bell-wrapper">
-                        <div className="notification_wrap">
-                          <div className="notification_icon ">
-                            <i className="bi bi-bell"></i>
-                          </div>
-                          <div className="notification-dropdown">
-                            <div className=" notification-header">
-                              <div className="notification-message-text">Notifications</div>
-                              <div>
-                                <i className="fas fa-close notification-close"></i>
-                              </div>
-                            </div>
-                            {notificationList &&
-                              notificationList.length > 0 &&
-                              notificationList.map((item, index) => (
-                                <div
-                                  className="notify_item"
-                                  key={index}
-                                  onClick={(e) => {
-                                    gotomessage(item);
-                                  }}
-                                >
-                                  <div className="notify_img">
-                                    {item?.talentDetails?.image &&
-                                      item.talentDetails.image[0]?.fileData && (
-                                        <img
-                                          className="notification-user-image"
-                                          src={`${API.userFilePath}${item.talentDetails?.image[0]?.fileData}`}
-                                          alt="profile_pic"
-                                        />
-                                      )}
-                                  </div>
-                                  <div className="notify_info">
-                                    <p>You Applied for {item?.gigDetails?.jobTitle}</p>
-                                    <span className="notify_time">Just now</span>
-                                  </div>
-                                </div>
-                              ))}
-
-                            {notificationList.length === 0 && (
-                              <>
-                                <div className="notify_item">
-                                  No Notifications Available
-                                </div>
-                              </>
-                            )} */}
-
-                {/* <div className="notify_item">
-                              <div className="notify_img">
-                                <img
-                                  className="notification-user-image"
-                                  src={model1}
-                                  alt="profile_pic"
-                                ></img>
-                              </div>
-                              <div className="notify_info">
-                                <p>Alex Send a message</p>
-                                <span className="notify_time">55 minutes ago</span>
-                              </div>
-                            </div>
-                            <div className="notify_item">
-                              <div className="notify_img">
-                                <img
-                                  className="notification-user-image"
-                                  src={model1}
-                                  alt="profile_pic"
-                                ></img>
-                              </div>
-                              <div className="notify_info">
-                                <p>Alex Send a message</p>
-                                <span className="notify_time">2 hours ago</span>
-                              </div>
-                            </div>
-                            <div className="notify_item">
-                              <div className="notify_img">
-                                <img
-                                  className="notification-user-image"
-                                  src={model1}
-                                  alt="profile_pic"
-                                ></img>
-                              </div>
-                              <div className="notify_info">
-                                <p>Alex Send a message</p>
-                                <span className="notify_time">6 hours ago</span>
-                              </div>
-                            </div> */}
-                {/* </div>
-                        </div>
-                      </div> */}
-
-                {/* <div className="talent-chat-icon">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            className="bi bi-chat"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105" />
-                          </svg>
-                        </div> */}
 
                 <Dropdown>
                   <MenuButton>

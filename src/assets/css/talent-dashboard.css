@@ -617,7 +617,7 @@
   cursor: pointer;
 }
 .add-more-services {
-  padding: 10px 0;
+  padding: 10px 0 60px 0px;
 }
 .add-more-services .add-more-services-btn {
   padding: 10px 15px;
@@ -788,7 +788,8 @@
   background-color: #eee;
 }
 
-.gallery-wrapper.modalSpc .galCont .logo-fill-briefcase, .gallery-wrapper.modalSpc .galCont .model-job-icons.location-icon {
+.gallery-wrapper.modalSpc .galCont .logo-fill-briefcase,
+.gallery-wrapper.modalSpc .galCont .model-job-icons.location-icon {
   float: left;
   width: 20px;
   min-width: 20px;
@@ -1298,6 +1299,13 @@
   overflow-x: hidden;
 }
 
+.job-features-li .pr-1{
+  padding-right: 1rem;
+}
+
+
+
+
 @media (max-width: 1200px) {
   .kidsform-one .kids-wrapper {
     margin: 25px 30px;
@@ -1308,7 +1316,16 @@
   }
   .adult-img-img.fixImgs {
     display: none;
+  } 
+  .userBox .campaigns-content-wrapper .recent-set-three {
+    margin: 0 0 10px;
+    display: flex;
+    justify-content: end;
+    width: 100%;
   }
+
+
+
 }
 @media (max-width: 991px) {
   .campaigns-content-wrapper .recent-set-three {
@@ -1441,26 +1458,7 @@
     padding-left: 10px;
   }
 }
-@media (max-width: 480px) {
-  .recent-setone.alignDivs .recent-img-div {
-    width: 40px;
-    height: 40px;
-  }
-  .recent-setone.alignDivs .recent-img-div img.recent-img {
-    min-height: 40px;
-    min-height: 40px;
-  }
-  .container-fluid
-    .row
-    .talent-column-one
-    .recent-gigs-main
-    .recent-gigs-wrapper
-    .recent-setone
-    .recent-gig-details
-    .recent-gig-name {
-    font-size: 16px;
-  }
-}
+
 @media (min-width: 481px) and (max-width: 768px) {
   .verification-section {
     display: flex;
@@ -1570,4 +1568,35 @@
   font-size: 16px;
   font-family: sans-serif;
   cursor: pointer;
+}
+
+.mobile-profile-details {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .mobile-profile-details {
+    display: block;
+    margin-bottom: 15px;
+  }
+  .recent-setone.alignDivs .recent-img-div {
+    width: 40px;
+    height: 40px;
+  }
+  .recent-setone.alignDivs .recent-img-div img.recent-img {
+    min-height: 40px;
+    min-height: 40px;
+  }
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-setone
+    .recent-gig-details
+    .recent-gig-name {
+    font-size: 16px;
+  }
+  .job-features-li .d-flex {  flex-direction: column; }
+
 }

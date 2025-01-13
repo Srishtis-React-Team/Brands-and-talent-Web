@@ -289,10 +289,38 @@ const BrandSettings = () => {
     setTalentOldPassword(e.target.value);
     setOldPasswordError(false);
   };
+
+  const [adultPasswordError, setAdultPasswordError] = useState(false);
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setAdultPasswordError("Password must be at least 8 characters long.");
+    } else if (
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      setAdultPasswordError(
+        "Your password must include at least 1 capital letter, 1 small letter, 1 number, and 1 special symbol."
+      );
+    } else {
+      setAdultPasswordError(""); // Clear the error if password meets the requirements
+    }
+  };
+
   const handlePasswordChange = (e) => {
     setTalentPassword(e.target.value);
     setPasswordMatch(e.target.value === talentConfirmPassword);
     settalentPasswordError(false);
+    validatePassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (e) => {
@@ -306,8 +334,13 @@ const BrandSettings = () => {
     }
   };
 
+ 
+  
+  
+
   const updatePassword = async () => {
-    if (!allSamePasswordError && passwordMatch) {
+ 
+    if (!allSamePasswordError && passwordMatch && !passwordStatus) {
       const formData = {
         brandId: brandId,
         password: oldPassword,
@@ -558,7 +591,7 @@ const BrandSettings = () => {
                     <div className="password_strength_box">
                       <div className="password_strength"></div>
                     </div>
-                    {talentPassword && !passwordStatus && (
+                    {talentPassword && adultPasswordError && (
                       <div className="invalid-fields password-error-box">
                         Your password must be at least 8 characters long and
                         include at least: 1 capital letter (A, B, C...), 1 small
@@ -700,9 +733,11 @@ const BrandSettings = () => {
             <CustomTabPanel value={valueTabs} index={2}>
               {/* Manage Account */}
               {console.log("brandDetails", brandDetails)}
-              <div style={containerStyle} className="cardHeight">
+              {/* <div style={containerStyle} className="cardHeight">
                 <div style={cardStyle}>
-                  <h2 className="hd-sett" style={headerStyle}>Transaction Details</h2>
+                  <h2 className="hd-sett" style={headerStyle}>
+                    Transaction Details
+                  </h2>
                   <div style={listStyle}>
                     <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Transaction Date:</div>
@@ -710,33 +745,198 @@ const BrandSettings = () => {
                         {brandDetails?.transactionDate}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Status:</div>
                       <div style={valueStyle}>
                         {brandDetails?.paymentStatus}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Currency:</div>
                       <div style={valueStyle}>
                         {brandDetails?.paymentCurreny}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Amount:</div>
                       <div style={valueStyle}>
                         {brandDetails?.paymentAmount}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Period:</div>
                       <div style={valueStyle}>{selectedPaymentPeriod}</div>
                     </div>
-                    <div  className="spd" style={lastDetailItemStyle}>
+                    <div className="spd" style={lastDetailItemStyle}>
                       <div style={labelStyle}>Payment Plan:</div>
                       <div style={valueStyle}>{selectedPaymentPlan}</div>
                     </div>
                   </div>
+                </div>
+              </div> */}
+              <div className="edit-basicdetails-section-main">
+                <div className="payment-details-card">
+                  {brandDetails?.transactionDate ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Transaction Date :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails.transactionDate.replace("T", " T")}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
+                  {brandDetails?.expirationDate ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Expiry Date :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails?.expirationDate.replace("T", " T")}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
+                  {brandDetails?.paymentStatus ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Payment Status :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails?.paymentStatus}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
+                  {brandDetails?.paymentCurreny ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Payment Currency :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails?.paymentCurreny}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
+                  {brandDetails?.paymentAmount ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Payment Amount :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails?.paymentAmount}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
+                  {brandDetails?.subscriptionPlan ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Payment Period :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails?.subscriptionPlan}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
+                  {brandDetails?.planName ? (
+                    <h6
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                      className="listsub"
+                    >
+                      Payment Plan :{" "}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "#afafaf",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {brandDetails?.planName}
+                      </span>
+                    </h6>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </CustomTabPanel>

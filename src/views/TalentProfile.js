@@ -24,7 +24,7 @@ import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import { ArrowBack, ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -398,68 +398,6 @@ const TalentProfile = () => {
     //   "_blank"
     // );
   };
-  const messageNow = () => {
-    if (isOwnTalent == true) {
-      if (talentData?.planName != "Premium") {
-        setMessage("Please upgrade to premium plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (talentData?.planName == "Premium") {
-        navigate(`/message?${talentData?._id}`);
-      }
-    } else if (isOwnTalent == false && isAdminApproved == true) {
-      if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to premium plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (brandData?.planName !== "Basic") {
-        navigate(`/message?${talentData?._id}`);
-      }
-    } else if (currentUserType == "brand") {
-      if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to premium plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (brandData?.planName !== "Basic") {
-        navigate(`/message?${talentData?._id}`);
-      }
-    }
-
-    // if (currentUserType == "talent" && talentData?.planName != "Premium") {
-    //   alert("called");
-    //   setMessage("Please upgrade to premium plan to use this feature");
-    //   setOpenPopUp(true);
-    //   setTimeout(function () {
-    //     setOpenPopUp(false);
-    //     navigate(`/pricing`);
-    //   }, 3000);
-    // } else if (talentData?.planName == "Premium") {
-    //   navigate(`/message?${talentData?._id}`);
-    // }
-    // if (currentUserType == "brand" && brandData?.planName === "Basic") {
-    //   setMessage("Please upgrade to pro plan to use this feature");
-    //   inviteTalentNotification();
-    //   setOpenPopUp(true);
-    //   setTimeout(function () {
-    //     setOpenPopUp(false);
-    //     navigate(`/pricing`);
-    //   }, 2000);
-    // } else if (
-    //   currentUserType == "brand" &&
-    //   brandData?.planName === "Premium"
-    // ) {
-    //   navigate(`/message?${talentData?._id}`);
-    // }
-  };
 
   const inviteTalentNotification = async () => {
     const formData = {
@@ -488,36 +426,45 @@ const TalentProfile = () => {
   };
 
   const inviteToApply = async () => {
-    const formData = {
-      talentId: talentData?._id,
-      brandId: brandId,
-      gigId: selectedJob,
-      comments: comments,
-    };
-    setIsLoading(true);
-    await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
-      .then((resData) => {
-        if (resData) {
-          if (resData?.data?.status === true) {
-            setShowModal(false);
-            setMessage("Invitation Sent Successfully");
-            setIsLoading(false);
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 2000);
-          } else {
-            setIsLoading(false);
-            setMessage("Error Occured Try Again");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
+    if (brandData?.accountBlock == false) {
+      const formData = {
+        talentId: talentData?._id,
+        brandId: brandId,
+        gigId: selectedJob,
+        comments: comments,
+      };
+      setIsLoading(true);
+      await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
+        .then((resData) => {
+          if (resData) {
+            if (resData?.data?.status === true) {
               setShowModal(false);
-            }, 2000);
+              setMessage("Invitation Sent Successfully");
+              setIsLoading(false);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 2000);
+            } else {
+              setIsLoading(false);
+              setMessage("Error Occured Try Again");
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+                setShowModal(false);
+              }, 2000);
+            }
           }
-        }
-      })
-      .catch((err) => {});
+        })
+        .catch((err) => {});
+    } else if (brandData?.accountBlock == true) {
+      setMessage("Please upgrade your plan to access your profile");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 3000);
+    }
   };
 
   const [isSliderOpen, setSliderOpen] = useState(false);
@@ -681,6 +628,7 @@ const TalentProfile = () => {
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
+        console.log(resData, "resData");
         if (resData?.data?.currentStatus == "own-talent") {
           setShowProfile(true);
           setIsOwnTalent(true);
@@ -704,6 +652,108 @@ const TalentProfile = () => {
         setTalentData(resData?.data?.data);
       })
       .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(isOwnTalent, "isOwnTalent");
+    console.log(isAdminApproved, "isAdminApproved");
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
+  const messageNow = async () => {
+    const formData = {
+      viewingUserId: talentData?._id,
+      loggedInUserId: localStorage.getItem("currentUser"),
+      viewingUserType: talentData?.userType,
+      loggedInUserType: localStorage.getItem("currentUserType"),
+    };
+
+    await ApiHelper.post(`${API.findPlan}`, formData)
+      .then((resData) => {
+        console.log(resData, "messageNow_response");
+        if (resData?.data?.status == true) {
+          navigate(`/message?${talentData?._id}`);
+        } else if (resData?.data?.status == false) {
+          setMessage(`${resData?.data?.message}`);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate(`/pricing`);
+          }, 3000);
+        }
+      })
+      .catch((err) => {});
+
+    // if (isOwnTalent == true) {
+    //   if (talentData?.planName == "Basic") {
+    //     setMessage("Please upgrade to pro plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     talentData?.planName != "Basic" &&
+    //     talentData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (talentData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    // } else if (isOwnTalent == false && isAdminApproved == true) {
+    //   if (brandData?.planName === "Basic") {
+    //     setMessage("Please upgrade to pro plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     brandData?.planName !== "Basic" &&
+    //     brandData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (brandData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    //   if (talentData?.planName != "Basic") {
+    //     // alert("block01");
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (talentData?.planName == "Basic") {
+    //     navigate(`/pricing`);
+    //   }
+    // } else if (currentUserType == "brand") {
+    //   if (brandData?.planName === "Basic") {
+    //     setMessage("Please upgrade to premium plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     brandData?.planName !== "Basic" &&
+    //     brandData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (brandData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    // }
   };
 
   return (
@@ -750,9 +800,13 @@ const TalentProfile = () => {
                               src={`${API.userFilePath}${talentData?.image?.fileData}`}
                             ></img>
                           )}
-                          {!talentData && !talentData?.image && (
-                            <img className="talent-img" src={avatarImage}></img>
-                          )}
+                          {!talentData ||
+                            (!talentData?.image && (
+                              <img
+                                className="talent-img"
+                                src={avatarImage}
+                              ></img>
+                            ))}
                         </div>
                         {talentData?.planName != "Basic" && (
                           <>
@@ -929,33 +983,37 @@ const TalentProfile = () => {
                               <div className="row">
                                 {(talentData?.instaFollowers ||
                                   talentData?.instagramUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.instagramUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.instagramUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.instagramUrl) {
+                                        window.open(
+                                          talentData.instagramUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            talentData?.instagramUrl,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={instaLogo}
-                                        alt="Instagram"
-                                      />
+                                      <img src={instaLogo} alt="Instagram" />
                                     </div>
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
                                         {talentData?.instaFollowers ? (
                                           <p>{talentData.instaFollowers}</p>
                                         ) : (
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                talentData?.instagramUrl,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
+                                          <div className="click-url">
                                             Click here
                                           </div>
                                         )}
@@ -971,90 +1029,91 @@ const TalentProfile = () => {
 
                                 {(talentData?.facebookFollowers ||
                                   talentData?.facebookUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.facebookUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.facebookUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.facebookUrl) {
+                                        window.open(
+                                          talentData.facebookUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            `${talentData?.facebookUrl}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={fbIcon}
-                                      ></img>
+                                      <img src={fbIcon} alt="Facebook" />
                                     </div>
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
-                                        {talentData.facebookFollowers && (
-                                          <>{talentData?.facebookFollowers}</>
-                                        )}
-                                        {!talentData.facebookFollowers && (
-                                          <>
-                                            <div
-                                              onClick={() =>
-                                                window.open(
-                                                  `${talentData?.facebookUrl}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              className="click-url"
-                                            >
-                                              Click here
-                                            </div>
-                                          </>
+                                        {talentData?.facebookFollowers ? (
+                                          <p>{talentData.facebookFollowers}</p>
+                                        ) : (
+                                          <div className="click-url">
+                                            Click here
+                                          </div>
                                         )}
                                       </div>
                                       {talentData?.facebookFollowers && (
-                                        <>
-                                          <div className="followers-text">
-                                            Followers
-                                          </div>
-                                        </>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
                                       )}
                                     </div>
                                   </div>
                                 )}
+
                                 {(talentData?.tiktokFollowers ||
                                   talentData?.tikTokUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.tikTokUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.tikTokUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.tikTokUrl) {
+                                        window.open(
+                                          talentData.tikTokUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            `${talentData?.tikTokUrl}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={tiktok}
-                                      ></img>
+                                      <img src={tiktok} alt="TikTok" />
                                     </div>
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
-                                        {talentData.tiktokFollowers && (
-                                          <>{talentData?.tiktokFollowers}</>
-                                        )}
-                                        {!talentData.tiktokFollowers && (
-                                          <>
-                                            <div
-                                              onClick={() =>
-                                                window.open(
-                                                  `${talentData?.tikTokUrl}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              className="click-url"
-                                            >
-                                              Click here
-                                            </div>
-                                          </>
+                                        {talentData?.tiktokFollowers ? (
+                                          <p>{talentData.tiktokFollowers}</p>
+                                        ) : (
+                                          <div className="click-url">
+                                            Click here
+                                          </div>
                                         )}
                                       </div>
                                       {talentData?.tiktokFollowers && (
-                                        <>
-                                          <div className="followers-text">
-                                            Followers
-                                          </div>
-                                        </>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
                                       )}
                                     </div>
                                   </div>
@@ -1062,45 +1121,45 @@ const TalentProfile = () => {
 
                                 {(talentData?.linkedinFollowers ||
                                   talentData?.linkedinUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.linkedinUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.linkedinUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.linkedinUrl) {
+                                        window.open(
+                                          talentData.linkedinUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            `${talentData?.linkedinUrl}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={linkdin}
-                                      ></img>
+                                      <img src={linkdin} alt="LinkedIn" />
                                     </div>
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
-                                        {talentData.linkedinFollowers && (
-                                          <>{talentData?.linkedinFollowers}</>
-                                        )}
-                                        {!talentData.linkedinFollowers && (
-                                          <>
-                                            <div
-                                              onClick={() =>
-                                                window.open(
-                                                  `${talentData?.linkedinUrl}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              className="click-url"
-                                            >
-                                              Click here
-                                            </div>
-                                          </>
+                                        {talentData?.linkedinFollowers ? (
+                                          <p>{talentData.linkedinFollowers}</p>
+                                        ) : (
+                                          <div className="click-url">
+                                            Click here
+                                          </div>
                                         )}
                                       </div>
                                       {talentData?.linkedinFollowers && (
-                                        <>
-                                          <div className="followers-text">
-                                            Followers
-                                          </div>
-                                        </>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
                                       )}
                                     </div>
                                   </div>
@@ -1108,92 +1167,91 @@ const TalentProfile = () => {
 
                                 {(talentData?.twitterFollowers ||
                                   talentData?.twitterUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.twitterUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.twitterUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.twitterUrl) {
+                                        window.open(
+                                          talentData.twitterUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            `${talentData?.twitterUrl}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={twitterLogo}
-                                      ></img>
+                                      <img src={twitterLogo} alt="Twitter" />
                                     </div>
-
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
-                                        {talentData.twitterFollowers && (
-                                          <>{talentData?.twitterFollowers}</>
-                                        )}
-                                        {!talentData.twitterFollowers && (
-                                          <>
-                                            <div
-                                              onClick={() =>
-                                                window.open(
-                                                  `${talentData?.twitterUrl}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              className="click-url"
-                                            >
-                                              Click here
-                                            </div>
-                                          </>
+                                        {talentData?.twitterFollowers ? (
+                                          <p>{talentData.twitterFollowers}</p>
+                                        ) : (
+                                          <div className="click-url">
+                                            Click here
+                                          </div>
                                         )}
                                       </div>
                                       {talentData?.twitterFollowers && (
-                                        <>
-                                          <div className="followers-text">
-                                            Followers
-                                          </div>
-                                        </>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
                                       )}
                                     </div>
                                   </div>
                                 )}
+
                                 {(talentData?.threadsFollowers ||
                                   talentData?.threadsUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.threadsUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.threadsUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.threadsUrl) {
+                                        window.open(
+                                          talentData.threadsUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            `${talentData?.threadsUrl}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={threadLogo}
-                                      ></img>
+                                      <img src={threadLogo} alt="Threads" />
                                     </div>
-
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
-                                        {talentData.threadsFollowers && (
-                                          <>{talentData?.threadsFollowers}</>
-                                        )}
-                                        {!talentData.threadsFollowers && (
-                                          <>
-                                            <div
-                                              onClick={() =>
-                                                window.open(
-                                                  `${talentData?.threadsUrl}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              className="click-url"
-                                            >
-                                              Click here
-                                            </div>
-                                          </>
+                                        {talentData?.threadsFollowers ? (
+                                          <p>{talentData.threadsFollowers}</p>
+                                        ) : (
+                                          <div className="click-url">
+                                            Click here
+                                          </div>
                                         )}
                                       </div>
                                       {talentData?.threadsFollowers && (
-                                        <>
-                                          <div className="followers-text">
-                                            Followers
-                                          </div>
-                                        </>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
                                       )}
                                     </div>
                                   </div>
@@ -1201,46 +1259,45 @@ const TalentProfile = () => {
 
                                 {(talentData?.youtubeFollowers ||
                                   talentData?.youTubeUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    style={{
+                                      cursor: talentData?.youTubeUrl
+                                        ? "pointer"
+                                        : "default",
+                                      position: "relative",
+                                    }}
+                                    data-tooltip={
+                                      talentData?.youTubeUrl
+                                        ? "Click here"
+                                        : "No link provided"
+                                    }
+                                    onClick={() => {
+                                      if (talentData?.youTubeUrl) {
+                                        window.open(
+                                          talentData.youTubeUrl,
+                                          "_blank"
+                                        );
+                                      }
+                                    }}
+                                  >
                                     <div className="logoSocial">
-                                      <img
-                                        onClick={() =>
-                                          window.open(
-                                            `${talentData?.youTubeUrl}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        src={youtubeLogo}
-                                      ></img>
+                                      <img src={youtubeLogo} alt="YouTube" />
                                     </div>
-
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
-                                        {talentData.youtubeFollowers && (
-                                          <>{talentData?.youtubeFollowers}</>
-                                        )}
-                                        {!talentData.youtubeFollowers && (
-                                          <>
-                                            <div
-                                              onClick={() =>
-                                                window.open(
-                                                  `${talentData?.youTubeUrl}`,
-                                                  "_blank"
-                                                )
-                                              }
-                                              className="click-url"
-                                            >
-                                              Click here
-                                            </div>
-                                          </>
+                                        {talentData?.youtubeFollowers ? (
+                                          <p>{talentData.youtubeFollowers}</p>
+                                        ) : (
+                                          <div className="click-url">
+                                            Click here
+                                          </div>
                                         )}
                                       </div>
                                       {talentData?.youtubeFollowers && (
-                                        <>
-                                          <div className="followers-text">
-                                            Followers
-                                          </div>
-                                        </>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
                                       )}
                                     </div>
                                   </div>
@@ -1354,7 +1411,7 @@ const TalentProfile = () => {
                           </div>
                         </div>
 
-                        <div className="talent-rates">
+                        {/* <div className="talent-rates">
                           <div className="title">
                             {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
                             Rates
@@ -1418,6 +1475,67 @@ const TalentProfile = () => {
                                 </div>
                               </>
                             ))}
+                        </div> */}
+
+                        <div className="talent-rates">
+                          {talentData?.profession?.some(
+                            (item) =>
+                              item?.perHourSalary ||
+                              item?.perDaySalary ||
+                              item?.perMonthSalary ||
+                              item?.perPostSalary ||
+                              item?.perImageSalary
+                          ) && (
+                            <>
+                              <div className="title">
+                                {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
+                                Rates
+                              </div>
+                              {talentData.profession.map((item, index) => (
+                                <div key={index}>
+                                  {(item?.perHourSalary ||
+                                    item?.perDaySalary ||
+                                    item?.perMonthSalary ||
+                                    item?.perPostSalary ||
+                                    item?.perImageSalary) && (
+                                    <>
+                                      <div className="talent-profession-name">
+                                        {item?.value}{" "}
+                                        {item?.openToOffers === true && (
+                                          <span>(Negotiable)</span>
+                                        )}
+                                      </div>
+                                    </>
+                                  )}
+                                  {item?.perHourSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perHourSalary} per hour
+                                    </div>
+                                  )}
+                                  {item?.perDaySalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perDaySalary} per day
+                                    </div>
+                                  )}
+                                  {item?.perMonthSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perMonthSalary} per month
+                                    </div>
+                                  )}
+                                  {item?.perPostSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perPostSalary} per post
+                                    </div>
+                                  )}
+                                  {item?.perImageSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perImageSalary} per image
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -2140,7 +2258,11 @@ const TalentProfile = () => {
                                         .map((feature) => (
                                           <tr key={feature.label}>
                                             <td>{feature.label}</td>
-                                            <td>{feature.value}</td>
+                                            <td>
+                                              {isNaN(feature.value)
+                                                ? feature.value
+                                                : `${feature.value} cm`}
+                                            </td>
                                           </tr>
                                         ))}
                                     </tbody>
@@ -2363,6 +2485,8 @@ const TalentProfile = () => {
             onClose={handleClose}
             aria-labelledby="image-slider-modal"
           >
+            
+           
             <Box
               sx={{
                 position: "absolute",
@@ -2377,16 +2501,20 @@ const TalentProfile = () => {
                 alignItems: "center",
               }}
             >
+            
               <IconButton
                 sx={{
                   position: "absolute",
-                  top: 5,
+                  top: "90px",
                   right: 5,
                   color: "#ffffff",
+                  left: "-95%",
                 }}
                 onClick={handleClose}
               >
-                <Close />
+                 <ArrowBack />
+             
+                {/* <Close /> */}
               </IconButton>
               <img
                 src={`${API.userFilePath}${photosList[currentIndex]}`}

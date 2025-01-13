@@ -7,7 +7,12 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Correct mo
 import "../assets/css/SwiperSlider.css"; // Import your custom CSS
 import { API } from "../config/api";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import {
+  ArrowBackIos,
+  ArrowForwardIos,
+  Close,
+  ArrowBack,
+} from "@mui/icons-material";
 const SwiperSlider = ({ photosList }) => {
   const logoWhite = require("../assets/images/logo-white.png");
   const [isSliderOpen, setSliderOpen] = useState(false);
@@ -98,10 +103,16 @@ const SwiperSlider = ({ photosList }) => {
           }}
         >
           <IconButton
-            sx={{ position: "absolute", top: 5, right: 5, color: "#ffffff" }}
+            sx={{
+              position: "absolute",
+              top: "90px",
+              right: 5,
+              color: "#ffffff",
+              left: "-95%",
+            }}
             onClick={handleClose}
           >
-            <Close />
+            <ArrowBack />
           </IconButton>
           <img
             src={`${API.userFilePath}${photosList[currentIndex]}`}

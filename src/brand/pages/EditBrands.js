@@ -161,7 +161,7 @@ const EditBrands = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleSelectedCountry = (event) => {
@@ -182,7 +182,7 @@ const EditBrands = () => {
     });
   };
 
-  useEffect(() => {}, [state]);
+  useEffect(() => { }, [state]);
 
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
@@ -211,7 +211,7 @@ const EditBrands = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const getCities = async (data) => {
     const formData = data;
@@ -221,7 +221,7 @@ const EditBrands = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const positionOptions = [
@@ -261,7 +261,7 @@ const EditBrands = () => {
           );
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrand = async () => {
@@ -269,7 +269,8 @@ const EditBrands = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            setBrandData(resData.data.data, "resData.data.data");
+            console.log(resData.data.data, "resData.data.data");
+            setBrandData(resData.data.data);
             setEditProfileImage(resData.data.data?.brandImage[0]?.fileData);
             setBrandName(resData.data.data?.brandName);
             setBrandEmail(resData.data.data?.brandEmail);
@@ -294,20 +295,22 @@ const EditBrands = () => {
             setState(resData?.data?.data?.brandState);
             setKidsCity(resData?.data?.data?.brandCity);
             setBrandType(resData?.data?.data?.brandType);
-            setAboutBrand(...resData?.data?.data?.aboutBrand);
+            setAboutBrand(resData?.data?.data?.aboutBrand);
             setWhyWorkWithUs(...resData?.data?.data?.whyWorkWithUs);
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
     console.log(errorMessage, "errorMessage");
   }, [errorMessage]);
-  useEffect(() => {}, [brandData]);
+  useEffect(() => { }, [brandData]);
 
-  useEffect(() => {}, [aboutBrand]);
+  useEffect(() => {
+    console.log(aboutBrand, "aboutBrand");
+  }, [aboutBrand]);
 
   const [valueTabs, setValueTabs] = React.useState(0);
 
@@ -404,7 +407,7 @@ const EditBrands = () => {
           // updateProfile(fileObj);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const uploadPersonalProfile = async (fileData) => {
@@ -432,7 +435,7 @@ const EditBrands = () => {
           // updateProfile(fileObj);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const updateProfileImage = async () => {
@@ -456,7 +459,7 @@ const EditBrands = () => {
           }, 2000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const basicDetailsUpdate = async () => {
@@ -500,7 +503,7 @@ const EditBrands = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const updatePublicUrl = async () => {
@@ -526,7 +529,7 @@ const EditBrands = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleBrandNameChange = (e) => {
@@ -626,7 +629,7 @@ const EditBrands = () => {
     }
   };
 
-  useEffect(() => {}, [editProfileImage]);
+  useEffect(() => { }, [editProfileImage]);
 
   const handleEditorChange = (editorState) => {
     setAboutBrand(editorState);
@@ -640,9 +643,8 @@ const EditBrands = () => {
       <BrandHeader toggleMenu={toggleMenu} myState={myState} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <BrandSideMenu myState={myState} />
       </div>
@@ -676,15 +678,16 @@ const EditBrands = () => {
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="kids-main  p-0">
                 <div className="kids-form-row row">
-                  <div className="kids-form-section col-md-6">
+                  <div className="kids-form-section col-md-12">
                     <div className="profile-image-edit-section  p-0 mt-2 mx-0">
                       <div>
                         <label className="form-label">
                           Brand / Client logo
                         </label>
-                        <div className="image-upload-label">
+                        
+                        <div className="image-upload-label mb-2">
                           ( Upload your company logo or your photo if signing up
-                          as an individual client )
+                        as an individual client )
                         </div>
                       </div>
                       {!editProfileImage && (
@@ -874,9 +877,8 @@ const EditBrands = () => {
                     <label className="form-label">E-mail</label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       placeholder="Enter E-mail"
                       value={brandEmail}
                       disabled={true}

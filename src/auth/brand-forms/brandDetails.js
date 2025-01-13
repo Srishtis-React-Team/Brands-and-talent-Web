@@ -178,26 +178,38 @@ const BrandDetails = () => {
   useEffect(() => {}, [openPopUp]);
 
   const brandsSignup = async () => {
-    if (brandName === "") {
+    console.log("brandName:", brandName);
+    console.log("phoneNumber:", phoneNumber);
+    console.log("zipCode:", zipCode);
+    console.log("yourName:", yourName);
+    console.log("mobileValidationError:", mobileValidationError);
+
+    if (!brandName) {
       setbrandNameError(true);
     }
-    if (phoneNumber === "") {
+    if (!phoneNumber) {
       setPhoneNumberError(true);
     }
-    if (zipCode === "") {
+    if (!zipCode) {
       setZipCodeError(true);
     }
-    if (address === "") {
+    if (!address) {
       setAddressError(true);
     }
-    if (yourName === "") {
+    if (!yourName) {
       setYourNameError(true);
     }
+    if (!country) {
+      setParentCountryError(true);
+    }
+    if (!websiteLink) {
+      setWebsiteLinkError(true);
+    }
     if (
-      brandName !== "" &&
-      phoneNumber !== "" &&
-      zipCode !== "" &&
-      yourName !== "" &&
+      brandName &&
+      phoneNumber &&
+      zipCode &&
+      yourName &&
       !mobileValidationError
     ) {
       const formData = {
@@ -207,7 +219,7 @@ const BrandDetails = () => {
         brandZipCode: zipCode,
         howHearAboutAs: hearAboutUs,
         address: address,
-        publicUrl: brandName.replace(/ /g, "-"),
+        publicUrl: brandName?.replace(/ /g, "-"),
         yourFullName: yourName,
         brandType: brandType,
         brandCountry: country,
@@ -274,7 +286,7 @@ const BrandDetails = () => {
   const handleBrandName = (e) => {
     const value = e.target.value;
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setBrandNameLetterError(false);
       setBrandName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -298,7 +310,7 @@ const BrandDetails = () => {
   const handleYourName = (e) => {
     const value = e.target.value;
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setYourNameLetterError(false);
       setYourName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -673,9 +685,7 @@ const BrandDetails = () => {
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-6">
                 <div className="mb-3">
-                  <label className="form-label">
-                    Brand / Client Website<span className="mandatory">*</span>
-                  </label>
+                  <label className="form-label">Brand / Client Website</label>
                   <div className="form-group">
                     <input
                       type="text"
@@ -687,9 +697,11 @@ const BrandDetails = () => {
                       }}
                       value={websiteLink}
                     ></input>
-                    {websiteLinkError && (
-                      <div className="invalid-fields">Please enter Website</div>
-                    )}
+                    {/* {websiteLinkError && (
+                      <div className="invalid-fields">
+                        Please provide Brand / Client Website
+                      </div>
+                    )} */}
                     {websiteValidError && (
                       <div className="invalid-fields">
                         Please enter valid website

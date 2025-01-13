@@ -77,7 +77,7 @@ const BrandPricing = () => {
             }}
           ></button>
         </div>
-        <Pricing from={"signup"} userType={"brands"} />
+        <Pricing from={"signup"} userType={"brands"} receivedData={receivedData} />
 
         <div className="dialog-footer">
           <button

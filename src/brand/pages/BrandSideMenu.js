@@ -44,9 +44,12 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     jobCount();
     saveUser();
   }, [brandId]);
+  useEffect(() => {
+    getBrand();
+  }, []);
 
   const getBrand = async () => {
-    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+    await ApiHelper.get(`${API.getBrandById}${localStorage.getItem("brandId")}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
@@ -82,7 +85,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   useEffect(() => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
-    const name = pathParts[pathParts.length - 1];
+    const name = pathParts[pathParts?.length - 1];
     console.log(name, "name");
     getDataByPublicUrl(name);
   }, [location]);
@@ -97,7 +100,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         console.log(resData?.data?.data?._id, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
-        setBrandData(resData?.data?.data);
+        // setBrandData(resData?.data?.data);
       })
       .catch((err) => {});
   };
@@ -131,16 +134,16 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   }, []);
 
   const handleNavigationClick = () => {
-    if (brandData?.planName == "Basic") {
-      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate("/pricing");
-      }, 3000);
-    } else {
+    // if (brandData?.planName === "Pro" || brandData?.planName === "Premium") {
+    //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate("/pricing");
+    //   }, 3000);
+    // } else {
       navigate("/find-talents");
-    }
+   // }
   };
 
   const handleNavigation = () => {
@@ -167,6 +170,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     }
   }, [myState]);
 
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
+
   // useEffect(() => {
   //   if (brandId) {
   //     getBrand();
@@ -181,7 +188,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           <div className="profImg">
             {brandData && (
               <>
-                {brandData?.brandImage.length > 0 && (
+                {brandData?.brandImage?.length > 0 && (
                   <img
                     className="profile-img"
                     src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}

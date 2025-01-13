@@ -74,23 +74,51 @@ const TalentSideMenu = ({ myState }) => {
   }, [talentData]);
 
   const handleNavigation = () => {
-    if (talentData?.adminApproved === true) {
-      navigate(`/edit-talent-profile?${talentData?._id}`);
-    } else {
-      setMessage(
-        "After your verification is approved, you can update your profile"
-      );
+    if (talentData?.accountBlock == false) {
+      if (talentData?.adminApproved === true) {
+        navigate(`/edit-talent-profile?${talentData?._id}`);
+      } else {
+        setMessage(
+          "After your verification is approved, you can update your profile"
+        );
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 2000);
+      }
+    } else if (talentData?.accountBlock == true) {
+      setMessage("Please upgrade your plan to access your profile");
       setOpenPopUp(true);
-      setTimeout(() => {
+      setTimeout(function () {
         setOpenPopUp(false);
-      }, 2000);
+        navigate(`/pricing`);
+      }, 3000);
     }
   };
 
-  const handleMessages = () => {
-    if (talentData?.planName !== "Basic") {
-      navigate("/message");
-    }
+  const handleMessages = async () => {
+    const formData = {
+      talentId: talentData?._id,
+    };
+    await ApiHelper.post(`${API.allowPermission}`, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData?.data?.msg == "Yes") {
+          navigate("/message");
+        } else if (resData?.data?.msg == "No") {
+          if (talentData?.planName !== "Basic") {
+            navigate("/message");
+          } else {
+            setMessage("Please upgrade to pro plan to use this feature");
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+              navigate(`/pricing`);
+            }, 3000);
+          }
+        }
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -131,7 +159,7 @@ const TalentSideMenu = ({ myState }) => {
             </div>
             <div className="talent-details">
               <div className="talent-name">
-                {talentData?.preferredChildFirstname}&nbsp;
+                {talentData?.preferredChildFirstname}{" "}
                 {talentData?.preferredChildLastName}
               </div>
               <div className="talent-category">Talent</div>

@@ -89,7 +89,7 @@ const TalentSettings = () => {
   }, []);
 
   const fetchPaymentDetails = async () => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("currentUser");
     const obj = {
       user_id: userId,
     };
@@ -187,14 +187,41 @@ const TalentSettings = () => {
       .catch((err) => {});
   };
 
+  const [adultPasswordError, setAdultPasswordError] = useState(false);
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setAdultPasswordError("Password must be at least 8 characters long.");
+    } else if (
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      setAdultPasswordError(
+        "Your password must include at least 1 capital letter, 1 small letter, 1 number, and 1 special symbol."
+      );
+    } else {
+      setAdultPasswordError(""); // Clear the error if password meets the requirements
+    }
+  };
+
   const handleOldPasswordChange = (e) => {
     setTalentOldPassword(e.target.value);
     setOldPasswordError(false);
+    validatePassword(e.target.value);
   };
   const handlePasswordChange = (e) => {
-    setTalentPassword(e.target.value);
     setPasswordMatch(e.target.value === talentConfirmPassword);
     settalentPasswordError(false);
+    setTalentPassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (e) => {
@@ -209,7 +236,7 @@ const TalentSettings = () => {
   };
 
   const updatePassword = async () => {
-    if (!allSamePasswordError && passwordMatch) {
+    if (!allSamePasswordError && passwordMatch && !adultPasswordError) {
       const formData = {
         talentId: talentId,
         password: oldPassword,
@@ -241,128 +268,27 @@ const TalentSettings = () => {
   };
 
   useEffect(() => {
+    console.log(allSamePasswordError, "allSamePasswordError useEffect");
+    console.log(passwordMatch, "passwordMatch useEffect");
+    console.log(oldPassword, "oldPassword useEffect");
+    console.log(talentPassword, "talentPassword useEffect");
+    console.log(talentConfirmPassword, "talentConfirmPassword useEffect");
     if (
-      allSamePasswordError ||
-      !passwordMatch ||
-      oldPassword == "" ||
-      talentPassword == "" ||
-      talentConfirmPassword == ""
+      !allSamePasswordError &&
+      !passwordMatch &&
+      oldPassword != "" &&
+      talentPassword != "" &&
+      talentConfirmPassword != ""
     ) {
       setIsButtonDisabled(true);
     } else {
       setIsButtonDisabled(false);
     }
   }, [allSamePasswordError, passwordMatch]);
-  const [passwordStatus, setPasswordStatus] = useState(false);
 
-  let line = document.querySelector(".line");
-  let text = document.querySelector(".text");
-  let password_strength_box = document.querySelector(".password_strength_box");
-  let passwordCriteria = document.querySelector(".password");
-
-  if (passwordCriteria && password_strength_box && line && text) {
-    if (passwordCriteria.value.length == 0) {
-      password_strength_box.style.display = "none";
-    }
-
-    passwordCriteria.oninput = function () {
-      if (passwordCriteria.value.length == 0) {
-        password_strength_box.style.display = "none";
-      }
-
-      if (passwordCriteria.value.length >= 1) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "5%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (passwordCriteria.value.length >= 2) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "10%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (passwordCriteria.value.length >= 3) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "20%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (passwordCriteria.value.length >= 4) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "35%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-        if (passwordCriteria.value.match(/[!@#$%^&*]/)) {
-          setPasswordStatus(false);
-          password_strength_box.style.display = "flex";
-          line.style.width = "45%";
-          line.style.backgroundColor = "#e9ee30";
-          text.style.color = "#e9ee30";
-          text.innerHTML = "Medium";
-        }
-      }
-      if (
-        passwordCriteria.value.length >= 5 &&
-        passwordCriteria.value.match(/[A-Z]/) &&
-        passwordCriteria.value.match(/[a-z]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "50%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        passwordCriteria.value.length >= 6 &&
-        passwordCriteria.value.match(/[0-9]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "70%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        passwordCriteria.value.length >= 7 &&
-        passwordCriteria.value.match(/[A-Z]/) &&
-        passwordCriteria.value.match(/[a-z]/) &&
-        passwordCriteria.value.match(/[0-9]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "80%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-
-      if (
-        passwordCriteria.value.length >= 8 &&
-        passwordCriteria.value.match(/[A-Z]/) &&
-        passwordCriteria.value.match(/[a-z]/) &&
-        passwordCriteria.value.match(/[0-9]/) &&
-        passwordCriteria.value.match(/[!@#$%^&*]/)
-      ) {
-        setPasswordStatus(true);
-        password_strength_box.style.display = "flex";
-        line.style.width = "100%";
-        line.style.backgroundColor = "#2ccc2c";
-        text.style.color = "#2ccc2c";
-        text.innerHTML = "Strong";
-      }
-    };
-  }
+  useEffect(() => {
+    console.log(talentPassword, "talentPassword");
+  }, [talentPassword]);
 
   return (
     <>
@@ -454,28 +380,53 @@ const TalentSettings = () => {
                   <label className="form-label">
                     New Password <span className="mandatory">*</span>
                   </label>
+
                   <div className="form-group has-search adult-password-wrapper">
                     <span className="fa fa-lock form-control-feedback"></span>
                     <input
                       type={showPassword ? "text" : "password"}
                       className="form-control password adult-signup-inputs"
-                      placeholder="New Password"
-                      value={talentPassword}
+                      placeholder="Password"
                       onChange={(e) => {
                         handlePasswordChange(e);
-                        setTalentPassword(e.target.value);
-                        settalentPasswordError(false);
                       }}
+                      value={talentPassword}
                     ></input>
+
                     <div className="password_strength_box">
-                      <div className="password_strength"></div>
+                      <div className="password_strength">
+                        <p className="text">Weak</p>
+                        <div className="line_box">
+                          <div className="line"></div>
+                        </div>
+                      </div>
+                      <div className="tool_tip_box">
+                        <span>
+                          <i className="bi bi-question-circle"></i>
+                        </span>
+                        <div className="tool_tip">
+                          <p style={{ listStyleType: "none" }}>
+                            <b>Password must be:</b>
+                          </p>
+                          <p>1 capital letter (A, B, C...)</p>
+                          <p>1 small letter (a, b, c...)</p>
+                          <p>1 number (1, 2, 3...)</p>
+                          <p>1 special symbol (!, @, #...)</p>
+                        </div>
+                      </div>
                     </div>
-                    {talentPassword && !passwordStatus && (
+
+                    {talentPassword && adultPasswordError && (
                       <div className="invalid-fields password-error-box">
                         Your password must be at least 8 characters long and
                         include at least: 1 capital letter (A, B, C...), 1 small
                         letter (a, b, c...), 1 number (1, 2, 3...), 1 special
                         symbol (!, @, #...)
+                      </div>
+                    )}
+                    {talentPasswordError && (
+                      <div className="invalid-fields">
+                        Please enter Password
                       </div>
                     )}
                     {showPassword ? (
@@ -488,11 +439,6 @@ const TalentSettings = () => {
                         className="fa fa-eye-slash show-password-icon"
                         onClick={togglePasswordVisibility}
                       ></span>
-                    )}
-                    {talentPasswordError && (
-                      <div className="invalid-fields">
-                        Please enter Password
-                      </div>
                     )}
                   </div>
                 </div>
@@ -625,7 +571,32 @@ const TalentSettings = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {paymentDetailsDataArray?.transactionDate}
+                      {paymentDetailsDataArray?.transactionDate?.replace(
+                        "T",
+                        " T"
+                      )}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Expiry Date :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.expirationDate?.replace(
+                        "T",
+                        " T"
+                      )}
                     </span>
                   </h6>
                   <h6

@@ -42,6 +42,7 @@ const AdultFormOne = () => {
   const [listOfNationalities, setListOfNationalities] = useState([]);
   const [listOfLanguages, setListOfLanguages] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (nationalitiesList.length > 0) {
@@ -359,6 +360,8 @@ const AdultFormOne = () => {
   };
 
   const updateAdultSignup = async () => {
+    setIsSubmitted(true);
+
     if (adultsLegalFirstName === "") {
       setAdultsLegalFirstNameError(true);
     }
@@ -436,7 +439,7 @@ const AdultFormOne = () => {
       adultsPreferedFirstName !== "" &&
       adultsPreferedLastName !== "" &&
       selectedProfessions.length !== 0 &&
-      selectedCategories.length >= 3 &&
+      selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
       gender !== "" &&
       languages.length !== 0 &&
@@ -482,7 +485,7 @@ const AdultFormOne = () => {
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
-                navigate(`/adult-social-medias-details?${userId}`);
+                navigate(`/talent-signup-social-medias-details?${userId}`);
               }, 1000);
             } else if (resData.data.status === false) {
               setIsLoading(false);
@@ -552,12 +555,19 @@ const AdultFormOne = () => {
         }, 2000);
       }
     }
-    if (selectedCategories.length < 4) {
-      setSelectedCategoriesError(true);
-    } else {
-      setSelectedCategoriesError(false);
-    }
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log(selectedCategories, "selectedCategories");
+      console.log(selectedCategories.length, "selectedCategories.length");
+      if (selectedCategories.length === 0) {
+        setSelectedCategoriesError(true);
+      } else {
+        setSelectedCategoriesError(false);
+      }
+    }
+  }, [isSubmitted, selectedCategories]);
 
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);
@@ -862,7 +872,7 @@ const AdultFormOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
@@ -885,7 +895,7 @@ const AdultFormOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
@@ -1012,7 +1022,7 @@ const AdultFormOne = () => {
                   </div>
                   <div className="adults-titles kids-form-title mb-2">
                     <span style={{ fontWeight: "bold", fontSize: "small" }}>
-                      Select 3 to 6 categories that best reflect your skills and
+                      Select 1 to 6 categories that best reflect your skills and
                       interests for portfolio and job notifications{" "}
                       <span className="mandatory">*</span>
                     </span>
@@ -1040,11 +1050,11 @@ const AdultFormOne = () => {
                       </div>
                     ))}
                   </div>
-                  {(selectedCategories?.length < 3 ||
+                  {(selectedCategories?.length == 0 ||
                     selectedCategories?.length > 6) &&
                     selectedCategoriesError && (
                       <div className="invalid-fields">
-                        Please select 3 to 6 categories relevant to your profile
+                        Please select 1 to 6 categories relevant to your profile
                       </div>
                     )}
                   <div className="adults-titles kids-form-title mt-3">

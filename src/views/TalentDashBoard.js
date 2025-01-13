@@ -59,7 +59,7 @@ const TalentDashBoard = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleSelectedCountry = (event) => {
@@ -88,7 +88,7 @@ const TalentDashBoard = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const customStylesProfession = {
@@ -113,7 +113,7 @@ const TalentDashBoard = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const customStyles = {
@@ -144,7 +144,7 @@ const TalentDashBoard = () => {
   const location = useLocation();
   const [talentData, setTalentData] = useState();
 
-  useEffect(() => {}, [location]);
+  useEffect(() => { }, [location]);
 
   const queryString = url.split("?")[1];
 
@@ -170,7 +170,7 @@ const TalentDashBoard = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -190,7 +190,7 @@ const TalentDashBoard = () => {
           openDoItNowModal();
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const undo = async () => {
@@ -208,32 +208,41 @@ const TalentDashBoard = () => {
           setGigsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
-    if (talentData?.planName == "Basic") {
-      let upgradeMessage;
-      if (talentData?.planName === "Basic") {
-        upgradeMessage = "Upgrade to Pro to apply for this job.";
+    if (talentData?.accountBlock == false) {
+      if (talentData?.planName == "Basic") {
+        let upgradeMessage;
+        if (talentData?.planName === "Basic") {
+          upgradeMessage = "Upgrade to Pro to apply for this job.";
+        }
+        setMessage(`${upgradeMessage}`);
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 4000);
+      } else if (
+        talentData?.planName?.includes("Pro") ||
+        talentData?.planName == "Premium"
+      ) {
+        setModalData(data);
+        if (data?.isApplied != "Applied") {
+          const modalElement = document.getElementById("exampleModal");
+          const bootstrapModal = new window.bootstrap.Modal(modalElement);
+          bootstrapModal.show();
+        }
       }
-      setMessage(`${upgradeMessage}`);
+    } else if (talentData?.accountBlock == true) {
+      setMessage("Please upgrade your plan to access your profile");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
-      }, 4000);
-    } else if (
-      talentData?.planName?.includes("Pro") ||
-      talentData?.planName == "Premium"
-    ) {
-      setModalData(data);
-      if (data?.isApplied != "Applied") {
-        const modalElement = document.getElementById("exampleModal");
-        const bootstrapModal = new window.bootstrap.Modal(modalElement);
-        bootstrapModal.show();
-      }
+        navigate(`/pricing`);
+      }, 3000);
     }
   };
 
@@ -261,7 +270,7 @@ const TalentDashBoard = () => {
           setTopBrandsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const toggleMenu = () => {
@@ -280,7 +289,7 @@ const TalentDashBoard = () => {
   const openSignup = () => {
     closeDoItNowModal();
     setTimeout(() => {
-      navigate(`/adult-signup-basic-details`);
+      navigate(`/talent-signup-basic-details`);
     }, 800);
   };
 
@@ -313,10 +322,10 @@ const TalentDashBoard = () => {
           bootstrapModal.hide();
         }, 1000);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
-  useEffect(() => {}, [modalData]);
+  useEffect(() => { }, [modalData]);
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {
@@ -493,7 +502,7 @@ const TalentDashBoard = () => {
           setSkillsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     setOpen(false);
   };
@@ -562,9 +571,8 @@ const TalentDashBoard = () => {
       <TalentHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <TalentSideMenu myState={queryString} />
       </div>
@@ -920,7 +928,7 @@ const TalentDashBoard = () => {
                                       </div>
 
                                       <div className="recent-gig-description">
-                                        {!item?.isFavorite && (
+                                        {!item?.isFavourite && (
                                           <i
                                             className="bi bi-heart save-job-icon"
                                             onClick={() => {
@@ -928,7 +936,7 @@ const TalentDashBoard = () => {
                                             }}
                                           ></i>
                                         )}
-                                        {item?.isFavorite && (
+                                        {item?.isFavourite && (
                                           <i
                                             className="bi bi-heart-fill remove-job-icon"
                                             onClick={() => {
@@ -972,33 +980,40 @@ const TalentDashBoard = () => {
                                           <i className="bi bi-eye-fill"></i>
                                           <div>View Job</div>
                                         </div>
-                                        <div
-                                          className={
-                                            item?.isApplied === "Apply Now"
-                                              ? "apply-now-btn"
-                                              : "apply-now-btn applied-btn"
-                                          }
-                                          onClick={() => {
-                                            applyjobs(item);
-                                          }}
-                                        >
-                                          {item?.isApplied == "Applied" && (
+                                        {(item?.howLikeToApply ===
+                                          "easy-apply" ||
+                                          item?.isApplied == "Applied") && (
                                             <>
-                                              <i className="bi bi-check-circle-fill"></i>
+                                              <div
+                                                className={
+                                                  item?.isApplied === "Apply Now"
+                                                    ? "apply-now-btn"
+                                                    : "apply-now-btn applied-btn"
+                                                }
+                                                onClick={() => {
+                                                  applyjobs(item);
+                                                }}
+                                              >
+                                                {item?.isApplied == "Applied" && (
+                                                  <>
+                                                    <i className="bi bi-check-circle-fill"></i>
+                                                  </>
+                                                )}
+                                                {item?.isApplied ==
+                                                  "Apply Now" && (
+                                                    <>
+                                                      <i className="bi bi-briefcase-fill"></i>
+                                                    </>
+                                                  )}
+                                                {item?.isApplied ===
+                                                  "Apply Now" && (
+                                                    <div>Apply Now</div>
+                                                  )}
+                                                {item?.isApplied ===
+                                                  "Applied" && <div>Applied</div>}
+                                              </div>
                                             </>
                                           )}
-                                          {item?.isApplied == "Apply Now" && (
-                                            <>
-                                              <i className="bi bi-briefcase-fill"></i>
-                                            </>
-                                          )}
-                                          {item?.isApplied === "Apply Now" && (
-                                            <div>Apply Now</div>
-                                          )}
-                                          {item?.isApplied === "Applied" && (
-                                            <div>Applied</div>
-                                          )}
-                                        </div>
                                       </div>
                                     </div>
 
@@ -1014,26 +1029,26 @@ const TalentDashBoard = () => {
                                       {(item?.city ||
                                         item?.state ||
                                         item?.country) && ( // Check if at least one value exists
-                                        <span className="job-company_dtls">
-                                          <i className="bi bi-geo-alt-fill"></i>
-                                          {item?.city && <>{item.city}</>}{" "}
-                                          {/* Display city if it exists */}
-                                          {item?.city &&
-                                            (item?.state || item?.country) && (
+                                          <span className="job-company_dtls">
+                                            <i className="bi bi-geo-alt-fill"></i>
+                                            {item?.city && <>{item.city}</>}{" "}
+                                            {/* Display city if it exists */}
+                                            {item?.city &&
+                                              (item?.state || item?.country) && (
+                                                <span>, </span>
+                                              )}{" "}
+                                            {/* Show comma if city exists and either state or country exists */}
+                                            {item?.state && <>{item.state}</>}{" "}
+                                            {/* Display state if it exists */}
+                                            {item?.state && item?.country && (
                                               <span>, </span>
                                             )}{" "}
-                                          {/* Show comma if city exists and either state or country exists */}
-                                          {item?.state && <>{item.state}</>}{" "}
-                                          {/* Display state if it exists */}
-                                          {item?.state && item?.country && (
-                                            <span>, </span>
-                                          )}{" "}
-                                          {/* Show comma if state exists and country exists */}
-                                          {item?.country && <>{item.country}</>}{" "}
-                                          {/* Display country if it exists */}
-                                          <i className="bi bi-dot"></i>
-                                        </span>
-                                      )}
+                                            {/* Show comma if state exists and country exists */}
+                                            {item?.country && <>{item.country}</>}{" "}
+                                            {/* Display country if it exists */}
+                                            <i className="bi bi-dot"></i>
+                                          </span>
+                                        )}
                                       <span className="job-company_dtls">
                                         {item?.employmentType}{" "}
                                         <i className="bi bi-dot"></i>
@@ -1044,17 +1059,17 @@ const TalentDashBoard = () => {
                                       </span>
                                       <span className="job-company_dtls">
                                         {Object.keys(item?.compensation)[0] ===
-                                        "paid_collaboration_and_gift"
+                                          "paid_collaboration_and_gift"
                                           ? "Paid Collaboration + Product/Gift"
                                           : Object.keys(
-                                              item?.compensation
-                                            )[0] === "product_gift"
-                                          ? "Product/Gift"
-                                          : Object.keys(
+                                            item?.compensation
+                                          )[0] === "product_gift"
+                                            ? "Product/Gift"
+                                            : Object.keys(
                                               item?.compensation
                                             )[0] === "paid_collaboration"
-                                          ? "Paid Collaboration"
-                                          : ""}
+                                              ? "Paid Collaboration"
+                                              : ""}
                                       </span>
                                     </div>
                                     <div className="mb-2">
@@ -1165,15 +1180,15 @@ const TalentDashBoard = () => {
                             <i className="bi bi-cash-coin model-job-icons"></i>
                             <div className="model-job-name">
                               {Object.keys(modalData?.compensation)[0] ===
-                              "paid_collaboration_and_gift"
+                                "paid_collaboration_and_gift"
                                 ? "Paid Collaboration + Product/Gift"
                                 : Object.keys(modalData?.compensation)[0] ===
                                   "product_gift"
-                                ? "Product/Gift"
-                                : Object.keys(modalData?.compensation)[0] ===
-                                  "paid_collaboration"
-                                ? "Paid Collaboration"
-                                : ""}
+                                  ? "Product/Gift"
+                                  : Object.keys(modalData?.compensation)[0] ===
+                                    "paid_collaboration"
+                                    ? "Paid Collaboration"
+                                    : ""}
                             </div>
                           </div>
                         )}
@@ -1190,6 +1205,8 @@ const TalentDashBoard = () => {
                           </div>
                         </div>
                       )}
+                     
+
                       {modalData?.gender &&
                         Array.isArray(modalData?.gender) && (
                           <div className="modal-job-flex">

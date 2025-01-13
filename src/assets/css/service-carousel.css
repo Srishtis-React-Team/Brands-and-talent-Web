@@ -1,7 +1,4 @@
 .service-list-main {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 .service-list-main .service-list-wrapper {
   margin: 10px 0 20px;
@@ -10,13 +7,7 @@
   height: 250px;
   overflow: hidden;
 }
-.service-list-main .service-list-wrapper .service-list-image img {
-  width: 100%;
-  min-height: 250px;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 16px;
-}
+
 .service-list-main
   .service-list-wrapper
   .service-list-content
@@ -65,20 +56,22 @@
   line-height: normal;
   margin: 3px 3px 3px 0;
 }
+
 .service-list-main .service-list-wrapper .enquire-btn {
-  font-size: 14px;
-  width: auto;
-  border-radius: 100px;
-  height: 40px;
-  border: 1px solid #000;
-  display: inline-flex;
-  justify-content: center;
   align-items: center;
+  border: 1px solid #000;
+  border-radius: 100px;
   cursor: pointer;
-  min-width: 150px;
-  transition: 0.5s;
+  display: inline-flex;
+  font-size: 12px;
   font-weight: 500;
+  height: 25px;
+  justify-content: center;
+  min-width: 100px;
+  transition: 0.5s;
+  width: auto;
 }
+
 .service-list-main .service-list-wrapper .enquire-btn:hover {
   background-color: #000;
   color: #fff;
@@ -101,4 +94,30 @@
   justify-content: space-between;
   align-items: center;
   margin: 2px 0 0;
+}
+
+.service-image-style {
+  width: 250px !important;
+  height: 250px;
+  border-radius: 16px;
+}
+
+.service-description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* Limit to 5 lines */
+  -webkit-box-orient: vertical;
+}
+
+.service-description.expanded {
+  -webkit-line-clamp: unset; /* Remove line limit */
+}
+
+.toggle-button {
+  margin-top: 10px;
+  color: #c2114b;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
 }

@@ -17,6 +17,16 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const [expandedItems, setExpandedItems] = useState({}); // Track expanded state by index
+
+  const toggleContent = (index) => {
+    setExpandedItems((prev) => ({
+      ...prev,
+      [index]: !prev[index], // Toggle the specific item's state
+    }));
+  };
 
   const [isOwnTalent, setIsOwnTalent] = useState(null);
   const [isAdminApproved, setIsAdminApproved] = useState(null);
@@ -104,26 +114,46 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
   const messageNow = () => {
     if (isOwnTalent == true) {
-      if (talentData?.planName != "Premium") {
-        setMessage("Please upgrade to premium plan to use this feature");
+      if (talentData?.planName == "Basic") {
+        setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate(`/pricing`);
         }, 3000);
-      } else if (talentData?.planName == "Premium") {
+      } else if (
+        talentData?.planName != "Basic" &&
+        talentData?.accountBlock == false
+      ) {
         navigate(`/message?${talentData?._id}`);
+      } else if (talentData?.accountBlock == true) {
+        setMessage("Please upgrade your plan to access your profile");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
       }
     } else if (isOwnTalent == false && isAdminApproved == true) {
       if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to premium plan to use this feature");
+        setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate(`/pricing`);
         }, 3000);
-      } else if (brandData?.planName !== "Basic") {
+      } else if (
+        brandData?.planName !== "Basic" &&
+        brandData?.accountBlock == false
+      ) {
         navigate(`/message?${talentData?._id}`);
+      } else if (brandData?.accountBlock == true) {
+        setMessage("Please upgrade your plan to access your profile");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
       }
     } else if (currentUserType == "brand") {
       if (brandData?.planName === "Basic") {
@@ -133,36 +163,20 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           setOpenPopUp(false);
           navigate(`/pricing`);
         }, 3000);
-      } else if (brandData?.planName !== "Basic") {
+      } else if (
+        brandData?.planName !== "Basic" &&
+        brandData?.accountBlock == false
+      ) {
         navigate(`/message?${talentData?._id}`);
+      } else if (brandData?.accountBlock == true) {
+        setMessage("Please upgrade your plan to access your profile");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
       }
     }
-
-    // if (currentUserType == "talent" && talentData?.planName != "Premium") {
-    //   alert("called");
-    //   setMessage("Please upgrade to premium plan to use this feature");
-    //   setOpenPopUp(true);
-    //   setTimeout(function () {
-    //     setOpenPopUp(false);
-    //     navigate(`/pricing`);
-    //   }, 3000);
-    // } else if (talentData?.planName == "Premium") {
-    //   navigate(`/message?${talentData?._id}`);
-    // }
-    // if (currentUserType == "brand" && brandData?.planName === "Basic") {
-    //   setMessage("Please upgrade to pro plan to use this feature");
-    //   inviteTalentNotification();
-    //   setOpenPopUp(true);
-    //   setTimeout(function () {
-    //     setOpenPopUp(false);
-    //     navigate(`/pricing`);
-    //   }, 2000);
-    // } else if (
-    //   currentUserType == "brand" &&
-    //   brandData?.planName === "Premium"
-    // ) {
-    //   navigate(`/message?${talentData?._id}`);
-    // }
   };
 
   const inviteTalentNotification = async () => {
@@ -183,69 +197,88 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
   return (
     <>
-      {servicesList && servicesList.length > 0 && <></>}
-
       <div className="service-list-main">
         {servicesList &&
           servicesList.length > 0 &&
-          servicesList?.map((item, index) => {
+          servicesList.map((item, index) => {
+            if (!item?.serviceName) return null;
+            const isExpanded = expandedItems[index]; // Check if this item is expanded
+
             return (
-              <>
-                <div className="service-list-wrapper" key={index}>
-                  <div className="row">
-                    <div className="service-list-image col-md-4">
-                      {item?.files[0]?.fileData && (
-                        <>
-                          <img
-                            src={`${API.userFilePath}${item?.files[0]?.fileData}`}
-                            alt=""
-                          />
-                        </>
-                      )}
-                      {!item?.files[0]?.fileData && (
-                        <>
-                          <img src={avatarImage} alt="" />
-                        </>
-                      )}
-                    </div>
-                    <div className="service-list-content col-md-8">
-                      <div className="service-title">{item?.serviceName}</div>
-                      <div
-                        className="service-description"
-                        dangerouslySetInnerHTML={{ __html: item?.editorState }}
+              <div className="service-list-wrapper" key={index}>
+                <div className="row">
+                  <div className="col-md-4">
+                    {item?.files[0]?.fileData ? (
+                      <img
+                        className="service-image-style"
+                        src={`${API.userFilePath}${item?.files[0]?.fileData}`}
+                        alt=""
                       />
-                      <div className="starting-amount">
-                        $ {item?.serviceAmount} per hour
-                      </div>
-                      <div className="text-btm">
-                        <div className="service-duration">
-                          <div className="service-duration-title">
-                            Delivery Time :
-                          </div>
-                          <div>
-                            {item?.serviceDuration} {item?.serviceTime}
-                          </div>
-                        </div>
-                        <div
-                          onClick={() => messageNow()}
-                          className="enquire-btn"
+                    ) : (
+                      <img
+                        className="service-image-style"
+                        src={avatarImage}
+                        alt=""
+                      />
+                    )}
+                  </div>
+                  <div className="service-list-content col-md-8">
+                    <div className="service-title">{item?.serviceName}</div>
+                    <div
+                      className={`service-description ${
+                        isExpanded ? "expanded" : "collapsed"
+                      }`}
+                      dangerouslySetInnerHTML={{ __html: item?.editorState }}
+                    />
+                    {item?.editorState?.length > 50 && ( // Only show the button if content is long enough
+                      <>
+                        <button
+                          className="toggle-button"
+                          onClick={() => toggleContent(index)} // Pass the index to toggle
                         >
-                          Inquire Now
+                          {isExpanded ? "Show Less" : "Show More"}
+                        </button>
+                      </>
+                    )}
+
+                    {item?.serviceAmount && (
+                      <>
+                        <div className="starting-amount">
+                          ${item?.serviceAmount} per hour
                         </div>
-                      </div>
+                      </>
+                    )}
+
+                    {(item?.serviceDuration || item?.serviceTime) && (
+                      <>
+                        <div className="text-btm mb-3">
+                          <div className="service-duration">
+                            <div className="service-duration-title">
+                              Delivery Time :
+                            </div>
+                            <div>
+                              {item?.serviceDuration} {item?.serviceTime}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    <div onClick={() => messageNow()} className="enquire-btn">
+                      Inquire Now
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
 
-        {!servicesList.length && (
-          <>
-            <div>No Services Available</div>
-          </>
+        {(!servicesList.length ||
+          !servicesList.some((item) => item.serviceName)) && (
+          <div>No Services Available</div>
         )}
       </div>
+
       {openPopUp && <PopUp message={message} />}
     </>
   );

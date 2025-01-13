@@ -383,6 +383,70 @@
   }
 }
 
+
+.public-url-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 8px;
+}
+
+.public-url-input {
+  margin-left: 0px;
+}
+
+.bi-pencil-square {
+  color: #c2114b;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.public-url-text {
+  // min-width: 100%;
+  width: 88%;
+}
+
+.edit-features-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.features-seperator {
+  // width: 215px;
+  width: 24%;
+  margin: 0 1% 15px 0;
+  max-width: 100%;
+    
+}
+
+.file-section,
+.file-options {
+  display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 320px — 480px: Mobile devices */
 
 @media (max-width: 480px) {
@@ -497,7 +561,7 @@
 }
 
 .invalid-fields {
-  width: 100%;
+  // width: 100%;
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: #dc3545;
@@ -976,6 +1040,7 @@
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
     width: 18%;
+    top: 90px;
   }
 }
 @media only screen and (max-width: 1180px) {
@@ -1083,8 +1148,6 @@
   .add-portfoli-section {
     display: flex;
     justify-content: end;
-    .add-portfolia-btn {
-    }
   }
 
   .edit_talentprofile .update-portfolio-cards {
@@ -1113,8 +1176,6 @@
   .add-portfoli-section {
     display: flex;
     justify-content: end;
-    .add-portfolia-btn {
-    }
   }
 
   .edit_talentprofile .update-portfolio-cards {
@@ -1122,10 +1183,6 @@
     display: block;
     width: 100%;
   }
-  // .bi-three-dots-vertical {
-  //   padding-right: 10px;
-  //   padding-left: 10px;
-  // }
   .edit_talentprofile .update-portfolio-cards {
     position: relative;
   }
@@ -1675,6 +1732,7 @@
     color: #000;
     padding: 8px 0px;
   }
+ 
 
   .update-password-main .password_strength_box {
     margin-top: 0;
@@ -1827,10 +1885,14 @@
   }
 
   .features-seperator {
-    width: 100%;
+    // width: 100%;
+    // max-width: 100%;
+    // margin-right: 0px;
+    // margin-bottom: 15px;
+
+    width: 48%;
+    margin: 0 1% 15px;
     max-width: 100%;
-    margin-right: 0px;
-    margin-bottom: 15px;
   }
   .upload-text {
     padding: 16px 0px;
@@ -1878,48 +1940,20 @@
     padding: 0;
     border-radius: 0;
   }
+  .fixImgs .kids-image-sticky {
+    width: 100%;
+    top: 0;
+    position: relative;
+  }   
+
+
+
+
+
+
+
 }
 
-.public-url-wrapper {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  border-radius: 8px;
-}
-
-.public-url-input {
-  margin-left: 0px;
-}
-
-.bi-pencil-square {
-  color: #c2114b;
-  font-size: 20px;
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-.public-url-text {
-  // min-width: 100%;
-  width: 88%;
-}
-
-.edit-features-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.features-seperator {
-  width: 215px;
-  margin-right: 20px;
-  margin-bottom: 15px;
-}
-
-.file-section,
-.file-options {
-  display: flex;
-}
 
 @media only screen and (max-width: 580px) {
   .dynamic-profession.newAlign .algSepc .divSep {
@@ -1962,3 +1996,13 @@
   height: 16px !important;
   background-size: cover !important;
 }
+
+.kids-form-three-wrapper {
+  margin-bottom: 100px !important;
+}
+
+.adult-service-form {
+  margin-top: 10px;
+}
+
+

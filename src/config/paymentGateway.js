@@ -2,7 +2,7 @@ import axios from 'axios';
 import crypto from 'crypto';
 
 // PayWay API Endpoints
-const API_BASE_URL = 'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments'; // Use production URL in production
+const API_BASE_URL = 'https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase'; // Use production URL in production
 const CREATE_PAYMENT_URL = `${API_BASE_URL}/purchase`; // Assuming this is the endpoint for creating payment
 const CHECK_TRANSACTION_URL = `${API_BASE_URL}/check-transaction-2`; // For checking transaction status
 

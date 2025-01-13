@@ -245,7 +245,7 @@ const MessageTalents = () => {
       .then((resData) => {
         if (resData) {
           setUsersList(resData?.data?.data);
-          if (resData.data.data.length > 0 && userList.length === 0) {
+          if (resData.data.data.length > 0 && userList?.length === 0) {
             setInitaialUser(resData.data.data, resData.data.data[0]?._id);
           }
           if (resData?.data?.status === false) {
@@ -253,7 +253,9 @@ const MessageTalents = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setUsersList([]);
+      });
   };
 
   const handleKeyPress = (e) => {
@@ -510,6 +512,9 @@ const MessageTalents = () => {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
   }, [messagesList]);
+  useEffect(() => {
+    console.log(userList, "userList");
+  }, [userList]);
 
   return (
     <>
@@ -600,7 +605,7 @@ const MessageTalents = () => {
                 <div className="message-sidebar col-md-4 col-lg-3">
                   <div className="message-leftmenu-main scroll">
                     <div className="message-list-wrapper">
-                      {userList.length === 0 && (
+                      {userList?.length === 0 && (
                         <div className="no-data">
                           <p>
                             You will be able to see a brand / client or talent
@@ -608,7 +613,7 @@ const MessageTalents = () => {
                           </p>
                         </div>
                       )}
-                      {userList.length > 0 &&
+                      {userList?.length > 0 &&
                         userList?.map((item, index) => (
                           <>
                             <div
@@ -621,7 +626,7 @@ const MessageTalents = () => {
                               key={index}
                             >
                               <div className="message-images-position">
-                                {item?.brandImage &&
+                                {/* {item?.brandImage &&
                                   item?.brandImage.length > 0 && (
                                     <img
                                       className="message-user-image"
@@ -635,7 +640,29 @@ const MessageTalents = () => {
                                     src={`${API.userFilePath}${item?.image?.fileData}`}
                                     alt=""
                                   />
+                                )} */}
+
+                                {item?.brandImage &&
+                                item?.brandImage.length > 0 ? (
+                                  <img
+                                    className="message-user-image"
+                                    src={`${API.userFilePath}${item?.brandImage[0]?.fileData}`}
+                                    alt=""
+                                  />
+                                ) : item?.image && item?.image?.fileData ? (
+                                  <img
+                                    className="message-user-image"
+                                    src={`${API.userFilePath}${item?.image?.fileData}`}
+                                    alt=""
+                                  />
+                                ) : (
+                                  <img
+                                    className="message-user-image"
+                                    src={avatar}
+                                    alt=""
+                                  />
                                 )}
+
                                 {item?.isOnline === true && (
                                   <div className="online-dot"></div>
                                 )}

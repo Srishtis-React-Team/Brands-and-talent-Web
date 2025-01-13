@@ -29,6 +29,7 @@ const KidsformOne = () => {
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [dateError, setDateError] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
     categoryList,
@@ -357,10 +358,37 @@ const KidsformOne = () => {
     setNationalityError(false);
   };
 
+  const [passwordError, setAdultPasswordError] = useState(false);
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setAdultPasswordError("Password must be at least 8 characters long.");
+    } else if (
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      setAdultPasswordError(
+        "Your password must include at least 1 capital letter, 1 small letter, 1 number, and 1 special symbol."
+      );
+    } else {
+      setAdultPasswordError(""); // Clear the error if password meets the requirements
+    }
+  };
+
   const handlePasswordChange = (e) => {
     setTalentPassword(e.target.value);
     setPasswordMatch(e.target.value === talentConfirmPassword);
     settalentPasswordError(false);
+    validatePassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (e) => {
@@ -407,13 +435,21 @@ const KidsformOne = () => {
         }, 2000);
       }
     }
-
-    if (selectedCategories.length < 4) {
-      setCategoryError(true);
-    } else {
-      setCategoryError(false);
-    }
+    // console.log(selectedCategories, "selectedCategories");
+    // console.log(selectedCategories.length, "selectedCategories.length");
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log(selectedCategories, "selectedCategories");
+      console.log(selectedCategories.length, "selectedCategories.length");
+      if (selectedCategories.length === 0) {
+        setCategoryError(true);
+      } else {
+        setCategoryError(false);
+      }
+    }
+  }, [isSubmitted, selectedCategories]);
 
   const deleteProfession = (profession, index) => {
     setSelectedProfessions((prevSelectedProfessions) =>
@@ -475,6 +511,8 @@ const KidsformOne = () => {
   };
 
   const kidsSignUp = async () => {
+    setIsSubmitted(true);
+
     if (parentFirstName === "") {
       setparentFirstNameError(true);
     }
@@ -544,7 +582,7 @@ const KidsformOne = () => {
       country !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
-      selectedCategories.length >= 3 &&
+      selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
       kidsPreferedFirstName !== "" &&
       nationality.length !== 0 &&
@@ -554,7 +592,7 @@ const KidsformOne = () => {
       passwordMatch === true &&
       completedJobs !== "" &&
       mobileValidationError == false &&
-      passwordStatus
+      !passwordError
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -581,7 +619,9 @@ const KidsformOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
+        publicUrl: `${kidsPreferedFirstName.replace(/ /g, "-")}-${
+          Math.floor(Math.random() * 900) + 100
+        }`,
       };
       setIsLoading(true);
       if (!userId) {
@@ -595,7 +635,7 @@ const KidsformOne = () => {
               setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(
-                  `/talent-otp?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
+                  `/talent-kids-teen-signup-otp?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
                 );
               }, 1000);
             } else if (resData.data.status === false) {
@@ -620,7 +660,7 @@ const KidsformOne = () => {
               setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(
-                  `/talent-otp?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
+                  `/talent-kids-teen-signup-otp?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
                 );
               }, 1000);
             } else if (resData.data.status === false) {
@@ -651,7 +691,7 @@ const KidsformOne = () => {
         setOpenPopUp(false);
       }, 1000);
     }
-    if (!passwordStatus) {
+    if (passwordError == true) {
       setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -845,117 +885,6 @@ const KidsformOne = () => {
       setMobileValidationError(true);
     }
   };
-
-  const [passwordStatus, setPasswordStatus] = useState(false);
-  let line = document.querySelector(".line");
-  let text = document.querySelector(".text");
-  let password_strength_box = document.querySelector(".password_strength_box");
-  let password = document.querySelector(".password");
-
-  if (password && password_strength_box && line && text) {
-    if (password.value.length == 0) {
-      password_strength_box.style.display = "none";
-    }
-
-    password.oninput = function () {
-      if (password.value.length == 0) {
-        password_strength_box.style.display = "none";
-      }
-      if (password.value.length >= 1) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "5%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 2) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "10%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 3) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "20%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 4) {
-        setPasswordStatus(false);
-
-        password_strength_box.style.display = "flex";
-        line.style.width = "35%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-        if (password.value.match(/[!@#$%^&*]/)) {
-          setPasswordStatus(false);
-          password_strength_box.style.display = "flex";
-          line.style.width = "45%";
-          line.style.backgroundColor = "#e9ee30";
-          text.style.color = "#e9ee30";
-          text.innerHTML = "Medium";
-        }
-      }
-      if (
-        password.value.length >= 5 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/)
-      ) {
-        setPasswordStatus(false);
-
-        password_strength_box.style.display = "flex";
-        line.style.width = "50%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
-        setPasswordStatus(false);
-
-        password_strength_box.style.display = "flex";
-        line.style.width = "70%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        password.value.length >= 7 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/) &&
-        password.value.match(/[0-9]/)
-      ) {
-        setPasswordStatus(false);
-
-        password_strength_box.style.display = "flex";
-        line.style.width = "80%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-
-      if (
-        password.value.length >= 8 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/) &&
-        password.value.match(/[0-9]/) &&
-        password.value.match(/[!@#$%^&*]/)
-      ) {
-        setPasswordStatus(true);
-
-        password_strength_box.style.display = "flex";
-        line.style.width = "100%";
-        line.style.backgroundColor = "#2ccc2c";
-        text.style.color = "#2ccc2c";
-        text.innerHTML = "Strong";
-      }
-    };
-  }
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -1229,7 +1158,7 @@ const KidsformOne = () => {
                               Please enter Password
                             </div>
                           )}
-                          {talentPassword && !passwordStatus && (
+                          {talentPassword && passwordError && (
                             <div className="invalid-fields password-error-box">
                               Your password must be at least 8 characters long
                               and include at least: 1 capital letter (A, B,
@@ -1407,7 +1336,7 @@ const KidsformOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
@@ -1417,7 +1346,7 @@ const KidsformOne = () => {
                                         }
                                       }}
                                       placeholder="$/hr"
-                                      min="0"
+                                      min="1"
                                     ></input>
                                   </div>
                                   <div className="mb-3 col-md-3 divSep">
@@ -1430,7 +1359,7 @@ const KidsformOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
@@ -1534,7 +1463,7 @@ const KidsformOne = () => {
                       </div>
                     </div>
                     <div className="kids-form-title-sub">
-                      Select 3 to 6 categories relevant to your profile
+                      Select 1 to 6 categories relevant to your profile
                       <span className="mandatory">*</span>
                     </div>
                     <div className="category-list">
@@ -1565,11 +1494,11 @@ const KidsformOne = () => {
                         Please choose Categories
                       </div>
                     )} */}
-                    {(selectedCategories?.length < 3 ||
+                    {(selectedCategories?.length == 0 ||
                       selectedCategories?.length > 6) &&
                       categoryError && (
                         <div className="invalid-fields">
-                          Please select 3 to 6 categories relevant to your
+                          Please select 1 to 6 categories relevant to your
                           profile
                         </div>
                       )}

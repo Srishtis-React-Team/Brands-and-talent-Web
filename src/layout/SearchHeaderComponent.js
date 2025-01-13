@@ -13,8 +13,7 @@ import PopUp from "../components/PopUp";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { Button, Modal, Box, Typography } from "@mui/material";
-import searchPathOptions from "../components/SearchPaths";
-
+import SearchPaths from "../components/SearchPaths";
 const SearchHeaderComponent = ({ onData }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -32,7 +31,10 @@ const SearchHeaderComponent = ({ onData }) => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
+  const searchPathOptions = SearchPaths(); // Call the function/component to get the options
+  const [brandData, setBrandData] = useState(null);
 
+  console.log(searchPathOptions, "searchPathOptions"); // Use the dynamically generated options
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
@@ -65,6 +67,21 @@ const SearchHeaderComponent = ({ onData }) => {
       setBrand(false);
     }
   }
+  useEffect(() => {
+    getBrand();
+  }, []);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${localStorage.getItem("brandId")}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const handleRegister = () => {
     if (brand === true) {
@@ -132,8 +149,21 @@ const SearchHeaderComponent = ({ onData }) => {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
-      } else if (currentUser_type === "brand" && currentUserId) {
-        navigate("/find-creators");
+      }
+       else if (currentUser_type === "brand" && currentUserId) {
+       // console.log("brandData?.planName",brandData?.planName)
+        // if (brandData?.planName === "Pro" || brandData?.planName === "Premium"){
+        //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate("/pricing");
+        //   }, 3000);
+        // } 
+      //  else {
+          navigate("/find-talents");
+       // }
+        navigate("/find-talent");
       } else if (currentUser_type === "talent" && currentUserId) {
         setMessage("You need to sign Up as Brand to find talents");
         setOpenPopUp(true);
@@ -162,10 +192,31 @@ const SearchHeaderComponent = ({ onData }) => {
         }
       }
       if (menuItem === "edit") {
-        if (currentUser_type === "talent") {
-          navigate(`${"/edit-talent-profile"}?${currentUserId}`);
-        } else if (currentUser_type === "brand") {
-          navigate(`/`);
+        if (talentData?.accountBlock == false) {
+          if (currentUser_type === "talent") {
+            if (talentData?.adminApproved === true) {
+              navigate(`/edit-talent-profile?${talentData?._id}`);
+            } else {
+              handleClose();
+
+              setMessage(
+                "After your verification is approved, you can update your profile"
+              );
+              setOpenPopUp(true);
+              setTimeout(() => {
+                setOpenPopUp(false);
+              }, 2000);
+            }
+          } else if (currentUser_type === "brand") {
+            navigate(`/`);
+          }
+        } else if (talentData?.accountBlock == true) {
+          setMessage("Please upgrade your plan to access your profile");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate(`/pricing`);
+          }, 3000);
         }
       }
     };
@@ -209,7 +260,16 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
-    if (route === "/find-creators") {
+    if (route == "/") {
+      navigate("/");
+    }
+    if (route == "/privacy-policy") {
+      navigate("/privacy-policy");
+    }
+    if (route == "/terms-conditions") {
+      navigate("/terms-conditions");
+    }
+    if (route === "/find-talent") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
         setMessage("You must be logged in");
@@ -240,7 +300,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/signup") {
       navigate(route);
     } else if (route === "/about-us") {
-      navigate(route);
+      navigate("/about-us");
     } else if (route === "/community-guidelines") {
       navigate(route);
     } else if (route === "/blogs") {
@@ -255,16 +315,12 @@ const SearchHeaderComponent = ({ onData }) => {
           navigate("/login");
         }, 1000);
       } else {
-        navigate(route);
+        navigate("/create-jobs");
       }
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
-      // navigate(route);
-      // window.open(
-      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      //   "_blank"
-      // );
+      navigate("/login");
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
@@ -302,7 +358,7 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/applied-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
+      if (!currentUserId || currentUser_type == "brand") {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
@@ -314,7 +370,7 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/saved-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
+      if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
@@ -338,7 +394,7 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/find-talents") {
-      if (!currentUserId || currentUser_type == "talent") {
+      if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
@@ -346,7 +402,9 @@ const SearchHeaderComponent = ({ onData }) => {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
-      } else {
+      } else if (currentUserId && currentUser_type == "talent") {
+        navigate("/find-talent");
+      } else if (currentUserId && currentUser_type == "brand") {
         navigate(route);
       }
     } else if (route === "/favorite-talents") {
@@ -386,16 +444,18 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/edit-talent-profile") {
-      if (!currentUserId || currentUser_type == "brand") {
+      if (talentData?.adminApproved === true) {
+        navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+      } else {
         handleClose();
-        setMessage("You must be logged in");
+
+        setMessage(
+          "After your verification is approved, you can update your profile"
+        );
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-      } else {
-        navigate(route);
+        }, 2000);
       }
     } else if (route === "/edit-brand-profile") {
       if (!currentUserId || currentUser_type == "talent") {
@@ -494,9 +554,31 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     }
+
+    if (route == "/careers") {
+      handleClose();
+      navigate("/careers");
+    }
+    if (route == "/become-affliate") {
+      handleClose();
+      navigate("/become-affliate");
+    }
+    if (route == "/investors") {
+      handleClose();
+      navigate("/investors");
+    }
+    if (route == "/feedback") {
+      handleClose();
+      navigate("/feedback");
+    }
+
     if (route == "/talent-signup") {
       handleClose();
       handleRegister();
+    }
+    if (route == "/contact-us") {
+      handleClose();
+      navigate("/contact-us");
     }
     if (route == "/brand-firstGig") {
       navigate(route);
@@ -508,7 +590,7 @@ const SearchHeaderComponent = ({ onData }) => {
       searchPathOptions
         .filter(
           (option) =>
-            option.label.toLowerCase().includes(searchTerm.toLowerCase()) // Changed startsWith to includes for partial matching
+            option.label.toLowerCase().startsWith(searchTerm.toLowerCase()) // Changed startsWith to includes for partial matching
         )
         .map((option) => option.label)
     )
@@ -558,6 +640,12 @@ const SearchHeaderComponent = ({ onData }) => {
                           </div>
                         </>
                       ))}
+
+                    {filteredOptions.length == 0 && (
+                      <>
+                        <div className="invalid-fields">No results found!</div>
+                      </>
+                    )}
                   </div>
                 </>
               )}
