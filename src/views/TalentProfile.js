@@ -24,7 +24,7 @@ import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import { ArrowBack, ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -2485,6 +2485,8 @@ const TalentProfile = () => {
             onClose={handleClose}
             aria-labelledby="image-slider-modal"
           >
+            
+           
             <Box
               sx={{
                 position: "absolute",
@@ -2498,20 +2500,21 @@ const TalentProfile = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              
             >
-              
-              
+            
               <IconButton
                 sx={{
                   position: "absolute",
-                  top: 5,
+                  top: "90px",
                   right: 5,
                   color: "#ffffff",
+                  left: "-95%",
                 }}
                 onClick={handleClose}
               >
-                <Close />
+                 <ArrowBack />
+             
+                {/* <Close /> */}
               </IconButton>
               <img
                 src={`${API.userFilePath}${photosList[currentIndex]}`}
@@ -2524,7 +2527,6 @@ const TalentProfile = () => {
                 }}
                 className="big-slider-image"
               />
-              
               <IconButton
                 sx={{
                   position: "absolute",
@@ -2545,7 +2547,6 @@ const TalentProfile = () => {
                 }}
                 onClick={handleNext}
               >
-             
                 <ArrowForwardIos />
               </IconButton>
             </Box>
@@ -2561,7 +2562,6 @@ const TalentProfile = () => {
             <div className="modal-dialog  modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
-               
                   <button
                     type="button"
                     className="btn-close"

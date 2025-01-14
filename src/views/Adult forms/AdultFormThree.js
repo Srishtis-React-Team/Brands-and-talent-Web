@@ -937,7 +937,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const goBack = () => {
-    navigate(`/adult-signup-plan-details?userId=${queryString}`);
+    navigate(`/talent-signup-plan-details?userId=${queryString}`);
   };
 
   useEffect(() => {
