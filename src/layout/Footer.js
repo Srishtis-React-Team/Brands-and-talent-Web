@@ -44,6 +44,7 @@ const Footer = (props) => {
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
+  const [copyRightList, setCopyRightList] = useState([]);
   const clear = () => {
     setFirstName("");
     setEmail("");
@@ -55,12 +56,36 @@ const Footer = (props) => {
   //   // setData("talent-signup");
   //   handleRegister();
   // };
+  useEffect(() => {
+    fetchContentByType();
+  }, []);
 
   useEffect(() => {
     if (currentUserId) {
       getTalentById();
     }
   }, [currentUserId]);
+
+  const fetchContentByType = async () => {
+    const formData = {
+      contentType: "Copy Right",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        if (resData) {
+          console.log("resDataresData",resData)
+          console.log("nnnnnnnnnnnnnnnnnnnnnnnn",resData?.data?.data?.content)
+          
+          setCopyRightList(resData?.data?.data?.content);
+        }
+      })
+      .catch((err) => {});
+  };
+  useEffect(() => {
+    console.log(copyRightList, "copyRightList");
+  }, [copyRightList]);
+  const copyRightContent = copyRightList;
+ 
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
@@ -573,14 +598,22 @@ const Footer = (props) => {
         </div>
 
         <section>
-          <div className="copyright-section">
+        <div className="copyright-section">
+        <p className="descp" dangerouslySetInnerHTML={{ __html: copyRightContent }}></p>
+        <p>
+          <Link onClick={() => {}} to="/feedback">
+            <span className="feedback">Feedback & Reporting</span>
+          </Link>
+        </p>
+      </div>
+          {/* <div className="copyright-section">
             <p>
               © 2024 Brands & Talent Management | All Rights Reserved |
               <Link onClick={handleClick} to="/feedback">
                 <span className="feedback"> Feedback & Reporting</span>
               </Link>
             </p>
-          </div>
+          </div> */}
         </section>
       </div>
       {openPopUp && <PopUp message={message} />}
