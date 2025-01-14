@@ -84,7 +84,7 @@ const PaymentOptions = ({
       } else {
         url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
       }
-    } else if('/adult-signup-plan-details'){
+    } else if('/talent-signup-plan-details'){
       url = `/talent-signup-files-details?userId=${userId}`;
     }else {
       url = success_url;
