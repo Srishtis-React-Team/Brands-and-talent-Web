@@ -287,7 +287,7 @@ const FindCreators = () => {
 
   const getTalentList = async () => {
     const formData = {
-      userId: brandId,
+      userId: localStorage?.getItem("currentUser"),
     };
     await ApiHelper.post(API.getTalentList, formData)
       .then((resData) => {

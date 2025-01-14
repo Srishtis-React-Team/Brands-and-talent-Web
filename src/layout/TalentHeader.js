@@ -182,14 +182,16 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
             navigate(`/pricing`);
           }, 3000);
         }
-      } else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
-        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/pricing");
-        }, 3000);
-      } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
+      }
+      // else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
+      //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //     navigate("/pricing");
+      //   }, 3000);
+      // }
+      else if (menuItem == "find-talent") {
         setActiveMenu(menuItem); // Update the active menu item
         navigate("/find-talent");
       }

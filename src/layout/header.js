@@ -221,21 +221,29 @@ const Header = ({ onData }) => {
         // );
       } else if (currentUser_type === "brand" && currentUserId) {
         setActiveMenu("find-talent"); // Update the active menu item
-        navigate("/find-talent");
-      } else if (
-        currentUser_type === "talent" &&
-        talentData?.planName == "Basic"
-      ) {
-        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/pricing");
-        }, 3000);
-      } else if (
-        currentUser_type === "talent" &&
-        talentData?.planName != "Basic"
-      ) {
+        // if (brandData?.planName === "Pro" || brandData?.planName === "Premium"){
+        //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate("/pricing");
+        //   }, 3000);
+        // }else{
+        navigate("/find-talents");
+        // }
+      }
+      // else if (
+      //   currentUser_type === "talent" &&
+      //   talentData?.planName == "Basic"
+      // ) {
+      //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //     navigate("/pricing");
+      //   }, 3000);
+      // }
+      else if (currentUser_type === "talent") {
         navigate("/find-talent");
         setActiveMenu("find-talent"); // Update the active menu item
       }
