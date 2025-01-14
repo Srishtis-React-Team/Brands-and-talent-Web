@@ -367,21 +367,38 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
 
               <div className="company-location comp-main">
-                {jobData.compensation &&
+                {/* {jobData.compensation &&
                   Object.keys(jobData.compensation).length > 0 && (
                     <>
                       <span className="job-feature-heading">
                         Compensation :&nbsp;{" "}
                       </span>
                     </>
-                  )}
+                  )} */}
+
+                {[
+                  jobData?.compensation?.paid_collaboration,
+                  jobData?.compensation?.product_gift,
+                  jobData?.compensation?.paid_collaboration_and_gift,
+                ].some(
+                  (obj) =>
+                    obj &&
+                    Object.values(obj).some(
+                      (value) =>
+                        value !== null && value !== undefined && value !== ""
+                    )
+                ) && (
+                  <>
+                    <span className="font-600">Compensation :&nbsp;</span>
+                  </>
+                )}
 
                 <span className="comp-H">
-                  {jobData.compensation && (
+                  {jobData?.compensation && (
                     <>
                       <span className="job-feature-values">
-                        {jobData.compensation &&
-                          Object.entries(jobData.compensation).map(
+                        {jobData?.compensation &&
+                          Object.entries(jobData?.compensation).map(
                             ([key, value]) => (
                               <span key={key}>
                                 {(value?.minPay ||
@@ -517,7 +534,33 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                             </span>
                           </li>
                         )}
-                        {jobData?.gender && (
+                        {jobData?.gender && jobData.gender.length > 0 ? (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Gender :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData.gender
+                                .map((gender, index) =>
+                                  index === jobData.gender.length - 1
+                                    ? gender
+                                    : gender + ", "
+                                )
+                                .join("")}
+                            </span>
+                          </li>
+                        ) : (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Gender :
+                            </span>
+                            <span className="job-feature-values">
+                              No data added
+                            </span>
+                          </li>
+                        )}
+
+                        {/* {jobData?.gender && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
                               Gender :
@@ -533,7 +576,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                   .join("")}
                             </span>
                           </li>
-                        )}
+                        )} */}
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (
                             <li className="job-features-li">
@@ -552,7 +595,34 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                               </span>
                             </li>
                           )}
-                        {jobData?.nationality && (
+                        {jobData?.nationality &&
+                        jobData.nationality.length > 0 ? (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Nationality :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData.nationality
+                                .map((nationality, index) =>
+                                  index === jobData.nationality.length - 1
+                                    ? nationality
+                                    : nationality + ", "
+                                )
+                                .join("")}
+                            </span>
+                          </li>
+                        ) : (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Nationality :
+                            </span>
+                            <span className="job-feature-values">
+                              No data added
+                            </span>
+                          </li>
+                        )}
+
+                        {/* {jobData?.nationality && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
                               Nationality :
@@ -568,7 +638,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                   .join("")}
                             </span>
                           </li>
-                        )}
+                        )} */}
                         {jobData?.ethnicity && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -579,7 +649,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                             </span>
                           </li>
                         )}
-
                         {(jobData?.instaMin ||
                           jobData?.tikTokMin ||
                           jobData?.linkedInMin ||
@@ -588,23 +657,26 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           jobData?.youTubeMin) && (
                           <>
                             <li className="job-features-li">
-                              <div className="d-flex">
+                              <div className="d-flex flex-column">
                                 <span className="job-feature-heading pr-1">
                                   Social Media Followers Count:
                                 </span>
-                                <ul>
+                                <ul className="mb-0 mt-2">
                                   {jobData?.instaMin && (
                                     <li>
                                       Instagram Followers:{" "}
                                       <span className="job-feature-values">
-                                        {jobData?.instaMin} - {jobData?.instaMax}
+                                        {jobData?.instaMin} -{" "}
+                                        {jobData?.instaMax}
                                       </span>
                                     </li>
                                   )}
 
                                   {jobData?.tikTokMin && (
                                     <li>
-                                      TikTok Followers:{" "}
+                                      <span className="job-feature-heading">
+                                        TikTok:
+                                      </span>{" "}
                                       <span className="job-feature-values">
                                         {jobData?.tikTokMin} -{" "}
                                         {jobData?.tikTokMax}
@@ -614,7 +686,9 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
                                   {jobData?.linkedInMin && (
                                     <li>
-                                      Linkedin Followers:{" "}
+                                      <span className="job-feature-heading">
+                                        LinkedIn:
+                                      </span>{" "}
                                       <span className="job-feature-values">
                                         {jobData?.linkedInMin} -{" "}
                                         {jobData?.linkedInMax}
@@ -624,7 +698,9 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
                                   {jobData?.fbMin && (
                                     <li>
-                                      Facebook Followers:{" "}
+                                      <span className="job-feature-heading">
+                                        Facebook:
+                                      </span>{" "}
                                       <span className="job-feature-values">
                                         {jobData?.fbMin} - {jobData?.fbMax}
                                       </span>
@@ -633,7 +709,9 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
                                   {jobData?.twitterMin && (
                                     <li>
-                                      Twitter(X) Followers:{" "}
+                                      <span className="job-feature-heading">
+                                        Twitter (X):
+                                      </span>{" "}
                                       <span className="job-feature-values">
                                         {jobData?.twitterMin} -{" "}
                                         {jobData?.twitterMax}
@@ -643,7 +721,9 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
                                   {jobData?.youTubeMin && (
                                     <li>
-                                      YouTube Followers:{" "}
+                                      <span className="job-feature-heading">
+                                        YouTube:
+                                      </span>{" "}
                                       <span className="job-feature-values">
                                         {jobData?.youTubeMin} -{" "}
                                         {jobData?.youTubeMax}
@@ -655,6 +735,83 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                             </li>
                           </>
                         )}
+
+                        {/* {(jobData?.instaMin ||
+                          jobData?.tikTokMin ||
+                          jobData?.linkedInMin ||
+                          jobData?.fbMin ||
+                          jobData?.twitterMin ||
+                          jobData?.youTubeMin) && (
+                            <>
+                              <li className="job-features-li">
+                                <div className="d-flex">
+                                  <span className="job-feature-heading pr-1">
+                                    Social Media Followers Count:
+                                  </span>
+                                  <ul>
+                                    {jobData?.instaMin && (
+                                      <li>
+                                        Instagram Followers:{" "}
+                                        <span className="job-feature-values">
+                                          {jobData?.instaMin} -{" "}
+                                          {jobData?.instaMax}
+                                        </span>
+                                      </li>
+                                    )}
+
+                                    {jobData?.tikTokMin && (
+                                      <li>
+                                        TikTok Followers:{" "}
+                                        <span className="job-feature-values">
+                                          {jobData?.tikTokMin} -{" "}
+                                          {jobData?.tikTokMax}
+                                        </span>
+                                      </li>
+                                    )}
+
+                                    {jobData?.linkedInMin && (
+                                      <li>
+                                        Linkedin Followers:{" "}
+                                        <span className="job-feature-values">
+                                          {jobData?.linkedInMin} -{" "}
+                                          {jobData?.linkedInMax}
+                                        </span>
+                                      </li>
+                                    )}
+
+                                    {jobData?.fbMin && (
+                                      <li>
+                                        Facebook Followers:{" "}
+                                        <span className="job-feature-values">
+                                          {jobData?.fbMin} - {jobData?.fbMax}
+                                        </span>
+                                      </li>
+                                    )}
+
+                                    {jobData?.twitterMin && (
+                                      <li>
+                                        Twitter(X) Followers:{" "}
+                                        <span className="job-feature-values">
+                                          {jobData?.twitterMin} -{" "}
+                                          {jobData?.twitterMax}
+                                        </span>
+                                      </li>
+                                    )}
+
+                                    {jobData?.youTubeMin && (
+                                      <li>
+                                        YouTube Followers:{" "}
+                                        <span className="job-feature-values">
+                                          {jobData?.youTubeMin} -{" "}
+                                          {jobData?.youTubeMax}
+                                        </span>
+                                      </li>
+                                    )}
+                                  </ul>
+                                </div>
+                              </li>
+                            </>
+                          )} */}
                       </ul>
                     </div>
                   </div>
@@ -744,12 +901,12 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <div className="job-about-section">
                     <div className="job-feature-title">Project brief / TOR</div>
                     <div className="service-files-main">
-                      <div>
+                      <div className="w-100">
                         {jobData?.workSamples?.length > 0 &&
                           jobData?.workSamples?.map((item) => {
                             return (
                               <>
-                                <div className="update-portfolio-cards">
+                                <div className="update-portfolio-cards project-file-wrapper">
                                   <div className="update-portfolio-icon">
                                     <div className="file-section">
                                       {item.type === "image" && (

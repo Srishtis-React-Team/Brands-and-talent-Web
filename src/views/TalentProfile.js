@@ -24,7 +24,7 @@ import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import { ArrowBack, ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -398,72 +398,6 @@ const TalentProfile = () => {
     //   "_blank"
     // );
   };
-  const messageNow = () => {
-    if (isOwnTalent == true) {
-      if (talentData?.planName == "Basic") {
-        setMessage("Please upgrade to pro plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (
-        talentData?.planName != "Basic" &&
-        talentData?.accountBlock == false
-      ) {
-        navigate(`/message?${talentData?._id}`);
-      } else if (talentData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-    } else if (isOwnTalent == false && isAdminApproved == true) {
-      if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to pro plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (
-        brandData?.planName !== "Basic" &&
-        brandData?.accountBlock == false
-      ) {
-        navigate(`/message?${talentData?._id}`);
-      } else if (brandData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-    } else if (currentUserType == "brand") {
-      if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to premium plan to use this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      } else if (
-        brandData?.planName !== "Basic" &&
-        brandData?.accountBlock == false
-      ) {
-        navigate(`/message?${talentData?._id}`);
-      } else if (brandData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-    }
-  };
 
   const inviteTalentNotification = async () => {
     const formData = {
@@ -694,6 +628,7 @@ const TalentProfile = () => {
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
+        console.log(resData, "resData");
         if (resData?.data?.currentStatus == "own-talent") {
           setShowProfile(true);
           setIsOwnTalent(true);
@@ -717,6 +652,108 @@ const TalentProfile = () => {
         setTalentData(resData?.data?.data);
       })
       .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(isOwnTalent, "isOwnTalent");
+    console.log(isAdminApproved, "isAdminApproved");
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
+  const messageNow = async () => {
+    const formData = {
+      viewingUserId: talentData?._id,
+      loggedInUserId: localStorage.getItem("currentUser"),
+      viewingUserType: talentData?.userType,
+      loggedInUserType: localStorage.getItem("currentUserType"),
+    };
+
+    await ApiHelper.post(`${API.findPlan}`, formData)
+      .then((resData) => {
+        console.log(resData, "messageNow_response");
+        if (resData?.data?.status == true) {
+          navigate(`/message?${talentData?._id}`);
+        } else if (resData?.data?.status == false) {
+          setMessage(`${resData?.data?.message}`);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate(`/pricing`);
+          }, 3000);
+        }
+      })
+      .catch((err) => {});
+
+    // if (isOwnTalent == true) {
+    //   if (talentData?.planName == "Basic") {
+    //     setMessage("Please upgrade to pro plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     talentData?.planName != "Basic" &&
+    //     talentData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (talentData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    // } else if (isOwnTalent == false && isAdminApproved == true) {
+    //   if (brandData?.planName === "Basic") {
+    //     setMessage("Please upgrade to pro plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     brandData?.planName !== "Basic" &&
+    //     brandData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (brandData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    //   if (talentData?.planName != "Basic") {
+    //     // alert("block01");
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (talentData?.planName == "Basic") {
+    //     navigate(`/pricing`);
+    //   }
+    // } else if (currentUserType == "brand") {
+    //   if (brandData?.planName === "Basic") {
+    //     setMessage("Please upgrade to premium plan to use this feature");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   } else if (
+    //     brandData?.planName !== "Basic" &&
+    //     brandData?.accountBlock == false
+    //   ) {
+    //     navigate(`/message?${talentData?._id}`);
+    //   } else if (brandData?.accountBlock == true) {
+    //     setMessage("Please upgrade your plan to access your profile");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate(`/pricing`);
+    //     }, 3000);
+    //   }
+    // }
   };
 
   return (
@@ -763,9 +800,13 @@ const TalentProfile = () => {
                               src={`${API.userFilePath}${talentData?.image?.fileData}`}
                             ></img>
                           )}
-                          {!talentData && !talentData?.image && (
-                            <img className="talent-img" src={avatarImage}></img>
-                          )}
+                          {!talentData ||
+                            (!talentData?.image && (
+                              <img
+                                className="talent-img"
+                                src={avatarImage}
+                              ></img>
+                            ))}
                         </div>
                         {talentData?.planName != "Basic" && (
                           <>
@@ -2444,6 +2485,8 @@ const TalentProfile = () => {
             onClose={handleClose}
             aria-labelledby="image-slider-modal"
           >
+            
+           
             <Box
               sx={{
                 position: "absolute",
@@ -2458,16 +2501,20 @@ const TalentProfile = () => {
                 alignItems: "center",
               }}
             >
+            
               <IconButton
                 sx={{
                   position: "absolute",
-                  top: 5,
+                  top: "90px",
                   right: 5,
                   color: "#ffffff",
+                  left: "-95%",
                 }}
                 onClick={handleClose}
               >
-                <Close />
+                 <ArrowBack />
+             
+                {/* <Close /> */}
               </IconButton>
               <img
                 src={`${API.userFilePath}${photosList[currentIndex]}`}

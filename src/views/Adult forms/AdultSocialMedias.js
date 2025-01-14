@@ -80,7 +80,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
           setTimeout(function () {
             setOpenPopUp(false);
             // navigate(`/talent-signup-files-details?${queryString}`);
-            navigate(`/adult-signup-plan-details?${queryString}`);
+            navigate(`/talent-signup-plan-details?${queryString}`);
           }, 1000);
         } else {
         }

@@ -46,6 +46,7 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
 
   // Handle changes for input, select, and creatableSelect
   const handleChange = (name, value) => {
+    console.log(value, "value");
     const newValues = formValues.map((item) =>
       item.label === name ? { ...item, value } : item
     );
@@ -109,24 +110,20 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
                 id={label}
                 name={label}
                 value={value ? { label: value, value } : null}
-                // onChange={(selectedOption) =>
-                //   handleChange(
-                //     label,
-                //     selectedOption ? selectedOption.value : ""
-                //   )
-                // }
                 onKeyDown={handleKeyDown}
                 onChange={(selectedOption) => {
-                  const value = selectedOption.value;
-                  // Check if the value is a valid number and is non-negative
-                  if (
-                    /^\d*\.?\d*$/.test(value) &&
-                    (value >= 0 || value === "")
-                  ) {
-                    handleChange(
-                      label,
-                      selectedOption ? selectedOption.value : ""
-                    );
+                  if (selectedOption === null) {
+                    // Handle the clear action
+                    handleChange(label, "");
+                  } else {
+                    const value = selectedOption?.value;
+                    // Check if the value is a valid number and is non-negative
+
+                    if (/^\d*\.?\d*\+?$/.test(value) || value === "") {
+                      handleChange(label, value);
+                    } else {
+                      console.error("Invalid input:", value);
+                    }
                   }
                 }}
                 options={getOptions(options)}

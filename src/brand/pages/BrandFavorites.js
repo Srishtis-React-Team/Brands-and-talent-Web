@@ -353,8 +353,11 @@ const BrandFavorites = () => {
                                     </div>
                                   </>
                                 )}
-                                <span className="job-company_dtls nweAlign pt-2 d-flex">
-                                  <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                                <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                  <div className="logo-fill-briefcase">
+                                  <i className="bi bi-geo-alt-fill model-job-icons"></i>
+                                  </div>
+                                  <div className="contSect" >
                                   <span>
                                     {item?.favouriteUserDetails?.childCity &&
                                       `${item?.favouriteUserDetails?.childCity}`}
@@ -373,7 +376,8 @@ const BrandFavorites = () => {
                                       ?.parentCountry &&
                                       `${item?.favouriteUserDetails?.parentCountry}`}
                                   </span>
-                                </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>

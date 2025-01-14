@@ -27,6 +27,7 @@ const AdultSignup = () => {
     // Extract userId and userEmail from the URL query string
     const userIdFromUrl = params.get("userId");
     const userEmailFromUrl = params.get("userEmail");
+    console.log(userIdFromUrl, "userIdFromUrl");
 
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
@@ -37,7 +38,10 @@ const AdultSignup = () => {
     generateToken();
   }, []);
   useEffect(() => {
-    getTalentById();
+    if (userId) {
+      getTalentById();
+      console.log(userId, "userId");
+    }
   }, [userId]);
 
   const getTalentById = async () => {
@@ -193,7 +197,9 @@ const AdultSignup = () => {
         talentPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
         adultName: adultName,
-        publicUrl: adultName.replace(/ /g, "-"),
+        publicUrl: `${adultName.replace(/ /g, "-")}-${
+          Math.floor(Math.random() * 900) + 100
+        }`,
         image: {
           fileData: "5cf3b581-deb2-4366-8949-43e7f1086165.webp",
           id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
@@ -202,34 +208,67 @@ const AdultSignup = () => {
         },
       };
       setIsLoading(true);
-      await ApiHelper.post(API.adultSignUp, formData)
-        .then((resData) => {
-          setIsLoading(false);
-          if (resData.data.status === true) {
-            setMessage("Registered Successfully");
+      if (!userId) {
+        await ApiHelper.post(API.adultSignUp, formData)
+          .then((resData) => {
+            setIsLoading(false);
+            if (resData.data.status === true) {
+              setMessage("Registered Successfully");
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+                navigate(
+                  `/otp-verification?userId=${resData.data["id"]}&userEmail=${resData.data.data}`
+                );
+              }, 2000);
+            } else if (resData.data.status === false) {
+              setMessage(resData?.data?.message);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            setMessage("Error Occured Try Again");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              navigate(
-                `/otp-verification?userId=${resData.data["id"]}&userEmail=${resData.data.data}`
-              );
-            }, 2000);
-          } else if (resData.data.status === false) {
-            setMessage(resData?.data?.message);
+            }, 1000);
+          });
+      } else if (userId) {
+        await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
+          .then((resData) => {
+            setIsLoading(false);
+            console.log(resData.data, "resData_updateAdults");
+
+            if (resData.data.status === true) {
+              setMessage("Updated Successfully");
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+                navigate(
+                  `/otp-verification?userId=${resData.data["id"]}&userEmail=${resData.data.email}`
+                );
+              }, 2000);
+            } else if (resData.data.status === false) {
+              setMessage(resData?.data?.message);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            setMessage("Error Occured Try Again");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-            }, 3000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          setMessage("Error Occured Try Again");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 1000);
-        });
+            }, 1000);
+          });
+      }
     } else {
       setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
@@ -365,35 +404,8 @@ const AdultSignup = () => {
                       setAdultPassword(e.target.value);
                     }}
                   ></input>
-                  <div className="password_strength_box">
-                    <div className="password_strength">
-                      <p className="text">Weak</p>
-                      <div className="line_box">
-                        <div className="line"></div>
-                      </div>
-                    </div>
-                    <div className="tool_tip_box">
-                      <span>
-                        <i className="bi bi-question-circle"></i>
-                      </span>
-                      <div className="tool_tip">
-                        <p style={{ listStyleType: "none" }}>
-                          <b>Password must be:</b>
-                        </p>
-                        <p>At least 8 character long</p>
-                        <p>At least 1 uppercase letter</p>
-                        <p>At least 1 lowercase letter</p>
-                        <p>At least 1 number</p>
-                        <p>At least 1 special character from !@#$%^&*</p>
-                      </div>
-                    </div>
-                  </div>
-
                   {adultPasswordError && (
-                    <div
-                      className="invalid-fields password-error-box"
-                      style={{ width: "width: 350px;" }}
-                    >
+                    <div className="invalid-fields password-error-box">
                       Your password must be at least 8 characters long and
                       include at least: 1 capital letter (A, B, C...), 1 small
                       letter (a, b, c...), 1 number (1, 2, 3...), 1 special

@@ -582,7 +582,7 @@ const KidsformOne = () => {
       country !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
-      selectedCategories.length >= 3 &&
+      selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
       kidsPreferedFirstName !== "" &&
       nationality.length !== 0 &&
@@ -619,7 +619,9 @@ const KidsformOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
+        publicUrl: `${kidsPreferedFirstName.replace(/ /g, "-")}-${
+          Math.floor(Math.random() * 900) + 100
+        }`,
       };
       setIsLoading(true);
       if (!userId) {
@@ -1492,7 +1494,7 @@ const KidsformOne = () => {
                         Please choose Categories
                       </div>
                     )} */}
-                    {(selectedCategories?.length < 3 ||
+                    {(selectedCategories?.length == 0 ||
                       selectedCategories?.length > 6) &&
                       categoryError && (
                         <div className="invalid-fields">

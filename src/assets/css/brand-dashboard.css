@@ -244,6 +244,8 @@
   object-fit: cover;
   height: auto;
   max-width: 100%;
+   
+  
 }
 .editTabs .image-edit-icon {
   width: 20px;
@@ -251,6 +253,8 @@
   padding: 16px;
   top: 64px;
   right: 184px;
+ 
+ 
 }
 .editTabs {
   padding-bottom: 20px;
@@ -408,4 +412,5 @@ input[type="radio"]:checked + .create-job-toggle-label {
     top: 64px;
     right: 100px;
   }
+
 }

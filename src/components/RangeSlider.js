@@ -27,19 +27,24 @@ class RangeSlider extends Component {
 
   getMousePosition = (e) => {
     const trackRect = this.track.getBoundingClientRect();
-    const x = (e.clientX - trackRect.left) / trackRect.width;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const x = (clientX - trackRect.left) / trackRect.width;
     return x;
   };
 
-  onMouseDown = (e, which) => {
-    window.addEventListener("mousemove", this.onMouseMove);
-    window.addEventListener("mouseup", this.onMouseUp);
+  onStart = (e, which) => {
+    const eventType = e.type === "mousedown" ? "mousemove" : "touchmove";
+    const endType = e.type === "mousedown" ? "mouseup" : "touchend";
+
+    window.addEventListener(eventType, this.onMove);
+    window.addEventListener(endType, this.onEnd);
     this.setState({ which });
   };
 
-  onMouseMove = (e) => {
+  onMove = (e) => {
     const { which, minPos, maxPos } = this.state;
     let newPos = this.getMousePosition(e);
+
     if (which === "minPos") {
       if (newPos < 0) {
         newPos = 0;
@@ -58,7 +63,7 @@ class RangeSlider extends Component {
     }
   };
 
-  onMouseUp = (e) => {
+  onEnd = () => {
     this.cleanUp();
     this.setState({ which: null });
   };
@@ -68,8 +73,10 @@ class RangeSlider extends Component {
   }
 
   cleanUp = () => {
-    window.removeEventListener("mousemove", this.onMouseMove);
-    window.removeEventListener("mouseup", this.onMouseUp);
+    window.removeEventListener("mousemove", this.onMove);
+    window.removeEventListener("mouseup", this.onEnd);
+    window.removeEventListener("touchmove", this.onMove);
+    window.removeEventListener("touchend", this.onEnd);
   };
 
   onChange = () => {
@@ -93,7 +100,6 @@ class RangeSlider extends Component {
 
     return (
       <div className="rangeslider">
-        {/* <div className="rangeslider-label">1</div> */}
         <div ref={(r) => (this.track = r)} className="rangeslider-track">
           <div
             className="rangeslider-track-active"
@@ -104,16 +110,17 @@ class RangeSlider extends Component {
           />
           <div
             className="rangeslider-track-button-min"
-            onMouseDown={(e) => this.onMouseDown(e, "minPos")}
+            onMouseDown={(e) => this.onStart(e, "minPos")}
+            onTouchStart={(e) => this.onStart(e, "minPos")}
             style={{ left: minPosition }}
           />
           <div
             className="rangeslider-track-button-max"
-            onMouseDown={(e) => this.onMouseDown(e, "maxPos")}
+            onMouseDown={(e) => this.onStart(e, "maxPos")}
+            onTouchStart={(e) => this.onStart(e, "maxPos")}
             style={{ left: maxPosition }}
           />
         </div>
-        {/* <div className="rangeslider-label">100</div> */}
       </div>
     );
   }
@@ -122,69 +129,3 @@ class RangeSlider extends Component {
 RangeSlider.propTypes = propTypes;
 
 export default RangeSlider;
-/*
-        <div className="rangeslider-track-button-max" />
-
-        const RangeSliderX = ({
-  min,
-  max,
-  minVal,
-  maxVal,
-  onMinChange,
-  onMaxChange
-}) => {
-  const track = useRef(null);
-  const [start, setStart] = useState();
-  const [trackRect, setTrackRect] = useState();
-  useEffect(() => {
-    
-    setTrackRect(track.current.getBoundingClientRect());
-  }, []);
-
-  const trackx = useCallback(node => {
-    if (node !== null) {
-      setTrackRect(node.getBoundingClientRect());
-    }
-  }, []);
-
-  const getMousePosition = e => {
-    //const rect = track.current.getBoundingClientRect();
-    
-
-    const x = e.clientX - trackRect.left;
-    
-    return +x;
-  };
-
-  const onMouseDown = e => {
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-    const xPos = getMousePosition(e);
-    
-    setStart(xPos);
-    
-  };
-  const onMouseMove = e => {
-    
-    const newX = getMousePosition(e) - start;
-    
-  };
-  const onMouseUp = e => {
-    window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
-    
-  };
-
-  return (
-    <div ref={track} className="rangeslider">
-      <div className="rangeslider-track">
-        <div className="rangeslider-track-active" />
-        <div
-          className="rangeslider-track-button-min"
-          onMouseDown={onMouseDown}
-        />
-      </div>
-    </div>
-  );
-};
-*/

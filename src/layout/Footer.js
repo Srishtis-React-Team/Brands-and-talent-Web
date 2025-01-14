@@ -7,6 +7,7 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import CurrentUser from "../CurrentUser";
+import weAccept from '../assets/icons/payment/Group 126 (1).png'
 import Header from "./header";
 const Footer = (props) => {
   const {
@@ -215,17 +216,19 @@ const Footer = (props) => {
       }, 1000);
     } else if (currentUserType === "brand" && currentUserId) {
       navigate("/find-talent");
-    } else if (
-      currentUserType === "talent" &&
-      talentData?.planName == "Basic"
-    ) {
-      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate("/pricing");
-      }, 3000);
-    } else if (
+    } 
+    // else if (
+    //   currentUserType === "talent" &&
+    //   talentData?.planName == "Basic"
+    // ) {
+    //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate("/pricing");
+    //   }, 3000);
+    // }
+     else if (
       currentUserType === "talent" &&
       talentData?.planName != "Basic"
     ) {
@@ -554,6 +557,10 @@ const Footer = (props) => {
                     margin: "0 10px",
                   }}
                 ></i>
+              </div>
+              <div style={{display:'flex',gap:'10px', marginTop:'10px'}}>
+                <span style={{fontWeight: 'bold'}}>We accept: </span>
+                <img style={{height:'22px'}} src={weAccept}></img>
               </div>
             </div>
           </div>

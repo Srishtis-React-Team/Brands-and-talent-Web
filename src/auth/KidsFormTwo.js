@@ -33,6 +33,17 @@ const KidsFormTwo = () => {
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
+    const userEmail = localStorage.getItem('userEmail');
+    const obj = {
+      email: userEmail
+    }
+
+    ApiHelper.post(API.typeChecking, obj).then((response)=>{
+      localStorage.setItem('userType',response.data.modelType)
+    })
+  })
+
+  useEffect(() => {
     // Check if the page has already been reloaded
     if (!localStorage.getItem("reloaded")) {
       localStorage.setItem("reloaded", "true"); // Set flag in localStorage
@@ -105,6 +116,10 @@ const KidsFormTwo = () => {
   };
 
   const editKids = async () => {
+    const currentUrl = window.location.href;
+    const userType = localStorage.getItem('userType');
+    // Extract the userId (part after '?')
+    const userId = currentUrl.split('?')[1];
     const userData = {
       planName: "Basic",
       user_id: userId,
@@ -116,7 +131,11 @@ const KidsFormTwo = () => {
       userData
     );
     console.log("responseSubscription", responseSubscription);
-    navigate(`/talent-kids-teen-signup-files-details?userId=${userId}`);
+    if(userType == 'kids'){
+    navigate(`/talent-kids-teen-signup-files-details?${userId}`);
+    }else{
+    navigate(`/talent-signup-files-details?${userId}`)
+    }
   };
 
   const handleEmailChange = (e) => {
@@ -374,7 +393,7 @@ const KidsFormTwo = () => {
             id="aba_merchant_request"
             target="aba_webservice"
             method="POST"
-            action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+            action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
           >
             <input
               type="hidden"

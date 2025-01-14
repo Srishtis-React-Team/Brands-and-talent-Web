@@ -439,7 +439,7 @@ const AdultFormOne = () => {
       adultsPreferedFirstName !== "" &&
       adultsPreferedLastName !== "" &&
       selectedProfessions.length !== 0 &&
-      selectedCategories.length >= 3 &&
+      selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
       gender !== "" &&
       languages.length !== 0 &&
@@ -1050,7 +1050,7 @@ const AdultFormOne = () => {
                       </div>
                     ))}
                   </div>
-                  {(selectedCategories?.length < 3 ||
+                  {(selectedCategories?.length == 0 ||
                     selectedCategories?.length > 6) &&
                     selectedCategoriesError && (
                       <div className="invalid-fields">
