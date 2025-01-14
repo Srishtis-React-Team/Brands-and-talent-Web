@@ -2184,7 +2184,8 @@ const CreateJobs = () => {
                             /> */}
 
                             <Select
-                            className="cs-select" 
+                            className="cs-select"
+
                               placeholder="Search country..."
                               options={countryList.map((country, index) => ({
                                 value: country,
@@ -2208,7 +2209,8 @@ const CreateJobs = () => {
                           <div className="mb-0">
                             <label className="form-label">State</label>
                             <Select
-                            className="cs-select" 
+                            className="cs-select"
+
                               placeholder="Select state..."
                               options={stateList?.map((state) => ({
                                 value: state.stateId, // or whatever unique identifier you want to use
@@ -2232,7 +2234,7 @@ const CreateJobs = () => {
                           <div className="mb-0">
                             <label className="form-label">City</label>
                             <Select
-                            className="cs-select" 
+                             className="cs-select" 
                               placeholder="Select City..."
                               options={cityList?.map((city) => ({
                                 value: city.cityId, // or whatever unique identifier you want to use
