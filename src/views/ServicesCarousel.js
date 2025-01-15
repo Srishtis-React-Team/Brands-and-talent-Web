@@ -15,6 +15,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   const [servicesList, setServicesList] = useState([]);
   const [userId, setUserId] = useState(null);
   const [currentPlanName, setCurrentPlanName] = useState(null);
+  const [accountBlock, setAccountBlock] = useState(null);
   const [videoAudioList, setVideoAudioList] = useState([]);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -65,7 +66,9 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   
       if (resData?.data?.status) {
         setCurrentPlanName(resData?.data?.planName); // Store planName in state
+        setAccountBlock(resData?.data?.accountBlock); // Store planName in state
         console.log("resData.planName",setCurrentPlanName)
+        console.log("resData.setAccountStatus",setAccountBlock)
         // messageNow(); // Call messageNow after setting the plan name
       } else {
         console.error("Failed to retrieve the plan name");
@@ -157,7 +160,9 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   };
 
   const messageNow = () => {
-
+    console.log("isOwnTalent",isOwnTalent)
+    console.log("accountBlock",accountBlock)
+    
     if (isOwnTalent == true) {
       if (talentData?.planName == "Basic"  ) {
         
@@ -181,11 +186,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         }, 3000);
       }
     } else if (isOwnTalent == false && isAdminApproved == true) {
-      console.log("-----------------------------")
+     
+      console.log("isOwnTalent",isOwnTalent)
      
       if (brandData?.planName === "Basic" ) {
-        console.log("branddataaaa111")
-       
+     
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -194,12 +199,12 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         }, 3000);
       } else if (
         brandData?.planName !== "Basic" &&
-        brandData?.accountBlock == false && currentPlanName !=="Basic"
+        brandData?.accountBlock == false && currentPlanName !=="Basic" && accountBlock ==false
       ) {
-        console.log("branddataa222222222222")
+       
         navigate(`/message?${talentData?._id}`);
       } else if (brandData?.accountBlock == true) {
-        console.log("branddataa33333333333333")
+        
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -207,57 +212,51 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           navigate(`/pricing`);
         }, 3000);
       } else if (talentData?.planName === "Basic" && currentPlanName !== "Basic") {
-        console.log("branddataa4444444444444444")
-        console.log("Inquire Now button clicked!brandd basic  ok condition");
-        console.log("talentData?.planName",talentData?.planName)
+       
+      
         navigate(`/message?${talentData?._id}`);
-        // setMessage("Please upgrade to pro plan to use this feature");
-        // setOpenPopUp(true);
-        // setTimeout(function () {
-        //   setOpenPopUp(false);
-        //   navigate(`/pricing`);
-        // }, 3000);
+       
       } else if (
         talentData?.planName !== "Basic" &&
-        talentData?.accountBlock == false && currentPlanName === "Basic"
+        talentData?.accountBlock == false && currentPlanName === "Basic" && accountBlock ==false
       ) {
-        console.log("branddataa555555555555555555")
+       
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate(`/pricing`);
         }, 3000);
-      //  navigate(`/message?${talentData?._id}`);
+    
       }
       else if (
         talentData?.planName === "Basic" &&
         talentData?.accountBlock == false && currentPlanName === "Basic"
       ) {
-        console.log("branddataa555555555555555555")
+        
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate(`/pricing`);
         }, 3000);
-      //  navigate(`/message?${talentData?._id}`);
+     
       }
+     
       else if (
         talentData?.planName !== "Basic" &&
-        talentData?.accountBlock == false && currentPlanName !== "Basic"
+        talentData?.accountBlock == false && currentPlanName !== "Basic" && accountBlock ==false
       ) {
-        console.log("branddataa5888888888888888")
-        // setMessage("Please upgrade to pro plan to use this feature");
-        // setOpenPopUp(true);
-        // setTimeout(function () {
-        //   setOpenPopUp(false);
-        //   navigate(`/pricing`);
-        // }, 3000);
+       
         navigate(`/message?${talentData?._id}`);
       }
       else if (talentData?.accountBlock == true) {
-        console.log("branddataa6666666666666666666")
+     
+        navigate(`/message?${talentData?._id}`);
+       
+      }
+      else if (accountBlock == true) {
+       
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
         setTimeout(function () {
