@@ -33,8 +33,6 @@ const OTPComponent = () => {
     const userIdFromUrl = params.get("userId");
     const userEmailFromUrl = params.get("userEmail");
 
-    console.log(userEmailFromUrl, "userEmailFromUrl");
-
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
@@ -53,10 +51,6 @@ const OTPComponent = () => {
 
     setOtp(newOtp);
   };
-
-  useEffect(() => {
-    console.log(userEmail, "userEmail");
-  }, [userEmail]);
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && otp[index] === "") {

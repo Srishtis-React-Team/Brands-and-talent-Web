@@ -185,13 +185,6 @@ const BrandFavorites = () => {
     });
   });
 
-  useEffect(() => {
-    console.log(talentList, "favoriteTalents");
-  }, [talentList]);
-  useEffect(() => {
-    console.log(modalData, "modalData");
-  }, [modalData]);
-
   return (
     <>
       <>
@@ -355,27 +348,29 @@ const BrandFavorites = () => {
                                 )}
                                 <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                   <div className="logo-fill-briefcase">
-                                  <i className="bi bi-geo-alt-fill model-job-icons"></i>
+                                    <i className="bi bi-geo-alt-fill model-job-icons"></i>
                                   </div>
-                                  <div className="contSect" >
-                                  <span>
-                                    {item?.favouriteUserDetails?.childCity &&
-                                      `${item?.favouriteUserDetails?.childCity}`}
-                                    {item?.favouriteUserDetails?.childCity &&
-                                      item?.favouriteUserDetails?.parentState &&
-                                      `, `}
-                                    {item?.favouriteUserDetails?.parentState &&
-                                      `${item?.favouriteUserDetails?.parentState}`}
-                                    {(item?.favouriteUserDetails?.childCity ||
-                                      item?.favouriteUserDetails
-                                        ?.parentState) &&
-                                      item?.favouriteUserDetails
+                                  <div className="contSect">
+                                    <span>
+                                      {item?.favouriteUserDetails?.childCity &&
+                                        `${item?.favouriteUserDetails?.childCity}`}
+                                      {item?.favouriteUserDetails?.childCity &&
+                                        item?.favouriteUserDetails
+                                          ?.parentState &&
+                                        `, `}
+                                      {item?.favouriteUserDetails
+                                        ?.parentState &&
+                                        `${item?.favouriteUserDetails?.parentState}`}
+                                      {(item?.favouriteUserDetails?.childCity ||
+                                        item?.favouriteUserDetails
+                                          ?.parentState) &&
+                                        item?.favouriteUserDetails
+                                          ?.parentCountry &&
+                                        `, `}
+                                      {item?.favouriteUserDetails
                                         ?.parentCountry &&
-                                      `, `}
-                                    {item?.favouriteUserDetails
-                                      ?.parentCountry &&
-                                      `${item?.favouriteUserDetails?.parentCountry}`}
-                                  </span>
+                                        `${item?.favouriteUserDetails?.parentCountry}`}
+                                    </span>
                                   </div>
                                 </div>
                               </div>

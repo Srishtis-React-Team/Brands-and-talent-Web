@@ -27,7 +27,6 @@ const AdultSignup = () => {
     // Extract userId and userEmail from the URL query string
     const userIdFromUrl = params.get("userId");
     const userEmailFromUrl = params.get("userEmail");
-    console.log(userIdFromUrl, "userIdFromUrl");
 
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
@@ -40,7 +39,6 @@ const AdultSignup = () => {
   useEffect(() => {
     if (userId) {
       getTalentById();
-      console.log(userId, "userId");
     }
   }, [userId]);
 
@@ -241,8 +239,6 @@ const AdultSignup = () => {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
           .then((resData) => {
             setIsLoading(false);
-            console.log(resData.data, "resData_updateAdults");
-
             if (resData.data.status === true) {
               setMessage("Updated Successfully");
               setOpenPopUp(true);

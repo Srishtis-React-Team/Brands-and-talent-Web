@@ -24,7 +24,12 @@ import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBack, ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import {
+  ArrowBack,
+  ArrowBackIos,
+  ArrowForwardIos,
+  Close,
+} from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -408,7 +413,6 @@ const TalentProfile = () => {
       .then((resData) => {
         setIsLoading(false);
         if (resData) {
-          console.log(resData, "resData");
           if (resData?.data?.status === true) {
             setMessage("Invitation email sent successfully");
             setIsLoading(false);
@@ -628,7 +632,6 @@ const TalentProfile = () => {
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData?.data?.currentStatus == "own-talent") {
           setShowProfile(true);
           setIsOwnTalent(true);
@@ -654,12 +657,6 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(isOwnTalent, "isOwnTalent");
-    console.log(isAdminApproved, "isAdminApproved");
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
   const messageNow = async () => {
     const formData = {
       viewingUserId: talentData?._id,
@@ -670,7 +667,6 @@ const TalentProfile = () => {
 
     await ApiHelper.post(`${API.findPlan}`, formData)
       .then((resData) => {
-        console.log(resData, "messageNow_response");
         if (resData?.data?.status == true) {
           navigate(`/message?${talentData?._id}`);
         } else if (resData?.data?.status == false) {
@@ -2485,8 +2481,6 @@ const TalentProfile = () => {
             onClose={handleClose}
             aria-labelledby="image-slider-modal"
           >
-            
-           
             <Box
               sx={{
                 position: "absolute",
@@ -2501,7 +2495,6 @@ const TalentProfile = () => {
                 alignItems: "center",
               }}
             >
-            
               <IconButton
                 sx={{
                   position: "absolute",
@@ -2512,8 +2505,8 @@ const TalentProfile = () => {
                 }}
                 onClick={handleClose}
               >
-                 <ArrowBack />
-             
+                <ArrowBack />
+
                 {/* <Close /> */}
               </IconButton>
               <img

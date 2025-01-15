@@ -1,12 +1,10 @@
 import React from "react";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 // import "../assets/css/checkout.css";
 
 const PopUp = ({ responseUrl, setCheckout, htmlContent }) => {
-
   const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
 
-  console.log('htmlContent',htmlContent)
   // Close button click handler
   const handleClose = () => {
     setCheckout(false); // Assuming setCheckout is used to manage the visibility of the popup
@@ -29,14 +27,13 @@ const PopUp = ({ responseUrl, setCheckout, htmlContent }) => {
 
   return (
     <div className="popupbackground">
-      
       <div className="popupcontainer2" style={{ position: "relative" }}>
         <button onClick={handleClose} style={closeButtonStyle}>
           X
         </button>
 
         <div dangerouslySetInnerHTML={{ __html: sanitizedHtmlContent }} />
-        
+
         {/* <iframe
           src={responseUrl}
           title="Popup Content"

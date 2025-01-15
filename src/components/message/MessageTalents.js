@@ -512,9 +512,6 @@ const MessageTalents = () => {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
   }, [messagesList]);
-  useEffect(() => {
-    console.log(userList, "userList");
-  }, [userList]);
 
   return (
     <>
