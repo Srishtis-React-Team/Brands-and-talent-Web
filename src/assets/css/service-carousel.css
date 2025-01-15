@@ -57,6 +57,7 @@
   margin: 3px 3px 3px 0;
 }
 
+
 .service-list-main .service-list-wrapper .enquire-btn {
   align-items: center;
   border: 1px solid #000;
@@ -75,7 +76,9 @@
 .service-list-main .service-list-wrapper .enquire-btn:hover {
   background-color: #000;
   color: #fff;
-}
+}  
+
+
 .model-picture-wrapper {
   margin-right: 20px;
 }
