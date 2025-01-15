@@ -11,9 +11,6 @@ const SearchPaths = () => {
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
-  useEffect(() => {
-    console.log(currentUserType, "currentUserType");
-  }, [currentUserType]);
 
   // Dynamically generate the array based on currentUserType
   const searchPathOptions = [

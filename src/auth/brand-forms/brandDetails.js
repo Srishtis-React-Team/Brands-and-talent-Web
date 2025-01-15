@@ -178,12 +178,6 @@ const BrandDetails = () => {
   useEffect(() => {}, [openPopUp]);
 
   const brandsSignup = async () => {
-    console.log("brandName:", brandName);
-    console.log("phoneNumber:", phoneNumber);
-    console.log("zipCode:", zipCode);
-    console.log("yourName:", yourName);
-    console.log("mobileValidationError:", mobileValidationError);
-
     if (!brandName) {
       setbrandNameError(true);
     }

@@ -14,7 +14,6 @@ const Investors = () => {
   const [aboutusList, setAboutusList] = useState([]);
   const [investorData, setInvestorData] = useState("");
 
-
   useEffect(() => {
     fetchContentByType();
   }, []);
@@ -27,11 +26,10 @@ const Investors = () => {
       .then((resData) => {
         if (resData) {
           setAboutusList(resData?.data?.data?.items);
-          setInvestorData(resData?.data?.data?.items[0].description[0])
+          setInvestorData(resData?.data?.data?.items[0].description[0]);
         }
-        console.log("resData", resData)
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   return (
@@ -47,23 +45,12 @@ const Investors = () => {
       <section className="abtWraper genCont_desg">
         <div className="container">
           <div className="topCont mt-4">
-
             <div className="text-center">
-
-              {/* <h2 className="maintitles">Investors</h2> */}
               <div className="widthParg mb-3">
-                <div
-                  dangerouslySetInnerHTML={{ __html: investorData }}
-                />
-
-                {/* {console.log("investorData",investorData)}
-                {/* {investorData} */}
-                {/* dangerouslySetInnerHTML={{ __html: investorData }} */} *
+                <div dangerouslySetInnerHTML={{ __html: investorData }} />
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
       <Footer />

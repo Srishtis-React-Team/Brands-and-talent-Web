@@ -10,33 +10,31 @@ const AdminPayment = () => {
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState(""); // State for selected amount
-  const [selectedEmail, setSelectedEmail] = useState('')
+  const [selectedEmail, setSelectedEmail] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [loading, setLoading] = useState(false);
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
   const [abaFormData, setAbaFormData] = useState({});
   const [returnParams, setReturnParams] = useState({});
-  const [adminReturnParams, setAdminReturnParams] = useState(`{\"subscriptionPlan\":\"adminSubscriptionPlan\",\"planName\":\"adminPlan\"}`)
+  const [adminReturnParams, setAdminReturnParams] = useState(
+    `{\"subscriptionPlan\":\"adminSubscriptionPlan\",\"planName\":\"adminPlan\"}`
+  );
   const [error, setError] = useState(""); // Error message state
   const [showPopup, setShowPopup] = useState(false); // State for showing popup
-
 
   useEffect(() => {
     const hasReloaded = localStorage.getItem("refresh");
 
-
     // Check if the reload flag is not set for this component
     if (!hasReloaded) {
-      console.log("refreshhhh")
       localStorage.setItem("refresh", "true"); // Set the reload flag
       window.location.reload(); // Reload the page
     } else {
-      console.log("refreshhhh  notttttttttttttttttttttttt")
       localStorage.removeItem("refresh"); // Clear the flag for the next mount
     }
   }, []);
-  
+
   // Email validation regex
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,7 +47,7 @@ const AdminPayment = () => {
   //     return;
   //   }
   //   const email = selectedEmail.trim();
-  //   if (!email || !validateEmail(email)) 
+  //   if (!email || !validateEmail(email))
   //     setError("Please enter a valid email address.");
   //     return;
   //   }
@@ -73,17 +71,16 @@ const AdminPayment = () => {
     }
     setError(""); // Reset error message if the form is valid
     setShowPopup(true); // Show the popup
-  
+
     // Hide the popup after 2 seconds
     setTimeout(() => {
       setShowPopup(false); // Hide popup
       setSelectedAmount(""); // Reset selectedAmount
-      setSelectedEmail("");  // Reset selectedEmail
+      setSelectedEmail(""); // Reset selectedEmail
     }, 2000); // You can adjust the time as needed
-  
+
     setPaymentOption(true);
   };
-  
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
@@ -108,14 +105,12 @@ const AdminPayment = () => {
   const SUBSCRIPTION_PLAN = "adminSubscriptionPlan";
   const PLAN_NAME = "adminPlan";
 
-
   const handleFormSubmit = async (dataObject, hash) => {
     // try {
-      setAbaFormData({ ...dataObject, hash });
+    setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
       document.getElementById("checkout_button").click();
     }, 100);
-    //   // console.log('selectedEmail--',selectedEmail)
     //   // // Extend dataObject with additional fields
     //   // const extendedData = {
     //   //   ...dataObject,
@@ -125,7 +120,6 @@ const AdminPayment = () => {
     //   //     planName: PLAN_NAME,
     //   //   }),
     //   // };
-    //   // console.log('extendedData',extendedData)
     //   // setReturnParams(extendedData.return_params)
 
     //   // Generate hash
@@ -233,7 +227,7 @@ const AdminPayment = () => {
             placeholder="Enter amount here"
           />
           <input
-           type="email"
+            type="email"
             value={selectedEmail}
             onChange={(e) => setSelectedEmail(e.target.value)} // Update selectedAmount
             placeholder="Enter email here"
@@ -251,11 +245,11 @@ const AdminPayment = () => {
           setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
-          selectedPaymentPlan={'Pro (Popular)'}
+          selectedPaymentPlan={"Pro (Popular)"}
           email={selectedEmail}
           adminPayment={true}
-          selectedPaymentPeriod={'annual'}
-          success_url='https://brandsandtalent.com/pricingadmin'
+          selectedPaymentPeriod={"annual"}
+          success_url="https://brandsandtalent.com/pricingadmin"
         />
       )}
 

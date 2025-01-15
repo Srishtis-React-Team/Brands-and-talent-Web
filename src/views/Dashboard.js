@@ -327,9 +327,6 @@ const Dashboard = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(talentsList, "talentsList");
-  }, [talentsList]);
   return (
     <>
       <div className="dashboard-main">

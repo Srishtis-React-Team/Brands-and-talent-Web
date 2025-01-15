@@ -33,15 +33,15 @@ const KidsFormTwo = () => {
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    const userEmail = localStorage.getItem('userEmail');
+    const userEmail = localStorage.getItem("userEmail");
     const obj = {
-      email: userEmail
-    }
+      email: userEmail,
+    };
 
-    ApiHelper.post(API.typeChecking, obj).then((response)=>{
-      localStorage.setItem('userType',response.data.modelType)
-    })
-  })
+    ApiHelper.post(API.typeChecking, obj).then((response) => {
+      localStorage.setItem("userType", response.data.modelType);
+    });
+  });
 
   useEffect(() => {
     // Check if the page has already been reloaded
@@ -117,24 +117,22 @@ const KidsFormTwo = () => {
 
   const editKids = async () => {
     const currentUrl = window.location.href;
-    const userType = localStorage.getItem('userType');
+    const userType = localStorage.getItem("userType");
     // Extract the userId (part after '?')
-    const userId = currentUrl.split('?')[1];
+    const userId = currentUrl.split("?")[1];
     const userData = {
       planName: "Basic",
       user_id: userId,
       paymentStatus: "Pending",
     };
-    console.log("userData", userData);
     const responseSubscription = await ApiHelper.post(
       API.subscriptionPlan,
       userData
     );
-    console.log("responseSubscription", responseSubscription);
-    if(userType == 'kids'){
-    navigate(`/talent-kids-teen-signup-files-details?${userId}`);
-    }else{
-    navigate(`/talent-signup-files-details?${userId}`)
+    if (userType == "kids") {
+      navigate(`/talent-kids-teen-signup-files-details?${userId}`);
+    } else {
+      navigate(`/talent-signup-files-details?${userId}`);
     }
   };
 
@@ -274,19 +272,14 @@ const KidsFormTwo = () => {
   };
 
   const choosePlan = async (index, item, from) => {
-    console.log("item", item);
-    console.log("index", index);
     if (index == 0) {
       editKids();
     } else {
       setPathFrom(from);
-      console.log("selectedPlan", `annual-${selectedPlan}`);
       if (from == "giftsubscription") {
-        console.log("inside from ");
         setGiftSub(true);
         localStorage.setItem("giftsubscription", true);
       } else {
-        console.log("else from00");
         setGiftSub(false);
         localStorage.setItem("giftsubscription", false);
       }
