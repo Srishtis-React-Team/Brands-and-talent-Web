@@ -8,6 +8,7 @@ const CurrentUser = () => {
   const [currentUserImage, setCurrentUserImage] = useState("");
   const [currentUserType, setCurrentUserType] = useState("");
   const [avatarImage, setAvatarImage] = useState("");
+ 
   // const [fcmToken, serFcmToken] = useState("");
 
   const avatar = require("../src/assets/images/avatar.webp");
@@ -24,9 +25,11 @@ const CurrentUser = () => {
     setTalentName(localStorage.getItem("talentName"));
     setBrandName(localStorage.getItem("brandName"));
     setAvatarImage(avatar);
+   
   }, []);
 
   let fcmToken = localStorage.getItem("fcmToken");
+  
 
   return {
     currentUserId,
@@ -37,6 +40,7 @@ const CurrentUser = () => {
     talentName,
     brandName,
     brandId,
+   
   };
 };
 
