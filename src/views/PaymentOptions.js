@@ -79,13 +79,14 @@ const PaymentOptions = ({
     if (location.pathname == "/pricing") {
       url = `/talent-home`;
     } else if (location.pathname == "/talent-signup-plan-details") {
-      if (userType == 'adults') {
-        url = `/talent-signup-files-details?userId=${userId}`;
+      const userType = localStorage.getItem('userType');
+      if (userType == 'adult') {
+        url = `/talent-signup-files-details?${userId}`;
       } else {
         url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
       }
     } else if('/talent-signup-plan-details'){
-      url = `/talent-signup-files-details?userId=${userId}`;
+      url = `/talent-signup-files-details?${userId}`;
     }else {
       url = success_url;
     }
