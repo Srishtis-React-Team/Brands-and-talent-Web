@@ -26,15 +26,11 @@ const BecomeAffliate = () => {
       .then((resData) => {
         if (resData) {
           setAboutusList(resData?.data?.data?.items);
-          setaffiliateData(resData?.data?.data?.items[0].description[0])
+          setaffiliateData(resData?.data?.data?.items[0].description[0]);
         }
       })
       .catch((err) => {});
   };
-
-  useEffect(() => {
-    console.log(aboutusList, "aboutusList");
-  }, [aboutusList]);
 
   return (
     <>
@@ -46,25 +42,16 @@ const BecomeAffliate = () => {
           </div>
         </div>
       </section>
-
       <section className="abtWraper genCont_desg">
         <div className="container">
-          
           <div className="topCont mt-4">
             <div className="text-center">
-
               {/* <h2 className="maintitles">Become an Affiliate</h2> */}
               <div className="widthParg mb-3">
-              <div
-                  dangerouslySetInnerHTML={{ __html: affiliateData }}
-                />
-
-              
+                <div dangerouslySetInnerHTML={{ __html: affiliateData }} />
               </div>
             </div>
-
           </div>
-  
         </div>
       </section>
       <Footer />

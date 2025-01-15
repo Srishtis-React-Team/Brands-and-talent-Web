@@ -68,11 +68,6 @@ const TalentSideMenu = ({ myState }) => {
     };
   }, []);
 
-  useEffect(() => {}, [isSmallScreen]);
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
   const handleNavigation = () => {
     if (talentData?.accountBlock == false) {
       if (talentData?.adminApproved === true) {
@@ -102,7 +97,6 @@ const TalentSideMenu = ({ myState }) => {
     };
     await ApiHelper.post(`${API.allowPermission}`, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData?.data?.msg == "Yes") {
           navigate("/message");
         } else if (resData?.data?.msg == "No") {

@@ -47,10 +47,9 @@ import EditSocialMedias from "../pages/EditSocialMedias";
 import "material-icons/iconfont/material-icons.css";
 import { tr } from "date-fns/locale";
 
-
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
- 
+
   return (
     <div
       role="tabpanel"
@@ -350,8 +349,6 @@ const EditTalent = () => {
 
   useEffect(() => {
     if (isSubmitted) {
-      console.log(selectedCategories, "selectedCategories");
-      console.log(selectedCategories.length, "selectedCategories.length");
       if (selectedCategories.length === 0) {
         setCategoryError(true);
       } else {
@@ -1597,13 +1594,11 @@ const EditTalent = () => {
     alert(index);
   };
   const deleteServiceFile = async () => {
-    console.log(alertpop, "alertpop_deleteServiceFile");
     const formData = {
       talentId: talentData?._id,
       serviceUniqueId: alertpop?.eachService?.uniqueId,
       fileId: alertpop?.item?.id,
     };
-    console.log(formData, "formData");
     await ApiHelper.post(`${API.deleteService}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -1954,7 +1949,6 @@ const EditTalent = () => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    console.log(url, "url");
     const isValidUrl = /^(https?|ftp):\/\/[^\s]+$/i.test(url);
     // alert(isValidUrl);
     return isValidUrl; // If the URL is valid, return false (since we want to check if it's NOT valid)
@@ -2293,7 +2287,6 @@ const EditTalent = () => {
 
   // Single function to handle menu open
   const handleServiceFileClickClick = (event, item, eachService) => {
-    console.log(item, "itemhandleServiceFileClickClick");
     setServiceFileAnchor(event.currentTarget);
     setSelectedServiceItem(item); // Set the selected item
     setSelectedServiceObject(eachService);
@@ -2324,19 +2317,6 @@ const EditTalent = () => {
     setSelectedCV(null); // Reset the selected item when closing the menu
     setCVIndex(index);
   };
-
-  useEffect(() => {
-    console.log(urls, "urls");
-  }, [urls]);
-  useEffect(() => {
-    console.log(checkAudioUrl, "checkAudioUrl");
-  }, [checkAudioUrl]);
-  useEffect(() => {
-    console.log(selectedServiceItem, "selectedServiceItem");
-  }, [selectedServiceItem]);
-  useEffect(() => {
-    console.log(selectedServiceObject, "selectedServiceObject");
-  }, [selectedServiceObject]);
 
   return (
     <>

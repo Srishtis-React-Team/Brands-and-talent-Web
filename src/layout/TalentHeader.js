@@ -19,7 +19,6 @@ import SearchHeaderComponent from "./SearchHeaderComponent";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import searchPathOptions from "../components/SearchPaths";
 const TalentHeader = ({ toggleMenu, myState, from }) => {
-  console.log(toggleMenu, "toggleMenu");
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const [talent, setTalent] = useState(true);
   const [signupCategory, setSignupCategory] = useState("talent");
@@ -100,9 +99,6 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
       getTalentById();
     }
   }, [myState]);
-  useEffect(() => {
-    console.log(activeMenu, "activeMenu");
-  }, [activeMenu]);
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
@@ -144,7 +140,6 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   };
 
   const createHandleMenuClick = (menuItem) => {
-    console.log("here is the function");
     return () => {
       if (menuItem === "profile") {
         navigate(`/talent/${talentData.publicUrl}`, {

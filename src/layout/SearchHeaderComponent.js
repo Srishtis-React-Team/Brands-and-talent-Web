@@ -34,7 +34,6 @@ const SearchHeaderComponent = ({ onData }) => {
   const searchPathOptions = SearchPaths(); // Call the function/component to get the options
   const [brandData, setBrandData] = useState(null);
 
-  console.log(searchPathOptions, "searchPathOptions"); // Use the dynamically generated options
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
@@ -149,9 +148,7 @@ const SearchHeaderComponent = ({ onData }) => {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
-      }
-       else if (currentUser_type === "brand" && currentUserId) {
-       // console.log("brandData?.planName",brandData?.planName)
+      } else if (currentUser_type === "brand" && currentUserId) {
         // if (brandData?.planName === "Pro" || brandData?.planName === "Premium"){
         //   setMessage("Upgrade Pro or Premium Plan to unlock this feature");
         //   setOpenPopUp(true);
@@ -159,10 +156,10 @@ const SearchHeaderComponent = ({ onData }) => {
         //     setOpenPopUp(false);
         //     navigate("/pricing");
         //   }, 3000);
-        // } 
-      //  else {
-          navigate("/find-talents");
-       // }
+        // }
+        //  else {
+        navigate("/find-talents");
+        // }
         navigate("/find-talent");
       } else if (currentUser_type === "talent" && currentUserId) {
         setMessage("You need to sign Up as Brand to find talents");

@@ -13,7 +13,6 @@ import PopUp from "../components/PopUp";
 import { Button } from "@mui/material";
 
 const EditSocialMedias = ({ talentData, onValuesChange }) => {
-  console.log(talentData, "talentData");
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
@@ -148,7 +147,6 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
     setIsLoading(true);
     await ApiHelper.post(apiName, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData?.data?.status === true) {
           setIsLoading(false);
           if (isTwitter) {
@@ -182,17 +180,9 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
         }
       })
       .catch((err) => {
-        console.log(err, "err");
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    console.log(twitterFollowersCount, "twitterFollowersCount");
-  }, [twitterFollowersCount]);
-  useEffect(() => {
-    console.log(youtubesFollowers, "youtubesFollowers");
-  }, [youtubesFollowers]);
 
   const validateInstagramUrl = (url) => {
     const instagramUrlPattern =

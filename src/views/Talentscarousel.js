@@ -121,10 +121,6 @@ const Talentscarousel = () => {
     getTalentList();
   }, []);
 
-  useEffect(() => {
-    console.log(talentList, "talentList");
-  }, [talentList]);
-
   return (
     <>
       {talentList && talentList.length > 0 && (

@@ -30,10 +30,6 @@ const Career = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(aboutusList, "aboutusList");
-  }, [aboutusList]);
-
   return (
     <>
       <Header />{" "}

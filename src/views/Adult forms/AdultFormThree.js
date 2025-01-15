@@ -58,8 +58,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   let queryString = url.split("?")[1];
 
-  console.log(queryString, "queryString");
-
   const userId = urlParams.get("userId");
   const [talentData, setTalentData] = useState();
 
@@ -772,7 +770,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleView = (item) => {
-  
     let viewImage = `${API.userFilePath}${item.fileData}`;
     window.open(viewImage, "_blank");
   };
@@ -965,7 +962,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   return (
     <>
-    
       <div className="form-dialog">
         <div className="header-wrapper">
           <div className="step-wrapper">

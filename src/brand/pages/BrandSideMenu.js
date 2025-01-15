@@ -72,21 +72,15 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   const fetchUser = async () => {
     await ApiHelper.get(`${API.fetchUser}`)
       .then((resData) => {
-        console.log(resData?.data?.user?.tempId, "fetchUser");
         getBrand(resData?.data?.user?.tempId);
       })
       .catch((err) => {});
   };
 
   useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
-
-  useEffect(() => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
     const name = pathParts[pathParts?.length - 1];
-    console.log(name, "name");
     getDataByPublicUrl(name);
   }, [location]);
 
@@ -97,7 +91,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
-        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
         // setBrandData(resData?.data?.data);
@@ -142,8 +135,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     //     navigate("/pricing");
     //   }, 3000);
     // } else {
-      navigate("/find-talents");
-   // }
+    navigate("/find-talents");
+    // }
   };
 
   const handleNavigation = () => {
@@ -169,10 +162,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       getBrand();
     }
   }, [myState]);
-
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
 
   // useEffect(() => {
   //   if (brandId) {

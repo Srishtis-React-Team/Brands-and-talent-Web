@@ -13,7 +13,6 @@ import CurrentUser from "../CurrentUser.js";
 const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   // const { job } = props;
   const job_id = job;
-  console.log(from, "from");
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
@@ -147,16 +146,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   };
   const [modalData, setModalData] = useState(null);
 
-  // const applyjobs = async (data) => {
-  //   console.log(data, "applyjobs_data");
-  //   setModalData(data);
-  //   if (data?.isApplied != "Applied") {
-  //     const modalElement = document.getElementById("viewJobApplyModal");
-  //     const bootstrapModal = new window.bootstrap.Modal(modalElement);
-  //     bootstrapModal.show();
-  //   }
-  // };
-
   const applyjobs = async (data) => {
     if (talentData?.accountBlock == false) {
       if (talentData?.planName == "Basic") {
@@ -189,10 +178,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
       }, 3000);
     }
   };
-
-  useEffect(() => {
-    console.log(modalData, "modalData");
-  }, [modalData]);
 
   const handleCloseModal = async () => {
     const formData = {
