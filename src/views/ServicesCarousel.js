@@ -190,8 +190,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
       console.log("isOwnTalent",isOwnTalent)
      
       if (brandData?.planName === "Basic" ) {
-        console.log("branddataaaa111")
-       
+     
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -202,10 +201,10 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         brandData?.planName !== "Basic" &&
         brandData?.accountBlock == false && currentPlanName !=="Basic" && accountBlock ==false
       ) {
-        console.log("branddataa222222222222")
+       
         navigate(`/message?${talentData?._id}`);
       } else if (brandData?.accountBlock == true) {
-        console.log("branddataa33333333333333")
+        
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -213,16 +212,15 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           navigate(`/pricing`);
         }, 3000);
       } else if (talentData?.planName === "Basic" && currentPlanName !== "Basic") {
-        console.log("branddataa4444444444444444")
-        console.log("Inquire Now button clicked!brandd basic  ok condition");
-        console.log("talentData?.planName",talentData?.planName)
+       
+      
         navigate(`/message?${talentData?._id}`);
        
       } else if (
         talentData?.planName !== "Basic" &&
         talentData?.accountBlock == false && currentPlanName === "Basic" && accountBlock ==false
       ) {
-        console.log("branddataa555555555555555555")
+       
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -235,7 +233,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         talentData?.planName === "Basic" &&
         talentData?.accountBlock == false && currentPlanName === "Basic"
       ) {
-        console.log("branddataa555555555555555555")
+        
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
