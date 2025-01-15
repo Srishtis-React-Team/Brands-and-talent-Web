@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router";
 import PopUp from "../components/PopUp";
 import CurrentUser from "../CurrentUser";
 const ServicesCarousel = ({ talentData, brandData }) => {
+
   const navigate = useNavigate();
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
@@ -13,6 +14,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
   const [servicesList, setServicesList] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [currentPlanName, setCurrentPlanName] = useState(null);
   const [videoAudioList, setVideoAudioList] = useState([]);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -38,6 +40,47 @@ const ServicesCarousel = ({ talentData, brandData }) => {
     const name = pathParts[pathParts.length - 1];
     getDataByPublicUrl(name);
   }, [location]);
+
+  //addedd
+  // Function to get the current user's plan name
+
+  const getCurrentUserPlanName = async () => {
+    try {
+      const userId =
+        localStorage.getItem("userId") || localStorage.getItem("currentUser");
+      console.log("userId:", userId);
+  
+      if (!userId) {
+        console.error("User ID is not available");
+        return;
+      }
+  
+      const formData = {
+        userId: userId,
+      };
+  
+      // API request to get the plan name
+      const resData = await ApiHelper.post(`${API.CurrentPlanName}`, formData);
+      console.log("resData",resData)
+  
+      if (resData?.data?.status) {
+        setCurrentPlanName(resData?.data?.planName); // Store planName in state
+        console.log("resData.planName",setCurrentPlanName)
+        // messageNow(); // Call messageNow after setting the plan name
+      } else {
+        console.error("Failed to retrieve the plan name");
+      }
+    } catch (err) {
+      console.error("Error fetching the current plan name:", err);
+    }
+  };
+  
+  // Fetch the current user's plan name when the component mounts
+  useEffect(() => {
+    getCurrentUserPlanName();
+  }, []); // Empty dependency array ensures this runs once when the component mounts
+
+  //addedd
 
   const getDataByPublicUrl = async (name) => {
     const formData = {
@@ -66,19 +109,20 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           }, 2000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
     const storedUserId =
       localStorage.getItem("userId") || localStorage.getItem("currentUser");
     setUserId(storedUserId);
+
     if (talentData?._id) {
       fetchServices();
       fetchVideoAudios();
     }
   }, [talentData?._id]);
-  useEffect(() => {}, [servicesList]);
+  useEffect(() => { }, [servicesList]);
 
   const fetchServices = async () => {
     const formData = {
@@ -93,7 +137,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           setServicesList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const fetchVideoAudios = async () => {
@@ -109,12 +153,14 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           setVideoAudioList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const messageNow = () => {
+
     if (isOwnTalent == true) {
-      if (talentData?.planName == "Basic") {
+      if (talentData?.planName == "Basic"  ) {
+        
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -135,7 +181,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         }, 3000);
       }
     } else if (isOwnTalent == false && isAdminApproved == true) {
-      if (brandData?.planName === "Basic") {
+      console.log("-----------------------------")
+     
+      if (brandData?.planName === "Basic" ) {
+        console.log("branddataaaa111")
+       
         setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -144,10 +194,70 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         }, 3000);
       } else if (
         brandData?.planName !== "Basic" &&
-        brandData?.accountBlock == false
+        brandData?.accountBlock == false && currentPlanName !=="Basic"
       ) {
+        console.log("branddataa222222222222")
         navigate(`/message?${talentData?._id}`);
       } else if (brandData?.accountBlock == true) {
+        console.log("branddataa33333333333333")
+        setMessage("Please upgrade your plan to access your profile");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (talentData?.planName === "Basic" && currentPlanName !== "Basic") {
+        console.log("branddataa4444444444444444")
+        console.log("Inquire Now button clicked!brandd basic  ok condition");
+        console.log("talentData?.planName",talentData?.planName)
+        navigate(`/message?${talentData?._id}`);
+        // setMessage("Please upgrade to pro plan to use this feature");
+        // setOpenPopUp(true);
+        // setTimeout(function () {
+        //   setOpenPopUp(false);
+        //   navigate(`/pricing`);
+        // }, 3000);
+      } else if (
+        talentData?.planName !== "Basic" &&
+        talentData?.accountBlock == false && currentPlanName === "Basic"
+      ) {
+        console.log("branddataa555555555555555555")
+        setMessage("Please upgrade to pro plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      //  navigate(`/message?${talentData?._id}`);
+      }
+      else if (
+        talentData?.planName === "Basic" &&
+        talentData?.accountBlock == false && currentPlanName === "Basic"
+      ) {
+        console.log("branddataa555555555555555555")
+        setMessage("Please upgrade to pro plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      //  navigate(`/message?${talentData?._id}`);
+      }
+      else if (
+        talentData?.planName !== "Basic" &&
+        talentData?.accountBlock == false && currentPlanName !== "Basic"
+      ) {
+        console.log("branddataa5888888888888888")
+        // setMessage("Please upgrade to pro plan to use this feature");
+        // setOpenPopUp(true);
+        // setTimeout(function () {
+        //   setOpenPopUp(false);
+        //   navigate(`/pricing`);
+        // }, 3000);
+        navigate(`/message?${talentData?._id}`);
+      }
+      else if (talentData?.accountBlock == true) {
+        console.log("branddataa6666666666666666666")
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -155,8 +265,10 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           navigate(`/pricing`);
         }, 3000);
       }
+      
     } else if (currentUserType == "brand") {
       if (brandData?.planName === "Basic") {
+        
         setMessage("Please upgrade to premium plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -192,7 +304,14 @@ const ServicesCarousel = ({ talentData, brandData }) => {
           // }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  };
+  const handleClick = async () => {
+    // First, fetch the current plan name
+    await getCurrentUserPlanName();
+
+    // // Then, trigger the messageNow function
+    messageNow();
   };
 
   return (
@@ -225,9 +344,8 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                   <div className="service-list-content col-md-8">
                     <div className="service-title">{item?.serviceName}</div>
                     <div
-                      className={`service-description ${
-                        isExpanded ? "expanded" : "collapsed"
-                      }`}
+                      className={`service-description ${isExpanded ? "expanded" : "collapsed"
+                        }`}
                       dangerouslySetInnerHTML={{ __html: item?.editorState }}
                     />
                     {item?.editorState?.length > 50 && ( // Only show the button if content is long enough
@@ -264,9 +382,18 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       </>
                     )}
 
-                    <div onClick={() => messageNow()} className="enquire-btn">
+                    <div
+                      onClick={handleClick}
+                      className="enquire-btn"
+                      style={{ cursor: 'pointer' }}
+                    >
                       Inquire Now
                     </div>
+
+                    {/*        
+                    <div onClick={() => messageNow()} className="enquire-btn">
+                      Inquire Now
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -275,8 +402,8 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
         {(!servicesList.length ||
           !servicesList.some((item) => item.serviceName)) && (
-          <div>No Services Available</div>
-        )}
+            <div>No Services Available</div>
+          )}
       </div>
 
       {openPopUp && <PopUp message={message} />}
