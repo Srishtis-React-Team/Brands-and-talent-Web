@@ -3,7 +3,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const RichTextEditor = ({ value, onChange, from }) => {
-  console.log(from, "from");
   return (
     <ReactQuill
       value={value}

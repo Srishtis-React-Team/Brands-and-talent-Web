@@ -268,11 +268,6 @@ const TalentSettings = () => {
   };
 
   useEffect(() => {
-    console.log(allSamePasswordError, "allSamePasswordError useEffect");
-    console.log(passwordMatch, "passwordMatch useEffect");
-    console.log(oldPassword, "oldPassword useEffect");
-    console.log(talentPassword, "talentPassword useEffect");
-    console.log(talentConfirmPassword, "talentConfirmPassword useEffect");
     if (
       !allSamePasswordError &&
       !passwordMatch &&
@@ -285,10 +280,6 @@ const TalentSettings = () => {
       setIsButtonDisabled(false);
     }
   }, [allSamePasswordError, passwordMatch]);
-
-  useEffect(() => {
-    console.log(talentPassword, "talentPassword");
-  }, [talentPassword]);
 
   return (
     <>

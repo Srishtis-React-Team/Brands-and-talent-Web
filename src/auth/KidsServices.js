@@ -70,7 +70,6 @@ const KidsServices = () => {
     let formData = {
       services: inputs,
     };
-    console.log(formData, "formData");
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -216,10 +215,6 @@ const KidsServices = () => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
   };
-
-  useEffect(() => {
-    console.log(inputs, "inputs");
-  }, [inputs]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);

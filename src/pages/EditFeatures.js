@@ -10,11 +10,6 @@ import "../assets/css/talent-profile.css";
 const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
   const [formValues, setFormValues] = useState([]);
 
-  // Initialize state with featureValues
-  useEffect(() => {
-    console.log(featuresStructure, "featuresStructure");
-    console.log(featureValues, "featureValues");
-  }, [featuresStructure, featureValues]);
   useEffect(() => {
     const initialValues = featuresStructure.map((feature) => {
       const existingValue = featureValues.find(
@@ -46,7 +41,6 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
 
   // Handle changes for input, select, and creatableSelect
   const handleChange = (name, value) => {
-    console.log(value, "value");
     const newValues = formValues.map((item) =>
       item.label === name ? { ...item, value } : item
     );

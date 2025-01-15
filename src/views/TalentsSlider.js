@@ -7,9 +7,13 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Correct mo
 import "../assets/css/SwiperSlider.css"; // Import your custom CSS
 import { API } from "../config/api";
 import { Modal, Box, IconButton } from "@mui/material";
-import { ArrowBack, ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import {
+  ArrowBack,
+  ArrowBackIos,
+  ArrowForwardIos,
+  Close,
+} from "@mui/icons-material";
 const TalentsSlider = ({ talentList }) => {
-  console.log(talentList, "talentList");
   const logoWhite = require("../assets/images/logo-white.png");
   const [isSliderOpen, setSliderOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -102,7 +106,6 @@ const TalentsSlider = ({ talentList }) => {
             sx={{ position: "absolute", top: 5, right: 5, color: "#ffffff" }}
             onClick={handleClose}
           >
-            
             <Close />
           </IconButton>
           <img

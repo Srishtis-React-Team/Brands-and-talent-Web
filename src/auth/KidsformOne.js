@@ -435,14 +435,10 @@ const KidsformOne = () => {
         }, 2000);
       }
     }
-    // console.log(selectedCategories, "selectedCategories");
-    // console.log(selectedCategories.length, "selectedCategories.length");
   };
 
   useEffect(() => {
     if (isSubmitted) {
-      console.log(selectedCategories, "selectedCategories");
-      console.log(selectedCategories.length, "selectedCategories.length");
       if (selectedCategories.length === 0) {
         setCategoryError(true);
       } else {

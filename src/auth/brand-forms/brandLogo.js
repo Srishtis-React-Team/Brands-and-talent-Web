@@ -228,8 +228,6 @@ const BrandLogo = () => {
   };
 
   const setBrandsLocalStorage = (data) => {
-    console.log(data, "setBrandsLocalStorage");
-
     localStorage.setItem("brandId", data?.brand_id);
     localStorage.setItem("currentUser", data?.brand_id);
     localStorage.setItem("currentUserType", "brand");

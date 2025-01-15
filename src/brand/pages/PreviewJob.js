@@ -104,10 +104,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
   useEffect(() => {
     getJobsByID();
   }, []);
-  useEffect(() => {
-    console.log(jobData, "jobData");
-  }, [jobData]);
-  useEffect(() => {}, [jobId]);
 
   const handleBackClick = () => {
     if (location.state && location.state.from) {

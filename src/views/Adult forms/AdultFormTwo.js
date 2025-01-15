@@ -92,7 +92,6 @@ const AdultFormTwo = () => {
     let formData = {
       services: inputs,
     };
-    console.log(formData, "formData");
 
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {

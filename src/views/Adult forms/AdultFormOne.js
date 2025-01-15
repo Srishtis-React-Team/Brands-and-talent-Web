@@ -561,8 +561,6 @@ const AdultFormOne = () => {
 
   useEffect(() => {
     if (isSubmitted) {
-      console.log(selectedCategories, "selectedCategories");
-      console.log(selectedCategories.length, "selectedCategories.length");
       if (selectedCategories.length === 0) {
         setSelectedCategoriesError(true);
       } else {
