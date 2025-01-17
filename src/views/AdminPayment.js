@@ -55,31 +55,34 @@ const AdminPayment = () => {
   //   setShowPopup(true); // Show the popup when clicking Pay Now
   //   setPaymentOption(true);
   // };
+  // Enhanced handlePayNow function
   const handlePayNow = async () => {
-    if (!selectedAmount || selectedAmount <= 0) {
+    // Trim and validate amount
+    const amount = parseFloat(selectedAmount.trim());
+    if (isNaN(amount) || amount <= 0) {
       setError("Please enter a valid amount.");
-      return;
-    }
-    const email = selectedEmail.trim();
-    if (!email || !validateEmail(email)) {
-      setError("Please enter a valid email address.");
-      setShowPopup(true); // Show popup if invalid email
+      setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false); // Hide popup after 2 seconds
-      }, 2000); // Set time to 2000ms (2 seconds)
+      }, 2000);
       return;
     }
-    setError(""); // Reset error message if the form is valid
-    setShowPopup(true); // Show the popup
-
-    // Hide the popup after 2 seconds
-    setTimeout(() => {
-      setShowPopup(false); // Hide popup
-      setSelectedAmount(""); // Reset selectedAmount
-      setSelectedEmail(""); // Reset selectedEmail
-    }, 2000); // You can adjust the time as needed
-
-    setPaymentOption(true);
+  
+    // Trim and validate email
+    const email = selectedEmail.trim();
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false); // Hide popup after 2 seconds
+      }, 2000);
+      return; // Exit function if email is invalid
+    }
+  
+    // If both validations pass, reset errors and proceed
+    setError(""); // Reset error message
+    setShowPopup(false); // Ensure no popup is displayed for errors
+    setPaymentOption(true); // Proceed to payment options
   };
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
@@ -125,6 +128,11 @@ const AdminPayment = () => {
       );
     }
   }, [selectedPaymentOption]); // Add selectedAmount to dependencies
+
+  const saveEmailInput = (email) =>{
+    email = email.toLowerCase();
+    setSelectedEmail(email)
+  }
 
   return (
     <>
@@ -207,7 +215,7 @@ const AdminPayment = () => {
           />
           <input
             value={selectedEmail}
-            onChange={(e) => setSelectedEmail(e.target.value)}
+            onChange={(e) => saveEmailInput(e.target.value)}
             placeholder="Enter email here"
             autoComplete="off"
             autoCorrect="off"
