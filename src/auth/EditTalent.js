@@ -509,6 +509,7 @@ const EditTalent = () => {
   const [services, setServices] = useState();
   const [isBasic, setIsBasic] = useState(false);
 
+
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -592,6 +593,11 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
+            if (resData?.data?.data?.planName == "Basic") {
+              setIsBasic(true);
+            } else {
+              setIsBasic(false);
+            }
             setTalentData(resData.data.data);
             setCompletedJobs(resData?.data?.data?.noOfJobsCompleted);
 
@@ -677,6 +683,7 @@ const EditTalent = () => {
       })
       .catch((err) => {});
   };
+
 
   const handleEditFeatureChanges = (values) => {
     setFeatures(values);
@@ -1947,7 +1954,7 @@ const EditTalent = () => {
         });
     }
   };
-
+  
   const isNotKnownFormatUrl = (url) => {
     const isValidUrl = /^(https?|ftp):\/\/[^\s]+$/i.test(url);
     // alert(isValidUrl);
@@ -3590,6 +3597,7 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
+          
             <CustomTabPanel value={valueTabs} index={5}>
               {isBasic == false && (
                 <>
