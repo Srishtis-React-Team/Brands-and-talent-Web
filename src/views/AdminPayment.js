@@ -111,29 +111,6 @@ const AdminPayment = () => {
     setTimeout(() => {
       document.getElementById("checkout_button").click();
     }, 100);
-    //   // // Extend dataObject with additional fields
-    //   // const extendedData = {
-    //   //   ...dataObject,
-    //   //   email:selectedEmail,
-    //   //   return_params: JSON.stringify({
-    //   //     subscriptionPlan: SUBSCRIPTION_PLAN,
-    //   //     planName: PLAN_NAME,
-    //   //   }),
-    //   // };
-    //   // setReturnParams(extendedData.return_params)
-
-    //   // Generate hash
-    //   // const hash = await generateHash(extendedData, PUBLIC_KEY);
-
-    //   // Update form data with hash
-    //   setAbaFormData({ ...dataObject, hashData });
-
-    //   // Simulate form submission
-    //   document.getElementById("checkout_button")?.click();
-    // } catch (error) {
-    //   console.error("Error in handleFormSubmit:", error);
-    //   alert("Something went wrong. Please try again.");
-    // }
   };
 
   useEffect(() => {
@@ -225,12 +202,15 @@ const AdminPayment = () => {
             value={selectedAmount}
             onChange={(e) => setSelectedAmount(e.target.value)} // Update selectedAmount
             placeholder="Enter amount here"
+            autoComplete="off"
+            autoCorrect="off"
           />
           <input
-            type="email"
             value={selectedEmail}
-            onChange={(e) => setSelectedEmail(e.target.value)} // Update selectedAmount
+            onChange={(e) => setSelectedEmail(e.target.value)}
             placeholder="Enter email here"
+            autoComplete="off"
+            autoCorrect="off"
           />
           <button onClick={handlePayNow}>Pay now</button>
           {showPopup && error && <div className="popup">{error}</div>}
