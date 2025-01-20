@@ -3,99 +3,68 @@ import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import PaymentOptions from "./PaymentOptions.js";
 import Loader from "./Loader.js";
-import CryptoJS from "crypto-js";
 
 const AdminPayment = () => {
-  const [checkout, setCheckout] = useState(false);
-  const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
-  const [selectedAmount, setSelectedAmount] = useState(""); // State for selected amount
+  const [selectedAmount, setSelectedAmount] = useState("");
   const [selectedEmail, setSelectedEmail] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
-  const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [loading, setLoading] = useState(false);
-  const [appliedCouponCode, setAppliedCouponCode] = useState("");
   const [abaFormData, setAbaFormData] = useState({});
-  const [returnParams, setReturnParams] = useState({});
-  const [adminReturnParams, setAdminReturnParams] = useState(
-    `{\"subscriptionPlan\":\"adminSubscriptionPlan\",\"planName\":\"adminPlan\"}`
-  );
-  const [error, setError] = useState(""); // Error message state
-  const [showPopup, setShowPopup] = useState(false); // State for showing popup
+  const [error, setError] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const hasReloaded = localStorage.getItem("refresh");
-
-    // Check if the reload flag is not set for this component
     if (!hasReloaded) {
-      localStorage.setItem("refresh", "true"); // Set the reload flag
-      window.location.reload(); // Reload the page
+      localStorage.setItem("refresh", "true");
+      window.location.reload();
     } else {
-      localStorage.removeItem("refresh"); // Clear the flag for the next mount
+      localStorage.removeItem("refresh");
     }
   }, []);
 
-  // Email validation regex
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  // const handlePayNow = async () => {
-  //   if (!selectedAmount || selectedAmount <= 0) {
-  //     setError("Please enter a valid amount.");
-  //     return;
-  //   }
-  //   const email = selectedEmail.trim();
-  //   if (!email || !validateEmail(email))
-  //     setError("Please enter a valid email address.");
-  //     return;
-  //   }
-  //   setError("");
-  //   setShowPopup(true); // Show the popup when clicking Pay Now
-  //   setPaymentOption(true);
-  // };
-  // Enhanced handlePayNow function
-  const handlePayNow = async () => {
-    // Trim and validate amount
+  const handlePayNow = () => {
     const amount = parseFloat(selectedAmount.trim());
     if (isNaN(amount) || amount <= 0) {
       setError("Please enter a valid amount.");
-      setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false); // Hide popup after 2 seconds
-      }, 2000);
+      showErrorPopup();
       return;
     }
-  
-    // Trim and validate email
+
     const email = selectedEmail.trim();
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
-      setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false); // Hide popup after 2 seconds
-      }, 2000);
-      return; // Exit function if email is invalid
+      showErrorPopup();
+      return;
     }
-  
-    // If both validations pass, reset errors and proceed
-    setError(""); // Reset error message
-    setShowPopup(false); // Ensure no popup is displayed for errors
-    setPaymentOption(true); // Proceed to payment options
+
+    setError("");
+    setShowPopup(false);
+    setPaymentOption(true);
+  };
+
+  const showErrorPopup = () => {
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
   };
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
       let apiUrl =
         paymentOption === "card" ? API.createPayment : API.createqrpayment;
-      const response = await ApiHelper.post(apiUrl, {
+      await ApiHelper.post(apiUrl, {
         amount,
         currency,
         type,
       });
-      setResponseUrl(response.data.url);
-      setCheckout(true);
       setLoading(false);
     } catch (error) {
       console.error("Error during payment:", error);
@@ -104,12 +73,7 @@ const AdminPayment = () => {
     }
   };
 
-  const PUBLIC_KEY = "ea8234fb-33fa-487d-8967-f6dd436721ab";
-  const SUBSCRIPTION_PLAN = "adminSubscriptionPlan";
-  const PLAN_NAME = "adminPlan";
-
-  const handleFormSubmit = async (dataObject, hash) => {
-    // try {
+  const handleFormSubmit = (dataObject, hash) => {
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
       document.getElementById("checkout_button").click();
@@ -120,19 +84,19 @@ const AdminPayment = () => {
     if (selectedPaymentOption) {
       setLoading(true);
       handlePayment(
-        selectedAmount, // Use selectedAmount from input
+        selectedAmount,
         "USD",
-        `https://brandsandtalent.com/pricingadmin`,
+        "https://brandsandtalent.com/pricingadmin",
         selectedPaymentOption,
         "normal"
       );
     }
-  }, [selectedPaymentOption]); // Add selectedAmount to dependencies
+  }, [selectedPaymentOption]);
 
-  const saveEmailInput = (email) =>{
+  const saveEmailInput = (email) => {
     email = email.toLowerCase();
-    setSelectedEmail(email)
-  }
+    setSelectedEmail(email);
+  };
 
   return (
     <>
@@ -140,15 +104,15 @@ const AdminPayment = () => {
         {`
           .button-container {
             display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center;     /* Center vertically */
-            height: 100vh;           /* Make the section full height */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
           }
 
           .button-container button {
-            padding: 10px 20px; /* Add some padding for better appearance */
-            font-size: 16px;    /* Adjust font size */
-            cursor: pointer;     /* Change cursor to pointer */
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
             border-radius: 5px;
             background: #c2114b;
             border: none;
@@ -169,8 +133,7 @@ const AdminPayment = () => {
             margin-right: 10px;
           }
 
-        
-           .popup {
+          .popup {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -196,7 +159,7 @@ const AdminPayment = () => {
           }
         `}
       </style>
-      <section className="">
+      <section>
         <div className="popular-header">
           <div className="container">
             <div className="header-title">Admin Pricing</div>
@@ -208,28 +171,27 @@ const AdminPayment = () => {
         <div className="input-group">
           <input
             value={selectedAmount}
-            onChange={(e) => setSelectedAmount(e.target.value)} // Update selectedAmount
+            onChange={(e) => setSelectedAmount(e.target.value)}
             placeholder="Enter amount here"
             autoComplete="off"
-            autoCorrect="off"
           />
           <input
             value={selectedEmail}
             onChange={(e) => saveEmailInput(e.target.value)}
             placeholder="Enter email here"
             autoComplete="off"
-            autoCorrect="off"
           />
           <button onClick={handlePayNow}>Pay now</button>
           {showPopup && error && <div className="popup">{error}</div>}
         </div>
       </section>
+
       {paymentOptions && (
         <PaymentOptions
           onConfirm={handleFormSubmit}
           paymentFrom={"giftsubscription"}
           selectedCurrency={"USD"}
-          selectedAmount={selectedAmount} // Pass selectedAmount to PaymentOptions
+          selectedAmount={selectedAmount}
           setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
@@ -289,7 +251,7 @@ const AdminPayment = () => {
           Pay Now
         </button>
       </form>
-      {loading ? <Loader /> : <div></div>}
+      {loading ? <Loader /> : null}
     </>
   );
 };
