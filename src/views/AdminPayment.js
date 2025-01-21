@@ -6,41 +6,39 @@ import Loader from "./Loader.js";
 
 const AdminPayment = () => {
   const [paymentOptions, setPaymentOption] = useState(false);
-  const [selectedAmount, setSelectedAmount] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState(""); // State for selected amount
   const [selectedEmail, setSelectedEmail] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [loading, setLoading] = useState(false);
   const [abaFormData, setAbaFormData] = useState({});
-  const [error, setError] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
+  const [error, setError] = useState(""); // Error message state
+  const [showPopup, setShowPopup] = useState(false); // State for showing popup
 
   useEffect(() => {
     const hasReloaded = localStorage.getItem("refresh");
     if (!hasReloaded) {
       localStorage.setItem("refresh", "true");
-      window.location.reload();
+      window.location.reload(); // Reload the page once
     } else {
       localStorage.removeItem("refresh");
     }
   }, []);
 
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  // Email validation regex
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handlePayNow = () => {
+  const handlePayNow = async () => {
     const amount = parseFloat(selectedAmount.trim());
     if (isNaN(amount) || amount <= 0) {
       setError("Please enter a valid amount.");
-      showErrorPopup();
+      triggerPopup();
       return;
     }
 
     const email = selectedEmail.trim();
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
-      showErrorPopup();
+      triggerPopup();
       return;
     }
 
@@ -49,53 +47,47 @@ const AdminPayment = () => {
     setPaymentOption(true);
   };
 
-  const showErrorPopup = () => {
+  const triggerPopup = () => {
     setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 2000);
+    setTimeout(() => setShowPopup(false), 2000);
   };
 
-  const handlePayment = async (amount, currency, type, paymentOption, plan) => {
+  const handlePayment = async (amount, currency, type, paymentOption) => {
+    setLoading(true);
     try {
-      let apiUrl =
-        paymentOption === "card" ? API.createPayment : API.createqrpayment;
-      await ApiHelper.post(apiUrl, {
-        amount,
-        currency,
-        type,
-      });
-      setLoading(false);
+      const apiUrl = paymentOption === "card" ? API.createPayment : API.createqrpayment;
+      await ApiHelper.post(apiUrl, { amount, currency, type });
     } catch (error) {
       console.error("Error during payment:", error);
-      setLoading(false);
       setError("Payment initiation failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleFormSubmit = (dataObject, hash) => {
+  const handleFormSubmit = async (dataObject, hash) => {
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
-      document.getElementById("checkout_button").click();
-    }, 100);
+      const checkoutButton = document.getElementById("checkout_button");
+      if (checkoutButton) {
+        checkoutButton.click();
+      }
+    }, 200);
   };
 
   useEffect(() => {
     if (selectedPaymentOption) {
-      setLoading(true);
       handlePayment(
         selectedAmount,
         "USD",
         "https://brandsandtalent.com/pricingadmin",
-        selectedPaymentOption,
-        "normal"
+        selectedPaymentOption
       );
     }
   }, [selectedPaymentOption]);
 
   const saveEmailInput = (email) => {
-    email = email.toLowerCase();
-    setSelectedEmail(email);
+    setSelectedEmail(email.trim().toLowerCase());
   };
 
   return (
@@ -209,40 +201,14 @@ const AdminPayment = () => {
         method="POST"
         action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
       >
-        <input
-          type="hidden"
-          name="merchant_id"
-          value={abaFormData.merchant_id || ""}
-        />
-        <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
-        <input type="hidden" name="amount" value={abaFormData.amount || ""} />
-        <input type="hidden" name="email" value={selectedEmail || ""} />
-        <input
-          type="hidden"
-          name="payment_option"
-          value={abaFormData.payment_option || ""}
-        />
-        <input
-          type="hidden"
-          name="req_time"
-          value={abaFormData.req_time || ""}
-        />
-        <input
-          type="hidden"
-          name="continue_success_url"
-          value={abaFormData.continue_success_url || ""}
-        />
-        <input
-          type="hidden"
-          name="return_params"
-          value={abaFormData.return_params}
-        />
-        <input type="hidden" name="hash" value={abaFormData.hash || ""} />
+        {Object.entries(abaFormData).map(([key, value]) => (
+          <input key={key} type="hidden" name={key} value={value || ""} />
+        ))}
         <button
           type="button"
           id="checkout_button"
           style={{
-            opacity: "0",
+            opacity: 0,
             height: "1px",
             width: "1px",
             position: "absolute",
@@ -251,7 +217,7 @@ const AdminPayment = () => {
           Pay Now
         </button>
       </form>
-      {loading ? <Loader /> : null}
+      {loading && <Loader />}
     </>
   );
 };
