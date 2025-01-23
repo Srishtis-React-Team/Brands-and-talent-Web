@@ -68,9 +68,9 @@ const AdminPayment = () => {
   const handleFormSubmit = async (dataObject, hash) => {
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
-      const checkoutButton = document.getElementById("checkout_button");
-      if (checkoutButton) {
-        checkoutButton.click();
+      const form = document.getElementById("aba_merchant_request");
+      if (form) {
+        form.submit(); // Submit the form explicitly
       }
     }, 200);
   };
@@ -196,27 +196,32 @@ const AdminPayment = () => {
       )}
 
       <form
-        id="aba_merchant_request"
-        target="aba_webservice"
-        method="POST"
-        action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
-      >
-        {Object.entries(abaFormData).map(([key, value]) => (
-          <input key={key} type="hidden" name={key} value={value || ""} />
-        ))}
-        <button
-          type="button"
-          id="checkout_button"
-          style={{
-            opacity: 0,
-            height: "1px",
-            width: "1px",
-            position: "absolute",
-          }}
-        >
-          Pay Now
-        </button>
-      </form>
+  id="aba_merchant_request"
+  target="aba_webservice"
+  method="POST"
+  action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+>
+  {Object.entries(abaFormData).map(([key, value]) => (
+    <input key={key} type="hidden" name={key} value={value || ""} />
+  ))}
+  <button
+    type="submit"
+    id="checkout_button"
+    style={{
+      opacity: 0.01, // Ensure button is slightly visible
+      height: "1px",
+      width: "1px",
+      position: "absolute",
+      zIndex: -1, // Keep it out of normal focus flow
+    }}
+    onClick={(e) => {
+      e.preventDefault(); // Prevent default button action
+      document.getElementById("aba_merchant_request").submit(); // Submit the form explicitly
+    }}
+  >
+    Pay Now
+  </button>
+</form>
       {loading && <Loader />}
     </>
   );
