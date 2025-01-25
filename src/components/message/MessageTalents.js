@@ -230,7 +230,7 @@ const MessageTalents = () => {
       await ApiHelper.post(API.createChat, formData)
         .then((resData) => {
           if (resData) {
-            setCurrentChat(resData?.data);
+            setCurrentChat(resData);
             findPreviousChatUsers();
           }
         })
@@ -238,7 +238,9 @@ const MessageTalents = () => {
     }
   };
 
-  useEffect(() => {}, [userList]);
+  useEffect(() => {
+    console.log("current user", currentChat);
+  }, [currentChat]);
 
   const findPreviousChatUsers = async () => {
     await ApiHelper.post(`${API.findPreviousChatUsers}${currentUserId}`)
@@ -287,6 +289,7 @@ const MessageTalents = () => {
     }
     /////socket ends
     let chat_file = fileObj;
+
     const formData = {
       chatId: currentChat?._id,
       senderId: currentUserId,
@@ -309,7 +312,7 @@ const MessageTalents = () => {
   };
 
   const getMessages = async () => {
-    await ApiHelper.get(`${API.getMessages}${currentChat?._id}`)
+    await ApiHelper.get(`${API.getMessages}${currentChat?.data?._id}`)
       .then((resData) => {
         if (resData) {
         }
@@ -320,6 +323,8 @@ const MessageTalents = () => {
   useEffect(() => {
     if (socket != null) {
       socket.on("getMessage", (res) => {
+        //real
+
         setClickedUserId(res?.senderId);
         createChat(res?.senderId);
         // findPreviousChatUsers();
@@ -332,6 +337,23 @@ const MessageTalents = () => {
       });
       return () => {
         socket.off("getMessage");
+      };
+    }
+  }, [socket, currentChat]);
+
+  useEffect(() => {
+    console.log("tttttttttttttttttttttttttttttttttttt");
+    if (socket != null) {
+      console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+      socket.on("getNotification", (res) => {
+        //real
+        console.log("getNotification_response", res);
+        if (currentChat?._id !== res?.current_chat) return;
+        // setMessagesList((prev) => [...prev, res]);
+        console.log("responseeeee notification", res);
+      });
+      return () => {
+        socket.off("getNotification");
       };
     }
   }, [socket, currentChat]);
