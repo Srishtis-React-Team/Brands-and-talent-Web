@@ -2278,6 +2278,12 @@ ul.MuiMenu-list li {
 
 
 
+.ReactModal__Overlay.ReactModal__Overlay--after-open, .css-zw3mfo-MuiModal-root-MuiDialog-root, .modal, .css-126xj0f {
+  z-index: 99999 !important;
+}
+.css-1vskg8q {
+  justify-content: center !important;
+}
 
 
 
