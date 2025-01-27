@@ -93,7 +93,6 @@ const KidsOTP = () => {
           }, 1000);
           setTimeout(function () {
             let successData = "verified";
-            console.log("resData.data.--", resData.data.data.parentEmail);
             localStorage.setItem("userEmail", resData.data.data.parentEmail);
             navigate(
               `/talent-kids-teen-social-media-connections?userId=${userId}&userEmail=${userEmail}`

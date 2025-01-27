@@ -126,18 +126,6 @@ const ContactSupport = () => {
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [countryCode, setCountryCode] = useState("");
 
-  // const handleMobileChange = (value) => {
-  //   console.log(value, "handleMobileChange");
-  //   isValidPhoneNumber(value);
-  //   if (isValidPhoneNumber(value)) {
-  //     setMobileError(false);
-  //     setMobileValidationError(false);
-  //     setMobile(value);
-  //   } else {
-  //     setMobileValidationError(true);
-  //   }
-  // };
-
   const handleMobileChange = (value, countryData) => {
     setMobile(value);
     setMobileError(false);
@@ -158,10 +146,6 @@ const ContactSupport = () => {
       navigate(-1); // Equivalent to history.goBack() in v5
     }
   };
-
-  useEffect(() => {
-    console.log(countryCode, "countryCode");
-  }, []);
 
   return (
     <>

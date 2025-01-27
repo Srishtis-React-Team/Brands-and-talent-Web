@@ -74,7 +74,6 @@ const BrandSettings = () => {
   // const [paymentDetails,setPaymentDetails] = useState()
 
   const paymentData = localStorage.getItem("paymentData");
-  console.log("paymentDetails", paymentData);
   const paymentDetails = JSON.parse(paymentData);
   const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
   const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
@@ -88,7 +87,6 @@ const BrandSettings = () => {
       try {
         const resData = await ApiHelper.post(`${API.fetchPaymentDetails}`, obj);
         setBrandDetails(resData?.data?.data);
-        console.log("resData--0--", resData);
       } catch (error) {
         console.error("Error fetching payment details:", error);
       }
@@ -160,39 +158,6 @@ const BrandSettings = () => {
     color: "red",
     textAlign: "left",
   };
-
-  // useEffect(() => {
-  //   checkTransaction();
-  // }, []);
-
-  // const checkTransaction = async () => {
-  //   const paymenttrans_id = localStorage.getItem("paymenttrans_id")
-  //   const obj = { tranId: paymenttrans_id };
-
-  //   try {
-  //     console.log("here cinsiu")
-  //     const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
-  //     console.log('data cconasoling', resData)
-  //     if (resData) {
-  //       if(resData.data.status.message == "Success!"){
-  //       const paymentData = resData.data.data;
-  //       if(paymentData.payment_status == "APPROVED"){
-  //         localStorage.setItem("paymentData", JSON.stringify(paymentData));
-  //         const userId = localStorage.getItem("userId")
-  //         const userData = {
-  //             "subscriptionPlan":selectedPaymentPeriod,
-  //             "planName":selectedPaymentPlan,
-  //             "user_id":userId
-  //         }
-  //         const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
-  //         console.log('responseSubscription',responseSubscription)
-  //       }
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.error("Error:", err);
-  //   }
-  // };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -334,12 +299,7 @@ const BrandSettings = () => {
     }
   };
 
- 
-  
-  
-
   const updatePassword = async () => {
- 
     if (!allSamePasswordError && passwordMatch && !passwordStatus) {
       const formData = {
         brandId: brandId,
@@ -732,7 +692,6 @@ const BrandSettings = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
               {/* Manage Account */}
-              {console.log("brandDetails", brandDetails)}
               {/* <div style={containerStyle} className="cardHeight">
                 <div style={cardStyle}>
                   <h2 className="hd-sett" style={headerStyle}>

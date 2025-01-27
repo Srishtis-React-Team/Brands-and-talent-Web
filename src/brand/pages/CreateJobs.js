@@ -42,9 +42,6 @@ const CreateJobs = () => {
     nationalitiesList,
   } = useFieldDatas();
 
-  console.log(gendersList, "gendersList");
-  console.log(nationalitiesList, "nationalitiesList");
-  console.log(categoryList, "categoryList");
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -135,10 +132,6 @@ const CreateJobs = () => {
       setInstaMaxError(""); // Clear error if valid
     }
   }, [instaMin, instaMax]);
-
-  useEffect(() => {
-    console.log(instaMinError, "instaMinError");
-  }, [instaMinError]);
 
   const [tikTokMinError, setTikTokMinError] = useState("");
   const [tikTokMaxError, setTikTokMaxError] = useState("");
@@ -299,15 +292,9 @@ const CreateJobs = () => {
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
-  useEffect(() => {
-    console.log(jobTitle, "jobTitle");
-  }, [jobTitle]);
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
@@ -499,8 +486,6 @@ const CreateJobs = () => {
   };
 
   const getJobsByID = async (jobId, type) => {
-    console.log(jobId, "jobId");
-    console.log(type, "type");
     if (type == "Posted") {
       const formData = {
         type: "brand",
@@ -514,7 +499,7 @@ const CreateJobs = () => {
             }
           }
         })
-        .catch((err) => { });
+        .catch((err) => {});
     } else if (type == "Draft") {
       const formData = {
         type: "brand",
@@ -528,33 +513,11 @@ const CreateJobs = () => {
             }
           }
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
   useEffect(() => {
-    console.log(editJobData, "editJobData");
-  }, [editJobData]);
-
-  useEffect(() => {
-    // const howToApplyDescriptionContent = initialHowToApply;
-    // const howToApplyDescriptionContentBlocks = convertFromHTML(
-    //   howToApplyDescriptionContent
-    // );
-    // const howToApplyDescriptionContentState = ContentState.createFromBlockArray(
-    //   howToApplyDescriptionContentBlocks
-    // );
-    // const howToApplyDescription = EditorState.createWithContent(
-    //   howToApplyDescriptionContentState
-    // );
-    // setEditorStateHowToApply(howToApplyDescription);
-    // setHowToApplyDescription(initialHowToApply);
-
-    // let initialHowToApply = [
-    //   `<p>Interested candidates should submit their resume and a link that contains portfolio
-    //    from Brands and Talent website to <a href="mailto:${brandData?.brandEmail}">${brandData?.brandEmail}</a>.
-    //    Please include ${jobTitle} in the subject line.</p>\n`,
-    // ];
     let initialHowToApply = [
       `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
     ];
@@ -578,14 +541,13 @@ const CreateJobs = () => {
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
-        console.log(resData, "getAllJobs");
         if (resData.data.status === true) {
           if (resData.data.data) {
             setAllJobsList(resData.data.data, "resData.data.data getAllJobs");
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -906,7 +868,7 @@ const CreateJobs = () => {
     }
   }, []);
 
-  useEffect(() => { }, [updateDisabled]);
+  useEffect(() => {}, [updateDisabled]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -1073,7 +1035,7 @@ const CreateJobs = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getKidsData = async () => {
@@ -1114,7 +1076,7 @@ const CreateJobs = () => {
           setAge(resData.data.data?.age);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handleSelectedCountry = (event) => {
@@ -1146,7 +1108,7 @@ const CreateJobs = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const getCities = async (data) => {
     const formData = data;
@@ -1156,7 +1118,7 @@ const CreateJobs = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const updateJob = async () => {
@@ -1276,7 +1238,7 @@ const CreateJobs = () => {
               }, 1000);
             }
           })
-          .catch((err) => { });
+          .catch((err) => {});
       } else if (editData?.type == "Posted") {
         await ApiHelper.post(`${API.editJob}${editData?.value}`, formData)
           .then((resData) => {
@@ -1299,7 +1261,7 @@ const CreateJobs = () => {
               }, 1000);
             }
           })
-          .catch((err) => { });
+          .catch((err) => {});
       }
     } else {
       setMessage("Please fill out all mandatory fields");
@@ -1450,7 +1412,7 @@ const CreateJobs = () => {
             }, 3000);
           }
         })
-        .catch((err) => { });
+        .catch((err) => {});
     } else {
       setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
@@ -1662,7 +1624,7 @@ const CreateJobs = () => {
     setSelectedTab(e.target.value);
   };
 
-  useEffect(() => { }, [showQuestions, employmentError, isDuplicateJob]);
+  useEffect(() => {}, [showQuestions, employmentError, isDuplicateJob]);
 
   const handleButtonClick = (data) => {
     setShowSidebar(!showSidebar);
@@ -1698,7 +1660,7 @@ const CreateJobs = () => {
       setSkillError(false);
     }
   }, [skills]);
-  useEffect(() => { }, [skills]);
+  useEffect(() => {}, [skills]);
 
   const skillsListing = [
     { title: "Actor" },
@@ -1778,8 +1740,8 @@ const CreateJobs = () => {
     setDobError(false);
   };
 
-  useEffect(() => { }, [lastdateApply]);
-  useEffect(() => { }, [category]);
+  useEffect(() => {}, [lastdateApply]);
+  useEffect(() => {}, [category]);
 
   useEffect(() => {
     if (minAge && maxAge && parseInt(minAge) > parseInt(maxAge)) {
@@ -1998,18 +1960,15 @@ const CreateJobs = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(lastdateApply, "lastdateApply");
-  }, [lastdateApply]);
-
   return (
     <>
       <>
         <BrandHeader toggleMenu={toggleMenu} />
         <div
           id="sidebarBrand"
-          className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-            }`}
+          className={`brand-sidebar ${
+            showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
         >
           <BrandSideMenu onButtonClick={handleButtonClick} />
         </div>
@@ -2184,7 +2143,7 @@ const CreateJobs = () => {
                             /> */}
 
                             <Select
-                            className="cs-select"
+                              className="cs-select"
                               placeholder="Search country..."
                               options={countryList.map((country, index) => ({
                                 value: country,
@@ -2208,7 +2167,7 @@ const CreateJobs = () => {
                           <div className="mb-0">
                             <label className="form-label">State</label>
                             <Select
-                            className="cs-select"
+                              className="cs-select"
                               placeholder="Select state..."
                               options={stateList?.map((state) => ({
                                 value: state.stateId, // or whatever unique identifier you want to use
@@ -2232,7 +2191,7 @@ const CreateJobs = () => {
                           <div className="mb-0">
                             <label className="form-label">City</label>
                             <Select
-                             className="cs-select" 
+                              className="cs-select"
                               placeholder="Select City..."
                               options={cityList?.map((city) => ({
                                 value: city.cityId, // or whatever unique identifier you want to use
@@ -2972,14 +2931,16 @@ const CreateJobs = () => {
                             <div className="kids-form-section col-md-6 mb-3">
                               {questions?.map((question, index) => (
                                 <div className=" mb-2" key={index}>
-                                  <label className="form-label mb-2">{`Question ${index + 1
-                                    }:`}</label>
+                                  <label className="form-label mb-2">{`Question ${
+                                    index + 1
+                                  }:`}</label>
                                   <div className="question-input-wrapper">
                                     <input
                                       type="text"
                                       className="form-control "
-                                      placeholder={`Enter Question ${index + 1
-                                        }`}
+                                      placeholder={`Enter Question ${
+                                        index + 1
+                                      }`}
                                       value={question}
                                       id={`question${index + 1}`}
                                       onChange={(event) =>
@@ -3003,7 +2964,9 @@ const CreateJobs = () => {
                                 style={{ cursor: "pointer" }}
                               >
                                 <i className="bi bi-plus-square-fill"></i>
-                                <div className="add-more-questions-text">Add More</div>
+                                <div className="add-more-questions-text">
+                                  Add More
+                                </div>
                               </div>
                               {/* <div
                                 className="add-more-questions "
@@ -3378,282 +3341,282 @@ const CreateJobs = () => {
                                 )}
                                 {selectedOption ===
                                   "paid_collaboration_and_gift" && (
-                                    <>
-                                      <div className="compensation-row row">
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Pay Type
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              onChange={handleTypeChange}
-                                              value={type}
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Pay Type
-                                              </option>
-                                              <option value="exact_pay">
-                                                Exact Pay
-                                              </option>
-                                              <option value="pay_range">
-                                                Pay Range
-                                              </option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        {type === "exact_pay" && (
-                                          <>
-                                            <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                              <div className="">
-                                                <label className="form-label">
-                                                  Exact Pay
-                                                </label>
-                                                <div className="creators-filter-select creator-age-wrapper">
-                                                  <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Exact Pay"
-                                                    value={exactPay}
-                                                    onChange={(e) => {
-                                                      onExactPayChange(e);
-                                                    }}
-                                                  ></input>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </>
-                                        )}
-                                        {type == "pay_range" && (
-                                          <>
-                                            <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                              <div className="payWidth">
-                                                <label className="form-label">
-                                                  Minimum Pay
-                                                </label>
-                                                <div className="creators-filter-select creator-age-wrapper">
-                                                  <div>
-                                                    <input
-                                                      type="number"
-                                                      className="form-control"
-                                                      placeholder="Minimum Pay"
-                                                      value={minPay}
-                                                      onChange={(e) => {
-                                                        onMinPayChange(e);
-                                                      }}
-                                                      min={1}
-                                                    ></input>
-                                                    {minPayError && (
-                                                      <div
-                                                        className="invalid-fields"
-                                                        style={{}}
-                                                      >
-                                                        {minPayError}
-                                                      </div>
-                                                    )}{" "}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                              <div className="payWidth">
-                                                <label className="form-label">
-                                                  Maximum Pay
-                                                </label>
-                                                <div className="creators-filter-select creator-age-wrapper">
-                                                  <div>
-                                                    <input
-                                                      type="number"
-                                                      className="form-control"
-                                                      placeholder="Maximum Pay"
-                                                      value={maxPay}
-                                                      onChange={(e) => {
-                                                        onMaxPayChange(e);
-                                                      }}
-                                                      style={{}}
-                                                      min={1}
-                                                    ></input>
-                                                    {maxPayError && (
-                                                      <div
-                                                        className="invalid-fields"
-                                                        style={{}}
-                                                      >
-                                                        {maxPayError}
-                                                      </div>
-                                                    )}{" "}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </>
-                                        )}
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Currency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={currency}
-                                              onChange={handleCurrencyChange}
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Currency
-                                              </option>
-                                              {currencyList?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option?.value}
-                                                  >
-                                                    {option?.title}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Frequency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={frequency}
-                                              onChange={handleFrequencyChange}
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Frequency
-                                              </option>
-                                              {frequencyOptions?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option}
-                                                  >
-                                                    {option}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
+                                  <>
+                                    <div className="compensation-row row">
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Pay Type
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            onChange={handleTypeChange}
+                                            value={type}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Pay Type
+                                            </option>
+                                            <option value="exact_pay">
+                                              Exact Pay
+                                            </option>
+                                            <option value="pay_range">
+                                              Pay Range
+                                            </option>
+                                          </select>
                                         </div>
                                       </div>
-                                      <div className="compensation-row row">
-                                        <div className="kids-form-section col-md-4 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Product/Gift Name (or) Product link
-                                            </label>
+                                      {type === "exact_pay" && (
+                                        <>
+                                          <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                            <div className="">
+                                              <label className="form-label">
+                                                Exact Pay
+                                              </label>
+                                              <div className="creators-filter-select creator-age-wrapper">
+                                                <input
+                                                  type="text"
+                                                  className="form-control"
+                                                  placeholder="Exact Pay"
+                                                  value={exactPay}
+                                                  onChange={(e) => {
+                                                    onExactPayChange(e);
+                                                  }}
+                                                ></input>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </>
+                                      )}
+                                      {type == "pay_range" && (
+                                        <>
+                                          <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                            <div className="payWidth">
+                                              <label className="form-label">
+                                                Minimum Pay
+                                              </label>
+                                              <div className="creators-filter-select creator-age-wrapper">
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Minimum Pay"
+                                                    value={minPay}
+                                                    onChange={(e) => {
+                                                      onMinPayChange(e);
+                                                    }}
+                                                    min={1}
+                                                  ></input>
+                                                  {minPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{}}
+                                                    >
+                                                      {minPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                            <div className="payWidth">
+                                              <label className="form-label">
+                                                Maximum Pay
+                                              </label>
+                                              <div className="creators-filter-select creator-age-wrapper">
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Maximum Pay"
+                                                    value={maxPay}
+                                                    onChange={(e) => {
+                                                      onMaxPayChange(e);
+                                                    }}
+                                                    style={{}}
+                                                    min={1}
+                                                  ></input>
+                                                  {maxPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{}}
+                                                    >
+                                                      {maxPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </>
+                                      )}
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Currency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={currency}
+                                            onChange={handleCurrencyChange}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Currency
+                                            </option>
+                                            {currencyList?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option?.value}
+                                                >
+                                                  {option?.title}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Frequency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={frequency}
+                                            onChange={handleFrequencyChange}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Frequency
+                                            </option>
+                                            {frequencyOptions?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option}
+                                                >
+                                                  {option}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="compensation-row row">
+                                      <div className="kids-form-section col-md-4 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Product/Gift Name (or) Product link
+                                          </label>
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            value={productName}
+                                            onChange={handleProductNameChange}
+                                            placeholder="Enter Product/Gift Name (or) Product link"
+                                          ></input>
+                                        </div>
+                                      </div>
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Product/Gift Value
+                                          </label>
+                                          <div className="creators-filter-select creator-age-wrapper">
                                             <input
-                                              type="text"
+                                              type="number"
                                               className="form-control"
-                                              value={productName}
-                                              onChange={handleProductNameChange}
-                                              placeholder="Enter Product/Gift Name (or) Product link"
+                                              placeholder="Product/Gift Value"
+                                              value={productValue}
+                                              onChange={(e) => {
+                                                handleProductValueChange(e);
+                                              }}
+                                              min={0}
                                             ></input>
                                           </div>
                                         </div>
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Product/Gift Value
-                                            </label>
-                                            <div className="creators-filter-select creator-age-wrapper">
-                                              <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Product/Gift Value"
-                                                value={productValue}
-                                                onChange={(e) => {
-                                                  handleProductValueChange(e);
-                                                }}
-                                                min={0}
-                                              ></input>
-                                            </div>
-                                          </div>
-                                        </div>
+                                      </div>
 
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className=" ">
-                                            <label className="form-label">
-                                              Currency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={productCurrency}
-                                              onChange={
-                                                handleProductCurrencyChange
-                                              }
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Currency
-                                              </option>
-                                              {currencyList?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option?.value}
-                                                  >
-                                                    {option?.title}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div className="kids-form-section col-md-2 mb-3">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Frequency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={productFrequency}
-                                              onChange={
-                                                handleProductFrequencyChange
-                                              }
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Frequency
-                                              </option>
-                                              {frequencyOptions?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option}
-                                                  >
-                                                    {option}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className=" ">
+                                          <label className="form-label">
+                                            Currency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={productCurrency}
+                                            onChange={
+                                              handleProductCurrencyChange
+                                            }
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Currency
+                                            </option>
+                                            {currencyList?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option?.value}
+                                                >
+                                                  {option?.title}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
                                         </div>
                                       </div>
-                                    </>
-                                  )}
+                                      <div className="kids-form-section col-md-2 mb-3">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Frequency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={productFrequency}
+                                            onChange={
+                                              handleProductFrequencyChange
+                                            }
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Frequency
+                                            </option>
+                                            {frequencyOptions?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option}
+                                                >
+                                                  {option}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>

@@ -18,6 +18,7 @@ export const API = {
   getLogos: BASEURL + "admin/getLogos",
   getFieldDatas: BASEURL + "features/getFieldDatas",
 
+
   //Registration
   brandsRegister: BASEURL + "brands/brandsRegister",
   kidsSignUp: BASEURL + "users/kidsSignUp ",
@@ -38,6 +39,7 @@ export const API = {
   adultFetch: BASEURL + "users/adultFetch/",
   typeChecking: BASEURL + "users/typeChecking",
   getDataByPublicUrl: BASEURL + "users/getDataByPublicUrl",
+  
 
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
@@ -103,6 +105,7 @@ export const API = {
   deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
   deleteAudioUrls: BASEURL + "users/deleteAudioUrls",
   directKidsLogin: BASEURL + "users/directKidsLogin",
+  CurrentPlanName :BASEURL + "users/CurrentPlanName",
 
   reportReview: BASEURL + "users/reportReview",
 

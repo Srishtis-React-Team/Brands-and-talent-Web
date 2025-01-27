@@ -47,10 +47,9 @@ import EditSocialMedias from "../pages/EditSocialMedias";
 import "material-icons/iconfont/material-icons.css";
 import { tr } from "date-fns/locale";
 
-
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
- 
+
   return (
     <div
       role="tabpanel"
@@ -350,8 +349,6 @@ const EditTalent = () => {
 
   useEffect(() => {
     if (isSubmitted) {
-      console.log(selectedCategories, "selectedCategories");
-      console.log(selectedCategories.length, "selectedCategories.length");
       if (selectedCategories.length === 0) {
         setCategoryError(true);
       } else {
@@ -512,6 +509,7 @@ const EditTalent = () => {
   const [services, setServices] = useState();
   const [isBasic, setIsBasic] = useState(false);
 
+
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -595,6 +593,11 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
+            if (resData?.data?.data?.planName == "Basic") {
+              setIsBasic(true);
+            } else {
+              setIsBasic(false);
+            }
             setTalentData(resData.data.data);
             setCompletedJobs(resData?.data?.data?.noOfJobsCompleted);
 
@@ -680,6 +683,7 @@ const EditTalent = () => {
       })
       .catch((err) => {});
   };
+
 
   const handleEditFeatureChanges = (values) => {
     setFeatures(values);
@@ -1597,13 +1601,11 @@ const EditTalent = () => {
     alert(index);
   };
   const deleteServiceFile = async () => {
-    console.log(alertpop, "alertpop_deleteServiceFile");
     const formData = {
       talentId: talentData?._id,
       serviceUniqueId: alertpop?.eachService?.uniqueId,
       fileId: alertpop?.item?.id,
     };
-    console.log(formData, "formData");
     await ApiHelper.post(`${API.deleteService}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -1954,7 +1956,6 @@ const EditTalent = () => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    console.log(url, "url");
     const isValidUrl = /^(https?|ftp):\/\/[^\s]+$/i.test(url);
     // alert(isValidUrl);
     return isValidUrl; // If the URL is valid, return false (since we want to check if it's NOT valid)
@@ -2293,7 +2294,6 @@ const EditTalent = () => {
 
   // Single function to handle menu open
   const handleServiceFileClickClick = (event, item, eachService) => {
-    console.log(item, "itemhandleServiceFileClickClick");
     setServiceFileAnchor(event.currentTarget);
     setSelectedServiceItem(item); // Set the selected item
     setSelectedServiceObject(eachService);
@@ -2324,20 +2324,7 @@ const EditTalent = () => {
     setSelectedCV(null); // Reset the selected item when closing the menu
     setCVIndex(index);
   };
-
-  useEffect(() => {
-    console.log(urls, "urls");
-  }, [urls]);
-  useEffect(() => {
-    console.log(checkAudioUrl, "checkAudioUrl");
-  }, [checkAudioUrl]);
-  useEffect(() => {
-    console.log(selectedServiceItem, "selectedServiceItem");
-  }, [selectedServiceItem]);
-  useEffect(() => {
-    console.log(selectedServiceObject, "selectedServiceObject");
-  }, [selectedServiceObject]);
-
+console.log("talentData?.portfolio?.length----------------",talentData?.portfolio?.length)
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />
@@ -3236,6 +3223,76 @@ const EditTalent = () => {
                     </>
                   )}
                   <div className="row">
+  {talentData &&
+    talentData?.portfolio?.map((item, index) => {
+      const isBasicPlan = talentData.planName === "Basic";
+      const canAddMore = !isBasicPlan || (isBasicPlan && index < 5);
+
+      if (canAddMore) {
+        return (
+          <div className="col-md-6" key={item.id}>
+            <div className="update-portfolio-cards">
+              <div className="update-portfolio-icon">
+                <div className="file-section">
+                  {item.type === "image" && (
+                    <div className="fileType">
+                      <i className="bi bi-card-image"></i>
+                    </div>
+                  )}
+                  <div className="update-portfolio-fileName pl-0">
+                    {item.title}
+                  </div>
+                  <div className="update-portfolio-action">
+                    <IconButton
+                      aria-label="more"
+                      aria-controls={`dropdown-menu-${item.id}`}
+                      aria-haspopup="true"
+                      onClick={(event) =>
+                        handlePortfolioClick(event, item)
+                      }
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id={`dropdown-menu-${item.id}`}
+                      anchorEl={portfolioAnchor}
+                      open={portfolioOpen}
+                      onClose={handlePortfolioClose}
+                    >
+                      <MenuItem
+                        onClick={() => {
+                          handlePortfolioClose();
+                          viewUpdateFile(selectedPortfolioItem);
+                        }}
+                      >
+                        View
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          handlePortfolioClose();
+                          setAlertpop({
+                            status: true,
+                            item: selectedPortfolioItem,
+                            label: "delete",
+                            eachService: null,
+                          });
+                        }}
+                      >
+                        Delete
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return null; // Exclude items if the plan limit is exceeded
+    })}
+</div>
+
+                  {/* <div className="row">
                     {talentData &&
                       talentData?.portfolio?.length > 0 &&
                       talentData?.portfolio?.map((item) => {
@@ -3302,7 +3359,7 @@ const EditTalent = () => {
                           </>
                         );
                       })}
-                  </div>
+                  </div> */}
                   <div className="add-portfoli-section">
                     <div className="add-portfolia-btn">
                       <input
@@ -3610,6 +3667,7 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
+          
             <CustomTabPanel value={valueTabs} index={5}>
               {isBasic == false && (
                 <>

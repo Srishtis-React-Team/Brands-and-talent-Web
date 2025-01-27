@@ -77,6 +77,7 @@ const AdultFormOne = () => {
     }
   }, [currentUserId]);
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
+  const [selectedPublicUrl, setSelectedPublicUrl] = useState("");
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
@@ -100,6 +101,7 @@ const AdultFormOne = () => {
             setKidsCity(resData?.data?.data?.childCity);
             setGender(resData?.data?.data?.childGender);
             setLanguages(resData?.data?.data?.languages);
+            setSelectedPublicUrl(resData?.data?.data?.publicUrl);
 
             const selectedOptions = resData?.data?.data?.languages.map(
               (language) => {
@@ -473,7 +475,7 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
+        publicUrl: selectedPublicUrl,
       };
 
       if (userId) {
@@ -559,8 +561,6 @@ const AdultFormOne = () => {
 
   useEffect(() => {
     if (isSubmitted) {
-      console.log(selectedCategories, "selectedCategories");
-      console.log(selectedCategories.length, "selectedCategories.length");
       if (selectedCategories.length === 0) {
         setSelectedCategoriesError(true);
       } else {
