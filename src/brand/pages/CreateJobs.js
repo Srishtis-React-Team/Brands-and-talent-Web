@@ -1273,9 +1273,9 @@ const CreateJobs = () => {
     }
   };
   const createGigs = async (type) => {
-    if(type == "draft"){
+    if (type == "draft") {
       setIsDraftLoading(true)
-    } else if(type == "post"){
+    } else if (type == "post") {
       setIsLoading(true);
 
     }
@@ -1384,11 +1384,11 @@ const CreateJobs = () => {
       await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            if(type == "draft"){
+            if (type == "draft") {
               setIsDraftLoading(false)
-            } else if(type == "post"){
+            } else if (type == "post") {
               setIsLoading(false);
-        
+
             }
             setMessage("Job Created Successfully!");
             setOpenPopUp(true);
@@ -1412,11 +1412,11 @@ const CreateJobs = () => {
               }
             }, 2000);
           } else if (resData.data.status === false) {
-            if(type == "draft"){
+            if (type == "draft") {
               setIsDraftLoading(false)
-            } else if(type == "post"){
+            } else if (type == "post") {
               setIsLoading(false);
-        
+
             }
             setMessage(resData.data.message);
             setOpenPopUp(true);
@@ -1434,11 +1434,11 @@ const CreateJobs = () => {
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
-        if(type == "draft"){
+        if (type == "draft") {
           setIsDraftLoading(false)
-        } else if(type == "post"){
+        } else if (type == "post") {
           setIsLoading(false);
-    
+
         }
       }, 2000);
     }
@@ -2432,6 +2432,11 @@ const CreateJobs = () => {
                       <div className="rich-editor mb-2">
                         <label className="form-label additional-requirements-title">
                           Additional Requirement (optional)
+                          <br />
+
+                          <span className="note" style={{ fontSize: '0.875rem', color: '#6c757d' }}>
+                            Note: Target the exact talent/creators you need by adding these additional requirements below.
+                          </span>
                         </label>
                       </div>
                       <div className="kids-form-row row">
