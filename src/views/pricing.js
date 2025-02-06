@@ -605,8 +605,12 @@ const Pricing = ({
     if (currentUserId) {
       if (currentUserType == "talent") {
         getTalentById();
+        getPricingList();
+        setIsChecked(true)
       } else if (currentUserType == "brand") {
         getBrand();
+        getBrandsPricingList();
+        setIsChecked(false)
       }
     }
   }, [currentUserId, currentUserType]);
@@ -657,7 +661,7 @@ const Pricing = ({
           <div className="select-plan-main ">
             <div className="select-pricing container text-center">
               <label className="toggleSwitch nolabel">
-                <input type="checkbox" onChange={handleToggle} />
+                <input type="checkbox" checked={isChecked} onChange={handleToggle} />
                 <a></a>
                 <span>
                   <span className="right-span">Brands /Clients</span>
