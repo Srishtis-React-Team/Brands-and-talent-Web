@@ -2285,7 +2285,8 @@ ul.MuiMenu-list li {
   justify-content: center !important;
 }
 .rdw-list-dropdown, .rdw-text-align-dropdown {
-  z-index: 999999 !important;
+  z-index: 9 !important;
+  /* z-index: 999999 !important; */
 }
 .aba-checkout-desktop {
   background: #081b3787;
