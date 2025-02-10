@@ -42,9 +42,6 @@ const CreateJobs = () => {
     nationalitiesList,
   } = useFieldDatas();
 
-  console.log(gendersList, "gendersList");
-  console.log(nationalitiesList, "nationalitiesList");
-  console.log(categoryList, "categoryList");
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -88,6 +85,7 @@ const CreateJobs = () => {
   const [message, setMessage] = useState("");
   const [allJobsList, setAllJobsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDraftLoading, setIsDraftLoading] = useState(false);
 
   const [selectedJobID, setSelectedJobID] = useState("");
   const [editJobData, setEditJobData] = useState("");
@@ -135,10 +133,6 @@ const CreateJobs = () => {
       setInstaMaxError(""); // Clear error if valid
     }
   }, [instaMin, instaMax]);
-
-  useEffect(() => {
-    console.log(instaMinError, "instaMinError");
-  }, [instaMinError]);
 
   const [tikTokMinError, setTikTokMinError] = useState("");
   const [tikTokMaxError, setTikTokMaxError] = useState("");
@@ -302,12 +296,6 @@ const CreateJobs = () => {
       .catch((err) => { });
   };
 
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
-  useEffect(() => {
-    console.log(jobTitle, "jobTitle");
-  }, [jobTitle]);
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
@@ -499,8 +487,6 @@ const CreateJobs = () => {
   };
 
   const getJobsByID = async (jobId, type) => {
-    console.log(jobId, "jobId");
-    console.log(type, "type");
     if (type == "Posted") {
       const formData = {
         type: "brand",
@@ -533,28 +519,6 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    console.log(editJobData, "editJobData");
-  }, [editJobData]);
-
-  useEffect(() => {
-    // const howToApplyDescriptionContent = initialHowToApply;
-    // const howToApplyDescriptionContentBlocks = convertFromHTML(
-    //   howToApplyDescriptionContent
-    // );
-    // const howToApplyDescriptionContentState = ContentState.createFromBlockArray(
-    //   howToApplyDescriptionContentBlocks
-    // );
-    // const howToApplyDescription = EditorState.createWithContent(
-    //   howToApplyDescriptionContentState
-    // );
-    // setEditorStateHowToApply(howToApplyDescription);
-    // setHowToApplyDescription(initialHowToApply);
-
-    // let initialHowToApply = [
-    //   `<p>Interested candidates should submit their resume and a link that contains portfolio
-    //    from Brands and Talent website to <a href="mailto:${brandData?.brandEmail}">${brandData?.brandEmail}</a>.
-    //    Please include ${jobTitle} in the subject line.</p>\n`,
-    // ];
     let initialHowToApply = [
       `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
     ];
@@ -578,7 +542,6 @@ const CreateJobs = () => {
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
-        console.log(resData, "getAllJobs");
         if (resData.data.status === true) {
           if (resData.data.data) {
             setAllJobsList(resData.data.data, "resData.data.data getAllJobs");
@@ -1309,8 +1272,13 @@ const CreateJobs = () => {
       }, 2000);
     }
   };
-  const createGigs = async () => {
-    setIsLoading(true);
+  const createGigs = async (type) => {
+    if(type == "draft"){
+      setIsDraftLoading(true)
+    } else if(type == "post"){
+      setIsLoading(true);
+
+    }
 
     if (jobTitle === "") {
       setjobTitleError(true);
@@ -1416,7 +1384,12 @@ const CreateJobs = () => {
       await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            setIsLoading(false);
+            if(type == "draft"){
+              setIsDraftLoading(false)
+            } else if(type == "post"){
+              setIsLoading(false);
+        
+            }
             setMessage("Job Created Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
@@ -1439,7 +1412,12 @@ const CreateJobs = () => {
               }
             }, 2000);
           } else if (resData.data.status === false) {
-            setIsLoading(false);
+            if(type == "draft"){
+              setIsDraftLoading(false)
+            } else if(type == "post"){
+              setIsLoading(false);
+        
+            }
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function () {
@@ -1456,7 +1434,12 @@ const CreateJobs = () => {
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
-        setIsLoading(false);
+        if(type == "draft"){
+          setIsDraftLoading(false)
+        } else if(type == "post"){
+          setIsLoading(false);
+    
+        }
       }, 2000);
     }
   };
@@ -1998,10 +1981,6 @@ const CreateJobs = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(lastdateApply, "lastdateApply");
-  }, [lastdateApply]);
-
   return (
     <>
       <>
@@ -2184,7 +2163,7 @@ const CreateJobs = () => {
                             /> */}
 
                             <Select
-                            className="cs-select"
+                              className="cs-select"
                               placeholder="Search country..."
                               options={countryList.map((country, index) => ({
                                 value: country,
@@ -2208,7 +2187,7 @@ const CreateJobs = () => {
                           <div className="mb-0">
                             <label className="form-label">State</label>
                             <Select
-                            className="cs-select"
+                              className="cs-select"
                               placeholder="Select state..."
                               options={stateList?.map((state) => ({
                                 value: state.stateId, // or whatever unique identifier you want to use
@@ -2232,7 +2211,7 @@ const CreateJobs = () => {
                           <div className="mb-0">
                             <label className="form-label">City</label>
                             <Select
-                             className="cs-select" 
+                              className="cs-select"
                               placeholder="Select City..."
                               options={cityList?.map((city) => ({
                                 value: city.cityId, // or whatever unique identifier you want to use
@@ -3003,7 +2982,9 @@ const CreateJobs = () => {
                                 style={{ cursor: "pointer" }}
                               >
                                 <i className="bi bi-plus-square-fill"></i>
-                                <div className="add-more-questions-text">Add More</div>
+                                <div className="add-more-questions-text">
+                                  Add More
+                                </div>
                               </div>
                               {/* <div
                                 className="add-more-questions "
@@ -4021,6 +4002,35 @@ const CreateJobs = () => {
                 </div>
 
                 <div className="create-job-buttons mt-4 mb-2 justify-content-center">
+                  {/* Render the "Preview & Save Draft" button only if not editing */}
+                  {!editData?.value && (
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        createGigs('draft');
+                      }}
+                      className="createjob-btn"
+                    >
+                      {isDraftLoading ? "Loading..." : "Preview & Save Draft"}
+                    </div>
+                  )}
+
+                  {/* Render the "Update Job" button only if editing */}
+                  {editData?.value && (
+                    <div
+                      className="createjob-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        updateJob();
+                      }}
+                    >
+                      Update Job
+                    </div>
+                  )}
+
+
+
+                  {/* <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                   <div
                     onClick={(e) => {
                       e.preventDefault();
@@ -4042,14 +4052,14 @@ const CreateJobs = () => {
                         Update Job
                       </div>
                     </>
-                  )}
+                  )} */}
                   {!editData?.value && (
                     <>
                       <div
                         className="createjob-btn"
                         onClick={(e) => {
                           e.preventDefault();
-                          createGigs();
+                          createGigs('post');
                         }}
                       >
                         {isLoading ? "Loading..." : " Preview & Post"}

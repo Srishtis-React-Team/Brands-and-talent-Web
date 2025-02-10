@@ -19,8 +19,6 @@ const Header = ({ onData }) => {
   const navigate = useNavigate();
   const searchPathOptions = SearchPaths(); // Call the function/component to get the options
 
-  console.log(searchPathOptions, "searchPathOptions_home");
-
   const btLogo = require("../assets/images/LOGO.png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const cofeeIcon = require("../assets/icons/cofeeIcon.png");
@@ -362,8 +360,6 @@ const Header = ({ onData }) => {
     )
   ).map((label) => searchPathOptions.find((option) => option.label === label));
 
-  console.log(filteredOptions, "filteredOptions");
-
   const handleClickBlogs = (step) => {
     //
     // navigate("/blogs", { state: { step: step } });
@@ -701,10 +697,6 @@ const Header = ({ onData }) => {
   const isLoginPage = location.pathname.includes("/login");
 
   const isActive = location.pathname.includes("/find-talent");
-
-  useEffect(() => {
-    console.log(activeMenu, "activeMenu");
-  }, [activeMenu]);
 
   return (
     <>

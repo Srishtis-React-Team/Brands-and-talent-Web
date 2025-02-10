@@ -167,9 +167,6 @@ const ListJobs = () => {
   useEffect(() => {}, [allJobsList]);
 
   const postJob = async () => {
-    console.log(alertpop?.jobType, "jobType");
-    console.log(alertpop?.jobObject, "jobObject");
-
     if (alertpop?.jobObject?.adminApproved == true) {
       await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
         .then((resData) => {
@@ -235,10 +232,6 @@ const ListJobs = () => {
       })
       .catch((err) => {});
   };
-
-  useEffect(() => {
-    console.log(allJobsList, "allJobsList");
-  }, [allJobsList]);
 
   return (
     <>

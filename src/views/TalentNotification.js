@@ -108,15 +108,8 @@ const TalentNotification = () => {
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
-
-  useEffect(() => {
-    console.log(talentData, "TALENTDATA_TALENTNOTIFICATIONS");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(subscriptionCategory, "TALENTDATA_subscriptionCategoryS");
-  }, [subscriptionCategory]);
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
@@ -125,7 +118,7 @@ const TalentNotification = () => {
           setNotifications(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -141,7 +134,7 @@ const TalentNotification = () => {
           getTalentNotification();
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
     navigate("/preview-job-talent", {
       state: {
         jobId: item?.gigId,
@@ -159,7 +152,7 @@ const TalentNotification = () => {
           getTalentNotification();
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const createJobAlert = async (item) => {
@@ -207,7 +200,7 @@ const TalentNotification = () => {
           }, 1000);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
     setIsLoading(false);
   };
 
@@ -231,8 +224,9 @@ const TalentNotification = () => {
       <TalentHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-          }`}
+        className={`brand-sidebar ${
+          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+        }`}
       >
         <TalentSideMenu />
       </div>
@@ -273,10 +267,11 @@ const TalentNotification = () => {
                         <>
                           <div
                             key={index}
-                            className={`talent-notification-card ${item.read
+                            className={`talent-notification-card ${
+                              item.read
                                 ? "notification-read"
                                 : "notification-unread"
-                              }`}
+                            }`}
                           >
                             {/* changed */}
                             <div className="notification-card-flex">
@@ -310,7 +305,7 @@ const TalentNotification = () => {
                               >
                                 {item?.talentNotificationMessage}&nbsp;
                               </div>
- {/* changed */}
+                              {/* changed */}
 
                               {/*                             
                             <div className="notification-card-flex">
@@ -338,7 +333,6 @@ const TalentNotification = () => {
                                 {item?.talentNotificationMessage}&nbsp;
                               </div> */}
                             </div>
-
 
                             <div className="notification-card-actions">
                               <div className="notification-card-time">
@@ -423,21 +417,21 @@ const TalentNotification = () => {
                         onClick={(e) => {
                           if (
                             talentData?.subscriptionType !==
-                            subscriptionCategory &&
+                              subscriptionCategory &&
                             talentData?.isSubscribed
                           ) {
                             // User is subscribed and changing their subscription type
                             createJobAlert(); // Re-subscribe to a different type
                           } else if (
                             talentData?.subscriptionType !==
-                            subscriptionCategory &&
+                              subscriptionCategory &&
                             !talentData?.isSubscribed
                           ) {
                             // User is not subscribed and selecting a different subscription
                             createJobAlert();
                           } else if (
                             talentData?.subscriptionType ===
-                            subscriptionCategory &&
+                              subscriptionCategory &&
                             talentData?.isSubscribed
                           ) {
                             // User is subscribed and wants to unsubscribe
@@ -448,26 +442,13 @@ const TalentNotification = () => {
                         variant="text"
                         style={{ textTransform: "capitalize" }}
                       >
-                        {console.log(
-                          "subscriptionType: manageSubscription",
-                          talentData?.subscriptionType
-                        )}
-                        {console.log(
-                          "subscriptionCategory: manageSubscription",
-                          subscriptionCategory
-                        )}
-                        {console.log(
-                          "isSubscribed: manageSubscription",
-                          talentData?.isSubscribed
-                        )}
-
                         {talentData?.subscriptionType !==
                           subscriptionCategory && !talentData?.isSubscribed
                           ? "Subscribe"
                           : talentData?.subscriptionType ===
-                            subscriptionCategory && talentData?.isSubscribed
-                            ? "Unsubscribe"
-                            : "Subscribe"}
+                              subscriptionCategory && talentData?.isSubscribed
+                          ? "Unsubscribe"
+                          : "Subscribe"}
                       </Button>
                     </div>
                   </div>

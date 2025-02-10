@@ -31,7 +31,7 @@ const PaymentOptions = ({
   success_url,
   setGiftError,
   userType,
-  adminPayment
+  adminPayment,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,7 +48,6 @@ const PaymentOptions = ({
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("adminPayment",adminPayment)
 
   useEffect(() => {
     setAmount(selectedAmount);
@@ -79,13 +78,14 @@ const PaymentOptions = ({
     if (location.pathname == "/pricing") {
       url = `/talent-home`;
     } else if (location.pathname == "/talent-signup-plan-details") {
-      if (userType == 'adults') {
-        url = `/talent-signup-files-details?userId=${userId}`;
+      const userType = localStorage.getItem('userType');
+      if (userType == 'adult') {
+        url = `/talent-signup-files-details?${userId}`;
       } else {
         url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
       }
-    } else if('/adult-signup-plan-details'){
-      url = `/talent-signup-files-details?userId=${userId}`;
+    } else if('/talent-signup-plan-details'){
+      url = `/talent-signup-files-details?${userId}`;
     }else {
       url = success_url;
     }
@@ -134,7 +134,6 @@ const PaymentOptions = ({
         setIsCouponApplied(false);
       }
     } catch (error) {
-      console.log('err', error)
       setErrorMessage("An error occurred while applying the coupon.");
     }
   };
@@ -148,13 +147,12 @@ const PaymentOptions = ({
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
       }
       let plan;
-     
+
       if (giftSub) {
         plan = "giftsubscription";
       }
       let paymentadmin = adminPayment ? true : null;
-      
-      
+
       let publicUrl;
       if (plan == "giftsubscription") {
         const giftObj = {
@@ -178,30 +176,24 @@ const PaymentOptions = ({
         if (resGiftSub.data.message == "coupon not found") {
           couponNotFound = true;
         }
-      }
-      else if (paymentadmin) {
-        console.log("testttttt")
-       
+      } else if (paymentadmin) {
         const userData = {
-        
-          email:email,
+          email: email,
           transId: tran_id,
           paymentStatus: "Pending",
         };
 
         const responseSubscription = await ApiHelper.post(
-           API.adminSubscriptionPlan,
-           userData
+          API.adminSubscriptionPlan,
+          userData
         );
-        console.log("responseSubscription",responseSubscription)
         publicUrl = responseSubscription.data.publicUrl;
-      }
-      else {
+      } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
           user_id: userId ? userId : currentUser,
-          email:email,
+          email: email,
           transId: tran_id,
           paymentStatus: "Pending",
           coupon: appliedCouponCode ? appliedCouponCode : "",
@@ -213,15 +205,11 @@ const PaymentOptions = ({
         );
         publicUrl = responseSubscription.data.publicUrl;
       }
-      
 
       const subscriptionData = JSON.stringify({
         subscriptionPlan: selectedPaymentPeriod,
         planName: planType ? planType : selectedPaymentPlan,
       });
-
- 
-      
 
       // // Create a data object for hash generation
       const dataObject = {
@@ -229,13 +217,13 @@ const PaymentOptions = ({
         merchant_id: "brandsandtalent",
         tran_id: tran_id,
         amount: finalAmount ? finalAmount : amount,
-        email: userEmail?userEmail:email,
+        email: userEmail ? userEmail : email,
         payment_option: type,
         continue_success_url:
           currentUserType == "brand"
             ? `https://brandsandtalent.com/client/${publicUrl}`
             : success_url,
-        return_params:subscriptionData,
+        return_params: subscriptionData,
       };
       // // Generate the hash using the dataObject and your public key
       const publicKey = "ea8234fb-33fa-487d-8967-f6dd436721ab";
