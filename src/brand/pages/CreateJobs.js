@@ -2433,6 +2433,11 @@ const CreateJobs = () => {
                       <div className="rich-editor mb-2">
                         <label className="form-label additional-requirements-title">
                           Additional Requirement (optional)
+                          <br />
+
+                          <span className="note" style={{ fontSize: '0.875rem', color: '#6c757d' }}>
+                            Note: Target the exact talent/creators you need by adding these additional requirements below.
+                          </span>
                         </label>
                       </div>
                       <div className="kids-form-row row">

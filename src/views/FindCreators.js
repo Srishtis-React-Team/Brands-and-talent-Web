@@ -497,13 +497,14 @@ const FindCreators = () => {
   };
 
   const search = async () => {
+ 
     const formData = {
       profession: profession ? profession : [],
       parentCountry: country,
       parentState: state,
       childCity: kidsCity,
-      minFollowers: minFollowers,
-      maxFollowers: maxFollowers,
+      minFollowers: Number(minFollowers),
+      maxFollowers: Number(maxFollowers),
       childGender: gender,
       minAge: minimumAge,
       maxAge: maximumAge,
@@ -518,13 +519,15 @@ const FindCreators = () => {
       name: fullName,
       height: height,
       relevantCategories: categories,
-      minfollowerscount: minFollowers,
-      maxfollowerscount: maxFollowers,
+      minfollowerscount: Number(minFollowers),
+      maxfollowerscount: Number(maxFollowers),
     };
 
     setIsLoading(true);
+   
     await ApiHelper.post(API.talentFilterData, formData)
       .then((resData) => {
+     
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Filtered Successfully");
