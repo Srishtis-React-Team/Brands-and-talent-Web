@@ -855,14 +855,12 @@ const MessageTalents = () => {
                       ></input>
                     </div>
                     <div>
-                      <div className="conversation-send">
+                      <div
+                        className="conversation-send"
+                        onClick={() => sendMessage()}
+                      >
                         <i className="bi bi-send conversation-send-icon"></i>
-                        <div
-                          onClick={() => sendMessage()}
-                          className="conversation-send-text"
-                        >
-                          Send
-                        </div>
+                        <div className="conversation-send-text">Send</div>
                       </div>
                     </div>
                   </div>
