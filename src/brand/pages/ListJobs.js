@@ -41,10 +41,10 @@ const ListJobs = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
-  useEffect(() => {}, [brandData]);
+  useEffect(() => { }, [brandData]);
 
   const navigate = useNavigate();
 
@@ -143,7 +143,7 @@ const ListJobs = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -164,7 +164,7 @@ const ListJobs = () => {
     }
   }, [postedJobs]);
 
-  useEffect(() => {}, [allJobsList]);
+  useEffect(() => { }, [allJobsList]);
 
   const postJob = async () => {
     if (alertpop?.jobObject?.adminApproved == true) {
@@ -188,7 +188,7 @@ const ListJobs = () => {
             }, 1000);
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       setMessage(
         "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
@@ -230,7 +230,7 @@ const ListJobs = () => {
           setAllJobsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (
@@ -239,9 +239,8 @@ const ListJobs = () => {
         <BrandHeader toggleMenu={toggleMenu} />
         <div
           id="sidebarBrand"
-          className={`brand-sidebar ${
-            showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-          }`}
+          className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+            }`}
         >
           <BrandSideMenu />
         </div>
@@ -353,17 +352,17 @@ const ListJobs = () => {
                                       {job && job.compensation && (
                                         <>
                                           {Object.keys(job.compensation)[0] ===
-                                          "paid_collaboration_and_gift"
+                                            "paid_collaboration_and_gift"
                                             ? "Paid Collaboration + Product/Gift"
                                             : Object.keys(
-                                                job.compensation
-                                              )[0] === "product_gift"
-                                            ? "Product/Gift"
-                                            : Object.keys(
+                                              job.compensation
+                                            )[0] === "product_gift"
+                                              ? "Product/Gift"
+                                              : Object.keys(
                                                 job.compensation
                                               )[0] === "paid_collaboration"
-                                            ? "Paid Collaboration"
-                                            : ""}
+                                                ? "Paid Collaboration"
+                                                : ""}
                                         </>
                                       )}
 
@@ -380,6 +379,8 @@ const ListJobs = () => {
                                         : ""} */}
                                     </span>
                                   </div>
+
+
                                   <div className="mb-2">
                                     <span
                                       style={{ fontWeight: "bold" }}
@@ -398,6 +399,11 @@ const ListJobs = () => {
                                         day: "numeric",
                                       })}
                                     </span>
+                                    {new Date(job.lastDateForApply) < new Date() && (
+                                      <span style={{ color: "red", fontWeight: "bold", marginLeft: "8px" }}>
+                                        (Expired)
+                                      </span>
+                                    )}
                                   </div>
                                 </div>
                               </div>
