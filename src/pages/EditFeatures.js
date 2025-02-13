@@ -11,6 +11,8 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
   const [formValues, setFormValues] = useState([]);
 
   useEffect(() => {
+    console.log(featuresStructure, "featuresStructure");
+    console.log(featureValues, "featureValues");
     const initialValues = featuresStructure.map((feature) => {
       const existingValue = featureValues.find(
         (item) => item.label === feature.label
@@ -20,6 +22,7 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
         value: existingValue ? existingValue.value : "",
       };
     });
+    console.log(initialValues, "initialValues");
     setFormValues(initialValues);
   }, [featuresStructure, featureValues]);
 
@@ -52,12 +55,19 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
   const getOptions = (options) =>
     options.map((option) => ({ value: option, label: option }));
 
+  useEffect(() => {
+    console.log(formValues, "formValues");
+  }, [formValues]);
+
   return (
     <div className="edit-features-wrapper">
       {featuresStructure.map((feature, index) => {
         const { label, type, options } = feature;
         const item = formValues.find((item) => item.label === label);
+        console.log(item, "item");
         const value = item ? item.value : "";
+        console.log(value, "value");
+        console.log(options, "options");
 
         if (type === "input") {
           return (

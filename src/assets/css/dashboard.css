@@ -2232,13 +2232,11 @@ ul.MuiMenu-list li {
 }
 /* 9-1-25 css start  */
 
-
 .login-main.regPage {
   width: 470px;
 }
 .talent-header-main {
   z-index: 99999 !important;
-
 }
 .messages-section {
   width: 100% !important;
@@ -2247,7 +2245,8 @@ ul.MuiMenu-list li {
   width: 50px !important;
   height: 50px !important;
 }
-.offline-dot, .online-dot {
+.offline-dot,
+.online-dot {
   top: 38px !important;
   right: 18px !important;
   width: 12px;
@@ -2267,7 +2266,10 @@ ul.MuiMenu-list li {
   width: 100%;
 }
 
-.ReactModal__Overlay.ReactModal__Overlay--after-open, .css-zw3mfo-MuiModal-root-MuiDialog-root, .modal, .css-126xj0f {
+.ReactModal__Overlay.ReactModal__Overlay--after-open,
+.css-zw3mfo-MuiModal-root-MuiDialog-root,
+.modal,
+.css-126xj0f {
   z-index: 99999 !important;
 }
 
@@ -2275,26 +2277,24 @@ ul.MuiMenu-list li {
   justify-content: center !important;
 }
 
-
-
-
-.ReactModal__Overlay.ReactModal__Overlay--after-open, .css-zw3mfo-MuiModal-root-MuiDialog-root, .modal, .css-126xj0f {
+.ReactModal__Overlay.ReactModal__Overlay--after-open,
+.css-zw3mfo-MuiModal-root-MuiDialog-root,
+.modal,
+.css-126xj0f {
   z-index: 99999 !important;
 }
 .css-1vskg8q {
   justify-content: center !important;
 }
-.rdw-list-dropdown, .rdw-text-align-dropdown {
-  z-index: 999999 !important;
+.rdw-list-dropdown,
+.rdw-text-align-dropdown {
+  z-index: 9 !important;
+  /* z-index: 999999 !important; */
 }
 .aba-checkout-desktop {
   background: #081b3787;
   z-index: 99999999 !important;
 }
-
-
-
-
 
 /* 9-1-25 css end*/
 
@@ -2424,14 +2424,14 @@ ul.MuiMenu-list li {
 }
 
 @media (max-width: 767px) {
-/* 9-1-25 css start  */
-.css-89200c-MuiFormControl-root-MuiTextField-root svg {
-  height: 1em;
-  position: absolute;
-  top: 0px;
-}
+  /* 9-1-25 css start  */
+  .css-89200c-MuiFormControl-root-MuiTextField-root svg {
+    height: 1em;
+    position: absolute;
+    top: 0px;
+  }
 
- /* 9-1-25 css end  */ 
+  /* 9-1-25 css end  */
   .talentSet .edit-basicdetails-section-main {
     justify-content: center;
     width: 100%;
@@ -4506,4 +4506,24 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
     color: red;
     width: 345px !important;
   }
+}
+
+.public-DraftStyleDefault-block {
+  text-align: inherit !important; /* Ensure it follows inline styles */
+}
+
+.public-DraftStyleDefault-ltr {
+  text-align: left;
+}
+
+.public-DraftStyleDefault-center {
+  text-align: center;
+}
+
+.public-DraftStyleDefault-right {
+  text-align: right;
+}
+
+.public-DraftStyleDefault-justify {
+  text-align: justify;
 }

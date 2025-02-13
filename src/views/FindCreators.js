@@ -519,6 +519,8 @@ const FindCreators = () => {
       name: fullName,
       height: height,
       relevantCategories: categories,
+      minfollowerscount: minFollowers,
+      maxfollowerscount: maxFollowers,
     };
 
     setIsLoading(true);

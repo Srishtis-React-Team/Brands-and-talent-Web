@@ -836,7 +836,10 @@ const Register = () => {
                   ],
                   inline: { inDropdown: true },
                   list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
+                  textAlign: {
+                    inDropdown: true,
+                    options: ["left", "center", "right", "justify"],
+                  }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present
                   link: { inDropdown: true },
                   history: { inDropdown: true },
                 }}
@@ -858,7 +861,10 @@ const Register = () => {
                   ],
                   inline: { inDropdown: true },
                   list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
+                  textAlign: {
+                    inDropdown: true,
+                    options: ["left", "center", "right", "justify"],
+                  }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present
                   link: { inDropdown: true },
                   history: { inDropdown: true },
                 }}
@@ -882,7 +888,10 @@ const Register = () => {
                   ],
                   inline: { inDropdown: true },
                   list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
+                  textAlign: {
+                    inDropdown: true,
+                    options: ["left", "center", "right", "justify"],
+                  }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present
                   link: { inDropdown: true },
                   history: { inDropdown: true },
                 }}
@@ -904,7 +913,10 @@ const Register = () => {
                   ],
                   inline: { inDropdown: true },
                   list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
+                  textAlign: {
+                    inDropdown: true,
+                    options: ["left", "center", "right", "justify"],
+                  }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present  textAlign: { inDropdown: true, options: ["left", "center", "right", "justify"] }, // Ensure 'justify' is present
                   link: { inDropdown: true },
                   history: { inDropdown: true },
                 }}
