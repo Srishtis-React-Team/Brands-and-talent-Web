@@ -389,17 +389,15 @@ const ListJobs = () => {
                                       Application Deadline :{" "}
                                     </span>{" "}
                                     <span>
-                                      {" "}
-                                      {new Date(
-                                        job.lastDateForApply
-                                      ).toLocaleDateString("en-GB", {
+                                      {new Date(job.lastDateForApply).toLocaleDateString("en-GB", {
                                         weekday: "long",
                                         year: "numeric",
                                         month: "long",
                                         day: "numeric",
                                       })}
                                     </span>
-                                    {new Date(job.lastDateForApply) < new Date() && (
+
+                                    {new Date(job.lastDateForApply).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) && (
                                       <span style={{ color: "red", fontWeight: "bold", marginLeft: "8px" }}>
                                         (Expired)
                                       </span>
