@@ -201,6 +201,7 @@ const TalentDashBoard = () => {
   const getRecentGigs = async () => {
     const formData = {
       talentId: userId,
+      userType:currentUserType
     };
     await ApiHelper.post(API.getPostedJobs, formData)
       .then((resData) => {

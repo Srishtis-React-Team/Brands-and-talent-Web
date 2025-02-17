@@ -433,8 +433,8 @@ const BrandTalents = () => {
       name: fullName,
       height: height,
       relevantCategories: categories,
-      minfollowerscount: minFollowers,
-      maxfollowerscount: maxFollowers,
+      minfollowerscount: Number(minFollowers),
+      maxfollowerscount: Number(maxFollowers),
     };
 
     setIsLoading(true);
