@@ -830,7 +830,7 @@ const TalentDashBoard = () => {
                                 id="jobtypeID"
                               >
                                 <option value="" disabled selected>
-                                  Select Employment Type
+                                Select Job Type
                                 </option>
                                 {jobTypeOptions.map((option, index) => (
                                   <option key={index} value={option}>
