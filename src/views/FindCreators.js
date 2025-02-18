@@ -34,6 +34,7 @@ const FindCreators = () => {
   const navigate = useNavigate();
   const heartIcon = require("../assets/icons/heart.png");
   const pinkStar = require("../assets/icons/pink-star.png");
+ 
 
   const favoruiteIcon = require("../assets/icons/favorite.png");
   const [filterOpen, setFilterOpen] = useState(false);
