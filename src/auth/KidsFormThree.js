@@ -980,7 +980,13 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setTalentLocalStorage(resData.data.data);
-          navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+          const pendingJobId = localStorage.getItem("pendingJobId");
+          if (pendingJobId) {
+            localStorage.removeItem("pendingJobId");
+            navigate(`/jobs/view/${pendingJobId}`);
+          } else {
+            navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+          }
         } else {
         }
       })

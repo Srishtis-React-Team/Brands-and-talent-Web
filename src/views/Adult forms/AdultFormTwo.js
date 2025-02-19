@@ -102,9 +102,16 @@ const AdultFormTwo = () => {
           updateProfileStatus();
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate(`/talent/${talentData?.publicUrl}`, {
-              state: { talentData: talentData },
-            });
+
+            const pendingJobId = localStorage.getItem("pendingJobId");
+            if (pendingJobId) {
+              localStorage.removeItem("pendingJobId");
+              navigate(`/jobs/view/${pendingJobId}`);
+            } else {
+              navigate(`/talent/${talentData?.publicUrl}`, {
+                state: { talentData: talentData },
+              });
+            }
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);

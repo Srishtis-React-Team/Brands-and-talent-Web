@@ -86,7 +86,14 @@ const KidsServices = () => {
 
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate(`/talent-home?${resData?.data?.data?.user_id}`);
+
+            const pendingJobId = localStorage.getItem("pendingJobId");
+            if (pendingJobId) {
+              localStorage.removeItem("pendingJobId");
+              navigate(`/jobs/view/${pendingJobId}`);
+            } else {
+              navigate(`/talent-home?${resData?.data?.data?.user_id}`);
+            }
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);

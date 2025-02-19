@@ -161,17 +161,24 @@ const Login = () => {
             setTimeout(function () {
               setOpenPopUp(false);
               setIsLoading(false);
-              setTalentLocalStorage(resData.data.data);
-              if (resData.data.type === "adult") {
-                navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
-                // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-                // window.location.reload();
-              } else if (resData.data.type === "kids") {
-                navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
 
-                // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-                // window.location.reload();
-                // navigate(`/otp?${resData?.data?.data?.email}`);
+              setTalentLocalStorage(resData.data.data);
+              const pendingJobId = localStorage.getItem("pendingJobId");
+              if (pendingJobId) {
+                localStorage.removeItem("pendingJobId");
+                navigate(`/jobs/view/${pendingJobId}`);
+              } else {
+                if (resData.data.type === "adult") {
+                  navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+                  // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                  // window.location.reload();
+                } else if (resData.data.type === "kids") {
+                  navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+
+                  // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                  // window.location.reload();
+                  // navigate(`/otp?${resData?.data?.data?.email}`);
+                }
               }
             }, 1000);
           } else if (resData.data.status === false) {

@@ -498,7 +498,6 @@ const FindCreators = () => {
   };
 
   const search = async () => {
- 
     const formData = {
       profession: profession ? profession : [],
       parentCountry: country,
@@ -525,10 +524,9 @@ const FindCreators = () => {
     };
 
     setIsLoading(true);
-   
+
     await ApiHelper.post(API.talentFilterData, formData)
       .then((resData) => {
-     
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Filtered Successfully");

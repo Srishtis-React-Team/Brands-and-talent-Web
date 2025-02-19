@@ -156,7 +156,7 @@ const BrandFavorites = () => {
       comment: comments,
       starRatings: starCount,
       reviewerName: talentName ? talentName : brandName,
-      reviewerId:localStorage.getItem("brandId"), //currentUserId,
+      reviewerId: localStorage.getItem("brandId"), //currentUserId,
       talentId: modalData?.favouriteUserId,
     };
     await ApiHelper.post(API.reviewsPosting, formData)
