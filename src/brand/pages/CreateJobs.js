@@ -1743,20 +1743,45 @@ const CreateJobs = () => {
 
   const [lastdateApply, setLastdateApply] = useState(null);
 
+  // const handleDateChange = (date) => {
+  //   // Format the date to ensure it's correctly parsed and displayed
+  //   setDeadlineError(false);
+  //   const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+  //   setLastdateApply(formattedDate);
+  //   // Set the DOB state and calculate the age
+  //   setDob(formattedDate);
+  //   let dobDate = new Date(formattedDate);
+  //   let today = new Date();
+  //   let diff = today - dobDate;
+  //   let ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+  //   setAge(String(ageInYears));
+  //   setDobError(false);
+  // };
   const handleDateChange = (date) => {
-    // Format the date to ensure it's correctly parsed and displayed
+    if (!date) return;
+  
     setDeadlineError(false);
-    const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-    setLastdateApply(formattedDate);
-    // Set the DOB state and calculate the age
+  
+    // Get local date without timezone shift
+    const localDate = new Date(date);
+    localDate.setHours(0, 0, 0, 0); // Set time to midnight
+  
+    // Convert to ISO format without shifting time
+    const formattedDate = new Date(
+      localDate.getTime() - localDate.getTimezoneOffset() * 60000
+    ).toISOString();
+  
+    setLastdateApply(formattedDate); // Store this in DB
+  
+    // Also update DOB and Age
     setDob(formattedDate);
-    let dobDate = new Date(formattedDate);
     let today = new Date();
-    let diff = today - dobDate;
-    let ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    let ageInYears = today.getFullYear() - localDate.getFullYear();
     setAge(String(ageInYears));
     setDobError(false);
   };
+  
+
 
   useEffect(() => {}, [lastdateApply]);
   useEffect(() => {}, [category]);
