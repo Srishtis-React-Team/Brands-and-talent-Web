@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
 import { styled } from "@mui/system";
@@ -139,9 +139,21 @@ const GetBooked = () => {
     setUserId(storedUserId);
   }, [userId]);
 
+  const { jobId } = useParams(); // Extract jobId if available
+
+  useEffect(() => {
+    if (!jobId) {
+      console.log("No jobId provided, showing general booking page.");
+      // If no jobId, you can show a default message or redirect if necessary
+    } else {
+      console.log(`JobId received: ${jobId}`);
+    }
+  }, [jobId, navigate]);
+
   const getRecentGigs = async () => {
     const formData = {
       talentId: userId,
+      jobId: jobId,
     };
     await ApiHelper.post(API.getPostedJobs, formData)
       .then((resData) => {
@@ -199,6 +211,23 @@ const GetBooked = () => {
         setOpenPopUp(false);
         navigate("/login");
       }, 1000);
+    }
+  };
+  const shareJob = async (jobId) => {
+    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+    const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
+
+    try {
+      await navigator.clipboard.writeText(jobUrl);
+      // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+      setMessage("Job link copied to clipboard!");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
     }
   };
 
@@ -713,6 +742,15 @@ const GetBooked = () => {
                               >
                                 <i className="bi bi-eye-fill"></i>
                                 <div>View Job</div>
+                              </div>
+                              <div
+                                className="view-gig-btn"
+                                onClick={() => {
+                                  shareJob(item?.jobId);
+                                }}
+                              >
+                                <i class="bi bi-copy"></i>
+                                <div>Copy</div>
                               </div>
                               <div
                                 className={

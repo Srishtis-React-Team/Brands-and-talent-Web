@@ -103,6 +103,7 @@ const Career = lazy(() => import("../pages/Career"));
 const EditFeatures = lazy(() => import("../pages/EditFeatures"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
 const LocationComponent = lazy(() => import("../components/LocationComponent"));
+const JobRedirect = lazy(() => import("../pages/JobRedirect"));
 
 function Routing() {
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -700,7 +701,7 @@ function Routing() {
             }
           />
           <Route
-            path="/get-booked"
+            path="/get-booked/:jobId?"
             element={
               <Suspense fallback={<Spinner />}>
                 <GetBooked />
@@ -760,6 +761,14 @@ function Routing() {
             element={
               <Suspense fallback={<Spinner />}>
                 <LocationComponent />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/jobs/view/:jobId"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <JobRedirect />
               </Suspense>
             }
           />

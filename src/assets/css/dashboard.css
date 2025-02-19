@@ -4527,3 +4527,7 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
 .public-DraftStyleDefault-justify {
   text-align: justify;
 }
+
+.bi-copy {
+  padding-right: 10px;
+}
