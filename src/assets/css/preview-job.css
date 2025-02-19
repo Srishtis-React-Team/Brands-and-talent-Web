@@ -265,3 +265,55 @@
   max-height: inherit;
   margin: 100px 30px 20px;
 }
+
+/* new added Container Styles */
+.social-followers-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Heading Styles */
+.job-feature-heading {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* List Styles */
+.followers-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual List Items */
+.followers-list li {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Values Styling */
+.job-feature-values {
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* Responsive Fixes for Small Screens */
+@media (max-width: 150px) {
+  .job-feature-heading {
+    font-size: 10px;
+  }
+  .followers-list li {
+    font-size: 10px;
+    flex-wrap: wrap;
+  }
+  .job-feature-values {
+    font-size: 10px;
+  }
+}
+
+
