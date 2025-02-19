@@ -3837,6 +3837,7 @@ ul.MuiMenu-list li {
 
 .company-location.comp-main {
   align-items: flex-start;
+  display: block !important;
 }
 span.comp-H {
   flex: 1;
