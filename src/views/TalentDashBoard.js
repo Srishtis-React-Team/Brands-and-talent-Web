@@ -201,7 +201,7 @@ const TalentDashBoard = () => {
   const getRecentGigs = async () => {
     const formData = {
       talentId: userId,
-      userType:currentUserType
+      userType: currentUserType,
     };
     await ApiHelper.post(API.getPostedJobs, formData)
       .then((resData) => {
@@ -563,6 +563,24 @@ const TalentDashBoard = () => {
     navigate("/contact-support");
   };
 
+  const shareJob = async (jobId) => {
+    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+    const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
+
+    try {
+      await navigator.clipboard.writeText(jobUrl);
+      // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+      setMessage("Job link copied to clipboard!");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -830,7 +848,7 @@ const TalentDashBoard = () => {
                                 id="jobtypeID"
                               >
                                 <option value="" disabled selected>
-                                Select Job Type
+                                  Select Job Type
                                 </option>
                                 {jobTypeOptions.map((option, index) => (
                                   <option key={index} value={option}>
@@ -978,6 +996,17 @@ const TalentDashBoard = () => {
                                           <i className="bi bi-eye-fill"></i>
                                           <div>View Job</div>
                                         </div>
+
+                                        <div
+                                          className="view-gig-btn"
+                                          onClick={() => {
+                                            shareJob(item?.jobId);
+                                          }}
+                                        >
+                                          <i class="bi bi-copy"></i>
+                                          <div>Copy Job url </div>
+                                        </div>
+
                                         {(item?.howLikeToApply ===
                                           "easy-apply" ||
                                           item?.isApplied == "Applied") && (

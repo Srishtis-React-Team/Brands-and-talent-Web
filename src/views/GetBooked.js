@@ -12,7 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Select from "react-select";
 import Header from "../layout/header.js";
 import useFieldDatas from "../config/useFieldDatas.js";
-
+import Loader from "./Loader.js";
 const GetBooked = () => {
   const { categoryList, professionList } = useFieldDatas();
   const [countryList, setCountryList] = useState([]);
@@ -21,6 +21,8 @@ const GetBooked = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [kidsCity, setKidsCity] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getCountries();
   }, []);
@@ -99,7 +101,6 @@ const GetBooked = () => {
   const navigate = useNavigate();
   const offcanvasRef = useRef(null);
   const [gigsList, setGigsList] = useState([]);
-  const [topBrandsList, setTopBrandsList] = useState([]);
   const [currentUserId, setcurrentUserId] = useState(null);
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [currentUser_type, setCurrentUserType] = useState("");
@@ -133,11 +134,7 @@ const GetBooked = () => {
 
   useEffect(() => {
     getRecentGigs();
-    getTopBrands();
-    const storedUserId = localStorage.getItem("userId");
-
-    setUserId(storedUserId);
-  }, [userId]);
+  }, []);
 
   const { jobId } = useParams(); // Extract jobId if available
 
@@ -151,17 +148,22 @@ const GetBooked = () => {
   }, [jobId, navigate]);
 
   const getRecentGigs = async () => {
+    setLoading(true);
+    // alert("getRecentGigs");
     const formData = {
-      talentId: userId,
-      jobId: jobId,
+      talentId: localStorage.getItem("userId"),
+      jobId: "",
     };
     await ApiHelper.post(API.getPostedJobs, formData)
       .then((resData) => {
+        setLoading(false);
         if (resData) {
           setGigsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setLoading(false);
+      });
   };
 
   const [modalData, setModalData] = useState(null);
@@ -248,18 +250,6 @@ const GetBooked = () => {
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 1000);
-      })
-      .catch((err) => {});
-  };
-
-  useEffect(() => {}, [gigsList]);
-
-  const getTopBrands = async () => {
-    await ApiHelper.post(API.getTopBrands)
-      .then((resData) => {
-        if (resData) {
-          setTopBrandsList(resData.data.data);
-        }
       })
       .catch((err) => {});
   };
@@ -750,7 +740,7 @@ const GetBooked = () => {
                                 }}
                               >
                                 <i class="bi bi-copy"></i>
-                                <div>Copy</div>
+                                <div>Copy Job url </div>
                               </div>
                               <div
                                 className={
@@ -930,6 +920,7 @@ const GetBooked = () => {
           </div>
         </div>
       </div>
+      {loading ? <Loader /> : <div></div>}
 
       {openPopUp && <PopUp message={message} />}
     </>
