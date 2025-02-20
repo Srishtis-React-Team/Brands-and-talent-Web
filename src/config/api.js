@@ -1,6 +1,5 @@
 const BASEURL = "https://brandsandtalent.com/api/";
 
-
 export const API = {
   //common
   baseUrl: BASEURL,
@@ -17,7 +16,6 @@ export const API = {
   getSuccessStories: BASEURL + "admin/getSuccessStories",
   getLogos: BASEURL + "admin/getLogos",
   getFieldDatas: BASEURL + "features/getFieldDatas",
-
 
   //Registration
   brandsRegister: BASEURL + "brands/brandsRegister",
@@ -39,7 +37,6 @@ export const API = {
   adultFetch: BASEURL + "users/adultFetch/",
   typeChecking: BASEURL + "users/typeChecking",
   getDataByPublicUrl: BASEURL + "users/getDataByPublicUrl",
-  
 
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
@@ -105,7 +102,7 @@ export const API = {
   deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
   deleteAudioUrls: BASEURL + "users/deleteAudioUrls",
   directKidsLogin: BASEURL + "users/directKidsLogin",
-  CurrentPlanName :BASEURL + "users/CurrentPlanName",
+  CurrentPlanName: BASEURL + "users/CurrentPlanName",
 
   reportReview: BASEURL + "users/reportReview",
 
@@ -115,10 +112,12 @@ export const API = {
   deleteUserSearchKeyword: BASEURL + "keyword/deleteUserSearchKeyword/",
 
   //jobs
+
   createJob: BASEURL + "gigs/createJob",
   draftJob: BASEURL + "gigs/draftJob",
   getAllJobs: BASEURL + "gigs/getAllJobs/",
   getJobsByID: BASEURL + "gigs/getJobsByID/",
+  fetchByJobUrl: BASEURL + "gigs/fetchByJobUrl",
   getAnyJobById: BASEURL + "gigs/getAnyJobById/",
   getDraftJobsByID: BASEURL + "gigs/getDraftJobsByID/",
   getBrandDraftJobsByID: BASEURL + "gigs/getBrandDraftJobsByID/",

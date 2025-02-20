@@ -497,7 +497,7 @@ const BrandTalents = () => {
       comment: comments,
       starRatings: starCount,
       reviewerName: talentName ? talentName : brandName,
-      reviewerId: localStorage.getItem("brandId"),//currentUserId,
+      reviewerId: localStorage.getItem("brandId"), //currentUserId,
       talentId: talent?._id,
     };
     await ApiHelper.post(API.reviewsPosting, formData)

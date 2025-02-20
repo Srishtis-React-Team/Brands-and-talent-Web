@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
 import { styled } from "@mui/system";
@@ -12,7 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Select from "react-select";
 import Header from "../layout/header.js";
 import useFieldDatas from "../config/useFieldDatas.js";
-
+import Loader from "./Loader.js";
 const GetBooked = () => {
   const { categoryList, professionList } = useFieldDatas();
   const [countryList, setCountryList] = useState([]);
@@ -21,6 +21,8 @@ const GetBooked = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [kidsCity, setKidsCity] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getCountries();
   }, []);
@@ -99,7 +101,6 @@ const GetBooked = () => {
   const navigate = useNavigate();
   const offcanvasRef = useRef(null);
   const [gigsList, setGigsList] = useState([]);
-  const [topBrandsList, setTopBrandsList] = useState([]);
   const [currentUserId, setcurrentUserId] = useState(null);
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [currentUser_type, setCurrentUserType] = useState("");
@@ -133,23 +134,36 @@ const GetBooked = () => {
 
   useEffect(() => {
     getRecentGigs();
-    getTopBrands();
-    const storedUserId = localStorage.getItem("userId");
+  }, []);
 
-    setUserId(storedUserId);
-  }, [userId]);
+  const { jobId } = useParams(); // Extract jobId if available
+
+  useEffect(() => {
+    if (!jobId) {
+      console.log("No jobId provided, showing general booking page.");
+      // If no jobId, you can show a default message or redirect if necessary
+    } else {
+      console.log(`JobId received: ${jobId}`);
+    }
+  }, [jobId, navigate]);
 
   const getRecentGigs = async () => {
+    setLoading(true);
+    // alert("getRecentGigs");
     const formData = {
-      talentId: userId,
+      talentId: localStorage.getItem("userId"),
+      jobId: "",
     };
     await ApiHelper.post(API.getPostedJobs, formData)
       .then((resData) => {
+        setLoading(false);
         if (resData) {
           setGigsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setLoading(false);
+      });
   };
 
   const [modalData, setModalData] = useState(null);
@@ -201,6 +215,23 @@ const GetBooked = () => {
       }, 1000);
     }
   };
+  const shareJob = async (jobId) => {
+    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+    const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
+
+    try {
+      await navigator.clipboard.writeText(jobUrl);
+      // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+      setMessage("Job link copied to clipboard!");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   const handleCloseModal = async () => {
     const formData = {
@@ -219,18 +250,6 @@ const GetBooked = () => {
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 1000);
-      })
-      .catch((err) => {});
-  };
-
-  useEffect(() => {}, [gigsList]);
-
-  const getTopBrands = async () => {
-    await ApiHelper.post(API.getTopBrands)
-      .then((resData) => {
-        if (resData) {
-          setTopBrandsList(resData.data.data);
-        }
       })
       .catch((err) => {});
   };
@@ -715,6 +734,15 @@ const GetBooked = () => {
                                 <div>View Job</div>
                               </div>
                               <div
+                                className="view-gig-btn"
+                                onClick={() => {
+                                  shareJob(item?.jobId);
+                                }}
+                              >
+                                <i class="bi bi-copy"></i>
+                                <div>Copy Job url </div>
+                              </div>
+                              <div
                                 className={
                                   item?.isApplied === "Apply Now"
                                     ? "apply-now-btn"
@@ -892,6 +920,7 @@ const GetBooked = () => {
           </div>
         </div>
       </div>
+      {loading ? <Loader /> : <div></div>}
 
       {openPopUp && <PopUp message={message} />}
     </>

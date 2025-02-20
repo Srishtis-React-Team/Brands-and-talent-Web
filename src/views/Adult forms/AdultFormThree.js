@@ -911,9 +911,15 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           setTimeout(function () {
             setOpenPopUp(false);
             if (talentData?.planName == "Basic") {
-              navigate(`/talent/${talentData.publicUrl}`, {
-                state: { talentData: talentData },
-              });
+              const pendingJobId = localStorage.getItem("pendingJobId");
+              if (pendingJobId) {
+                localStorage.removeItem("pendingJobId");
+                navigate(`/jobs/view/${pendingJobId}`);
+              } else {
+                navigate(`/talent/${talentData.publicUrl}`, {
+                  state: { talentData: talentData },
+                });
+              }
             } else {
               navigate(`/talent-signup-service-details?${queryString}`);
             }
