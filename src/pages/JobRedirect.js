@@ -36,7 +36,7 @@ const JobRedirect = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrand = async (brandId) => {
@@ -48,7 +48,7 @@ const JobRedirect = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -182,7 +182,7 @@ const JobRedirect = () => {
           navigate("/applied-jobs");
         }, 1000);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   return (
     <>
@@ -205,24 +205,24 @@ const JobRedirect = () => {
                       </div>
                       {(jobData?.howLikeToApply === "easy-apply" ||
                         jobData?.isApplied == "Applied") && (
-                        <div className="easy-apply-section">
-                          <div
-                            className={
-                              jobData?.isApplied === "Apply Now" ||
-                              !jobData?.isApplied
-                                ? "apply-now-btn"
-                                : "apply-now-btn applied-btn"
-                            }
-                            onClick={() => {
-                              applyjobs(jobData);
-                            }}
-                          >
-                            <i className="bi bi-briefcase-fill"></i>
+                          <div className="easy-apply-section">
+                            <div
+                              className={
+                                jobData?.isApplied === "Apply Now" ||
+                                  !jobData?.isApplied
+                                  ? "apply-now-btn"
+                                  : "apply-now-btn applied-btn"
+                              }
+                              onClick={() => {
+                                applyjobs(jobData);
+                              }}
+                            >
+                              <i className="bi bi-briefcase-fill"></i>
 
-                            <div>Apply Now</div>
+                              <div>Apply Now</div>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">
@@ -237,12 +237,14 @@ const JobRedirect = () => {
                       </div>
 
                       <div className="company-location">
-                        <span className="job-feature-heading">
+                       
+                        <span className="font-600">
                           Location :&nbsp;{" "}
                         </span>
+                      
                         <span>
                           <span>
-                            <span className="">
+                            <span className="job-feature-heading">
                               {[
                                 jobData?.jobLocation,
                                 jobData?.city,
@@ -258,9 +260,11 @@ const JobRedirect = () => {
 
                       <div className="company-location">
                         <span className="job-feature-heading">
+                        <span className="font-600">
                           Application Deadline :&nbsp;
                         </span>
-                        <span>
+                        </span>
+                        <span className="job-feature-values">
                           {new Date(
                             jobData?.lastDateForApply
                           ).toLocaleDateString("en-GB", {
@@ -273,17 +277,21 @@ const JobRedirect = () => {
                       </div>
 
                       <div className="company-location">
-                        <span className="job-feature-heading">
-                          Job Type :&nbsp;{" "}
-                        </span>
+                      <span className="font-600">
+                      Job Type :&nbsp;
+                          </span>
+                        
+                       
                         <span>
-                          <span className="">{jobData?.jobType}</span>
+                          <span className="job-feature-values">{jobData?.jobType}</span>
                         </span>
                       </div>
                       <div className="company-location">
-                        <span className="job-feature-heading">
-                          Category :&nbsp;{" "}
-                        </span>
+                       
+                        <span className="font-600">
+                          Category :&nbsp;
+                          </span>
+                       
                         <span className="job-feature-values">
                           {jobData?.category}
                         </span>
@@ -304,12 +312,12 @@ const JobRedirect = () => {
                                 value !== ""
                             )
                         ) && (
-                          <>
-                            <span className="font-600">
-                              Compensation :&nbsp;
-                            </span>
-                          </>
-                        )}
+                            <>
+                              <span className="font-600">
+                                Compensation :&nbsp;
+                              </span>
+                            </>
+                          )}
 
                         <span className="comp-H">
                           {jobData?.compensation && (
@@ -322,10 +330,10 @@ const JobRedirect = () => {
                                         {(value?.minPay ||
                                           value?.maxPay ||
                                           value?.exactPay) && (
-                                          <>
-                                            <span>{value.currency}</span>&nbsp;
-                                          </>
-                                        )}
+                                            <>
+                                              <span>{value.currency}</span>&nbsp;
+                                            </>
+                                          )}
                                         {value?.minPay && (
                                           <>
                                             <span>
@@ -357,7 +365,7 @@ const JobRedirect = () => {
 
                                         {value.product_name && (
                                           <>
-                                            +&nbsp;
+                                            &nbsp;
                                             {isValidURL(value.product_name) ? (
                                               <a
                                                 href={value.product_name}
@@ -416,7 +424,7 @@ const JobRedirect = () => {
                                             jobData.benefits
                                               .map((benefits, index) =>
                                                 index ===
-                                                jobData.benefits.length - 1
+                                                  jobData.benefits.length - 1
                                                   ? benefits
                                                   : benefits + ", "
                                               )
@@ -438,7 +446,7 @@ const JobRedirect = () => {
                                             jobData.skills
                                               .map((skill, index) =>
                                                 index ===
-                                                jobData.skills.length - 1
+                                                  jobData.skills.length - 1
                                                   ? skill
                                                   : skill + ", "
                                               )
@@ -460,7 +468,7 @@ const JobRedirect = () => {
                                   </li>
                                 )}
                                 {jobData?.gender &&
-                                jobData.gender.length > 0 ? (
+                                  jobData.gender.length > 0 ? (
                                   <li className="job-features-li">
                                     <span className="job-feature-heading">
                                       Gender :
@@ -496,7 +504,7 @@ const JobRedirect = () => {
                                           jobData.languages
                                             .map((skill, index) =>
                                               index ===
-                                              jobData.languages.length - 1
+                                                jobData.languages.length - 1
                                                 ? skill
                                                 : skill + ", "
                                             )
@@ -505,7 +513,7 @@ const JobRedirect = () => {
                                     </li>
                                   )}
                                 {jobData?.nationality &&
-                                jobData.nationality.length > 0 ? (
+                                  jobData.nationality.length > 0 ? (
                                   <li className="job-features-li">
                                     <span className="job-feature-heading">
                                       Nationality :
@@ -514,7 +522,7 @@ const JobRedirect = () => {
                                       {jobData.nationality
                                         .map((nationality, index) =>
                                           index ===
-                                          jobData.nationality.length - 1
+                                            jobData.nationality.length - 1
                                             ? nationality
                                             : nationality + ", "
                                         )
@@ -548,87 +556,88 @@ const JobRedirect = () => {
                                   jobData?.fbMin ||
                                   jobData?.twitterMin ||
                                   jobData?.youTubeMin) && (
-                                  <>
-                                    <li className="job-features-li">
-                                      <div className="d-flex flex-column">
-                                        <span className="job-feature-heading pr-1">
-                                          Social Media Followers Count:
-                                        </span>
-                                        <ul className="mb-0 mt-2">
-                                          {jobData?.instaMin && (
-                                            <li>
-                                              Instagram Followers:{" "}
-                                              <span className="job-feature-values">
-                                                {jobData?.instaMin} -{" "}
-                                                {jobData?.instaMax}
-                                              </span>
-                                            </li>
-                                          )}
+                                    <>
+                                      <li className="job-features-li">
+                                        <div className="d-flex flex-column">
+                                          <span className="job-feature-heading pr-1">
+                                            Social Media Followers Count:
+                                          </span>
+                                          <ul className="mb-0 mt-2">
+                                            {jobData?.instaMin && (
+                                              <li>
+                                                <span className="job-feature-heading">
+                                                  Instagram Followers:{" "}
+                                                </span>{" "}
+                                                <span className="job-feature-values">
+                                                  {jobData?.instaMin} -{" "}
+                                                  {jobData?.instaMax}
+                                                </span>
+                                              </li>
+                                            )}
+                                            {jobData?.tikTokMin && (
+                                              <li>
+                                                <span className="job-feature-heading">
+                                                  TikTok:
+                                                </span>{" "}
+                                                <span className="job-feature-values">
+                                                  {jobData?.tikTokMin} -{" "}
+                                                  {jobData?.tikTokMax}
+                                                </span>
+                                              </li>
+                                            )}
 
-                                          {jobData?.tikTokMin && (
-                                            <li>
-                                              <span className="job-feature-heading">
-                                                TikTok:
-                                              </span>{" "}
-                                              <span className="job-feature-values">
-                                                {jobData?.tikTokMin} -{" "}
-                                                {jobData?.tikTokMax}
-                                              </span>
-                                            </li>
-                                          )}
+                                            {jobData?.linkedInMin && (
+                                              <li>
+                                                <span className="job-feature-heading">
+                                                  LinkedIn:
+                                                </span>{" "}
+                                                <span className="job-feature-values">
+                                                  {jobData?.linkedInMin} -{" "}
+                                                  {jobData?.linkedInMax}
+                                                </span>
+                                              </li>
+                                            )}
 
-                                          {jobData?.linkedInMin && (
-                                            <li>
-                                              <span className="job-feature-heading">
-                                                LinkedIn:
-                                              </span>{" "}
-                                              <span className="job-feature-values">
-                                                {jobData?.linkedInMin} -{" "}
-                                                {jobData?.linkedInMax}
-                                              </span>
-                                            </li>
-                                          )}
+                                            {jobData?.fbMin && (
+                                              <li>
+                                                <span className="job-feature-heading">
+                                                  Facebook:
+                                                </span>{" "}
+                                                <span className="job-feature-values">
+                                                  {jobData?.fbMin} -{" "}
+                                                  {jobData?.fbMax}
+                                                </span>
+                                              </li>
+                                            )}
 
-                                          {jobData?.fbMin && (
-                                            <li>
-                                              <span className="job-feature-heading">
-                                                Facebook:
-                                              </span>{" "}
-                                              <span className="job-feature-values">
-                                                {jobData?.fbMin} -{" "}
-                                                {jobData?.fbMax}
-                                              </span>
-                                            </li>
-                                          )}
+                                            {jobData?.twitterMin && (
+                                              <li>
+                                                <span className="job-feature-heading">
+                                                  Twitter (X):
+                                                </span>{" "}
+                                                <span className="job-feature-values">
+                                                  {jobData?.twitterMin} -{" "}
+                                                  {jobData?.twitterMax}
+                                                </span>
+                                              </li>
+                                            )}
 
-                                          {jobData?.twitterMin && (
-                                            <li>
-                                              <span className="job-feature-heading">
-                                                Twitter (X):
-                                              </span>{" "}
-                                              <span className="job-feature-values">
-                                                {jobData?.twitterMin} -{" "}
-                                                {jobData?.twitterMax}
-                                              </span>
-                                            </li>
-                                          )}
-
-                                          {jobData?.youTubeMin && (
-                                            <li>
-                                              <span className="job-feature-heading">
-                                                YouTube:
-                                              </span>{" "}
-                                              <span className="job-feature-values">
-                                                {jobData?.youTubeMin} -{" "}
-                                                {jobData?.youTubeMax}
-                                              </span>
-                                            </li>
-                                          )}
-                                        </ul>
-                                      </div>
-                                    </li>
-                                  </>
-                                )}
+                                            {jobData?.youTubeMin && (
+                                              <li>
+                                                <span className="job-feature-heading">
+                                                  YouTube:
+                                                </span>{" "}
+                                                <span className="job-feature-values">
+                                                  {jobData?.youTubeMin} -{" "}
+                                                  {jobData?.youTubeMax}
+                                                </span>
+                                              </li>
+                                            )}
+                                          </ul>
+                                        </div>
+                                      </li>
+                                    </>
+                                  )}
                               </ul>
                             </div>
                           </div>
@@ -903,15 +912,15 @@ const JobRedirect = () => {
                           <i className="bi bi-cash-coin model-job-icons"></i>
                           <div className="model-job-name">
                             {Object.keys(modalData?.compensation)[0] ===
-                            "paid_collaboration_and_gift"
+                              "paid_collaboration_and_gift"
                               ? "Paid Collaboration + Product/Gift"
                               : Object.keys(modalData?.compensation)[0] ===
                                 "product_gift"
-                              ? "Product/Gift"
-                              : Object.keys(modalData?.compensation)[0] ===
-                                "paid_collaboration"
-                              ? "Paid Collaboration"
-                              : ""}
+                                ? "Product/Gift"
+                                : Object.keys(modalData?.compensation)[0] ===
+                                  "paid_collaboration"
+                                  ? "Paid Collaboration"
+                                  : ""}
                           </div>
                         </div>
                       )}
