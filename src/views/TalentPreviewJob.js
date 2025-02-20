@@ -306,10 +306,11 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
 
               <div className="company-location">
-                <span className="job-feature-heading">Location :&nbsp; </span>
+              <span className="font-600">
+                  Location :&nbsp; </span>
                 <span>
                   <span>
-                    <span className="">
+                    <span className="job-feature-values">
                       {[
                         jobData?.jobLocation,
                         jobData?.city,
@@ -324,10 +325,10 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
 
               <div className="company-location">
-                <span className="job-feature-heading">
+              <span className="font-600">
                   Application Deadline :&nbsp;
                 </span>
-                <span>
+                <span  className="job-feature-values">
                   {new Date(jobData?.lastDateForApply).toLocaleDateString(
                     "en-GB",
                     {
@@ -341,14 +342,18 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
 
               <div className="company-location">
-                <span className="job-feature-heading">Job Type :&nbsp; </span>
+              <span className="font-600">
+                  Job Type :&nbsp;
+                   </span>
                 <span>
-                  <span className="">{jobData?.jobType}</span>
+                  <span className="job-feature-heading">{jobData?.jobType}</span>
                 </span>
               </div>
               <div className="company-location">
-                <span className="job-feature-heading">Category :&nbsp; </span>
-                <span className="job-feature-values">{jobData?.category}</span>
+              <span className="font-600">
+                  Category :&nbsp; 
+                  </span>
+                <span className="job-feature-heading">{jobData?.category}</span>
               </div>
 
               <div className="company-location comp-main">
@@ -424,7 +429,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
                                 {value.product_name && (
                                   <>
-                                    +&nbsp;
+                                    &nbsp;
                                     {isValidURL(value.product_name) ? (
                                       <a
                                         href={value.product_name}
@@ -649,14 +654,16 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                 <ul className="mb-0 mt-2">
                                   {jobData?.instaMin && (
                                     <li>
+                                      <span className="job-feature-heading">
                                       Instagram Followers:{" "}
+                                      </span>{" "}
                                       <span className="job-feature-values">
                                         {jobData?.instaMin} -{" "}
                                         {jobData?.instaMax}
                                       </span>
                                     </li>
                                   )}
-
+                                   
                                   {jobData?.tikTokMin && (
                                     <li>
                                       <span className="job-feature-heading">
