@@ -97,7 +97,7 @@ const JobRedirect = () => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate("pricing");
+            navigate("/pricing");
           }, 4000);
         } else if (
           talentData?.planName?.includes("Pro") ||
