@@ -34,7 +34,7 @@ const GetBooked = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const employmentTypeList = [
@@ -66,7 +66,7 @@ const GetBooked = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleSelectedCountry = (event) => {
@@ -95,7 +95,7 @@ const GetBooked = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const navigate = useNavigate();
@@ -251,7 +251,7 @@ const GetBooked = () => {
           bootstrapModal.hide();
         }, 1000);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const [talentId, setTalentId] = useState(null);
@@ -356,7 +356,7 @@ const GetBooked = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     setOpen(false);
   };
@@ -387,7 +387,7 @@ const GetBooked = () => {
           setSkillsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     setOpen(false);
   };
@@ -727,9 +727,23 @@ const GetBooked = () => {
                               <div
                                 className="view-gig-btn"
                                 onClick={() => {
-                                  viewJob(item?._id);
+                                  const currentUserId = localStorage.getItem("currentUserId");
+                                  console.log("currentUserId:", currentUserId);
+                                  console.log("Item ID:", item?._id); // Debugging
+
+                                  if (currentUserId) {
+                                    viewJob(item?._id);
+                                  } else {
+                                    setMessage("You must be logged in");
+                                    setOpenPopUp(true);
+                                    setTimeout(() => {
+                                      setOpenPopUp(false);
+                                      navigate("/login");
+                                    }, 1000);
+                                  }
                                 }}
                               >
+
                                 <i className="bi bi-eye-fill"></i>
                                 <div>View</div>
                               </div>
@@ -759,16 +773,16 @@ const GetBooked = () => {
                                 {item?.isApplied === "Applied" && (
                                   <div>Applied</div>
                                 )}
-                              <div
-                                className="view-gig-btn"
-                                onClick={() => {
-                                  shareJob(item?.jobId);
-                                }}
-                              >
-                                <i class="bi bi-copy"></i>
-                                <div>Share</div>
-                              </div>
-                              
+                                <div
+                                  className="view-gig-btn"
+                                  onClick={() => {
+                                    shareJob(item?.jobId);
+                                  }}
+                                >
+                                  <i class="bi bi-copy"></i>
+                                  <div>Share</div>
+                                </div>
+
                               </div>
                             </div>
                           </div>
@@ -795,15 +809,15 @@ const GetBooked = () => {
                               </span>
                               <span className="job-company_dtls">
                                 {Object.keys(item?.compensation)[0] ===
-                                "paid_collaboration_and_gift"
+                                  "paid_collaboration_and_gift"
                                   ? "Paid Collaboration + Product/Gift"
                                   : Object.keys(item?.compensation)[0] ===
                                     "product_gift"
-                                  ? "Product/Gift"
-                                  : Object.keys(item?.compensation)[0] ===
-                                    "paid_collaboration"
-                                  ? "Paid Collaboration"
-                                  : ""}
+                                    ? "Product/Gift"
+                                    : Object.keys(item?.compensation)[0] ===
+                                      "paid_collaboration"
+                                      ? "Paid Collaboration"
+                                      : ""}
                               </span>
                             </div>
                           </div>

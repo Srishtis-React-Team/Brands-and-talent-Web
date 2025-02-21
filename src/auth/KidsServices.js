@@ -88,6 +88,7 @@ const KidsServices = () => {
             setOpenPopUp(false);
 
             const pendingJobId = localStorage.getItem("pendingJobId");
+            
             if (pendingJobId) {
               localStorage.removeItem("pendingJobId");
               navigate(`/jobs/view/${pendingJobId}`);

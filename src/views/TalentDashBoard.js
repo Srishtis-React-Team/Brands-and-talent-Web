@@ -568,6 +568,7 @@ const TalentDashBoard = () => {
     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
     const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
 
+
     try {
       await navigator.clipboard.writeText(jobUrl);
       // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
