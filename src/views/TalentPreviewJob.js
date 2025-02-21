@@ -281,7 +281,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                         </>
                       ))}
 
-                    {jobData?.isApplied === "Apply Now" && <div>Apply Now</div>}
+                    {jobData?.isApplied === "Apply Now" && <div>Quick Apply</div>}
                     {jobData?.isApplied === "Applied" && (
                       <>
                         <div>Applied</div>

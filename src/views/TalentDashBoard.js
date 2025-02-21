@@ -994,19 +994,8 @@ const TalentDashBoard = () => {
                                           }}
                                         >
                                           <i className="bi bi-eye-fill"></i>
-                                          <div>View Job</div>
+                                          <div>View</div>
                                         </div>
-
-                                        <div
-                                          className="view-gig-btn"
-                                          onClick={() => {
-                                            shareJob(item?.jobId);
-                                          }}
-                                        >
-                                          <i class="bi bi-copy"></i>
-                                          <div>Copy Job url </div>
-                                        </div>
-
                                         {(item?.howLikeToApply ===
                                           "easy-apply" ||
                                           item?.isApplied == "Applied") && (
@@ -1034,13 +1023,25 @@ const TalentDashBoard = () => {
                                               )}
                                               {item?.isApplied ===
                                                 "Apply Now" && (
-                                                <div>Apply Now</div>
+                                                <div>Quick Apply</div>
                                               )}
                                               {item?.isApplied ===
                                                 "Applied" && <div>Applied</div>}
                                             </div>
                                           </>
                                         )}
+
+                                        <div
+                                          className="view-gig-btn"
+                                          onClick={() => {
+                                            shareJob(item?.jobId);
+                                          }}
+                                        >
+                                          <i class="bi bi-copy"></i>
+                                          <div>Share</div>
+                                        </div>
+
+                                        
                                       </div>
                                     </div>
 

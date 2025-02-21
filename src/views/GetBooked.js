@@ -731,16 +731,7 @@ const GetBooked = () => {
                                 }}
                               >
                                 <i className="bi bi-eye-fill"></i>
-                                <div>View Job</div>
-                              </div>
-                              <div
-                                className="view-gig-btn"
-                                onClick={() => {
-                                  shareJob(item?.jobId);
-                                }}
-                              >
-                                <i class="bi bi-copy"></i>
-                                <div>Copy Job url </div>
+                                <div>View</div>
                               </div>
                               <div
                                 className={
@@ -768,6 +759,16 @@ const GetBooked = () => {
                                 {item?.isApplied === "Applied" && (
                                   <div>Applied</div>
                                 )}
+                              <div
+                                className="view-gig-btn"
+                                onClick={() => {
+                                  shareJob(item?.jobId);
+                                }}
+                              >
+                                <i class="bi bi-copy"></i>
+                                <div>Share</div>
+                              </div>
+                              
                               </div>
                             </div>
                           </div>

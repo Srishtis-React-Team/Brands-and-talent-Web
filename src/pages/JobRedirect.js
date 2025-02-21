@@ -219,7 +219,7 @@ const JobRedirect = () => {
                             >
                               <i className="bi bi-briefcase-fill"></i>
 
-                              <div>Apply Now</div>
+                              <div>Quick Apply</div>
                             </div>
                           </div>
                         )}
