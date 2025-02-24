@@ -912,10 +912,12 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
             setOpenPopUp(false);
             if (talentData?.planName == "Basic") {
               const pendingJobId = localStorage.getItem("pendingJobId");
-              if (pendingJobId) {
-                localStorage.removeItem("pendingJobId");
-                navigate(`/jobs/view/${pendingJobId}`);
-              } else {
+              const pendingJobTitle = localStorage.getItem("pendingJobTitle");
+          if (pendingJobId) {
+            localStorage.removeItem("pendingJobId");
+            localStorage.removeItem("pendingJobTitle");
+            navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
+          } else {
                 navigate(`/talent/${talentData.publicUrl}`, {
                   state: { talentData: talentData },
                 });
