@@ -2447,6 +2447,20 @@ gap: 6px;
 }
 
 @media (max-width: 767px) {
+  .invalid-fields {
+    width: 100% !important;
+    line-height: 17px;
+    font-size: 12px;
+}
+  .view-gig-btn, .apply-now-btn.applied-btn {
+    min-width: 85px !important;
+}
+.userBox .campaigns-content-wrapper .recent-set-three {
+  justify-content: flex-start !important;
+}
+li.job-features-li {
+  width: 100% !important;
+}
   /* 9-1-25 css start  */
   .css-89200c-MuiFormControl-root-MuiTextField-root svg {
     height: 1em;
