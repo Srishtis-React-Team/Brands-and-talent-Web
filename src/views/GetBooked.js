@@ -215,10 +215,11 @@ const GetBooked = () => {
       }, 1000);
     }
   };
-  const shareJob = async (jobId) => {
+  const shareJob = async (item) => {
     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-    const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
+    console.log("item",item)
+    const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
 
     try {
       await navigator.clipboard.writeText(jobUrl);
@@ -776,7 +777,8 @@ const GetBooked = () => {
                                 <div
                                   className="view-gig-btn"
                                   onClick={() => {
-                                    shareJob(item?.jobId);
+                                    shareJob(item);
+                                    
                                   }}
                                 >
                                   <i class="bi bi-copy"></i>

@@ -980,10 +980,17 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setTalentLocalStorage(resData.data.data);
+          // const pendingJobId = localStorage.getItem("pendingJobId");
+          // if (pendingJobId) {
+          //   localStorage.removeItem("pendingJobId");
+          //   navigate(`/jobs/view/${pendingJobId}`);
+          // } 
           const pendingJobId = localStorage.getItem("pendingJobId");
+          const pendingJobTitle = localStorage.getItem("pendingJobTitle");
           if (pendingJobId) {
             localStorage.removeItem("pendingJobId");
-            navigate(`/jobs/view/${pendingJobId}`);
+            localStorage.removeItem("pendingJobTitle");
+            navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
           } else {
             navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
           }

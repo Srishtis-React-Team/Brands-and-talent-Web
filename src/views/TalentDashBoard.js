@@ -563,10 +563,10 @@ const TalentDashBoard = () => {
     navigate("/contact-support");
   };
 
-  const shareJob = async (jobId) => {
+  const shareJob = async (item) => {
     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-    const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
+    const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
 
 
     try {
@@ -1035,7 +1035,7 @@ const TalentDashBoard = () => {
                                         <div
                                           className="view-gig-btn"
                                           onClick={() => {
-                                            shareJob(item?.jobId);
+                                            shareJob(item);
                                           }}
                                         >
                                           <i class="bi bi-copy"></i>

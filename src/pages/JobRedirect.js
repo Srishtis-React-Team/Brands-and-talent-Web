@@ -11,7 +11,7 @@ import Loader from "../views/Loader";
 import { tr } from "date-fns/locale";
 import CurrentUser from "../CurrentUser";
 const JobRedirect = () => {
-  const { jobId } = useParams();
+  const { jobId,jobTitle } = useParams();
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -19,13 +19,40 @@ const JobRedirect = () => {
   const [loading, setLoading] = useState(false);
   const [talentData, setTalentData] = useState();
   const { currentUserId } = CurrentUser();
+  
 
+ 
   useEffect(() => {
     if (currentUserId) {
       getTalentById();
     }
   }, [currentUserId]);
+
+
+  useEffect(() => {
+    fetchUserId(); // Call the function
+}, [currentUserId]); // Runs when currentUserId changes
+
+
+
   const [modalData, setModalData] = useState(null);
+
+  const fetchUserId = async () => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(() => {
+            setOpenPopUp(false);
+            navigate("/login");
+        }, 2000);
+        return null;  // Return null explicitly to indicate no user
+    }
+
+    return userId;  // Return userId if found
+};
+
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
@@ -54,6 +81,7 @@ const JobRedirect = () => {
   useEffect(() => {
     getJobsByID();
   }, [jobId]);
+ 
 
   const [jobData, setJobData] = useState("");
   const getJobsByID = async () => {
@@ -79,6 +107,8 @@ const JobRedirect = () => {
     if (!userId) {
       // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
       localStorage.setItem("pendingJobId", jobId);
+      localStorage.setItem("pendingJobTitle",jobTitle)
+      
       setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function () {

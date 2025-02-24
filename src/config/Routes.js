@@ -765,7 +765,7 @@ function Routing() {
             }
           />
           <Route
-            path="/jobs/view/:jobId"
+            path="/jobs/view/:jobTitle/:jobId"
             element={
               <Suspense fallback={<Spinner />}>
                 <JobRedirect />
