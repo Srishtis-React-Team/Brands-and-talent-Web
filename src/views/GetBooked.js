@@ -218,8 +218,11 @@ const GetBooked = () => {
   const shareJob = async (item) => {
     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-    console.log("item",item)
+
+    
     const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+     // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+ 
 
     try {
       await navigator.clipboard.writeText(jobUrl);
@@ -748,6 +751,7 @@ const GetBooked = () => {
                                 <i className="bi bi-eye-fill"></i>
                                 <div>View</div>
                               </div>
+                            
                               <div
                                 className={
                                   item?.isApplied === "Apply Now"
@@ -773,8 +777,12 @@ const GetBooked = () => {
                                 )}
                                 {item?.isApplied === "Applied" && (
                                   <div>Applied</div>
+                                  
                                 )}
-                                <div
+                                </div>
+                               
+                               
+                               <div
                                   className="view-gig-btn"
                                   onClick={() => {
                                     shareJob(item);
@@ -785,7 +793,7 @@ const GetBooked = () => {
                                   <div>Share</div>
                                 </div>
 
-                              </div>
+                             
                             </div>
                           </div>
                           <div className="recent-settwo pt-0">
