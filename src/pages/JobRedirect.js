@@ -33,14 +33,20 @@ const JobRedirect = () => {
     fetchUserId(); // Call the function
 }, [currentUserId]); // Runs when currentUserId changes
 
-
+useEffect(() => {
+  // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+  localStorage.setItem("pendingJobId", jobId);
+  localStorage.setItem("pendingJobTitle",jobTitle)
+}, []); // Runs when currentUserId changes
 
   const [modalData, setModalData] = useState(null);
 
   const fetchUserId = async () => {
     const userId = localStorage.getItem("userId");
+    
 
     if (!userId) {
+     
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(() => {
@@ -105,6 +111,7 @@ const JobRedirect = () => {
     const userId = localStorage.getItem("userId");
     const userType = localStorage.getItem("currentUserType");
     if (!userId) {
+  
       // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
       localStorage.setItem("pendingJobId", jobId);
       localStorage.setItem("pendingJobTitle",jobTitle)

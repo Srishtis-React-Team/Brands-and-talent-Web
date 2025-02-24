@@ -165,6 +165,7 @@ const Login = () => {
               setTalentLocalStorage(resData.data.data);
               const pendingJobId = localStorage.getItem("pendingJobId");
               const pendingJobTitle = localStorage.getItem("pendingJobTitle")
+              console.log("pendingJobTitle",pendingJobId)
               if (pendingJobId) {
                 localStorage.removeItem("pendingJobId");
                 localStorage.removeItem("pendingJobTitle");
