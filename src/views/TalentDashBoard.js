@@ -566,7 +566,10 @@ const TalentDashBoard = () => {
   const shareJob = async (item) => {
     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-    const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+    //const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+    const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+
 
 
     try {
