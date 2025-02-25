@@ -9,6 +9,7 @@ import "../assets/css/preview-job.css";
 import "../assets/css/createjobs.css";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
+import Header from "../layout/header.js";
 
 const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   // const { job } = props;
@@ -36,6 +37,41 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
       getTalentById();
     }
   }, [currentUserId]);
+
+ 
+  useEffect(() => {
+    fetchLoggedUser(); // Call the function
+}, [currentUserId]); // Runs when currentUserId changes
+
+  
+  useEffect(() => {
+    if (currentUserId) {
+      console.log("Navigating to Preview Job Talent...");
+      navigate("/preview-job-talent");
+   
+    }
+  }, [currentUserId, navigate]); 
+
+
+  const fetchLoggedUser = async () => {
+    const userId = localStorage.getItem("userId");
+    
+
+    if (!userId) {
+     
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(() => {
+            setOpenPopUp(false);
+            navigate("/login");
+        }, 2000);
+        return null;  // Return null explicitly to indicate no user
+    }
+
+    return userId;  // Return userId if found
+};
+
+
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
@@ -237,7 +273,8 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
     <>
       {from != "dashboard" && (
         <>
-          <TalentHeader toggleMenu={toggleMenu} from={"message"} />
+         <Header />
+          {/* <TalentHeader toggleMenu={toggleMenu} from={"message"} /> */}
         </>
       )}
       <main id="mainBrand">
