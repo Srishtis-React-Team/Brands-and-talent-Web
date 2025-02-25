@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
+
 const PreviewJob = ({ data, onButtonClick }) => {
   const location = useLocation();
   const { jobId } = location.state || {};
@@ -19,6 +20,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const [jobData, setJobData] = useState("");
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
+
+
+
 
   const getJobsByID = async () => {
     const formData = {
@@ -63,6 +67,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
       getBrand();
     }
   }, [brandId]);
+
+ 
+
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
