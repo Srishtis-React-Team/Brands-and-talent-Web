@@ -1034,6 +1034,7 @@ const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.
                                             </div>
                                           </>
                                         )}
+                                        
 
                                         <div
                                           className="view-gig-btn"
