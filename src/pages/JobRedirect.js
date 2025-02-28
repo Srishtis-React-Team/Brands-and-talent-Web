@@ -19,6 +19,7 @@ const JobRedirect = () => {
   const [loading, setLoading] = useState(false);
   const [talentData, setTalentData] = useState();
   const { currentUserId } = CurrentUser();
+  const [showPopup, setShowPopup] = useState(false);
   
 
  
@@ -91,13 +92,16 @@ useEffect(() => {
 
   const [jobData, setJobData] = useState("");
   const getJobsByID = async () => {
+    const userId = localStorage.getItem("userId");
     let formData = {
       jobId: jobId,
+      talentId:userId
     };
     setLoading(true);
     await ApiHelper.post(`${API.fetchByJobUrl}`, formData)
       .then((resData) => {
         setLoading(false);
+        console.log("resData.data.data",resData.data.data)
 
         setJobData(resData.data.data);
         getBrand(resData.data.data?.brandId);
@@ -240,7 +244,63 @@ useEffect(() => {
                           {jobData?.jobTitle}
                         </div>
                       </div>
-                      {(jobData?.howLikeToApply === "easy-apply" ||
+
+                      {(jobData?.howLikeToApply ===
+                                          "easy-apply" ||
+                                          jobData?.isApplied == "Applied") && (
+                                          <>
+                                            <div
+                                              className={
+                                                jobData?.isApplied === "Apply Now"
+                                                  ? "apply-now-btn"
+                                                  : "apply-now-btn applied-btn"
+                                              }
+                                              onClick={() => {
+                                                applyjobs(jobData);
+                                              }}
+                                            >
+                                              {jobData?.isApplied == "Applied" && (
+                                                <>
+                                                  <i className="bi bi-check-circle-fill"></i>
+                                                </>
+                                              )}
+                                              {jobData?.isApplied ==
+                                                "Apply Now" && (
+                                                <>
+                                                  <i className="bi bi-briefcase-fill"></i>
+                                                </>
+                                              )}
+                                              {jobData?.isApplied ===
+                                                "Apply Now" && (
+                                                <div>Quick Apply</div>
+                                              )}
+                                              {jobData?.isApplied ===
+                                                "Applied" && <div>Applied</div>}
+                                            </div>
+                                          </>
+                                        )}
+                                         {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
+              {jobData?.howLikeToApply === "how_to_apply" && (
+                <div className="apply-section">
+                  <button className="apply-btn" onClick={() => setShowPopup(true)}>
+                    Apply
+                  </button>
+                </div>
+              )}
+
+              {/* Popup Modal */}
+              {showPopup && (
+                <div className="popup-overlay">
+                  <div className="popup-content">
+
+                    <p>Please follow the instructions provided to apply.</p>
+                    <button className="close-btn" onClick={() => setShowPopup(false)}>
+                      Ok
+                    </button>
+                  </div>
+                </div>
+              )}
+                      {/* {(jobData?.howLikeToApply === "easy-apply" ||
                         jobData?.isApplied == "Applied") && (
                           <div className="easy-apply-section">
                             <div
@@ -259,7 +319,7 @@ useEffect(() => {
                               <div>Quick Apply</div>
                             </div>
                           </div>
-                        )}
+                        )} */}
                     </div>
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">

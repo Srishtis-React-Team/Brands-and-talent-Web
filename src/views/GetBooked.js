@@ -46,6 +46,12 @@ const GetBooked = () => {
     "Other",
   ];
 
+  const compensationTypes = [
+    "Paid Collaboration",
+    "Product/ Gift",
+    "Paid Collaboration + Product/Gift",
+  ];
+
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
@@ -201,12 +207,14 @@ const GetBooked = () => {
         navigate("/login");
       }, 1000);
     } else if (currentUserId && currentUser_type == "talent") {
-      navigate("/preview-job-talent", {
+     
+      navigate("/preview-job-talent", {  
         state: {
           jobId: jobId,
         },
       });
     } else if (currentUserId && currentUser_type == "brand") {
+     
       setMessage("Login as an talent to use this feature");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -375,15 +383,22 @@ const GetBooked = () => {
   const jobAgeRef = useRef(null);
   const jobFullNameRef = useRef(null);
 
+  // const jobTypeOptions = [
+  //   "Full-Time",
+  //   "Part-Time",
+  //   "Per Diem",
+  //   "Contractor",
+  //   "Temporary",
+  //   "Other",
+  // ];
   const jobTypeOptions = [
-    "Full-Time",
-    "Part-Time",
-    "Per Diem",
-    "Contractor",
+    "On Site",
+    "Remote",
+    "Work From Anywhere",
+    "Hybrid",
     "Temporary",
     "Other",
   ];
-
   useEffect(() => {
     getSkills();
   }, []);
@@ -488,13 +503,20 @@ const GetBooked = () => {
                     }}
                   >
                     <div className="gift-dialog-header">
+                        <DialogTitle>Filter</DialogTitle>
+                        <i
+                          className="bi bi-x-lg close-gift"
+                          onClick={handleClose}
+                        ></i>
+                      </div>
+                    {/* <div className="gift-dialog-header">
                       <DialogTitle>Filter</DialogTitle>
                       <i
                         className="bi bi-x-lg close-gift"
                         onClick={handleClose}
                       ></i>
-                    </div>
-                    <DialogContent>
+                    </div> */}
+                    {/* <DialogContent>
                       <div className="search-filter-section">
                         <div className="kids-form-row row">
                           <div className="kids-form-section col-md-6 mb-3">
@@ -661,7 +683,201 @@ const GetBooked = () => {
                           </div>
                         </div>
                       </div>
-                    </DialogContent>
+                    </DialogContent> */}
+                     <DialogContent>
+                        <div className="search-filter-section">
+                          <div className="kids-form-row row">
+                            <div className="kids-form-section col-md-6 mb-3">
+                              <label className="form-label">Keywords</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter Keyword"
+                                ref={keyWordRef}
+                              ></input>
+                            </div>
+
+                            <div className="kids-form-section col-md-6 mb-3">
+                              <label className="form-label">Category</label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="selectedCategoryID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Category
+                                </option>
+                                {categoryList.map((option, index) => (
+                                  <option key={index} value={option?.value}>
+                                    {option?.value}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="kids-form-row row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Country</label>
+                            <Select
+                              placeholder="Search country..."
+                              options={countryList.map((country, index) => ({
+                                value: country,
+                                label: country,
+                                key: index,
+                              }))}
+                              value={country?.value}
+                              onChange={handleSelectedCountry}
+                              isSearchable={true}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">State</label>
+                            <Select
+                              placeholder="Select state..."
+                              options={stateList.map((state) => ({
+                                value: state.stateId,
+                                label: state.name,
+                              }))}
+                              value={state?.label}
+                              onChange={handleSelectedState}
+                              isSearchable={true}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="kids-form-row row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">City</label>
+                            <Select
+                              placeholder="Select City..."
+                              options={cityList.map((city) => ({
+                                value: city.cityId,
+                                label: city.name,
+                              }))}
+                              value={kidsCity?.label}
+                              onChange={handleSelectedCity}
+                              isSearchable={true}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <div className=" ">
+                              <label className="form-label">
+                                Employment Type
+                              </label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="employmentTypeID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Employment Type
+                                </option>
+                                {employmentTypeList.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          {/* <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Skills</label>
+                            <Select
+                              isMulti
+                              name="skills"
+                              options={skillsList}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectSkills(value)}
+                              styles={customStyles}
+                            />
+                          </div> */}
+                        </div>
+                        <div className="row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <div className=" ">
+                              <label className="form-label">Job Type</label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="jobtypeID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Job Type
+                                </option>
+                                {jobTypeOptions.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Job Title</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Job Title"
+                              ref={jobNameRef}
+                            ></input>
+                          </div>
+                        </div>
+
+                        {/* <div className="kids-form-row row ">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Min Age</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Min Age"
+                              ref={minAgeref}
+                              min={1}
+                            ></input>
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Max Age</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Max Age"
+                              ref={MaxAgeref}
+                              min={1}
+                            ></input>
+                          </div>
+                        </div> */}
+
+                        <div className="kids-form-row row ">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <div className=" ">
+                              <label className="form-label">Compensation</label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="compensationID"
+                              >
+                                <option value="" disabled selected>
+                                  Select compensation
+                                </option>
+                                {compensationTypes.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
                     <DialogActions>
                       <button
                         type="button"
@@ -738,10 +954,21 @@ const GetBooked = () => {
                                   const currentUserId = localStorage.getItem("currentUserId");
                                   console.log("currentUserId:", currentUserId);
                                   console.log("Item ID:", item?._id); // Debugging
-
+                                  const pendingJobId = item?.jobId; // Get the job ID
+                                  localStorage.setItem("pendingJobId", pendingJobId); // Store in localStorage
+                                  const pendingJobTitle =item?.jobTitle
+                                  localStorage.setItem("pendingJobTitle", pendingJobTitle); // Store in localStorage
+                                  
                                   if (currentUserId) {
-                                    viewJob(item?._id);
-                                  } else {
+                                      viewJob(item?._id); // Pass the stored ID to viewJob function
+                                  }
+                                  
+
+                                  // if (currentUserId) {
+                                  //   viewJob(item?._id);
+                                   
+                                  // } 
+                                  else {
                                     setMessage("You must be logged in");
                                     setOpenPopUp(true);
                                     setTimeout(() => {
