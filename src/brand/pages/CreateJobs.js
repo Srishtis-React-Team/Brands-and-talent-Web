@@ -361,6 +361,8 @@ const CreateJobs = () => {
 
       setSelectedGenderOptions(genderUpdatedOptions);
 
+      console.log("editData?.nationality?",editData?.nationality)
+
       const selectedOptions = editData?.languages.map((language) => {
         return languagesList.find((option) => option.label === language);
       });
@@ -1877,7 +1879,7 @@ const CreateJobs = () => {
       setState(editJobData.state);
       getStates(editJobData.country);
       setKidsCity(editJobData.city);
-
+      
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersList.find((option) => option?.label === gender);
       });
@@ -1890,12 +1892,20 @@ const CreateJobs = () => {
 
       setSelectedLanguageOptions(selectedOptions);
 
-      if (nationalitiesList.length > 0) {
-        const nationalitiesList = editJobData?.nationality?.map((language) => {
+      if (nationalitiesList?.length > 0) {
+        const selectedNationalities = editJobData?.nationality?.map((language) => {
           return nationalitiesList.find((option) => option?.label === language);
         });
-        setSelectedNationalityOptions(nationalitiesList);
+        setSelectedNationalityOptions(selectedNationalities);
       }
+      
+
+      // if (nationalitiesList.length > 0) {
+      //   const nationalitiesList = editJobData?.nationality?.map((language) => {
+      //     return nationalitiesList.find((option) => option?.label === language);
+      //   });
+      //   setSelectedNationalityOptions(nationalitiesList);
+      // }
 
       const dynamicKey = Object.keys(editJobData.compensation)[0];
       const minPayValue = editJobData.compensation[dynamicKey].minPay;

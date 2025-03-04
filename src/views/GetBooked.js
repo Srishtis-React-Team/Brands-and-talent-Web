@@ -13,6 +13,7 @@ import Select from "react-select";
 import Header from "../layout/header.js";
 import useFieldDatas from "../config/useFieldDatas.js";
 import Loader from "./Loader.js";
+import "../assets/css/createjobs.css";
 const GetBooked = () => {
   const { categoryList, professionList } = useFieldDatas();
   const [countryList, setCountryList] = useState([]);
@@ -22,6 +23,7 @@ const GetBooked = () => {
   const [state, setState] = useState("");
   const [kidsCity, setKidsCity] = useState("");
   const [loading, setLoading] = useState(false);
+   const [filterState, setFilterState] = useState(false);
 
   useEffect(() => {
     getCountries();
@@ -104,6 +106,9 @@ const GetBooked = () => {
       .catch((err) => { });
   };
 
+
+
+
   const navigate = useNavigate();
   const offcanvasRef = useRef(null);
   const [gigsList, setGigsList] = useState([]);
@@ -152,6 +157,12 @@ const GetBooked = () => {
       console.log(`JobId received: ${jobId}`);
     }
   }, [jobId, navigate]);
+
+  
+  const undo = async () => {
+    setFilterState(false);
+    getRecentGigs();
+  };
 
   const getRecentGigs = async () => {
     setLoading(true);
@@ -355,6 +366,7 @@ const GetBooked = () => {
     };
 
     setIsLoading(true);
+    setFilterState(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -472,6 +484,7 @@ const GetBooked = () => {
 
     setOpen(false);
   };
+  console.log("filterState",filterState)
 
   return (
     <>
@@ -483,10 +496,33 @@ const GetBooked = () => {
               <div className="filter-text-wrapper">
                 <div className="recent-gigs-title">Get Booked</div>
                 <React.Fragment>
-                  <div className="header-filter-icon" onClick={handleClickOpen}>
-                    Filter Jobs
+                <div className="d-flex align-items-center">
+                      <div
+                        className="header-filter-icon"
+                        onClick={handleClickOpen}
+                      >
+                        Filter Jobs
+                        <img className="filter-icon" src={sliderIcon} alt="" />
+                      </div>
+                      {filterState == true && (
+                        <>
+                          <div className="view-undo-jobs " onClick={undo}>
+                            <i className="bi bi-arrow-counterclockwise"></i>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                 {/* <div className="header-filter-icon" onClick={handleClickOpen}>
+                    Filter Jobsssssssssss
                     <img className="filter-icon" src={sliderIcon} alt="" />
-                  </div>
+                    {filterState == true && (
+                        <>
+                          <div className="view-undo-jobs " onClick={undo}>
+                            <i className="bi bi-arrow-counterclockwise"></i>
+                          </div>
+                        </>
+                      )}
+                  </div> */}
                   <Dialog
                     open={open}
                     onClose={handleClose}
@@ -990,6 +1026,14 @@ const GetBooked = () => {
                                     : "apply-now-btn applied-btn"
                                 }
                                 onClick={() => {
+                                  const currentUserId = localStorage.getItem("currentUserId");
+                                  console.log("currentUserId:", currentUserId);
+                                  console.log("Item ID:", item?._id); // Debugging
+                                  const pendingJobId = item?.jobId; // Get the job ID
+                                  localStorage.setItem("pendingJobId", pendingJobId); // Store in localStorage
+                                  const pendingJobTitle =item?.jobTitle
+                                  localStorage.setItem("pendingJobTitle", pendingJobTitle); // Store in localStorage
+                                  console.log("item",item)
                                   applyjobs(item);
                                 }}
                               >
