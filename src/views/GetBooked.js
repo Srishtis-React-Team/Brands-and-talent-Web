@@ -407,9 +407,7 @@ const GetBooked = () => {
     "On Site",
     "Remote",
     "Work From Anywhere",
-    "Hybrid",
-    "Temporary",
-    "Other",
+    "Hybrid"
   ];
   useEffect(() => {
     getSkills();
