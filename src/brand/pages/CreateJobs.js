@@ -486,7 +486,7 @@ const CreateJobs = () => {
   const handleChange = (e) => {
     setSelectedJobID(e?.value);
     getJobsByID(e?.value, e?.type);
-    setIsDuplicateJob(true);
+   setIsDuplicateJob(true);
   };
 
   const getJobsByID = async (jobId, type) => {
@@ -2067,13 +2067,22 @@ const CreateJobs = () => {
                   </>
                 )}
 
-                {editJobData && isDuplicateJob === true && (
+                   {editJobData && (
+                  <>
+                    <label className="create-job-toggle-label" htmlFor="newjob">
+                    Create New Job
+                    </label>
+                  </>
+                )}
+               
+
+                {/* {editJobData && isDuplicateJob === true && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Duplicate Job
                     </label>
                   </>
-                )}
+                )} */}
 
                 <input
                   type="radio"
