@@ -84,6 +84,7 @@ const TalentProfile = () => {
   const location = useLocation();
   const [talentName, setTalentName] = useState("");
   const [urlTalentData, setUrlTalentData] = useState("");
+  const [playingUrl, setPlayingUrl] = useState(null);
   useEffect(() => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
@@ -781,6 +782,8 @@ const TalentProfile = () => {
     //   }
     // }
   };
+
+ 
 
   return (
     <>
@@ -1875,7 +1878,7 @@ const TalentProfile = () => {
                                   )}
                                 </div>
                               </div>
-                              <p className="fw-bold">Audios</p>
+                              {/* <p className="fw-bold">Audios</p>
 
 <div className="service-list-main w-100">
   <div className="cvAdjust padSpace w-100">
@@ -1907,7 +1910,7 @@ const TalentProfile = () => {
       <div className="msgs">Audios will be visible only after admin approval</div>
     )}
   </div>
-</div>
+</div> */}
 
                               {/* <p>Audios</p>
 
@@ -1967,6 +1970,118 @@ const TalentProfile = () => {
                                   )}
                                 </div>
                               </div> */}
+
+{/* <p>Audios</p>
+
+<div className="service-list-main w-100">
+  <div className="cvAdjust padSpace w-100">
+    {audiosList && (
+      <div className="cvlist-wrapper row">
+        {audiosList.map((url, index) => {
+          const isMp3 = url.endsWith(".mp3");
+          return (
+            <div className="col-md-4 padSpace" key={index}>
+              <div className="cv-card">
+                <div className="d-flex align-items-center">
+                  <i className="fa-solid fa-file"></i>
+                  <div className="fileName audio-url-style">{url}</div>
+                </div>
+                {isMp3 ? (
+                  <audio controls className="w-100">
+                    <source src={url} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                ) : (
+                  <button className="view-cv" onClick={() => window.open(url)}>
+                    Open
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+      <div className="msgs">Audios will be visible only after admin approval</div>
+    )}
+
+    {audiosList?.length === 0 && (
+      <div className="msgs">Audios are not added</div>
+    )}
+  </div>
+</div>
+
+ */}
+ <p>Audios</p>
+
+<div className="service-list-main w-100">
+<div className="row">
+  {/* <div className="cvAdjust padSpace w-100"> */}
+    {audiosList && (
+      <div>
+       {/* <div className="cvlist-wrapper row"> */}
+        {audiosList.map((url) => {
+          const isMp3 = url.endsWith(".mp3");
+          const fileName = url.split("/").pop(); // Extracts the file name from URL
+          return (
+            // <div className="col-md-4 padSpace" key={index}>
+              <div className="cv-card"key={url}>
+                <div className="d-flex align-items-center">
+                  <i className="fa-solid fa-file"></i>
+                  <div className="fileName audio-url-style">{fileName}</div>
+                </div>
+             {isMp3 ? (
+                    <>
+                      <button
+                        className="view-cv"
+                        onClick={() =>
+                          setPlayingUrl(playingUrl === url ? null : url)
+                        }
+                      >
+                        {playingUrl === url ? "Pause" : "Play"}
+                      </button>
+
+                      {playingUrl === url && (
+                        <audio
+                          controls
+                          autoPlay
+                          className="w-100"
+                          onEnded={() => setPlayingUrl(null)}
+                        >
+                          <source src={url} type="audio/mpeg" />
+                          Your browser does not support the audio tag.
+                        </audio>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      className="view-cv"
+                      onClick={() => window.open(url, "_blank")}
+                    >
+                      <i className="fa-solid fa-external-link"></i>
+                    </button>
+                )}
+              </div>
+            // </div>
+          );
+        })}
+      </div>
+    )}
+
+    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+      <div className="msgs">Audios will be visible only after admin approval</div>
+    )}
+
+    {audiosList?.length === 0 && (
+      <div className="msgs">Audios are not added</div>
+    )}
+  </div>
+</div>
+
+
+
 
                               {talentData &&
                                 talentData?.services?.length > 0 && (
@@ -2237,7 +2352,7 @@ const TalentProfile = () => {
                               </div>
                             </>
                           )}
-                          {videos && (
+                         {/* {videos && (
   <>
     <p className="fw-bold">Audios</p>
     <div className="service-list-main w-100">
@@ -2268,10 +2383,10 @@ const TalentProfile = () => {
       </div>
     </div>
   </>
-)}
+)}  */}
 
 
-                          {/* {videos && (
+                         {/* {videos && (
                             <>
                               <p>Audios</p>
                               <div className="service-list-main w-100">
@@ -2292,15 +2407,16 @@ const TalentProfile = () => {
                                                     {url}
                                                   </div>
                                                 </div>
-                                                <button
+                                               <button
                                                   className="view-cv"
                                                   onClick={() =>
                                                     window.open(url)
                                                   }
                                                 >
                                                   Play
-                                                </button>
-                                              </div>
+                                                  
+                                                </button> 
+                                                </div>
                                             </>
                                           </>
                                         );
@@ -2328,7 +2444,68 @@ const TalentProfile = () => {
                                 </div>
                               </div>
                             </>
-                          )} */}
+                          )}   */}
+
+{videos && (
+  <>
+    <p>Audios</p>
+    <div className="service-list-main w-100">
+      <div className="row">
+        {audiosList && (
+          <div>
+            {audiosList.map((url) => {
+              const isMp3 = url.toLowerCase().endsWith(".mp3");
+              const fileName = url.split("/").pop(); // Extracts the file name from URL
+
+              return (
+                <div className="cv-card" key={url}>
+                  <div className="d-flex align-items-center">
+                    <i className="fa-solid fa-file"></i>
+                    <div className="fileName audio-url-style">{fileName}</div>
+                  </div>
+
+                  {isMp3 ? (
+                    <>
+                      <button
+                        className="view-cv"
+                        onClick={() =>
+                          setPlayingUrl(playingUrl === url ? null : url)
+                        }
+                      >
+                        {playingUrl === url ? "Pause" : "Play"}
+                      </button>
+
+                      {playingUrl === url && (
+                        <audio
+                          controls
+                          autoPlay
+                          className="w-100"
+                          onEnded={() => setPlayingUrl(null)}
+                        >
+                          <source src={url} type="audio/mpeg" />
+                          Your browser does not support the audio tag.
+                        </audio>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      className="view-cv"
+                      onClick={() => window.open(url, "_blank")}
+                    >
+                      <i className="fa-solid fa-external-link"></i>
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  </>
+)}
+
+
 
                           {services && (
                             <>
