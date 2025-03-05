@@ -2308,7 +2308,9 @@ gap: 6px;
  .col-md-8.col-lg-6.scrolscrolPrevOut .mb-2.col-lg-7.col-md-12.logoSpc {
   width: 100% !important;
 }
-
+.border-curve {
+  border-radius: 30px;
+}
 
 
 
@@ -2614,6 +2616,9 @@ li.job-features-li {
   .nav.menu-items ul.dropdown-menu.show {
     position: relative !important;
   }
+  .border-curve {
+    margin-bottom: 20px;
+}
 }
 @media (max-width: 580px) {
   .section-description {
