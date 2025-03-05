@@ -21,6 +21,7 @@ const JobRedirect = () => {
   const { currentUserId } = CurrentUser();
   const [showPopup, setShowPopup] = useState(false);
   
+  
 
  
   useEffect(() => {
@@ -33,6 +34,8 @@ const JobRedirect = () => {
   useEffect(() => {
     fetchUserId(); // Call the function
 }, [currentUserId]); // Runs when currentUserId changes
+
+
 
 useEffect(() => {
   // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
@@ -280,26 +283,37 @@ useEffect(() => {
                                           </>
                                         )}
                                          {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
-              {jobData?.howLikeToApply === "how_to_apply" && (
-                <div className="apply-section">
-                  <button className="apply-btn" onClick={() => setShowPopup(true)}>
-                    Apply
-                  </button>
-                </div>
-              )}
+                                          {jobData?.howLikeToApply === "how_to_apply" && (
+                                            <div className="apply-section">
+                                              <button className="apply-btn" onClick={() => 
+                                                setShowPopup(true)}>
+                                                Apply
+                                              </button>
+                                            </div>
+                                          )}
 
-              {/* Popup Modal */}
-              {showPopup && (
-                <div className="popup-overlay">
-                  <div className="popup-content">
+                                        {/* Popup Modal */}
+                                        {showPopup && (
+                                          <div className="popup-overlay">
+                                            <div className="popup-content">
+                                              <span className="close-button" onClick={() => setShowPopup(false)}>✖</span>
+                                              <p>Kindly follow the application instructions</p>
+                                            </div>
+                                          </div>
+                                        )}
 
-                    <p>Please follow the instructions provided to apply.</p>
-                    <button className="close-btn" onClick={() => setShowPopup(false)}>
-                      Ok
-                    </button>
-                  </div>
-                </div>
-              )}
+
+
+                                        {/* {showPopup && (
+                                          <div className="popup-overlay">
+                                            <div className="popup-content">
+
+                                              <p>Kindly follow the application instructions</p>
+                                             
+                                            </div>
+                                          </div>
+                                        )} */}
+
                       {/* {(jobData?.howLikeToApply === "easy-apply" ||
                         jobData?.isApplied == "Applied") && (
                           <div className="easy-apply-section">
@@ -320,7 +334,7 @@ useEffect(() => {
                             </div>
                           </div>
                         )} */}
-                    </div>
+                            </div>
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">
                         <img
