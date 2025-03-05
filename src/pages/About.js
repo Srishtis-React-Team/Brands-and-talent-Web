@@ -86,7 +86,7 @@ const About = () => {
                 <img
                   className="img-fluid border-curve"
                   src={
-                    "https://brandsandtalent.com//backend/uploads/b9289ca8-15e7-4432-a9a0-8b487f2d8f28.jpg"
+                    "https://brandsandtalent.com//backend/uploads/e4748ea7-dcd1-44a9-8d3c-06fc8900a41f.jpg"
                   }
                 ></img>
               </div>

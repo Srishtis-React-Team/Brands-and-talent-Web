@@ -2060,7 +2060,8 @@ const TalentProfile = () => {
                       className="view-cv"
                       onClick={() => window.open(url, "_blank")}
                     >
-                      <i className="fa-solid fa-external-link"></i>
+                      Play
+                      {/* <i className="fa-solid fa-external-link"></i> */}
                     </button>
                 )}
               </div>
@@ -2492,7 +2493,8 @@ const TalentProfile = () => {
                       className="view-cv"
                       onClick={() => window.open(url, "_blank")}
                     >
-                      <i className="fa-solid fa-external-link"></i>
+                      Play
+                      {/* <i className="fa-solid fa-external-link"></i> */}
                     </button>
                   )}
                 </div>

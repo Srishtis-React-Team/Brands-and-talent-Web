@@ -32,6 +32,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandData, setBrandData] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  
 
 
 
@@ -40,6 +41,8 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
       getTalentById();
     }
   }, [currentUserId]);
+
+
 
 
   useEffect(() => {
@@ -353,16 +356,25 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
               {/* Popup Modal */}
               {showPopup && (
+              <div className="popup-overlay">
+                <div className="popup-content">
+                  <span className="close-button" onClick={() => setShowPopup(false)}>✖</span>
+                  <p>Kindly follow the application instructions</p>
+                </div>
+              </div>
+            )}
+
+
+
+              {/* {showPopup && (
                 <div className="popup-overlay">
                   <div className="popup-content">
 
-                    <p>Please follow the instructions provided to apply.</p>
-                    <button className="close-btn" onClick={() => setShowPopup(false)}>
-                      Ok
-                    </button>
+                    <p>Kindly follow the application instructions</p>
+                   
                   </div>
                 </div>
-              )}
+              )} */}
 
 
             </div>

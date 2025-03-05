@@ -1001,7 +1001,27 @@ const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.
                                           <i className="bi bi-eye-fill"></i>
                                           <div>View</div>
                                         </div>
-                                        {(item?.howLikeToApply ===
+
+                                         {(item?.howLikeToApply === "easy-apply" || item?.howLikeToApply === "how_to_apply" || item?.isApplied === "Applied") && (
+                                            <div
+                                              className={item?.isApplied === "Apply Now" ? "apply-now-btn" : "apply-now-btn applied-btn"}
+                                              onClick={() => applyjobs(item)}
+                                            >
+                                              {item?.isApplied === "Applied" ? (
+                                                <>
+                                                  <i className="bi bi-check-circle-fill"></i>
+                                                  <div>Applied</div>
+                                                </>
+                                              ) : (
+                                                <>
+                                                  <i className="bi bi-briefcase-fill"></i>
+                                                  <div>{item?.howLikeToApply === "easy-apply" ? "Quick Apply" : "Apply"}</div>
+                                                </>
+                                              )}
+                                            </div>
+                                          )}
+
+                                        {/* {(item?.howLikeToApply ===
                                           "easy-apply" ||
                                           item?.isApplied == "Applied") && (
                                           <>
@@ -1034,7 +1054,9 @@ const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.
                                                 "Applied" && <div>Applied</div>}
                                             </div>
                                           </>
-                                        )}
+                                        )} */}
+
+                                        
                                         
 
                                         <div
@@ -1293,14 +1315,31 @@ const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.
                     </div>
 
                     <div className="modal-footer">
-                      <button
+                    <button
+                    onClick={() => {
+                      if (modalData?.howLikeToApply === "how_to_apply") {
+                        setMessage("Kindly follow the application instructions.");
+                        setOpenPopUp(true);
+                        setTimeout(() => setOpenPopUp(false), 4000);
+                      } else {
+                        handleCloseModal();
+                      }
+                    }}
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss={modalData?.howLikeToApply === "how_to_apply" ? "" : "modal"}
+                  >
+                    Apply
+                  </button>
+
+                      {/* <button
                         onClick={handleCloseModal}
                         type="button"
                         className="btn btn-success"
                         data-bs-dismiss="modal"
                       >
                         Apply
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
