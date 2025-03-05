@@ -283,6 +283,9 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
       return false;
     }
   };
+  if (showPopup) {
+    setTimeout(() => setShowPopup(false), 4000); // Auto-close after 4 seconds
+  }
 
   return (
     <>
@@ -356,13 +359,20 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
               {/* Popup Modal */}
               {showPopup && (
+  <div className="popup-overlay">
+    <div className="popup-content">
+      <p>Kindly follow the application instructions</p>
+    </div>
+  </div>
+)}
+              {/* {showPopup && (
               <div className="popup-overlay">
                 <div className="popup-content">
                   <span className="close-button" onClick={() => setShowPopup(false)}>✖</span>
                   <p>Kindly follow the application instructions</p>
                 </div>
               </div>
-            )}
+            )} */}
 
 
 
