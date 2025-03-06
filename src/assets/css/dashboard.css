@@ -2617,7 +2617,10 @@ li.job-features-li {
     position: relative !important;
   }
   .border-curve {
-    margin-bottom: 20px;
+    border-radius: 30px;
+    height: 320px;
+    width: 100%;
+    object-fit: cover;
 }
 }
 @media (max-width: 580px) {
