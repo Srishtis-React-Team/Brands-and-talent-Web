@@ -2310,6 +2310,9 @@ gap: 6px;
 }
 .border-curve {
   border-radius: 30px;
+  height: 320px;
+  object-fit: cover;
+  width: 100%;
 }
 
 
@@ -2617,10 +2620,7 @@ li.job-features-li {
     position: relative !important;
   }
   .border-curve {
-    border-radius: 30px;
-    height: 320px;
-    width: 100%;
-    object-fit: cover;
+    margin-bottom: 20px;
 }
 }
 @media (max-width: 580px) {
