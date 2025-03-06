@@ -2067,7 +2067,7 @@ const CreateJobs = () => {
                   </>
                 )}
 
-                   {editJobData && (
+                   {editJobData && isDuplicateJob === true && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                     Create New Job
