@@ -556,9 +556,9 @@ const SearchHeaderComponent = ({ onData }) => {
       handleClose();
       navigate("/careers");
     }
-    if (route == "/become-affliate") {
+    if (route == "/become-affiliate") {
       handleClose();
-      navigate("/become-affliate");
+      navigate("/become-affiliate");
     }
     if (route == "/investors") {
       handleClose();
