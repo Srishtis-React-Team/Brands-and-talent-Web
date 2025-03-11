@@ -175,6 +175,12 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
     navigate("/talent-dashboard");
   };
 
+  
+  const convertLinks = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return String(text).replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+  };
+
   const handleBackClick = () => {
     const currentUrl = location.pathname;
     if (currentUrl == "/talent-dashboard") {
@@ -1054,7 +1060,34 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                 </>
               )}
 
-              {jobData?.howLikeToApply !== "easy-apply" && (
+              
+{jobData?.howLikeToApply !== "easy-apply" && (
+  <div className="job-about-section">
+    <div className="job-feature-title">How to Apply</div>
+    <div className="job-about-values">
+      {jobData?.applyDescription ? (
+        <div
+          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription) }}
+          className="apply-description"
+        />
+      ) : (
+        <>
+          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+          <span className="how-apply-terms-link">
+            {brandData?.brandEmail}
+          </span>
+          . Please include
+          <span className="how-apply-terms-link">
+            {jobData?.jobTitle}
+          </span>
+          in the subject line.
+        </>
+      )}
+    </div>
+  </div>
+)}
+
+              {/* {jobData?.howLikeToApply !== "easy-apply" && (
                 <div className="job-about-section">
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
@@ -1070,7 +1103,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                     in the subject line.
                   </div>
                 </div>
-              )}
+              )} */}
 
               {jobData?.type == "Draft" && (
                 <>

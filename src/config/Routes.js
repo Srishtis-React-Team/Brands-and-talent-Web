@@ -733,7 +733,7 @@ function Routing() {
             }
           />
           <Route
-            path="/become-affliate"
+            path="/become-affiliate"
             element={
               <Suspense fallback={<Spinner />}>
                 <BecomeAffliate />

@@ -523,10 +523,10 @@ const CreateJobs = () => {
 
   useEffect(() => {
     let initialHowToApply = [
-      `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
+      `<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
     ];
 
-    const whyWorkWithUsContent = initialHowToApply[0];
+      const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
     let whyWorkWithUsContentState;
     if (whyWorkWithUsContentBlocks) {
@@ -540,7 +540,50 @@ const CreateJobs = () => {
     );
     setEditorStateHowToApply(updatewhyWorkWithUs);
     setHowToApplyDescription(editJobData?.whyWorkWithUs);
-  }, [brandData, jobTitle]);
+  
+    // Check if applyDescription exists and is not empty
+    const applyDescriptionContent = Array.isArray(editJobData?.applyDescription) && editJobData.applyDescription.length > 0
+      ? editJobData.applyDescription.join(" ").trim()
+      : initialHowToApply[0];
+  
+    // Convert HTML content to Draft.js content block
+    const contentBlock = convertFromHTML(applyDescriptionContent);
+  
+    // Handle empty content block case
+    const contentState = ContentState.createFromBlockArray(
+      contentBlock.contentBlocks || [],
+      contentBlock.entityMap || {}
+    );
+  
+    const initialEditorState = EditorState.createWithContent(contentState);
+    setEditorStateApplyDescription(initialEditorState);
+    setApplyDescription([applyDescriptionContent]);
+  }, [brandData, jobTitle, editJobData]);
+  
+  
+  
+
+  // useEffect(() => {
+  //   let initialHowToApply = [
+  //     `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
+  //   ];
+
+  //   const whyWorkWithUsContent = initialHowToApply[0];
+  //   const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+  //   let whyWorkWithUsContentState;
+  //   if (whyWorkWithUsContentBlocks) {
+  //     whyWorkWithUsContentState = ContentState.createFromBlockArray(
+  //       whyWorkWithUsContentBlocks
+  //     );
+  //   }
+
+  //   const updatewhyWorkWithUs = EditorState.createWithContent(
+  //     whyWorkWithUsContentState
+  //   );
+  //   setEditorStateHowToApply(updatewhyWorkWithUs);
+  //   setHowToApplyDescription(editJobData?.whyWorkWithUs);
+   
+  // }, [brandData, jobTitle]);
 
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
@@ -566,6 +609,9 @@ const CreateJobs = () => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   const [editorStateJobDescription, setEditorStateJobDescription] = useState(
+    EditorState.createEmpty()
+  );
+  const [editorStateApplyDescription, setEditorStateApplyDescription] = useState(
     EditorState.createEmpty()
   );
   const [editorStateJobRequirements, setEditorStateJobRequirements] = useState(
@@ -649,6 +695,8 @@ const CreateJobs = () => {
   const [dobError, setDobError] = useState(false);
   const [category, setCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
+  const [applyDescription, setApplyDescription] = useState([]);
+  
 
   const handleApplyOption = (e) => {
     setSelectedApplyOption(e.target.value);
@@ -991,6 +1039,12 @@ const CreateJobs = () => {
     ]);
     setEditorStateJobDescription(editorState);
   };
+  const onEditorApplyDescription = (editorState) => {
+    setApplyDescription([
+      draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    ]);
+    setEditorStateApplyDescription(editorState);
+  };
   const onEditorRequirements = (editorState) => {
     setJobRequirements([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
@@ -1219,6 +1273,7 @@ const CreateJobs = () => {
         twitterMax: twitterMax,
         youTubeMin: youTubeMin,
         youTubeMax: youTubeMax,
+        applyDescription: applyDescription
       };
       if (editData?.type == "Draft") {
         await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
@@ -1381,6 +1436,7 @@ const CreateJobs = () => {
         twitterMax: twitterMax,
         youTubeMin: youTubeMin,
         youTubeMax: youTubeMax,
+        applyDescription: applyDescription
       };
 
       await ApiHelper.post(API.draftJob, formData)
@@ -1879,6 +1935,7 @@ const CreateJobs = () => {
       setState(editJobData.state);
       getStates(editJobData.country);
       setKidsCity(editJobData.city);
+      setApplyDescription(editJobData?.applyDescription)
       
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersList.find((option) => option?.label === gender);
@@ -1983,6 +2040,25 @@ const CreateJobs = () => {
       );
       setEditorStateJobDescription(updateJobDescription);
       setJobDescription(editJobData?.jobDescription);
+
+      //aadeddd
+
+      const applyDescriptionhtmlContent = editJobData?.applyDescription[0];
+      const applyDescriptionContentBlocks = convertFromHTML(
+        applyDescriptionhtmlContent
+      );
+      const applyDescriptionContentState = ContentState.createFromBlockArray(
+        applyDescriptionContentBlocks
+      );
+      const updateApplyDescription = EditorState.createWithContent(
+        applyDescriptionContentState
+      );
+      setEditorStateApplyDescription(updateApplyDescription);
+      setApplyDescription(editJobData?.applyDescription);
+
+  
+
+      //adeddd
       const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
       const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
       const whyWorkWithUsContentState = ContentState.createFromBlockArray(
@@ -2427,7 +2503,7 @@ const CreateJobs = () => {
                                   renderInput={(params) => (
                                     <TextField
                                       {...params}
-                                      label="Search input"
+                                      label="Search"
                                       InputProps={{
                                         ...params.InputProps,
                                         type: "search",
@@ -3893,65 +3969,56 @@ const CreateJobs = () => {
                     </div>
                   </div>
                   <div className="application-condition-wrapper">
-                    <div className="application-condition-radios">
-                      <input
-                        type="radio"
-                        id="how_apply"
-                        name="applyGroup"
-                        className="screening-checkbox profession-checkbox"
-                        value="how_to_apply"
-                        checked={selectedApplyOption == "how_to_apply"}
-                        onChange={handleApplyOption}
-                      />
-                      <label
-                        className="compensation-labels form-label"
-                        htmlFor="how_apply"
-                      >
-                        How to Apply
-                      </label>
-                    </div>
-                    <div className="easy-apply-description">
-                      {/* (If you would like to receive and manage
-                              applications outside this plaform, type the
-                              application instructions below) */}
-                      <Editor
-                        editorState={editorStateHowToApply}
-                        editorStyle={{ overflow: "hidden" }}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                        onEditorStateChange={onEditorHowToApply}
-                        toolbar={{
-                          options: [
-                            "inline",
-                            "blockType",
-                            "fontSize",
-                            "list",
-                            "textAlign",
-                            "history",
-                          ],
-                          inline: { inDropdown: true },
-                          list: { inDropdown: true },
-                          textAlign: {
-                            inDropdown: true,
-                            options: ["left", "center", "right", "justify"],
-                          }, // Ensure 'justify' is present
-                          link: { inDropdown: true },
-                          history: { inDropdown: true },
-                        }}
-                      />
-                    </div>
-                    {/* <div className="how-to-apply-steps">
-                              <div>
-                                1. To submit your application, kindly email your
-                                portfolio
-                              </div>
-                              <div>
-                                2. Applicants will be considered on a rolling
-                                basis.
-                              </div>
-                            </div> */}
-                  </div>
+      <div className="application-condition-radios">
+        <input
+          type="radio"
+          id="how_apply"
+          name="applyGroup"
+          className="screening-checkbox profession-checkbox"
+          value="how_to_apply"
+          checked={selectedApplyOption === "how_to_apply"}
+          onChange={handleApplyOption}
+        />
+        <label
+          className="compensation-labels form-label"
+          htmlFor="how_apply"
+        >
+          How to Apply
+        </label>
+      </div>
+
+      {selectedApplyOption === "how_to_apply" && (
+        <div className="rich-editor mb-4">
+          
+          <Editor
+            editorState={editorStateApplyDescription}
+            editorStyle={{ overflow: "hidden" }}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            onEditorStateChange={onEditorApplyDescription}
+            toolbar={{
+              options: [
+                "inline",
+                "blockType",
+                "fontSize",
+                "list",
+                "textAlign",
+                "history",
+              ],
+              inline: { inDropdown: true },
+              list: { inDropdown: true },
+              textAlign: {
+                inDropdown: true,
+                options: ["left", "center", "right", "justify"],
+              },
+              link: { inDropdown: true },
+              history: { inDropdown: true },
+            }}
+          />
+        </div>
+      )}
+    </div>
                 </div>
 
                 <div

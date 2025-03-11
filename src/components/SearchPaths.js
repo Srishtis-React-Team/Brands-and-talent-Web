@@ -57,7 +57,7 @@ const SearchPaths = () => {
     // { routes: "/favorite-talents", label: "Favorite Talents" },
 
     { routes: "/careers", label: "Careers" },
-    { routes: "/become-affliate", label: "Become Affiliate" },
+    { routes: "/become-affiliate", label: "Become Affiliate" },
     { routes: "/investors", label: "Investors" },
     { routes: "/feedback", label: "Feedback Reporting" },
     { routes: "/about-us", label: "About Us" }, // Common route for all users

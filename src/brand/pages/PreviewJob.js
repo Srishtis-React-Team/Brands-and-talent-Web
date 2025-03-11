@@ -124,6 +124,13 @@ const PreviewJob = ({ data, onButtonClick }) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
+  const convertLinks = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return String(text).replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+  };
+  
+  
+
   const isValidURL = (string) => {
     try {
       new URL(string);
@@ -821,7 +828,35 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </>
               )}
 
-              {jobData?.howLikeToApply !== "easy-apply" && (
+
+{jobData?.howLikeToApply !== "easy-apply" && (
+  <div className="job-about-section">
+    <div className="job-feature-title">How to Apply</div>
+    <div className="job-about-values">
+      {jobData?.applyDescription ? (
+        <div
+          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription) }}
+          className="apply-description"
+        />
+      ) : (
+        <>
+          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+          <span className="how-apply-terms-link">
+            {brandData?.brandEmail}
+          </span>
+          . Please include
+          <span className="how-apply-terms-link">
+            {jobData?.jobTitle}
+          </span>
+          in the subject line.
+        </>
+      )}
+    </div>
+  </div>
+)}
+
+
+              {/* {jobData?.howLikeToApply !== "easy-apply" && (
                 <div className="job-about-section">
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
@@ -837,7 +872,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     in the subject line.
                   </div>
                 </div>
-              )}
+              )} */}
 
               {/* <div className="job-feature-title">Work Samples</div>
 
