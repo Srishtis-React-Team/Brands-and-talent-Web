@@ -199,7 +199,7 @@ const BrandHome = () => {
                 <div
                   className="view-all-text"
                   onClick={() => {
-                    navigate("/find-talents");
+                    navigate("/find-talent");
                   }}
                 >
                   View All

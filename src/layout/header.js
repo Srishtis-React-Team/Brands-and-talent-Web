@@ -234,7 +234,7 @@ const Header = ({ onData }) => {
         //     navigate("/pricing");
         //   }, 3000);
         // }else{
-        navigate("/find-talents");
+        navigate("/find-talent");
         // }
       }
       // else if (
@@ -507,7 +507,7 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/find-talents") {
+    } else if (route === "/find-talent") {
       if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
@@ -681,9 +681,9 @@ const Header = ({ onData }) => {
       handleClose();
       navigate("/careers");
     }
-    if (route == "/become-affiliate") {
+    if (route == "/become-an-affiliate") {
       handleClose();
-      navigate("/become-affiliate");
+      navigate("/become-an-affiliate");
     }
     if (route == "/investors") {
       handleClose();
@@ -836,7 +836,7 @@ const Header = ({ onData }) => {
           {currentUser_type == "brand" && (
             <>
               <div className="navTxt">
-                <NavLink to="/find-talents">Invite To Apply</NavLink>
+                <NavLink to="/find-talent">Invite To Apply</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/list-jobs">My Jobs</NavLink>
