@@ -1447,7 +1447,7 @@ const CreateJobs = () => {
             } else if (type == "post") {
               setIsLoading(false);
             }
-            setMessage("Job Created Successfully!");
+            setMessage("Kindly review the job!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -2503,7 +2503,7 @@ const CreateJobs = () => {
                                   renderInput={(params) => (
                                     <TextField
                                       {...params}
-                                      label="Search"
+                                      label="Search or add input"
                                       InputProps={{
                                         ...params.InputProps,
                                         type: "search",
@@ -4139,7 +4139,7 @@ const CreateJobs = () => {
                       }}
                       className="createjob-btn"
                     >
-                      {isDraftLoading ? "Loading..." : "Preview & Save Draft"}
+                      {isDraftLoading ? "Loading..." : "Save Draft"}
                     </div>
                   )}
 

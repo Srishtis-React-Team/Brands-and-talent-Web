@@ -53,7 +53,7 @@ const SearchPaths = () => {
     // { routes: "/brand-signup", label: "Brand Signup" },
     { routes: "/contact-us", label: "Contact Us" },
 
-    { routes: "/find-talents", label: "Find Talents" },
+    { routes: "/find-talent", label: "Find Talents" },
     // { routes: "/favorite-talents", label: "Favorite Talents" },
 
     { routes: "/careers", label: "Careers" },

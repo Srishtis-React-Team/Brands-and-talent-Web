@@ -124,10 +124,20 @@ const PreviewJob = ({ data, onButtonClick }) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
+  // const convertLinks = (text) => {
+  //   const urlRegex = /(https?:\/\/[^\s]+)/g;
+  //   return String(text).replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+  // };
   const convertLinks = (text) => {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return String(text).replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+    if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
+    const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
+    return text.replace(urlRegex, (url) => {
+      // Remove any trailing encoded tags or HTML tags
+      const cleanUrl = url.replace(/(%3C\/p%3E|<\/p>)$/g, "");
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+    });
   };
+  
   
   
 
@@ -835,7 +845,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
     <div className="job-about-values">
       {jobData?.applyDescription ? (
         <div
-          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription) }}
+          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
           className="apply-description"
         />
       ) : (

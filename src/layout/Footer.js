@@ -372,7 +372,7 @@ const Footer = (props) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/become-affiliate" onClick={handleClick}>
+                  <Link to="/become-an-affiliate" onClick={handleClick}>
                     Become an Affiliate
                   </Link>
                 </li>
