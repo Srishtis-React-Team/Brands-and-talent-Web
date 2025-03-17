@@ -53,11 +53,11 @@ const SearchPaths = () => {
     // { routes: "/brand-signup", label: "Brand Signup" },
     { routes: "/contact-us", label: "Contact Us" },
 
-    { routes: "/find-talents", label: "Find Talents" },
+    { routes: "/find-talent", label: "Find Talents" },
     // { routes: "/favorite-talents", label: "Favorite Talents" },
 
     { routes: "/careers", label: "Careers" },
-    { routes: "/become-affliate", label: "Become Affiliate" },
+    { routes: "/become-affiliate", label: "Become Affiliate" },
     { routes: "/investors", label: "Investors" },
     { routes: "/feedback", label: "Feedback Reporting" },
     { routes: "/about-us", label: "About Us" }, // Common route for all users

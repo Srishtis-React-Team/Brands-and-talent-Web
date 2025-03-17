@@ -158,7 +158,7 @@ const SearchHeaderComponent = ({ onData }) => {
         //   }, 3000);
         // }
         //  else {
-        navigate("/find-talents");
+        navigate("/find-talent");
         // }
         navigate("/find-talent");
       } else if (currentUser_type === "talent" && currentUserId) {
@@ -390,7 +390,7 @@ const SearchHeaderComponent = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/find-talents") {
+    } else if (route === "/find-talent") {
       if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
@@ -556,9 +556,9 @@ const SearchHeaderComponent = ({ onData }) => {
       handleClose();
       navigate("/careers");
     }
-    if (route == "/become-affliate") {
+    if (route == "/become-an-affiliate") {
       handleClose();
-      navigate("/become-affliate");
+      navigate("/become-an-affiliate");
     }
     if (route == "/investors") {
       handleClose();

@@ -573,7 +573,7 @@ function Routing() {
             }
           />
           <Route
-            path="/find-talents"
+            path="/find-talent"
             element={
               <Suspense fallback={<Spinner />}>
                 <BrandTalents />
@@ -733,7 +733,7 @@ function Routing() {
             }
           />
           <Route
-            path="/become-affliate"
+            path="/become-an-affiliate"
             element={
               <Suspense fallback={<Spinner />}>
                 <BecomeAffliate />
@@ -765,7 +765,7 @@ function Routing() {
             }
           />
           <Route
-            path="/jobs/view/:jobId"
+            path="/jobs/view/:jobTitle/:jobId"
             element={
               <Suspense fallback={<Spinner />}>
                 <JobRedirect />

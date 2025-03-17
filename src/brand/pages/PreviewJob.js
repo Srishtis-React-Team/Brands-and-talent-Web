@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
+
 const PreviewJob = ({ data, onButtonClick }) => {
   const location = useLocation();
   const { jobId } = location.state || {};
@@ -19,6 +20,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const [jobData, setJobData] = useState("");
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
+
+
+
 
   const getJobsByID = async () => {
     const formData = {
@@ -63,6 +67,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
       getBrand();
     }
   }, [brandId]);
+
+ 
+
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -116,6 +123,20 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const viewUpdateFile = (item) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
+
+ 
+  const convertLinks = (text) => {
+    if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
+    const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
+    return text.replace(urlRegex, (url) => {
+      // Remove any trailing encoded tags or HTML tags
+      const cleanUrl = url.replace(/(%3C\/p%3E|<\/p>)$/g, "");
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+    });
+  };
+  
+  
+  
 
   const isValidURL = (string) => {
     try {
@@ -202,33 +223,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   }
                 )}
               </div>
-
-              {/* <div className="company-location">
-                <span>Payment :&nbsp; </span>
-                <span>
-                  {jobData?.paymentType?.label === "range" && (
-                    <>
-                      <span className="job-pay">
-                        {jobData?.paymentType?.minPay}&nbsp;
-                        {jobData?.jobCurrency}
-                      </span>
-                      <span className="job-to-pay">to</span>
-                      <span className="job-pay">
-                        {jobData?.paymentType?.maxPay}&nbsp;
-                        {jobData?.jobCurrency}
-                      </span>
-                    </>
-                  )}
-                  {jobData?.paymentType?.label === "fixed" && (
-                    <>
-                      <span className="job-pay">
-                        {jobData?.paymentType?.amount}
-                        {jobData?.jobCurrency}
-                      </span>
-                    </>
-                  )}
-                </span>
-              </div> */}
 
               <div className="company-location">
                 <span className="font-600">Job Type :&nbsp; </span>
@@ -337,22 +331,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   ))}
               </div>
 
-              {/* <div className="company-location">
-                <span>Application Type :&nbsp; </span>
-                <span>
-                  <span className="">
-                    {jobData?.howLikeToApply
-                      ? jobData.howLikeToApply
-                          .split("-")
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          )
-                          .join(" ")
-                      : ""}
-                  </span>
-                </span>
-              </div> */}
+             
 
               <div className="job-features-benefits pb-0">
                 <div className="row">
@@ -382,46 +361,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           </li>
                         )}
 
-                        {/* {jobData?.benefits && jobData.benefits.length > 0 && (
-                          <>
-                            <li className="job-features-li">
-                              <span className="job-feature-heading">
-                                Benefits :
-                              </span>
-                            <span className="job-feature-values">
-                                {jobData?.benefits &&
-                                  jobData.benefits
-                                    .map((benefits, index) =>
-                                      index === jobData.benefits.length - 1
-                                        ? benefits
-                                        : benefits + ", "
-                                    )
-                                    .join("")}
-                              </span>
-                            </li>
-                          </>
-                        )} */}
-
-                        {/* {jobData?.skills && jobData?.skills.length > 0 && (
-                              <>
-                                <li className="job-features-li">
-                                  <span className="job-feature-heading">
-                                    Skills :
-                                  </span>
-
-                                  <span className="job-feature-values">
-                                    {jobData?.skills &&
-                                      jobData.skills
-                                        .map((skill, index) =>
-                                          index === jobData.skills.length - 1
-                                            ? skill
-                                            : skill + ", "
-                                        )
-                                        .join("")}
-                                  </span>
-                                </li>
-                              </>
-                            )} */}
+                     
 
                         {jobData?.skills && jobData.skills.length > 0 ? (
                           <li className="job-features-li">
@@ -473,17 +413,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           </li>
                         )}
 
-                        {/* {jobData?.gender && (
-                          <li className="job-features-li">
-                            <span className="job-feature-heading">
-                              Gender :
-                            </span>
-
-                            <span className="job-feature-values">
-                              {jobData?.gender && jobData.gender.join(", ")}
-                            </span>
-                          </li>
-                        )} */}
+                       
 
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (
@@ -524,24 +454,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                             </span>
                           </li>
                         )}
-                        {/*   {jobData?.nationality && (
-                          <li className="job-features-li">
-                            <span className="job-feature-heading">
-                              Nationality :
-                            </span>
-
-                            <span className="job-feature-values">
-                              {jobData?.nationality &&
-                                jobData.nationality
-                                  .map((nationality, index) =>
-                                    index === jobData.nationality.length - 1
-                                      ? nationality
-                                      : nationality + ", "
-                                  )
-                                  .join("")}
-                            </span>
-                          </li>
-                        )} */}
+                   
                         {jobData?.ethnicity && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -627,19 +540,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="job-benefits col-md-6">
-                    <div className="job-feature-title">Benefits</div>
-                    <div className="job-benefits-points">
-                      <ul>
-                        {jobData?.benefits &&
-                          jobData.benefits.map((benefit, index) => (
-                            <li className="job-benefits-values" key={index}>
-                              <span>{benefit}</span>
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </div> */}
+                 
                 </div>
               </div>
               <div className="job-questions-section">
@@ -683,23 +584,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </div>
               )}
 
-              {/* {jobData?.jobDescription &&
-                jobData?.jobDescription.length > 0 && (
-                  <>
-                    <div className="job-about-section">
-                      <div className="job-feature-title">Job Description</div>
-                      <div className="job-about-values">
-                        {jobData?.jobDescription &&
-                          jobData?.jobDescription?.map((htmlContent, index) => (
-                            <div
-                              key={index}
-                              dangerouslySetInnerHTML={{ __html: htmlContent }}
-                            />
-                          ))}
-                      </div>
-                    </div>
-                  </>
-                )} */}
+              
 
               {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
                 <>
@@ -814,47 +699,35 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </>
               )}
 
-              {jobData?.howLikeToApply !== "easy-apply" && (
-                <div className="job-about-section">
-                  <div className="job-feature-title">How to Apply</div>
-                  <div className="job-about-values">
-                    Interested candidates should submit their resume and a link
-                    that contains portfolio from Brands & Talent website to
-                    <span className="how-apply-terms-link">
-                      {brandData?.brandEmail}
-                    </span>
-                    Please include
-                    <span className="how-apply-terms-link">
-                      {jobData?.jobTitle}
-                    </span>
-                    in the subject line.
-                  </div>
-                </div>
-              )}
 
-              {/* <div className="job-feature-title">Work Samples</div>
+{jobData?.howLikeToApply !== "easy-apply" && (
+  <div className="job-about-section">
+    <div className="job-feature-title">How to Apply</div>
+    <div className="job-about-values">
+      {jobData?.applyDescription ? (
+        <div
+          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+          className="apply-description"
+        />
+      ) : (
+        <>
+          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+          <span className="how-apply-terms-link">
+            {brandData?.brandEmail}
+          </span>
+          . Please include
+          <span className="how-apply-terms-link">
+            {jobData?.jobTitle}
+          </span>
+          in the subject line.
+        </>
+      )}
+    </div>
+  </div>
+)}
 
-              <div className="cvlist-wrapper">
-                {jobData?.workSamples?.length > 0 &&
-                  jobData?.workSamples.map((file) => {
-                    return (
-                      <>
-                        <>
-                          <div className="cv-card" key={file.title}>
-                            <i className="fa-solid fa-file"></i>
-                            <div className="fileName">{file.title}</div>
-                            <button
-                              className="view-cv"
-                              onClick={() => viewFile(file)}
-                            >
-                              View
-                            </button>
-                          </div>
-                        </>
-                      </>
-                    );
-                  })}
-              </div> */}
+
+     
 
               {jobData?.type == "Draft" && (
                 <>

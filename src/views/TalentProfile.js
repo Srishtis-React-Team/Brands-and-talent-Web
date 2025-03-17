@@ -84,6 +84,7 @@ const TalentProfile = () => {
   const location = useLocation();
   const [talentName, setTalentName] = useState("");
   const [urlTalentData, setUrlTalentData] = useState("");
+  const [playingUrl, setPlayingUrl] = useState(null);
   useEffect(() => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
@@ -369,20 +370,15 @@ const TalentProfile = () => {
 
   const handleOpenModal = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage(
-        "The user is ineligible to receive an invitation for the job opening."
-      );
-      inviteTalentNotification();
+      setMessage("The user is ineligible to receive an invitation for the job opening.");
       setOpenPopUp(true);
-      setTimeout(function () {
+      setTimeout(() => {
         setOpenPopUp(false);
-        // navigate(`/pricing`);
       }, 2000);
     } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to pro plan to use this feature");
-      inviteTalentNotification();
+      setMessage("Please upgrade to Pro plan to use this feature");
       setOpenPopUp(true);
-      setTimeout(function () {
+      setTimeout(() => {
         setOpenPopUp(false);
         navigate(`/pricing`);
       }, 2000);
@@ -390,19 +386,54 @@ const TalentProfile = () => {
       if (currentUserType == "talent") {
         setMessage("Please log in as a Brand/Client and post a job first");
         setOpenPopUp(true);
-        setTimeout(function () {
+        setTimeout(() => {
           setOpenPopUp(false);
           navigate("/login");
         }, 3000);
       } else if (currentUserType == "brand") {
+        inviteTalentNotification(); // ✅ Call only when eligible
         setShowModal(true);
       }
     }
-    // window.open(
-    //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-    //   "_blank"
-    // );
   };
+  
+
+  // const handleOpenModal = () => {
+  //   if (currentUserType == "brand" && talentData?.planName === "Basic") {
+  //     setMessage(
+  //       "The user is ineligible to receive an invitation for the job opening."
+  //     );
+  //     inviteTalentNotification();
+  //     setOpenPopUp(true);
+  //     setTimeout(function () {
+  //       setOpenPopUp(false);
+  //       // navigate(`/pricing`);
+  //     }, 2000);
+  //   } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
+  //     setMessage("Please upgrade to pro plan to use this feature");
+  //     inviteTalentNotification();
+  //     setOpenPopUp(true);
+  //     setTimeout(function () {
+  //       setOpenPopUp(false);
+  //       navigate(`/pricing`);
+  //     }, 2000);
+  //   } else {
+  //     if (currentUserType == "talent") {
+  //       setMessage("Please log in as a Brand/Client and post a job first");
+  //       setOpenPopUp(true);
+  //       setTimeout(function () {
+  //         setOpenPopUp(false);
+  //         navigate("/login");
+  //       }, 3000);
+  //     } else if (currentUserType == "brand") {
+  //       setShowModal(true);
+  //     }
+  //   }
+  //   // window.open(
+  //   //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+  //   //   "_blank"
+  //   // );
+  // };
 
   const inviteTalentNotification = async () => {
     const formData = {
@@ -751,6 +782,8 @@ const TalentProfile = () => {
     //   }
     // }
   };
+
+ 
 
   return (
     <>
@@ -1845,7 +1878,41 @@ const TalentProfile = () => {
                                   )}
                                 </div>
                               </div>
-                              <p>Audios</p>
+                              {/* <p className="fw-bold">Audios</p>
+
+<div className="service-list-main w-100">
+  <div className="cvAdjust padSpace w-100">
+    {audiosList?.length > 0 ? (
+      <div className="cvlist-wrapper row">
+        {audiosList.map((url, index) => (
+          <div className="col-md-4 padSpace" key={index}>
+            <div className="cv-card p-3">
+              <div className="d-flex align-items-center mb-2">
+                <i className="fa-solid fa-file text-primary me-2"></i>
+                <div className="fileName audio-url-style text-truncate w-75">
+                  {url.split("/").pop()}
+                </div>
+              </div>
+
+              <audio controls className="w-100">
+                <source src={url} type="audio/mp3" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="msgs">Audios are not added</div>
+    )}
+
+    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+      <div className="msgs">Audios will be visible only after admin approval</div>
+    )}
+  </div>
+</div> */}
+
+                              {/* <p>Audios</p>
 
                               <div className="service-list-main w-100">
                                 <div className="cvAdjust padSpace w-100">
@@ -1902,7 +1969,120 @@ const TalentProfile = () => {
                                     </>
                                   )}
                                 </div>
-                              </div>
+                              </div> */}
+
+{/* <p>Audios</p>
+
+<div className="service-list-main w-100">
+  <div className="cvAdjust padSpace w-100">
+    {audiosList && (
+      <div className="cvlist-wrapper row">
+        {audiosList.map((url, index) => {
+          const isMp3 = url.endsWith(".mp3");
+          return (
+            <div className="col-md-4 padSpace" key={index}>
+              <div className="cv-card">
+                <div className="d-flex align-items-center">
+                  <i className="fa-solid fa-file"></i>
+                  <div className="fileName audio-url-style">{url}</div>
+                </div>
+                {isMp3 ? (
+                  <audio controls className="w-100">
+                    <source src={url} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                ) : (
+                  <button className="view-cv" onClick={() => window.open(url)}>
+                    Open
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+      <div className="msgs">Audios will be visible only after admin approval</div>
+    )}
+
+    {audiosList?.length === 0 && (
+      <div className="msgs">Audios are not added</div>
+    )}
+  </div>
+</div>
+
+ */}
+ <p>Audios</p>
+
+<div className="service-list-main w-100">
+<div className="row">
+  {/* <div className="cvAdjust padSpace w-100"> */}
+    {audiosList && (
+      <div>
+       {/* <div className="cvlist-wrapper row"> */}
+        {audiosList.map((url) => {
+          const isMp3 = url.endsWith(".mp3");
+          const fileName = url.split("/").pop(); // Extracts the file name from URL
+          return (
+            // <div className="col-md-4 padSpace" key={index}>
+              <div className="cv-card"key={url}>
+                <div className="d-flex align-items-center">
+                  <i className="fa-solid fa-file"></i>
+                  <div className="fileName audio-url-style">{fileName}</div>
+                </div>
+             {isMp3 ? (
+                    <>
+                      <button
+                        className="view-cv"
+                        onClick={() =>
+                          setPlayingUrl(playingUrl === url ? null : url)
+                        }
+                      >
+                        {playingUrl === url ? "Pause" : "Play"}
+                      </button>
+
+                      {playingUrl === url && (
+                        <audio
+                          controls
+                          autoPlay
+                          className="w-100"
+                          onEnded={() => setPlayingUrl(null)}
+                        >
+                          <source src={url} type="audio/mpeg" />
+                          Your browser does not support the audio tag.
+                        </audio>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      className="view-cv"
+                      onClick={() => window.open(url, "_blank")}
+                    >
+                      Play
+                      {/* <i className="fa-solid fa-external-link"></i> */}
+                    </button>
+                )}
+              </div>
+            // </div>
+          );
+        })}
+      </div>
+    )}
+
+    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+      <div className="msgs">Audios will be visible only after admin approval</div>
+    )}
+
+    {audiosList?.length === 0 && (
+      <div className="msgs">Audios are not added</div>
+    )}
+  </div>
+</div>
+
+
+
 
                               {talentData &&
                                 talentData?.services?.length > 0 && (
@@ -2173,8 +2353,41 @@ const TalentProfile = () => {
                               </div>
                             </>
                           )}
+                         {/* {videos && (
+  <>
+    <p className="fw-bold">Audios</p>
+    <div className="service-list-main w-100">
+      <div className="row">
+        {audiosList?.length > 0 ? (
+          audiosList.map((url, index) => (
+            <div className="cv-card p-3" key={index}>
+              <div className="d-flex align-items-center mb-2">
+                <i className="fa-solid fa-file text-primary me-2"></i>
+                <div className="fileName audio-url-style text-truncate w-75">
+                  {url.split("/").pop()}
+                </div>
+              </div>
 
-                          {videos && (
+              <audio controls className="w-100">
+                <source src={url} type="audio/mp3" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          ))
+        ) : (
+          <div className="msgs">Audios are not added</div>
+        )}
+
+        {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+          <div className="msgs">Audios will be visible only after admin approval</div>
+        )}
+      </div>
+    </div>
+  </>
+)}  */}
+
+
+                         {/* {videos && (
                             <>
                               <p>Audios</p>
                               <div className="service-list-main w-100">
@@ -2195,15 +2408,16 @@ const TalentProfile = () => {
                                                     {url}
                                                   </div>
                                                 </div>
-                                                <button
+                                               <button
                                                   className="view-cv"
                                                   onClick={() =>
                                                     window.open(url)
                                                   }
                                                 >
                                                   Play
-                                                </button>
-                                              </div>
+                                                  
+                                                </button> 
+                                                </div>
                                             </>
                                           </>
                                         );
@@ -2231,7 +2445,69 @@ const TalentProfile = () => {
                                 </div>
                               </div>
                             </>
-                          )}
+                          )}   */}
+
+{videos && (
+  <>
+    <p>Audios</p>
+    <div className="service-list-main w-100">
+      <div className="row">
+        {audiosList && (
+          <div>
+            {audiosList.map((url) => {
+              const isMp3 = url.toLowerCase().endsWith(".mp3");
+              const fileName = url.split("/").pop(); // Extracts the file name from URL
+
+              return (
+                <div className="cv-card" key={url}>
+                  <div className="d-flex align-items-center">
+                    <i className="fa-solid fa-file"></i>
+                    <div className="fileName audio-url-style">{fileName}</div>
+                  </div>
+
+                  {isMp3 ? (
+                    <>
+                      <button
+                        className="view-cv"
+                        onClick={() =>
+                          setPlayingUrl(playingUrl === url ? null : url)
+                        }
+                      >
+                        {playingUrl === url ? "Pause" : "Play"}
+                      </button>
+
+                      {playingUrl === url && (
+                        <audio
+                          controls
+                          autoPlay
+                          className="w-100"
+                          onEnded={() => setPlayingUrl(null)}
+                        >
+                          <source src={url} type="audio/mpeg" />
+                          Your browser does not support the audio tag.
+                        </audio>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      className="view-cv"
+                      onClick={() => window.open(url, "_blank")}
+                    >
+                      Play
+                      {/* <i className="fa-solid fa-external-link"></i> */}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  </>
+)}
+
+
 
                           {services && (
                             <>
