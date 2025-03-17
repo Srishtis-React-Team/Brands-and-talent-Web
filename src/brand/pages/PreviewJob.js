@@ -125,17 +125,34 @@ const PreviewJob = ({ data, onButtonClick }) => {
   };
 
  
+ 
+  // const convertLinks = (text) => {
+  //   if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
+  //   const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
+  //   return text.replace(urlRegex, (url) => {
+  //     // Remove any trailing encoded tags or HTML tags
+  //     const cleanUrl = url.replace(/(%3C\/p%3E|<\/p>)$/g, "");
+  //     return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+  //   });
+  // };
   const convertLinks = (text) => {
     if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
-    const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
+
+    // Improved regex to match URLs without capturing unwanted tags or attributes
+    const urlRegex = /(https?:\/\/[^\s<>"']+)/g;
+
+    // Check if the text already contains an anchor tag
+    if (text.includes("<a ")) {
+      return text; // Return as is if it's already an anchor link
+    }
+
     return text.replace(urlRegex, (url) => {
-      // Remove any trailing encoded tags or HTML tags
-      const cleanUrl = url.replace(/(%3C\/p%3E|<\/p>)$/g, "");
-      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+      // Clean up the URL by removing any trailing tags or unwanted characters
+      const cleanUrl = url.replace(/["'>]$/g, "").trim();
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="apply-Description">${cleanUrl}</a>`;
     });
   };
-  
-  
+
   
 
   const isValidURL = (string) => {
