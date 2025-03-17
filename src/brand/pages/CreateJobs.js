@@ -10,7 +10,6 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 import { convertToRaw, ContentState, convertFromHTML } from "draft-js";
 import Select from "react-select";
 import Axios from "axios";
@@ -1759,20 +1758,20 @@ const CreateJobs = () => {
   // };
   const handleDateChange = (date) => {
     if (!date) return;
-  
+
     setDeadlineError(false);
-  
+
     // Get local date without timezone shift
     const localDate = new Date(date);
     localDate.setHours(0, 0, 0, 0); // Set time to midnight
-  
+
     // Convert to ISO format without shifting time
     const formattedDate = new Date(
       localDate.getTime() - localDate.getTimezoneOffset() * 60000
     ).toISOString();
-  
+
     setLastdateApply(formattedDate); // Store this in DB
-  
+
     // Also update DOB and Age
     setDob(formattedDate);
     let today = new Date();
@@ -1780,8 +1779,6 @@ const CreateJobs = () => {
     setAge(String(ageInYears));
     setDobError(false);
   };
-  
-
 
   useEffect(() => {}, [lastdateApply]);
   useEffect(() => {}, [category]);
@@ -2344,6 +2341,7 @@ const CreateJobs = () => {
                               "list",
                               "textAlign",
                               "history",
+                              "link",
                             ],
                             inline: { inDropdown: true },
                             list: { inDropdown: true },
@@ -2459,9 +2457,12 @@ const CreateJobs = () => {
                         <label className="form-label additional-requirements-title">
                           Additional Requirement (optional)
                           <br />
-
-                          <span className="note" style={{ fontSize: '0.875rem', color: '#6c757d' }}>
-                            Note: Target the exact talent/creators you need by adding these additional requirements below.
+                          <span
+                            className="note"
+                            style={{ fontSize: "0.875rem", color: "#6c757d" }}
+                          >
+                            Note: Target the exact talent/creators you need by
+                            adding these additional requirements below.
                           </span>
                         </label>
                       </div>
@@ -3796,6 +3797,7 @@ const CreateJobs = () => {
                         "list",
                         "textAlign",
                         "history",
+                        "link",
                       ],
                       inline: { inDropdown: true },
                       list: { inDropdown: true },
@@ -3827,6 +3829,7 @@ const CreateJobs = () => {
                         "list",
                         "textAlign",
                         "history",
+                        "link",
                       ],
                       inline: { inDropdown: true },
                       list: { inDropdown: true },
@@ -3910,6 +3913,7 @@ const CreateJobs = () => {
                             "list",
                             "textAlign",
                             "history",
+                            "link",
                           ],
                           inline: { inDropdown: true },
                           list: { inDropdown: true },
