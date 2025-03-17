@@ -231,10 +231,7 @@ useEffect(() => {
   if (showPopup) {
     setTimeout(() => setShowPopup(false), 4000); // Auto-close after 4 seconds
   }
-  // const convertLinks = (text) => {
-  //   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  //   return String(text).replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
-  // };
+ 
   const convertLinks = (text) => {
     if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
     const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
@@ -319,47 +316,7 @@ useEffect(() => {
     </div>
   </div>
 )}
-                                        {/* {showPopup && (
-                                          <div className="popup-overlay">
-                                            <div className="popup-content">
-                                              <span className="close-button" onClick={() => setShowPopup(false)}>✖</span>
-                                              <p>Kindly follow the application instructions</p>
-                                            </div>
-                                          </div>
-                                        )} */}
-
-
-
-                                        {/* {showPopup && (
-                                          <div className="popup-overlay">
-                                            <div className="popup-content">
-
-                                              <p>Kindly follow the application instructions</p>
-                                             
-                                            </div>
-                                          </div>
-                                        )} */}
-
-                      {/* {(jobData?.howLikeToApply === "easy-apply" ||
-                        jobData?.isApplied == "Applied") && (
-                          <div className="easy-apply-section">
-                            <div
-                              className={
-                                jobData?.isApplied === "Apply Now" ||
-                                  !jobData?.isApplied
-                                  ? "apply-now-btn"
-                                  : "apply-now-btn applied-btn"
-                              }
-                              onClick={() => {
-                                applyjobs(jobData);
-                              }}
-                            >
-                              <i className="bi bi-briefcase-fill"></i>
-
-                              <div>Quick Apply</div>
-                            </div>
-                          </div>
-                        )} */}
+                                     
                             </div>
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">
@@ -981,24 +938,6 @@ useEffect(() => {
 
 
 
-                      {/* {jobData?.howLikeToApply !== "easy-apply" && (
-                        <div className="job-about-section">
-                          <div className="job-feature-title">How to Apply</div>
-                          <div className="job-about-values">
-                            Interested candidates should submit their resume and
-                            a link that contains portfolio from Brands & Talent
-                            website to
-                            <span className="how-apply-terms-link">
-                              {brandData?.brandEmail}
-                            </span>
-                            Please include
-                            <span className="how-apply-terms-link">
-                              {jobData?.jobTitle}
-                            </span>
-                            in the subject line.
-                          </div>
-                        </div>
-                      )} */}
                     </div>
                   </div>
                 </div>
