@@ -2295,6 +2295,34 @@ ul.MuiMenu-list li {
   background: #081b3787;
   z-index: 99999999 !important;
 }
+.view-gig-btn, .apply-now-btn.applied-btn {
+  min-width: 115px !important;
+  font-size: 12px !important;
+  padding: 5px 10px !important;
+  margin-right: 0px !important;
+}
+.recent-set-three {
+gap: 6px;
+}
+.col-md-8.col-lg-6.scrolscrolPrevOut .recent-set-three.col-lg-5.col-md-12,
+ .col-md-8.col-lg-6.scrolscrolPrevOut .mb-2.col-lg-7.col-md-12.logoSpc {
+  width: 100% !important;
+}
+.border-curve {
+  border-radius: 30px;
+  height: 320px;
+  object-fit: cover;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
 
 /* 9-1-25 css end*/
 
@@ -2424,6 +2452,20 @@ ul.MuiMenu-list li {
 }
 
 @media (max-width: 767px) {
+  .invalid-fields {
+    width: 100% !important;
+    line-height: 17px;
+    font-size: 12px;
+}
+  .view-gig-btn, .apply-now-btn.applied-btn {
+    min-width: 85px !important;
+}
+.userBox .campaigns-content-wrapper .recent-set-three {
+  justify-content: flex-start !important;
+}
+li.job-features-li {
+  width: 100% !important;
+}
   /* 9-1-25 css start  */
   .css-89200c-MuiFormControl-root-MuiTextField-root svg {
     height: 1em;
@@ -2577,6 +2619,9 @@ ul.MuiMenu-list li {
   .nav.menu-items ul.dropdown-menu.show {
     position: relative !important;
   }
+  .border-curve {
+    margin-bottom: 20px;
+}
 }
 @media (max-width: 580px) {
   .section-description {
@@ -4418,6 +4463,16 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
   .brand-headings-wrapper.mobilevw .sample-profile {
     width: 100% !important;
   }
+
+
+
+
+
+
+
+
+
+
 
   @media (max-width: 768px) {
     .base-Popup-root {

@@ -563,10 +563,14 @@ const TalentDashBoard = () => {
     navigate("/contact-support");
   };
 
-  const shareJob = async (jobId) => {
+  const shareJob = async (item) => {
     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-    const jobUrl = `${window.location.origin}/jobs/view/${jobId}`;
+    //const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+    const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+
+
 
     try {
       await navigator.clipboard.writeText(jobUrl);
@@ -580,6 +584,7 @@ const TalentDashBoard = () => {
       console.error("Failed to copy:", err);
     }
   };
+  console.log("roilokipoffa-9412@yopmail.com",filterState)
 
   return (
     <>
@@ -994,20 +999,29 @@ const TalentDashBoard = () => {
                                           }}
                                         >
                                           <i className="bi bi-eye-fill"></i>
-                                          <div>View Job</div>
+                                          <div>View</div>
                                         </div>
 
-                                        <div
-                                          className="view-gig-btn"
-                                          onClick={() => {
-                                            shareJob(item?.jobId);
-                                          }}
-                                        >
-                                          <i class="bi bi-copy"></i>
-                                          <div>Copy Job url </div>
-                                        </div>
+                                         {(item?.howLikeToApply === "easy-apply" || item?.howLikeToApply === "how_to_apply" || item?.isApplied === "Applied") && (
+                                            <div
+                                              className={item?.isApplied === "Apply Now" ? "apply-now-btn" : "apply-now-btn applied-btn"}
+                                              onClick={() => applyjobs(item)}
+                                            >
+                                              {item?.isApplied === "Applied" ? (
+                                                <>
+                                                  <i className="bi bi-check-circle-fill"></i>
+                                                  <div>Applied</div>
+                                                </>
+                                              ) : (
+                                                <>
+                                                  <i className="bi bi-briefcase-fill"></i>
+                                                  <div>{item?.howLikeToApply === "easy-apply" ? "Quick Apply" : "Apply"}</div>
+                                                </>
+                                              )}
+                                            </div>
+                                          )}
 
-                                        {(item?.howLikeToApply ===
+                                        {/* {(item?.howLikeToApply ===
                                           "easy-apply" ||
                                           item?.isApplied == "Applied") && (
                                           <>
@@ -1034,13 +1048,28 @@ const TalentDashBoard = () => {
                                               )}
                                               {item?.isApplied ===
                                                 "Apply Now" && (
-                                                <div>Apply Now</div>
+                                                <div>Quick Apply</div>
                                               )}
                                               {item?.isApplied ===
                                                 "Applied" && <div>Applied</div>}
                                             </div>
                                           </>
-                                        )}
+                                        )} */}
+
+                                        
+                                        
+
+                                        <div
+                                          className="view-gig-btn"
+                                          onClick={() => {
+                                            shareJob(item);
+                                          }}
+                                        >
+                                          <i class="bi bi-copy"></i>
+                                          <div>Share</div>
+                                        </div>
+
+                                        
                                       </div>
                                     </div>
 
@@ -1286,14 +1315,31 @@ const TalentDashBoard = () => {
                     </div>
 
                     <div className="modal-footer">
-                      <button
+                    <button
+                    onClick={() => {
+                      if (modalData?.howLikeToApply === "how_to_apply") {
+                        setMessage("Kindly follow the application instructions.");
+                        setOpenPopUp(true);
+                        setTimeout(() => setOpenPopUp(false), 4000);
+                      } else {
+                        handleCloseModal();
+                      }
+                    }}
+                    type="button"
+                    className="btn btn-success"
+                    data-bs-dismiss={modalData?.howLikeToApply === "how_to_apply" ? "" : "modal"}
+                  >
+                    Apply
+                  </button>
+
+                      {/* <button
                         onClick={handleCloseModal}
                         type="button"
                         className="btn btn-success"
                         data-bs-dismiss="modal"
                       >
                         Apply
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>

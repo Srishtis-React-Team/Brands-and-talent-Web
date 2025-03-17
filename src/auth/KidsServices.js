@@ -88,9 +88,13 @@ const KidsServices = () => {
             setOpenPopUp(false);
 
             const pendingJobId = localStorage.getItem("pendingJobId");
+          
+            const pendingJobTitle = localStorage.getItem("pendingJobTitle");
+           
             if (pendingJobId) {
               localStorage.removeItem("pendingJobId");
-              navigate(`/jobs/view/${pendingJobId}`);
+              localStorage.removeItem("pendingJobTitle");
+              navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
             } else {
               navigate(`/talent-home?${resData?.data?.data?.user_id}`);
             }

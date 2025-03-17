@@ -76,9 +76,17 @@ const About = () => {
             <div className="row textAlg mt-3 mb-5">
               <div className="col-md-6 ">
                 <img
-                  className="img-fluid"
+                  className="img-fluid border-curve"
                   src={
                     "https://brandsandtalent.com//backend/uploads/76f0ef01-9a84-4459-90f6-b2c7aaa9f1e3.webp"
+                  }
+                ></img>
+              </div>
+              <div className="col-md-6 ">
+                <img
+                  className="img-fluid border-curve"
+                  src={
+                    "https://brandsandtalent.com//backend/uploads/e4748ea7-dcd1-44a9-8d3c-06fc8900a41f.jpg"
                   }
                 ></img>
               </div>

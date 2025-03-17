@@ -380,14 +380,24 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                         </div>
                       </>
                     )}
+                    {currentUserType === 'brand' && (
+                      <div
+                        onClick={handleClick}
+                        className="enquire-btn"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        Inquire Now
+                      </div>
+                    )}
 
-                    <div
+
+                    {/* <div
                       onClick={handleClick}
                       className="enquire-btn"
                       style={{ cursor: 'pointer' }}
                     >
                       Inquire Now
-                    </div>
+                    </div> */}
 
                     {/*        
                     <div onClick={() => messageNow()} className="enquire-btn">

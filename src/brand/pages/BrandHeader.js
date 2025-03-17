@@ -188,7 +188,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   const conditionalNavigate = () => {};
 
-  const isActive = location.pathname.includes("/find-talents");
+  const isActive = location.pathname.includes("/find-talent");
 
   const handleNavigationClick = () => {
     // if (brandData?.planName === "Pro" || brandData?.planName === "Premium") {
@@ -199,7 +199,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
     //     navigate("/pricing");
     //   }, 3000);
     // } else {
-      navigate("/find-talents");
+      navigate("/find-talent");
    // }
   };
 
@@ -255,7 +255,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                     </div>
                     <div className="brand-mobile-menu">
                       <div className="navTxt">
-                        <NavLink to="/find-talents">Invite To Apply</NavLink>
+                        <NavLink to="/find-talent">Invite To Apply</NavLink>
                       </div>
                       <div className="navTxt">
                         <NavLink to="/list-jobs">My Jobs</NavLink>

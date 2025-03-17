@@ -101,7 +101,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     await ApiHelper.post(`${API.jobCount}${currentUserId}`)
       .then((resData) => {
         if (resData) {
-          setJobCountNumber(resData.data.data[2].count);
+          setJobCountNumber(resData.data.data[1].count);
         }
       })
       .catch((err) => {});
@@ -135,7 +135,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     //     navigate("/pricing");
     //   }, 3000);
     // } else {
-    navigate("/find-talents");
+    navigate("/find-talent");
     // }
   };
 
@@ -283,7 +283,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           >
             <Link
               className={
-                location.pathname === "/find-talents"
+                location.pathname === "/find-talent"
                   ? "sidemenu-active mt-2"
                   : "brand-menu-wrapper mt-2"
               }
