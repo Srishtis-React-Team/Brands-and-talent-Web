@@ -421,6 +421,20 @@
 }
 
 
+.apply-description a {
+  color: #007bff !important;
+  text-decoration: underline !important;
+}
+
+.apply-description a:hover {
+  color: #0056b3 !important;
+  text-decoration: underline !important;
+}
+
+
+
+
+
 
 
 
