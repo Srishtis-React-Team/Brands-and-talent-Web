@@ -68,7 +68,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
     }
   }, [brandId]);
 
- 
+
 
 
   const getBrand = async () => {
@@ -102,7 +102,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-          }, 1000);
+          }, 4000);
         }
       })
       .catch((err) => { });
@@ -124,8 +124,8 @@ const PreviewJob = ({ data, onButtonClick }) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
- 
- 
+
+
   // const convertLinks = (text) => {
   //   if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
   //   const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
@@ -153,7 +153,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
     });
   };
 
-  
+
 
   const isValidURL = (string) => {
     try {
@@ -348,7 +348,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   ))}
               </div>
 
-             
+
 
               <div className="job-features-benefits pb-0">
                 <div className="row">
@@ -378,7 +378,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           </li>
                         )}
 
-                     
+
 
                         {jobData?.skills && jobData.skills.length > 0 ? (
                           <li className="job-features-li">
@@ -430,7 +430,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           </li>
                         )}
 
-                       
+
 
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (
@@ -471,7 +471,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                             </span>
                           </li>
                         )}
-                   
+
                         {jobData?.ethnicity && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -557,7 +557,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       </ul>
                     </div>
                   </div>
-                 
+
                 </div>
               </div>
               <div className="job-questions-section">
@@ -584,14 +584,41 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Job Description</div>
-                    <div className="job-about-values">
+
+                   
+<div className="job-about-values">
+  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
+    jobData.jobDescription.some((htmlContent) => {
+      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+      return cleanedContent && cleanedContent !== "<p></p>";
+    }) ? (
+      jobData.jobDescription.map((htmlContent, index) => {
+        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+        return cleanedContent && cleanedContent !== "<p></p>" ? (
+          <div
+            key={index}
+            dangerouslySetInnerHTML={{ __html: cleanedContent }}
+          />
+        ) : null;
+      })
+    ) : (
+      <div>No Data Added</div>
+    )
+  ) : (
+    <div>No Data Added</div>
+  )}
+</div>
+
+
+
+                    {/* <div className="job-about-values">
                       {jobData?.jobDescription.map((htmlContent, index) => (
                         <div
                           key={index}
                           dangerouslySetInnerHTML={{ __html: htmlContent }}
                         />
                       ))}
-                    </div>
+                    </div> */}
                   </div>
                 </>
               ) : (
@@ -601,7 +628,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </div>
               )}
 
-              
+
 
               {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
                 <>
@@ -717,34 +744,34 @@ const PreviewJob = ({ data, onButtonClick }) => {
               )}
 
 
-{jobData?.howLikeToApply !== "easy-apply" && (
-  <div className="job-about-section">
-    <div className="job-feature-title">How to Apply</div>
-    <div className="job-about-values">
-      {jobData?.applyDescription ? (
-        <div
-          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
-          className="apply-description"
-        />
-      ) : (
-        <>
-          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
-          <span className="how-apply-terms-link">
-            {brandData?.brandEmail}
-          </span>
-          . Please include
-          <span className="how-apply-terms-link">
-            {jobData?.jobTitle}
-          </span>
-          in the subject line.
-        </>
-      )}
-    </div>
-  </div>
-)}
+              {jobData?.howLikeToApply !== "easy-apply" && (
+                <div className="job-about-section">
+                  <div className="job-feature-title">How to Apply</div>
+                  <div className="job-about-values">
+                    {jobData?.applyDescription ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+                        className="apply-description"
+                      />
+                    ) : (
+                      <>
+                        Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+                        <span className="how-apply-terms-link">
+                          {brandData?.brandEmail}
+                        </span>
+                        . Please include
+                        <span className="how-apply-terms-link">
+                          {jobData?.jobTitle}
+                        </span>
+                        in the subject line.
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
 
 
-     
+
 
               {jobData?.type == "Draft" && (
                 <>

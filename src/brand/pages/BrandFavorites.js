@@ -131,7 +131,8 @@ const BrandFavorites = () => {
   };
 
   const openTalent = (item) => {
-    navigate(`/talent/${item.publicUrl}`, {
+    
+    navigate(`/talent/${item.favouriteUserDetails?.publicUrl}`, {
       state: { talentData: item },
     });
   };
