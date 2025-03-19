@@ -11,7 +11,7 @@ import Loader from "../views/Loader";
 import { tr } from "date-fns/locale";
 import CurrentUser from "../CurrentUser";
 const JobRedirect = () => {
-  const { jobId,jobTitle } = useParams();
+  const { jobId, jobTitle } = useParams();
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -20,10 +20,10 @@ const JobRedirect = () => {
   const [talentData, setTalentData] = useState();
   const { currentUserId } = CurrentUser();
   const [showPopup, setShowPopup] = useState(false);
-  
-  
 
- 
+
+
+
   useEffect(() => {
     if (currentUserId) {
       getTalentById();
@@ -33,35 +33,35 @@ const JobRedirect = () => {
 
   useEffect(() => {
     fetchUserId(); // Call the function
-}, [currentUserId]); // Runs when currentUserId changes
+  }, [currentUserId]); // Runs when currentUserId changes
 
 
 
-useEffect(() => {
-  // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
-  localStorage.setItem("pendingJobId", jobId);
-  localStorage.setItem("pendingJobTitle",jobTitle)
-}, []); // Runs when currentUserId changes
+  useEffect(() => {
+    // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+    localStorage.setItem("pendingJobId", jobId);
+    localStorage.setItem("pendingJobTitle", jobTitle)
+  }, []); // Runs when currentUserId changes
 
   const [modalData, setModalData] = useState(null);
 
   const fetchUserId = async () => {
     const userId = localStorage.getItem("userId");
-    
+
 
     if (!userId) {
-     
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(() => {
-            setOpenPopUp(false);
-            navigate("/login");
-        }, 2000);
-        return null;  // Return null explicitly to indicate no user
+
+      setMessage("You must be logged in");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 2000);
+      return null;  // Return null explicitly to indicate no user
     }
 
     return userId;  // Return userId if found
-};
+  };
 
 
   const getTalentById = async () => {
@@ -91,20 +91,20 @@ useEffect(() => {
   useEffect(() => {
     getJobsByID();
   }, [jobId]);
- 
+
 
   const [jobData, setJobData] = useState("");
   const getJobsByID = async () => {
     const userId = localStorage.getItem("userId");
     let formData = {
       jobId: jobId,
-      talentId:userId
+      talentId: userId
     };
     setLoading(true);
     await ApiHelper.post(`${API.fetchByJobUrl}`, formData)
       .then((resData) => {
         setLoading(false);
-        console.log("resData.data.data",resData.data.data)
+        console.log("resData.data.data", resData.data.data)
 
         setJobData(resData.data.data);
         getBrand(resData.data.data?.brandId);
@@ -118,11 +118,11 @@ useEffect(() => {
     const userId = localStorage.getItem("userId");
     const userType = localStorage.getItem("currentUserType");
     if (!userId) {
-  
+
       // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
       localStorage.setItem("pendingJobId", jobId);
-      localStorage.setItem("pendingJobTitle",jobTitle)
-      
+      localStorage.setItem("pendingJobTitle", jobTitle)
+
       setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -231,7 +231,7 @@ useEffect(() => {
   if (showPopup) {
     setTimeout(() => setShowPopup(false), 4000); // Auto-close after 4 seconds
   }
- 
+
   // const convertLinks = (text) => {
   //   if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
   //   const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
@@ -259,14 +259,14 @@ useEffect(() => {
     });
   };
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
   return (
     <>
       <>
@@ -288,59 +288,59 @@ useEffect(() => {
                       </div>
 
                       {(jobData?.howLikeToApply ===
-                                          "easy-apply" ||
-                                          jobData?.isApplied == "Applied") && (
-                                          <>
-                                            <div
-                                              className={
-                                                jobData?.isApplied === "Apply Now"
-                                                  ? "apply-now-btn"
-                                                  : "apply-now-btn applied-btn"
-                                              }
-                                              onClick={() => {
-                                                applyjobs(jobData);
-                                              }}
-                                            >
-                                              {jobData?.isApplied == "Applied" && (
-                                                <>
-                                                  <i className="bi bi-check-circle-fill"></i>
-                                                </>
-                                              )}
-                                              {jobData?.isApplied ==
-                                                "Apply Now" && (
-                                                <>
-                                                  <i className="bi bi-briefcase-fill"></i>
-                                                </>
-                                              )}
-                                              {jobData?.isApplied ===
-                                                "Apply Now" && (
-                                                <div>Quick Apply</div>
-                                              )}
-                                              {jobData?.isApplied ===
-                                                "Applied" && <div>Applied</div>}
-                                            </div>
-                                          </>
-                                        )}
-                                         {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
-                                          {jobData?.howLikeToApply === "how_to_apply" && (
-                                            <div className="apply-section">
-                                              <button className="apply-btn" onClick={() => 
-                                                setShowPopup(true)}>
-                                                Apply
-                                              </button>
-                                            </div>
-                                          )}
-
-                                        {/* Popup Modal */}
-                                        {showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-content">
-      <p>Kindly follow the application instructions</p>
-    </div>
-  </div>
-)}
-                                     
+                        "easy-apply" ||
+                        jobData?.isApplied == "Applied") && (
+                          <>
+                            <div
+                              className={
+                                jobData?.isApplied === "Apply Now"
+                                  ? "apply-now-btn"
+                                  : "apply-now-btn applied-btn"
+                              }
+                              onClick={() => {
+                                applyjobs(jobData);
+                              }}
+                            >
+                              {jobData?.isApplied == "Applied" && (
+                                <>
+                                  <i className="bi bi-check-circle-fill"></i>
+                                </>
+                              )}
+                              {jobData?.isApplied ==
+                                "Apply Now" && (
+                                  <>
+                                    <i className="bi bi-briefcase-fill"></i>
+                                  </>
+                                )}
+                              {jobData?.isApplied ===
+                                "Apply Now" && (
+                                  <div>Quick Apply</div>
+                                )}
+                              {jobData?.isApplied ===
+                                "Applied" && <div>Applied</div>}
                             </div>
+                          </>
+                        )}
+                      {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
+                      {jobData?.howLikeToApply === "how_to_apply" && (
+                        <div className="apply-section">
+                          <button className="apply-btn" onClick={() =>
+                            setShowPopup(true)}>
+                            Apply
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Popup Modal */}
+                      {showPopup && (
+                        <div className="popup-overlay">
+                          <div className="popup-content">
+                            <p>Kindly follow the application instructions</p>
+                          </div>
+                        </div>
+                      )}
+
+                    </div>
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">
                         <img
@@ -354,11 +354,11 @@ useEffect(() => {
                       </div>
 
                       <div className="company-location">
-                       
+
                         <span className="font-600">
                           Location :&nbsp;{" "}
                         </span>
-                      
+
                         <span>
                           <span>
                             <span className="job-feature-heading">
@@ -377,9 +377,9 @@ useEffect(() => {
 
                       <div className="company-location">
                         <span className="job-feature-heading">
-                        <span className="font-600">
-                          Application Deadline :&nbsp;
-                        </span>
+                          <span className="font-600">
+                            Application Deadline :&nbsp;
+                          </span>
                         </span>
                         <span className="job-feature-values">
                           {new Date(
@@ -394,21 +394,21 @@ useEffect(() => {
                       </div>
 
                       <div className="company-location">
-                      <span className="font-600">
-                      Job Type :&nbsp;
-                          </span>
-                        
-                       
+                        <span className="font-600">
+                          Job Type :&nbsp;
+                        </span>
+
+
                         <span>
                           <span className="job-feature-values">{jobData?.jobType}</span>
                         </span>
                       </div>
                       <div className="company-location">
-                       
+
                         <span className="font-600">
                           Category :&nbsp;
-                          </span>
-                       
+                        </span>
+
                         <span className="job-feature-values">
                           {jobData?.category}
                         </span>
@@ -793,7 +793,33 @@ useEffect(() => {
                               <div className="job-feature-title">
                                 Job Description
                               </div>
-                              <div className="job-about-values">
+                              
+                            
+<div className="job-about-values">
+  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
+    jobData.jobDescription.some((htmlContent) => {
+      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+      return cleanedContent && cleanedContent !== "<p></p>";
+    }) ? (
+      jobData.jobDescription.map((htmlContent, index) => {
+        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+        return cleanedContent && cleanedContent !== "<p></p>" ? (
+          <div
+            key={index}
+            dangerouslySetInnerHTML={{ __html: cleanedContent }}
+          />
+        ) : null;
+      })
+    ) : (
+      <div>No Data Added</div>
+    )
+  ) : (
+    <div>No Data Added</div>
+  )}
+</div>
+
+
+                              {/* <div className="job-about-values">
                                 {jobData?.jobDescription &&
                                   jobData?.jobDescription?.map(
                                     (htmlContent, index) => (
@@ -805,7 +831,7 @@ useEffect(() => {
                                       />
                                     )
                                   )}
-                              </div>
+                              </div> */}
                             </div>
                           </>
                         )}
@@ -933,31 +959,31 @@ useEffect(() => {
                           </>
                         )}
 
-{jobData?.howLikeToApply !== "easy-apply" && (
-  <div className="job-about-section">
-    <div className="job-feature-title">How to Apply</div>
-    <div className="job-about-values">
-      {jobData?.applyDescription ? (
-        <div
-          dangerouslySetInnerHTML={{ __html: convertLinks(jobData.applyDescription.join(" ")) }}
-          className="apply-description"
-        />
-      ) : (
-        <>
-          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
-          <span className="how-apply-terms-link">
-            {brandData?.brandEmail}
-          </span>
-          . Please include
-          <span className="how-apply-terms-link">
-            {jobData?.jobTitle}
-          </span>
-          in the subject line.
-        </>
-      )}
-    </div>
-  </div>
-)}
+                      {jobData?.howLikeToApply !== "easy-apply" && (
+                        <div className="job-about-section">
+                          <div className="job-feature-title">How to Apply</div>
+                          <div className="job-about-values">
+                            {jobData?.applyDescription ? (
+                              <div
+                                dangerouslySetInnerHTML={{ __html: convertLinks(jobData.applyDescription.join(" ")) }}
+                                className="apply-description"
+                              />
+                            ) : (
+                              <>
+                                Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+                                <span className="how-apply-terms-link">
+                                  {brandData?.brandEmail}
+                                </span>
+                                . Please include
+                                <span className="how-apply-terms-link">
+                                  {jobData?.jobTitle}
+                                </span>
+                                in the subject line.
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      )}
 
 
 

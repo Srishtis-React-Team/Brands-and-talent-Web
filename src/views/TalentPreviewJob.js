@@ -32,7 +32,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandData, setBrandData] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  
+
 
 
 
@@ -193,7 +193,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
     });
   };
 
-  
+
 
   const handleBackClick = () => {
     const currentUrl = location.pathname;
@@ -379,13 +379,13 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
               {/* Popup Modal */}
               {showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-content">
-      <p>Kindly follow the application instructions</p>
-    </div>
-  </div>
-)}
-            
+                <div className="popup-overlay">
+                  <div className="popup-content">
+                    <p>Kindly follow the application instructions</p>
+                  </div>
+                </div>
+              )}
+
 
 
 
@@ -646,7 +646,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           </li>
                         )}
 
-                        
+
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (
                             <li className="job-features-li">
@@ -692,7 +692,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           </li>
                         )}
 
-                        
+
                         {jobData?.ethnicity && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -792,7 +792,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                             </>
                           )}
 
-                        
+
                       </ul>
                     </div>
                   </div>
@@ -824,7 +824,32 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <>
                     <div className="job-about-section">
                       <div className="job-feature-title">Job Description</div>
-                      <div className="job-about-values">
+                      
+                   
+<div className="job-about-values">
+  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
+    jobData.jobDescription.some((htmlContent) => {
+      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+      return cleanedContent && cleanedContent !== "<p></p>";
+    }) ? (
+      jobData.jobDescription.map((htmlContent, index) => {
+        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+        return cleanedContent && cleanedContent !== "<p></p>" ? (
+          <div
+            key={index}
+            dangerouslySetInnerHTML={{ __html: cleanedContent }}
+          />
+        ) : null;
+      })
+    ) : (
+      <div>No Data Added</div>
+    )
+  ) : (
+    <div>No Data Added</div>
+  )}
+</div>
+
+                      {/* <div className="job-about-values">
                         {jobData?.jobDescription &&
                           jobData?.jobDescription?.map((htmlContent, index) => (
                             <div
@@ -832,7 +857,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                               dangerouslySetInnerHTML={{ __html: htmlContent }}
                             />
                           ))}
-                      </div>
+                      </div> */}
                     </div>
                   </>
                 )}
@@ -950,34 +975,34 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                 </>
               )}
 
-              
-{jobData?.howLikeToApply !== "easy-apply" && (
-  <div className="job-about-section">
-    <div className="job-feature-title">How to Apply</div>
-    <div className="job-about-values">
-      {jobData?.applyDescription ? (
-        <div
-          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
-          className="apply-description"
-        />
-      ) : (
-        <>
-          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
-          <span className="how-apply-terms-link">
-            {brandData?.brandEmail}
-          </span>
-          . Please include
-          <span className="how-apply-terms-link">
-            {jobData?.jobTitle}
-          </span>
-          in the subject line.
-        </>
-      )}
-    </div>
-  </div>
-)}
 
-              
+              {jobData?.howLikeToApply !== "easy-apply" && (
+                <div className="job-about-section">
+                  <div className="job-feature-title">How to Apply</div>
+                  <div className="job-about-values">
+                    {jobData?.applyDescription ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+                        className="apply-description"
+                      />
+                    ) : (
+                      <>
+                        Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+                        <span className="how-apply-terms-link">
+                          {brandData?.brandEmail}
+                        </span>
+                        . Please include
+                        <span className="how-apply-terms-link">
+                          {jobData?.jobTitle}
+                        </span>
+                        in the subject line.
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+
+
               {jobData?.type == "Draft" && (
                 <>
                   <div className="create-job-buttons mt-4 mb-2 justify-content-center">

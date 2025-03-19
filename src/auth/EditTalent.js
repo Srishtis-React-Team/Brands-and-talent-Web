@@ -127,7 +127,7 @@ const EditTalent = () => {
       fileType === "application/pdf" ||
       fileType === "application/msword" ||
       fileType ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
   };
 
@@ -427,7 +427,7 @@ const EditTalent = () => {
     getCountries();
   }, []);
 
-  useEffect(() => {}, [updateDisabled]);
+  useEffect(() => { }, [updateDisabled]);
 
   const handleDateChange = (e) => {
     setValue(e);
@@ -496,7 +496,7 @@ const EditTalent = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -681,7 +681,7 @@ const EditTalent = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
 
@@ -747,7 +747,7 @@ const EditTalent = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const getCities = async (data) => {
     const formData = data;
@@ -757,7 +757,7 @@ const EditTalent = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const basicDetailsUpdate = async () => {
@@ -1029,11 +1029,14 @@ const EditTalent = () => {
 
   const [valueTabs, setValueTabs] = React.useState(0);
 
+
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
   };
 
+
   const handleNavigation = (event) => {
+
     if (valueTabs === 0 && event === "back") {
       setValueTabs(0);
     } else if (event === "next") {
@@ -1041,11 +1044,15 @@ const EditTalent = () => {
     } else if (event === "back") {
       setValueTabs(valueTabs - 1);
     }
+
   };
+  console.log("talentData?.planName ==", talentData?.planName)
+  console.log("valueTabsss", valueTabs)
 
-  useEffect(() => {}, [valueTabs]);
 
-  useEffect(() => {}, [editProfileImage]);
+  useEffect(() => { }, [valueTabs]);
+
+  useEffect(() => { }, [editProfileImage]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -1631,7 +1638,7 @@ const EditTalent = () => {
       });
   };
 
-  useEffect(() => {}, [portofolioFile]);
+  useEffect(() => { }, [portofolioFile]);
 
   const addService = () => {
     setServices([
@@ -1892,7 +1899,7 @@ const EditTalent = () => {
           );
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const updatePublicUrl = async () => {
@@ -2324,15 +2331,14 @@ const EditTalent = () => {
     setSelectedCV(null); // Reset the selected item when closing the menu
     setCVIndex(index);
   };
-console.log("talentData?.portfolio?.length----------------",talentData?.portfolio?.length)
+  console.log("talentData?.portfolio?.length----------------", talentData?.portfolio?.length)
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <TalentSideMenu myState={myState} />
       </div>
@@ -2340,9 +2346,8 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
       <main
         style={allJobsList?.length === 0 ? {} : {}}
         id="mainBrand"
-        className={`profileCont brand-main-container ${
-          showSidebar ? "" : "main-pd"
-        }`}
+        className={`profileCont brand-main-container ${showSidebar ? "" : "main-pd"
+          }`}
       >
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">Edit Profile</div>
@@ -2766,9 +2771,8 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleEmailChange}
                       placeholder="Enter E-mail"
                       value={parentEmail}
@@ -3223,74 +3227,74 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                     </>
                   )}
                   <div className="row">
-  {talentData &&
-    talentData?.portfolio?.map((item, index) => {
-      const isBasicPlan = talentData.planName === "Basic";
-      const canAddMore = !isBasicPlan || (isBasicPlan && index < 5);
+                    {talentData &&
+                      talentData?.portfolio?.map((item, index) => {
+                        const isBasicPlan = talentData.planName === "Basic";
+                        const canAddMore = !isBasicPlan || (isBasicPlan && index < 5);
 
-      if (canAddMore) {
-        return (
-          <div className="col-md-6" key={item.id}>
-            <div className="update-portfolio-cards">
-              <div className="update-portfolio-icon">
-                <div className="file-section">
-                  {item.type === "image" && (
-                    <div className="fileType">
-                      <i className="bi bi-card-image"></i>
-                    </div>
-                  )}
-                  <div className="update-portfolio-fileName pl-0">
-                    {item.title}
+                        if (canAddMore) {
+                          return (
+                            <div className="col-md-6" key={item.id}>
+                              <div className="update-portfolio-cards">
+                                <div className="update-portfolio-icon">
+                                  <div className="file-section">
+                                    {item.type === "image" && (
+                                      <div className="fileType">
+                                        <i className="bi bi-card-image"></i>
+                                      </div>
+                                    )}
+                                    <div className="update-portfolio-fileName pl-0">
+                                      {item.title}
+                                    </div>
+                                    <div className="update-portfolio-action">
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls={`dropdown-menu-${item.id}`}
+                                        aria-haspopup="true"
+                                        onClick={(event) =>
+                                          handlePortfolioClick(event, item)
+                                        }
+                                      >
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id={`dropdown-menu-${item.id}`}
+                                        anchorEl={portfolioAnchor}
+                                        open={portfolioOpen}
+                                        onClose={handlePortfolioClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            handlePortfolioClose();
+                                            viewUpdateFile(selectedPortfolioItem);
+                                          }}
+                                        >
+                                          View
+                                        </MenuItem>
+                                        <MenuItem
+                                          onClick={() => {
+                                            handlePortfolioClose();
+                                            setAlertpop({
+                                              status: true,
+                                              item: selectedPortfolioItem,
+                                              label: "delete",
+                                              eachService: null,
+                                            });
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null; // Exclude items if the plan limit is exceeded
+                      })}
                   </div>
-                  <div className="update-portfolio-action">
-                    <IconButton
-                      aria-label="more"
-                      aria-controls={`dropdown-menu-${item.id}`}
-                      aria-haspopup="true"
-                      onClick={(event) =>
-                        handlePortfolioClick(event, item)
-                      }
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id={`dropdown-menu-${item.id}`}
-                      anchorEl={portfolioAnchor}
-                      open={portfolioOpen}
-                      onClose={handlePortfolioClose}
-                    >
-                      <MenuItem
-                        onClick={() => {
-                          handlePortfolioClose();
-                          viewUpdateFile(selectedPortfolioItem);
-                        }}
-                      >
-                        View
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handlePortfolioClose();
-                          setAlertpop({
-                            status: true,
-                            item: selectedPortfolioItem,
-                            label: "delete",
-                            eachService: null,
-                          });
-                        }}
-                      >
-                        Delete
-                      </MenuItem>
-                    </Menu>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      }
-      return null; // Exclude items if the plan limit is exceeded
-    })}
-</div>
 
                   {/* <div className="row">
                     {talentData &&
@@ -3667,7 +3671,7 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                 </div>
               </div>
             </CustomTabPanel>
-          
+
             <CustomTabPanel value={valueTabs} index={5}>
               {isBasic == false && (
                 <>
@@ -3847,22 +3851,22 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                                                         <div className="file-section">
                                                           {item.type ===
                                                             "audio" && (
-                                                            <div className="fileType">
-                                                              <i className="bi bi-mic-fill"></i>
-                                                            </div>
-                                                          )}
+                                                              <div className="fileType">
+                                                                <i className="bi bi-mic-fill"></i>
+                                                              </div>
+                                                            )}
                                                           {item.type ===
                                                             "video" && (
-                                                            <div className="fileType">
-                                                              <i className="bi bi-play-circle-fill"></i>
-                                                            </div>
-                                                          )}
+                                                              <div className="fileType">
+                                                                <i className="bi bi-play-circle-fill"></i>
+                                                              </div>
+                                                            )}
                                                           {item.type ===
                                                             "document" && (
-                                                            <div className="fileType">
-                                                              <i className="bi bi-file-earmark-richtext"></i>
-                                                            </div>
-                                                          )}
+                                                              <div className="fileType">
+                                                                <i className="bi bi-file-earmark-richtext"></i>
+                                                              </div>
+                                                            )}
                                                           <div className="update-portfolio-fileName pl-0">
                                                             {item.title}
                                                           </div>
@@ -3934,20 +3938,20 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                                                                   });
                                                                 }}
 
-                                                                // onClick={(
-                                                                //   e
-                                                                // ) => {
-                                                                //   {
-                                                                //     handleServiceFileClose(
-                                                                //       selectedServiceItem,
-                                                                //       selectedServiceObject
-                                                                //     );
-                                                                //   }
-                                                                //   deleteServiceFile(
-                                                                //     selectedServiceItem,
-                                                                //     selectedServiceObject
-                                                                //   );
-                                                                // }}
+                                                              // onClick={(
+                                                              //   e
+                                                              // ) => {
+                                                              //   {
+                                                              //     handleServiceFileClose(
+                                                              //       selectedServiceItem,
+                                                              //       selectedServiceObject
+                                                              //     );
+                                                              //   }
+                                                              //   deleteServiceFile(
+                                                              //     selectedServiceItem,
+                                                              //     selectedServiceObject
+                                                              //   );
+                                                              // }}
                                                               >
                                                                 Delete
                                                               </MenuItem>
@@ -3976,9 +3980,9 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                                                 )
                                               }
                                               ref={(el) =>
-                                                (serviceFileInputRefs.current[
-                                                  servicesIndex
-                                                ] = el)
+                                              (serviceFileInputRefs.current[
+                                                servicesIndex
+                                              ] = el)
                                               }
                                             />
                                             <div className="btnWraper">
@@ -4188,8 +4192,7 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                   <span className="edit-profile-navigation-text">Back</span>
                 </div>
               )}
-              {((talentData?.planName == "Basic" && valueTabs != 6) ||
-                (talentData?.planName != "Basic" && valueTabs != 7)) && (
+              {!((talentData?.planName === "Basic" || talentData?.planName !== "Basic") && (valueTabs === 7 || valueTabs === 8)) && (
                 <div
                   className="edit-profile-navigation-btn"
                   onClick={() => {
@@ -4200,6 +4203,20 @@ console.log("talentData?.portfolio?.length----------------",talentData?.portfoli
                   <i className="bi bi-arrow-right-circle-fill"></i>
                 </div>
               )}
+
+
+              {/* {((talentData?.planName == "Basic" && valueTabs != 6) ||
+                (talentData?.planName != "Basic" && valueTabs != 7)) && (
+                <div
+                  className="edit-profile-navigation-btn"
+                  onClick={() => {
+                    handleNavigation("next");
+                  }}
+                >
+                  <span className="edit-profile-navigation-text">Next</span>
+                  <i className="bi bi-arrow-right-circle-fill"></i>
+                </div>
+              )} */}
             </div>
           </Box>
         </div>
