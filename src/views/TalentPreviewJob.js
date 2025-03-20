@@ -32,7 +32,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandData, setBrandData] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  
+
 
 
 
@@ -175,21 +175,25 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
     navigate("/talent-dashboard");
   };
 
-  
-  
   const convertLinks = (text) => {
     if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
-    const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
+
+    // Improved regex to match URLs without capturing unwanted tags or attributes
+    const urlRegex = /(https?:\/\/[^\s<>"']+)/g;
+
+    // Check if the text already contains an anchor tag
+    if (text.includes("<a ")) {
+      return text; // Return as is if it's already an anchor link
+    }
+
     return text.replace(urlRegex, (url) => {
-      // Remove any trailing encoded tags or HTML tags
-      const cleanUrl = url.replace(/(%3C\/p%3E|<\/p>)$/g, "");
-      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+      // Clean up the URL by removing any trailing tags or unwanted characters
+      const cleanUrl = url.replace(/["'>]$/g, "").trim();
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="apply-Description">${cleanUrl}</a>`;
     });
   };
-  
 
-  
-  
+
 
   const handleBackClick = () => {
     const currentUrl = location.pathname;
@@ -375,13 +379,13 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
               {/* Popup Modal */}
               {showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-content">
-      <p>Kindly follow the application instructions</p>
-    </div>
-  </div>
-)}
-            
+                <div className="popup-overlay">
+                  <div className="popup-content">
+                    <p>Kindly follow the application instructions</p>
+                  </div>
+                </div>
+              )}
+
 
 
 
@@ -642,7 +646,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           </li>
                         )}
 
-                        
+
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (
                             <li className="job-features-li">
@@ -688,7 +692,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           </li>
                         )}
 
-                        
+
                         {jobData?.ethnicity && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -788,7 +792,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                             </>
                           )}
 
-                        
+
                       </ul>
                     </div>
                   </div>
@@ -820,7 +824,32 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <>
                     <div className="job-about-section">
                       <div className="job-feature-title">Job Description</div>
-                      <div className="job-about-values">
+                      
+                   
+<div className="job-about-values">
+  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
+    jobData.jobDescription.some((htmlContent) => {
+      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+      return cleanedContent && cleanedContent !== "<p></p>";
+    }) ? (
+      jobData.jobDescription.map((htmlContent, index) => {
+        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
+        return cleanedContent && cleanedContent !== "<p></p>" ? (
+          <div
+            key={index}
+            dangerouslySetInnerHTML={{ __html: cleanedContent }}
+          />
+        ) : null;
+      })
+    ) : (
+      <div>No Data Added</div>
+    )
+  ) : (
+    <div>No Data Added</div>
+  )}
+</div>
+
+                      {/* <div className="job-about-values">
                         {jobData?.jobDescription &&
                           jobData?.jobDescription?.map((htmlContent, index) => (
                             <div
@@ -828,7 +857,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                               dangerouslySetInnerHTML={{ __html: htmlContent }}
                             />
                           ))}
-                      </div>
+                      </div> */}
                     </div>
                   </>
                 )}
@@ -946,34 +975,34 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                 </>
               )}
 
-              
-{jobData?.howLikeToApply !== "easy-apply" && (
-  <div className="job-about-section">
-    <div className="job-feature-title">How to Apply</div>
-    <div className="job-about-values">
-      {jobData?.applyDescription ? (
-        <div
-          dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
-          className="apply-description"
-        />
-      ) : (
-        <>
-          Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
-          <span className="how-apply-terms-link">
-            {brandData?.brandEmail}
-          </span>
-          . Please include
-          <span className="how-apply-terms-link">
-            {jobData?.jobTitle}
-          </span>
-          in the subject line.
-        </>
-      )}
-    </div>
-  </div>
-)}
 
-              
+              {jobData?.howLikeToApply !== "easy-apply" && (
+                <div className="job-about-section">
+                  <div className="job-feature-title">How to Apply</div>
+                  <div className="job-about-values">
+                    {jobData?.applyDescription ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+                        className="apply-description"
+                      />
+                    ) : (
+                      <>
+                        Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+                        <span className="how-apply-terms-link">
+                          {brandData?.brandEmail}
+                        </span>
+                        . Please include
+                        <span className="how-apply-terms-link">
+                          {jobData?.jobTitle}
+                        </span>
+                        in the subject line.
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+
+
               {jobData?.type == "Draft" && (
                 <>
                   <div className="create-job-buttons mt-4 mb-2 justify-content-center">

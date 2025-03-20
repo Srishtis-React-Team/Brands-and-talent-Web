@@ -191,7 +191,8 @@ const ListJobs = () => {
         .catch((err) => { });
     } else {
       setMessage(
-        "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+        "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
+       // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
       );
       setOpenPopUp(true);
       setTimeout(function () {
