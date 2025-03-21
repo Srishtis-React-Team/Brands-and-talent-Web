@@ -243,6 +243,7 @@ const Pricing = ({
       "https://brandsandtalent.com/api/users/fetchPaymentDetails",
       obj
     );
+    console.log(paymentDetailsData, "paymentDetailsData");
     let activatedPlan;
     let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
     if (paymentDetailsData?.data?.data?.planName == "Pro") {
@@ -276,14 +277,19 @@ const Pricing = ({
     }
   }, [userType]);
 
+  const [selectedPricingType, setSelectedPricingType] = useState("brand");
+
   useEffect(() => {
     if (from != "signup") {
       if (isChecked) {
         getPricingList();
+        setSelectedPricingType("talent");
       } else {
         getBrandsPricingList();
+        setSelectedPricingType("brand");
       }
     }
+    console.log(isChecked, "isChecked");
   }, [isChecked]);
 
   const handleToggle = (event) => {
@@ -291,6 +297,9 @@ const Pricing = ({
   };
 
   useEffect(() => {}, [comment]);
+  useEffect(() => {
+    console.log(selectedPricingType, "selectedPricingType");
+  }, [selectedPricingType]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -609,6 +618,7 @@ const Pricing = ({
         getBrand();
       }
     }
+    console.log(currentUserType, "currentUserType");
   }, [currentUserId, currentUserType]);
 
   const getTalentById = async () => {
@@ -641,6 +651,10 @@ const Pricing = ({
       document.getElementById("checkout_button").click();
     }, 100);
   };
+
+  useEffect(() => {
+    console.log(activePeriod, "activePeriod");
+  }, [activePeriod]);
 
   return (
     <>
@@ -814,7 +828,8 @@ const Pricing = ({
                                 >
                                   {item.period}
                                   {item.planname === activePlan &&
-                                    activePeriod === "annual" && (
+                                    activePeriod === "annual" &&
+                                    selectedPricingType === currentUserType && (
                                       <i className="bi bi-check-circle-fill active-icon"></i>
                                     )}
                                 </label>
@@ -883,7 +898,8 @@ const Pricing = ({
                                 >
                                   Monthly
                                   {item.planname === activePlan &&
-                                    activePeriod === "monthly" && (
+                                    activePeriod === "monthly" &&
+                                    selectedPricingType === currentUserType && (
                                       <i className="bi bi-check-circle-fill active-icon"></i>
                                     )}
                                 </label>
