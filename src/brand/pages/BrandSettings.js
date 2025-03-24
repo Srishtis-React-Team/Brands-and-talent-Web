@@ -559,7 +559,7 @@ const BrandSettings = () => {
                           <li>1 number (1, 2, 3…)</li>
                           <li>1 special mark (!, @, #…)</li>
                         </ul>
-                        Examples:<strong>Rosy@2025</strong>, <strong>Rina#2019</strong>, <strong>Kongka!2008</strong>, <strong>etc.</strong>
+                        Examples : <strong>Rosy@2025</strong>, <strong>Rina#2019</strong>, <strong>Kongka!2008</strong>, <strong>etc.</strong>
                         </div>
                       // <div className="invalid-fields password-error-box">
 

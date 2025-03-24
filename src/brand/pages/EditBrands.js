@@ -522,20 +522,29 @@ const EditBrands = () => {
       .catch((err) => {});
   };
 
+  
   const handleBrandNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
-      setBrandNameLetterError(false);
       setBrandName("");
-    } else if (!onlyLettersRegex.test(value)) {
-      setBrandNameLetterError(true);
     } else {
       setBrandName(value);
-      setBrandNameLetterError(false);
     }
   };
+  // const handleBrandNameChange = (e) => {
+  //   const value = e.target.value;
+  //   // Regular expression to allow only letters
+  //   const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+  //   if (value.trim() === "") {
+  //     setBrandNameLetterError(false);
+  //     setBrandName("");
+  //   } else if (!onlyLettersRegex.test(value)) {
+  //     setBrandNameLetterError(true);
+  //   } else {
+  //     setBrandName(value);
+  //     setBrandNameLetterError(false);
+  //   }
+  // };
   const aboutUsOptions = [
     "Streaming Audio (Pandora, Spotify, etc.)",
     "Search Engine",
@@ -575,8 +584,17 @@ const EditBrands = () => {
     setWebsiteLinkError(false);
   };
 
+  // const handleUserNameChange = (e) => {
+  //   setUserName(e.target.value);
+  //   setUserNameError(false);
+  // };
   const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
+    const value = e.target.value;
+    if (value.trim() === "") {
+      setUserName("");
+    } else {
+      setUserName(value);
+    }
     setUserNameError(false);
   };
 
@@ -758,8 +776,49 @@ const EditBrands = () => {
                     </div>
                   </div> */}
                 </div>
-
                 <div className="kids-form-row row mt-3">
+  <div className="kids-form-section col-md-6 mb-3">
+    <label className="form-label">Brand / Client Name</label>
+    <input
+      type="text"
+      className="form-control"
+      value={brandName}
+      onChange={(e) => {
+        handleBrandNameChange(e);
+        setBrandNameError(false);
+      }}
+      onKeyDown={handleKeyPress}
+      placeholder="Enter your company name or your name if you’re an individual client"
+    />
+    {brandNameError && (
+      <div className="invalid-fields">
+        Please enter Brand Name
+      </div>
+    )}
+  </div>
+
+  <div className="kids-form-section col-md-6 mb-3">
+    <label className="form-label">Your Full Name</label>
+    <input
+      type="text"
+      className="form-control"
+      value={userName}
+      onChange={(e) => {
+        handleUserNameChange(e);
+        setUserNameError(false);
+      }}
+      onKeyDown={handleKeyPress}
+      placeholder="Enter User Name"
+    />
+    {userNameError && (
+      <div className="invalid-fields">
+        Please enter Your Full Name
+      </div>
+    )}
+  </div>
+</div>
+
+                {/* <div className="kids-form-row row mt-3">
                   <div className="kids-form-section col-md-6 mb-3 ">
                     <label className="form-label">Brand / Client Name</label>
                     <input
@@ -808,7 +867,7 @@ const EditBrands = () => {
                       </div>
                     )}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6 mb-3">

@@ -192,7 +192,7 @@ const ListJobs = () => {
     } else {
       setMessage(
         "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
-       // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+        // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
       );
       setOpenPopUp(true);
       setTimeout(function () {
@@ -233,6 +233,33 @@ const ListJobs = () => {
       })
       .catch((err) => { });
   };
+
+
+  const shareJob = async (job) => {
+    try {
+      
+      const formattedJobTitle = job?.jobTitle?.replace(/\s+/g, "-");
+      const currentUserId = job?.brandId; // Get brandId as userId
+      const currentUserType ="brand" // Get brandId as userId
+
+  
+      localStorage.setItem("currentUserId", currentUserId);
+      localStorage.setItem("userId", currentUserId);
+      localStorage.setItem("currentUserType", currentUserType);
+      const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${job?.jobId}`;
+  
+      await navigator.clipboard.writeText(jobUrl);
+      setMessage("Job link copied to clipboard!");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+    
+
 
   return (
     <>
@@ -450,6 +477,15 @@ const ListJobs = () => {
                                               Edit Job
                                             </a>
                                           </li>
+
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={() => shareJob(job)}
+                                            >
+                                          Share Job
+                                            </a>
+                                          </li>
                                           <li>
                                             <a
                                               className="dropdown-item"
@@ -468,6 +504,7 @@ const ListJobs = () => {
                                         </ul>
                                       </div>
                                     </div>
+
                                     {job?.type == "Draft" && (
                                       <>
                                         <div

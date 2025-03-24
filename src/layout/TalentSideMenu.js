@@ -70,17 +70,18 @@ const TalentSideMenu = ({ myState }) => {
 
   const handleNavigation = () => {
     if (talentData?.accountBlock == false) {
-      if (talentData?.adminApproved === true) {
-        navigate(`/edit-talent-profile?${talentData?._id}`);
-      } else {
-        setMessage(
-          "After your verification is approved, you can update your profile"
-        );
-        setOpenPopUp(true);
-        setTimeout(() => {
-          setOpenPopUp(false);
-        }, 2000);
-      }
+      navigate(`/edit-talent-profile?${talentData?._id}`);
+      // if (talentData?.adminApproved === true) {
+      //   navigate(`/edit-talent-profile?${talentData?._id}`);
+      // } else {
+      //   setMessage(
+      //     "After your verification is approved, you can update your profile"
+      //   );
+      //   setOpenPopUp(true);
+      //   setTimeout(() => {
+      //     setOpenPopUp(false);
+      //   }, 2000);
+      // }
     } else if (talentData?.accountBlock == true) {
       setMessage("Please upgrade your plan to access your profile");
       setOpenPopUp(true);

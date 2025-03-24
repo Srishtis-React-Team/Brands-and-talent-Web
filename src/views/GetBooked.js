@@ -211,6 +211,7 @@ const GetBooked = () => {
   };
   const viewJob = async (jobId) => {
     if (!currentUserId) {
+     
       setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -224,8 +225,9 @@ const GetBooked = () => {
           jobId: jobId,
         },
       });
-    } else if (currentUserId && currentUser_type == "brand") {
-     
+    } 
+    else if (currentUserId && currentUser_type == "brand") {
+      
       setMessage("Login as an talent to use this feature");
       setOpenPopUp(true);
       setTimeout(function () {

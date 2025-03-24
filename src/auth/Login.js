@@ -167,7 +167,7 @@ const Login = () => {
               const pendingJobTitle = localStorage.getItem("pendingJobTitle")
               console.log("pendingJobTitle",pendingJobId)
               if (pendingJobId) {
-               
+                
                 localStorage.removeItem("pendingJobId");
                 localStorage.removeItem("pendingJobTitle");
                 navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
