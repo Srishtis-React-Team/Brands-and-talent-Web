@@ -191,19 +191,20 @@ const SearchHeaderComponent = ({ onData }) => {
       if (menuItem === "edit") {
         if (talentData?.accountBlock == false) {
           if (currentUser_type === "talent") {
-            if (talentData?.adminApproved === true) {
-              navigate(`/edit-talent-profile?${talentData?._id}`);
-            } else {
-              handleClose();
+            navigate(`/edit-talent-profile?${talentData?._id}`);
+            // if (talentData?.adminApproved === true) {
+            //   navigate(`/edit-talent-profile?${talentData?._id}`);
+            // } else {
+            //   handleClose();
 
-              setMessage(
-                "After your verification is approved, you can update your profile"
-              );
-              setOpenPopUp(true);
-              setTimeout(() => {
-                setOpenPopUp(false);
-              }, 2000);
-            }
+            //   setMessage(
+            //     "After your verification is approved, you can update your profile"
+            //   );
+            //   setOpenPopUp(true);
+            //   setTimeout(() => {
+            //     setOpenPopUp(false);
+            //   }, 2000);
+            // }
           } else if (currentUser_type === "brand") {
             navigate(`/`);
           }

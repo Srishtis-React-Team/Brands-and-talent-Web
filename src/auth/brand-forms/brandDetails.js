@@ -277,20 +277,27 @@ const BrandDetails = () => {
   };
 
   const [brandNameLetterError, setBrandNameLetterError] = useState(false);
+  // const handleBrandName = (e) => {
+  //   const value = e.target.value;
+  //   const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+  //   if (value?.trim() === "") {
+  //     setBrandNameLetterError(false);
+  //     setBrandName("");
+  //   } else if (!onlyLettersRegex.test(value)) {
+  //     setBrandNameLetterError(true);
+  //   } else {
+  //     setBrandName(value);
+  //     setBrandNameLetterError(false);
+  //   }
+  // };
   const handleBrandName = (e) => {
     const value = e.target.value;
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
-      setBrandNameLetterError(false);
       setBrandName("");
-    } else if (!onlyLettersRegex.test(value)) {
-      setBrandNameLetterError(true);
     } else {
       setBrandName(value);
-      setBrandNameLetterError(false);
     }
   };
-
   const handleBrandNameKeyPress = (e) => {
     if (e.key === "Backspace") {
       setBrandNameLetterError(false);
@@ -300,20 +307,27 @@ const BrandDetails = () => {
   const [yourNameLetterError, setYourNameLetterError] = useState(false);
   const [yourNameError, setYourNameError] = useState(false);
   const [yourName, setYourName] = useState("");
-
   const handleYourName = (e) => {
     const value = e.target.value;
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
-      setYourNameLetterError(false);
       setYourName("");
-    } else if (!onlyLettersRegex.test(value)) {
-      setYourNameLetterError(true);
     } else {
       setYourName(value);
-      setYourNameLetterError(false);
     }
   };
+  // const handleYourName = (e) => {
+  //   const value = e.target.value;
+  //   const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+  //   if (value?.trim() === "") {
+  //     setYourNameLetterError(false);
+  //     setYourName("");
+  //   } else if (!onlyLettersRegex.test(value)) {
+  //     setYourNameLetterError(true);
+  //   } else {
+  //     setYourName(value);
+  //     setYourNameLetterError(false);
+  //   }
+  // };
   const [linkedinUrl, setLinkedinUrl] = useState("");
   const [facebookUrl, setFacebookUrl] = useState("");
   const [twitterUrl, setTwitterUrl] = useState("");
@@ -468,6 +482,61 @@ const BrandDetails = () => {
             <div className="step-title mb-3">Brand / Client Details</div>
 
             <div className="kids-form-row row">
+  <div className="kids-form-section col-md-6">
+    <div className="mb-3">
+      <label className="form-label">
+        Brand/Client Name<span className="mandatory">*</span>
+      </label>
+      <div className="form-group">
+        <input
+          type="text"
+          className="form-control adult-signup-inputs adult-name-input"
+          placeholder="Company / Client Name"
+          onChange={(e) => {
+            handleBrandName(e);
+            setbrandNameError(false);
+          }}
+          onKeyDown={handleBrandNameKeyPress}
+          value={brandName}
+        />
+        {brandNameError && (
+          <div className="invalid-fields">
+            Please enter Brand / Client name
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <div className="kids-form-section col-md-6">
+    <div className="mb-3">
+      <label className="form-label">
+        Your Full Name<span className="mandatory">*</span>
+      </label>
+      <div className="form-group">
+        <input
+          type="text"
+          className="form-control adult-signup-inputs"
+          placeholder="Your Full Name"
+          onChange={(e) => {
+            handleYourName(e);
+            setYourNameError(false);
+          }}
+          onKeyDown={handleYourNameKeyPress}
+          value={yourName}
+        />
+        {yourNameError && (
+          <div className="invalid-fields">
+            Please enter Your Full Name
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            {/* <div className="kids-form-row row">
               <div className="kids-form-section col-md-6">
                 <div className="mb-3">
                   <label className="form-label">
@@ -528,7 +597,7 @@ const BrandDetails = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-6">

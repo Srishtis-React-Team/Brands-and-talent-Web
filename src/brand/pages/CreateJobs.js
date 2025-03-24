@@ -522,8 +522,12 @@ const CreateJobs = () => {
 
   useEffect(() => {
     let initialHowToApply = [
-      `<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
+      `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/>
+       Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}.<br/>
+       Please include ${jobTitle} in the subject line.</p>`,
     ];
+    
+    //`<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
 
     const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
@@ -2222,7 +2226,8 @@ const CreateJobs = () => {
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-0">
                             <label className="form-label">
-                              Category
+                            Company / Client Category
+                            
                               <span className="mandatory">*</span>
                             </label>
                             <select
@@ -2233,7 +2238,7 @@ const CreateJobs = () => {
                               style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
-                                Select Category
+                                Select Company / Client Category
                               </option>
                               {categoryList.map((option, index) => (
                                 <option
