@@ -1355,14 +1355,7 @@ const Header = ({ onData }) => {
                 we'd love to know more about you.
               </div>
               <div className="modal-buttons">
-                <div
-                  onClick={(e) => {
-                    userType("talent");
-                  }}
-                  className={talent ? "selected-register" : "choose-register"}
-                >
-                  I am a Talent
-                </div>
+               
                 <div
                   onClick={(e) => {
                     userType("brand");
@@ -1370,6 +1363,14 @@ const Header = ({ onData }) => {
                   className={brand ? "selected-register" : "choose-register"}
                 >
                   I am a Brand/Client
+                </div>
+                <div
+                  onClick={(e) => {
+                    userType("talent");
+                  }}
+                  className={talent ? "selected-register" : "choose-register"}
+                >
+                  I am a Talent
                 </div>
               </div>
               <div className="question-model">

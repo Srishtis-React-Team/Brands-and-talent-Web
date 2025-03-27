@@ -93,7 +93,7 @@ const Pricing = ({
       if (talentData?.planName != "Basic") {
         setOpen(true);
       } else {
-        setMessage("Please upgrade to pro plan to send gift subscription");
+        setMessage("Please upgrade to pro or premium plan to send gift subscription");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

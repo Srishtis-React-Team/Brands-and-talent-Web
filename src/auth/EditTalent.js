@@ -1104,9 +1104,9 @@ const EditTalent = () => {
       if (portofolioFile.length + imageFiles.length > maxFiles) {
         let upgradeMessage;
         if (talentData?.planName === "Basic") {
-          upgradeMessage = "Upgrade to Pro to add more files.";
+          upgradeMessage = "Upgrade to Pro or Premium to add more files.";
         } else if (talentData?.planName === "Pro") {
-          upgradeMessage = "Upgrade to Premium to add more files.";
+          upgradeMessage = "Upgrade to Pro or Premium to add more files.";
         }
 
         setMessage(
@@ -1115,7 +1115,7 @@ const EditTalent = () => {
         setOpenPopUp(true);
         setTimeout(() => {
           setOpenPopUp(false);
-        }, 3000);
+        }, 5000);
         return;
       }
 
@@ -1981,9 +1981,9 @@ const EditTalent = () => {
     if (audioUrlsList.length >= maxUrls) {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "Upgrade to Pro to add more URLs.";
+        upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
       } else if (talentData?.planName === "Pro") {
-        upgradeMessage = "Upgrade to Premium to add more URLs.";
+        upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
       }
       setMessage(
         `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
@@ -1993,7 +1993,7 @@ const EditTalent = () => {
         setAudioUrl("");
 
         setOpenPopUp(false);
-      }, 1000);
+      }, 5000);
     } else {
       if (audioUrl.trim() !== "") {
         if (isNotKnownFormatUrl(audioUrl)) {
@@ -2067,9 +2067,9 @@ const EditTalent = () => {
         if (urls.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro to add more URLs.";
+            upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
           } else if (talentData?.planName === "Pro") {
-            upgradeMessage = "Upgrade to Premium to add more URLs.";
+            upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
           }
 
           setMessage(
@@ -2079,7 +2079,7 @@ const EditTalent = () => {
           setTimeout(() => {
             setVideoUrl("");
             setOpenPopUp(false);
-          }, 1000);
+          }, 5000);
           return;
         }
         setUrls([...urls, videoUrl]);
@@ -2908,7 +2908,7 @@ const EditTalent = () => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label pay-info">
-                          Profession / Skills (Choose any 1-5)
+                        Select 1 to 5 profession/skills that showcase your talents, experience, and passion
                           <span className="mandatory">*</span>
                         </label>
                         <div>
@@ -3090,8 +3090,10 @@ const EditTalent = () => {
                     ))}
                   </div>
                 </div>
-                <div className="kids-form-title">
-                  Select 1 to 6 categories relevant to your profile
+                <div className="kids-form-section col-md-12 mb-3">
+                <label className="form-label"></label>
+                {/* <div className="kids-form-title"> */}
+                Select 1 to 6  company / client categories that best reflect your skills and interests for portfolio and job notifications
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">

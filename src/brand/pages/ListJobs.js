@@ -191,7 +191,8 @@ const ListJobs = () => {
         .catch((err) => { });
     } else {
       setMessage(
-        "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
+        "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
+       // "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
         // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
       );
       setOpenPopUp(true);
@@ -304,6 +305,7 @@ const ListJobs = () => {
               >
                 Draft Jobs
               </div>
+    
               <div
                 className={
                   postedJobs
@@ -316,6 +318,7 @@ const ListJobs = () => {
               >
                 Posted Jobs
               </div>
+             
             </div>
 
             {allJobsList && allJobsList.length > 0 && (
@@ -365,7 +368,7 @@ const ListJobs = () => {
                                         job?.country,
                                       ]
                                         .filter(Boolean)
-                                        .join(", ")}
+                                        .join(", ")|| "No Data Added"}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
@@ -434,6 +437,113 @@ const ListJobs = () => {
                                 </div>
                               </div>
                               <div className="campaigns-wrapper-two">
+  <div className="campaign-company">
+    <div className="campaign-company-wrapper">
+      {job?.hiringCompany ? (
+        <>
+          <div className="campaign-initial">
+            {job.hiringCompany.charAt(0)}
+          </div>
+          <div className="campaign-company-name">
+            {job.hiringCompany}
+          </div>
+        </>
+      ) : null}
+    </div>
+
+    <div className="job-card-buttons">
+      <div className="manage-dropdown">
+        <div className="dropdown">
+          <button
+            className="btn manage-btn dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Manage
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a
+                className="dropdown-item"
+                onClick={() => {
+                  setAlertpop({
+                    status: true,
+                    jobId: job?._id,
+                    jobType: job?.type,
+                    label: "edit",
+                  });
+                }}
+              >
+                Edit Job
+              </a>
+            </li>
+          
+
+              {job?.type === "Posted" && ( // ✅ Only show "Share Job" for posted jobs
+                  <li>
+                    <a className="dropdown-item" onClick={() => shareJob(job)}>
+                      Share Job
+                    </a>
+                  </li>
+                )}
+
+            <li>
+              <a
+                className="dropdown-item"
+                onClick={() => {
+                  setAlertpop({
+                    status: true,
+                    jobId: job?._id,
+                    jobType: job?.type,
+                    label: "delete",
+                  });
+                }}
+              >
+                Delete Job
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {job?.type === "Draft" && (
+        <div
+          className="post-work-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            setAlertpop({
+              status: true,
+              jobId: job?._id,
+              jobType: job?.type,
+              label: "post-job",
+              jobObject: job,
+            });
+          }}
+        >
+          <i className="bi bi-briefcase-fill post-work-icon"></i>
+          <div className="post-campaign-text">Post Job</div>
+        </div>
+      )}
+
+      {job?.type === "Posted" && (
+        <div
+          className="preview-work-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            PreviewJob(job?._id);
+          }}
+        >
+          <i className="bi bi-eye-fill post-work-icon"></i>
+          <div className="preview-campaign-text">Preview Job</div>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+                              {/* <div className="campaigns-wrapper-two">
                                 <div className="campaign-company">
                                   {job?.hiringCompany && (
                                     <div className="campaign-company-wrapper">
@@ -545,7 +655,7 @@ const ListJobs = () => {
                                     )}
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </>

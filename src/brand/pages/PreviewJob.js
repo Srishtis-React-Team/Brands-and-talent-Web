@@ -222,7 +222,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         jobData?.country,
                       ]
                         .filter(Boolean)
-                        .join(", ")}
+                        .join(", ")|| "No Data Added"}
                     </span>
                   </span>
                 </span>

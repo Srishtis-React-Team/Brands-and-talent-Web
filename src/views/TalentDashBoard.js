@@ -216,19 +216,20 @@ const TalentDashBoard = () => {
 
   const applyjobs = async (data) => {
     if (talentData?.accountBlock == false) {
-      if (talentData?.planName == "Basic") {
-        let upgradeMessage;
-        if (talentData?.planName === "Basic") {
-          upgradeMessage = "Upgrade to Pro to apply for this job.";
-        }
-        setMessage(`${upgradeMessage}`);
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 4000);
-      } else if (
+      // if (talentData?.planName == "Basic") {
+      //   let upgradeMessage;
+      //   if (talentData?.planName === "Basic") {
+      //     upgradeMessage = "Upgrade to Pro to apply for this job.";
+      //   }
+      //   setMessage(`${upgradeMessage}`);
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //   }, 4000);
+      // } else
+      if (
         talentData?.planName?.includes("Pro") ||
-        talentData?.planName == "Premium"
+        talentData?.planName == "Premium" ||talentData?.planName == "Basic"
       ) {
         setModalData(data);
         if (data?.isApplied != "Applied") {

@@ -167,12 +167,12 @@ const Login = () => {
               const pendingJobTitle = localStorage.getItem("pendingJobTitle")
               console.log("pendingJobTitle",pendingJobId)
               if (pendingJobId) {
-                
+               
                 localStorage.removeItem("pendingJobId");
                 localStorage.removeItem("pendingJobTitle");
                 navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
               } else {
-                
+               
                 if (resData.data.type === "adult") {
                   navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
                   // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
