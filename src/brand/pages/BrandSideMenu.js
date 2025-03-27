@@ -146,7 +146,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     if (brandData?.planName != "Basic") {
       navigate("/message");
     } else {
-      setMessage("Upgrade to pro plan to message a talent");
+      setMessage("Upgrade to pro or premium plan to message a talent");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);

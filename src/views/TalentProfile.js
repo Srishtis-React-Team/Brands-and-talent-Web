@@ -376,7 +376,7 @@ const TalentProfile = () => {
         setOpenPopUp(false);
       }, 2000);
     } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to Pro plan to use this feature");
+      setMessage("Please upgrade to Pro or Premium plan to use this feature");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);
@@ -2724,7 +2724,7 @@ const TalentProfile = () => {
                               {reviews && (
                                 <>
                                   <div className="msgs">
-                                    Upgrade to pro plan to view talent reviews
+                                  Upgrade your plan to Pro or Premium to view talent reviews
                                   </div>
                                   <button
                                     className="view-cv"

@@ -1081,10 +1081,25 @@ const GetBooked = () => {
                                 {item?.jobType} <i className="bi bi-dot"></i>
                               </span>
                               <span className="job-company_dtls">
+  <i className="bi bi-geo-alt-fill location-icon"></i>
+  {item?.state || item?.city ? (
+    <>
+      {item?.state ? item.state : ""} 
+      {item?.state && item?.city ? ", " : ""}
+      {item?.city ? item.city : ""} 
+    </>
+  ) : (
+    "No data added"
+  )}
+  <i className="bi bi-dot"></i> {/* Always render dot */}
+</span>
+
+                              {/* <span className="job-company_dtls">
                                 <i className="bi bi-geo-alt-fill location-icon"></i>
                                 {item?.state}, {item?.city}{" "}
                                 <i className="bi bi-dot"></i>
-                              </span>
+                                
+                              </span> */}
                               <span className="job-company_dtls">
                                 {item?.employmentType}{" "}
                                 <i className="bi bi-dot"></i>
