@@ -99,10 +99,10 @@ const TalentSideMenu = ({ myState }) => {
     await ApiHelper.post(`${API.allowPermission}`, formData)
       .then((resData) => {
         if (resData?.data?.msg == "Yes") {
-          navigate("/message");
+          navigate("/messages");
         } else if (resData?.data?.msg == "No") {
           if (talentData?.planName !== "Basic") {
-            navigate("/message");
+            navigate("/messages");
           } else {
             setMessage("Please upgrade to pro plan to use this feature");
             setOpenPopUp(true);
@@ -254,7 +254,7 @@ const TalentSideMenu = ({ myState }) => {
           <div
             onClick={handleMessages}
             className={
-              location.pathname === "/message"
+              location.pathname === "/messages"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

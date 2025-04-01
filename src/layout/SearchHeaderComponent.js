@@ -343,7 +343,7 @@ const SearchHeaderComponent = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/list-jobs") {
+    } else if (route === "/my-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You must be logged in");
@@ -405,7 +405,7 @@ const SearchHeaderComponent = ({ onData }) => {
       } else if (currentUserId && currentUser_type == "brand") {
         navigate(route);
       }
-    } else if (route === "/favorite-talents") {
+    } else if (route === "/favourite-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You must be logged in");

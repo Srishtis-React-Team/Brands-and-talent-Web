@@ -1566,3 +1566,15 @@
 .model-job-icons {
   color: #c2114b !important;
 }
+
+
+.bio-action-buttons {
+  display: flex;
+  gap: 10px; /* Adjust the space between the buttons */
+  align-items: center;
+}
+
+.edit-profileimg-btn,
+.cancel-edit-btn {
+  margin-right: 10px; /* Optional: Adds space between the buttons */
+}

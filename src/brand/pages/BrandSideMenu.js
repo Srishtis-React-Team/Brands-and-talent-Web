@@ -144,7 +144,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   };
   const handleMessages = () => {
     if (brandData?.planName != "Basic") {
-      navigate("/message");
+      navigate("/messages");
     } else {
       setMessage("Upgrade to pro or premium plan to message a talent");
       setOpenPopUp(true);
@@ -294,9 +294,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           </div>
 
           <Link
-            to="/list-jobs"
+            to="/my-jobs"
             className={
-              location.pathname === "/list-jobs"
+              location.pathname === "/my-jobs"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -320,9 +320,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           </Link>
 
           <Link
-            to="/favorite-talents"
+            to="/favourite-talents"
             className={
-              location.pathname === "/favorite-talents"
+              location.pathname === "/favourite-talents"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -348,7 +348,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           <div
             onClick={handleMessages}
             className={
-              location.pathname === "/message"
+              location.pathname === "/messages"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

@@ -134,7 +134,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   useEffect(() => {}, [talentData]);
 
   const gotomessage = (item) => {
-    navigate(`/message?${item?.brandId}`);
+    navigate(`/messages?${item?.brandId}`);
   };
 
   const createHandleMenuClick = (menuItem) => {
@@ -479,7 +479,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                         </div>
 
                         <div className="navTxt">
-                          <NavLink to="/message">Messages</NavLink>
+                          <NavLink to="/messages">Messages</NavLink>
                         </div>
 
                         <div className="navTxt">

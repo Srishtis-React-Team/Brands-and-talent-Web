@@ -150,7 +150,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate("/list-jobs", {
+            navigate("/my-jobs", {
               state: {
                 jobId: resData?.data?.data?._id,
               },

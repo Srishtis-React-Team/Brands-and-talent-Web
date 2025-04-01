@@ -699,7 +699,7 @@ const TalentProfile = () => {
     await ApiHelper.post(`${API.findPlan}`, formData)
       .then((resData) => {
         if (resData?.data?.status == true) {
-          navigate(`/message?${talentData?._id}`);
+          navigate(`/messages?${talentData?._id}`);
         } else if (resData?.data?.status == false) {
           setMessage(`${resData?.data?.message}`);
           setOpenPopUp(true);

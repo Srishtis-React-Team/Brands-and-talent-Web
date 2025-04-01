@@ -294,6 +294,12 @@ const EditTalent = () => {
   );
   const [videoUrl, setVideoUrl] = useState("");
   const [completedJobs, setCompletedJobs] = useState("");
+  //added
+  const [isEditing, setIsEditing] = useState(false); // State to track if we are editing or viewing the bio
+  const [bio, setBio] = useState(talentData?.childAboutYou || ''); // Initial bio data
+  const [bioError, setBioError] = useState(false); // State for bio validation
+ 
+ //added
 
   const [audioUrl, setAudioUrl] = useState("");
   const [checkVideoUrl, setCheckVideoUrl] = useState(false);
@@ -301,6 +307,8 @@ const EditTalent = () => {
   const [initialUrl, setInitialUrl] = useState("");
   const [urls, setUrls] = useState([]);
   const [audioUrlsList, setAudioUrlsList] = useState([]);
+  
+ 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -317,6 +325,9 @@ const EditTalent = () => {
       zIndex: 9999,
     }),
   };
+
+
+
 
   const maritalStatusOptions = [
     "Single",
@@ -846,6 +857,7 @@ const EditTalent = () => {
           age: age,
           publicUrl: publicUrl,
           noOfJobsCompleted: completedJobs,
+          childAboutYou: aboutYou,  // Updating the childAboutYou field for adults
         };
         await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
           .then((resData) => {
@@ -926,6 +938,15 @@ const EditTalent = () => {
       setLastNameLetterError(false);
     }
   };
+
+  //added
+  const removeHtmlTags = (htmlContent) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    return tempDiv.textContent || tempDiv.innerText || '';
+  };
+  
+  //aded
 
   const handleLastNameKeyPress = (e) => {
     if (e.key === "Backspace") {
@@ -1748,6 +1769,77 @@ const EditTalent = () => {
         setIsLoading(false);
       });
   };
+
+  //added
+  const handleBioChange = (e) => {
+    setBio(e.target.value); // Update bio state with the new value
+  };
+
+
+  
+  // // Handle the bio submission to update it
+  const handleSubmit = async () => {
+    let formData = {
+      childAboutYou: bio,
+    };
+  
+    setIsLoading(true);
+  
+    let apiUrl;
+    if (talentData?.type === "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type === "adults") {
+      apiUrl = API.updateAdults;
+    }
+  
+    try {
+      const resData = await ApiHelper.post(`${apiUrl}${talentId}`, formData);
+      if (resData.data.status === true) {
+        setIsLoading(false);
+        setMessage("Bio updated successfully");
+        setIsEditing(false);
+        scrollToTop();
+        setOpenPopUp(true);
+  
+        // ✅ Update both talentData and bio to reflect new content
+        setTalentData((prev) => ({
+          ...prev,
+          childAboutYou: bio,
+        }));
+  
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+      } else {
+        setIsLoading(false);
+        setMessage(resData.data.message);
+        setOpenPopUp(true);
+  
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      setMessage("Error updating bio. Please try again.");
+      setOpenPopUp(true);
+  
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+    }
+  };
+  
+  // ✅ Ensure bio has the latest value when editing
+  const handleEditClick = () => {
+    setBio(talentData?.childAboutYou || ""); // Sync bio with latest content
+    setIsEditing(true);
+  };
+  
+ 
+  
+
+  //added
   const submitSocialMedia = async () => {
     let formData = {
       features: features,
@@ -1981,13 +2073,19 @@ const EditTalent = () => {
     if (audioUrlsList.length >= maxUrls) {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
+        upgradeMessage = "To add more videos, please upgrade to pro or premium membership plan.";//Upgrade to Pro or Premium to add more URLs.";
       } else if (talentData?.planName === "Pro") {
         upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
       }
       setMessage(
-        `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+        talentData?.planName === "Basic"
+          ? upgradeMessage
+          : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
       );
+      // setMessage(
+        
+      //   `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+      // );
       setOpenPopUp(true);
       setTimeout(() => {
         setAudioUrl("");
@@ -2067,14 +2165,20 @@ const EditTalent = () => {
         if (urls.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
+            upgradeMessage ="To add more videos, please upgrade to pro or premium membership plan.";/// "Upgrade to Pro or Premium to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
           }
 
           setMessage(
-            `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+            talentData?.planName === "Basic"
+              ? upgradeMessage
+              : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
           );
+
+          // setMessage(
+          //   `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+          // );
           setOpenPopUp(true);
           setTimeout(() => {
             setVideoUrl("");
@@ -2399,10 +2503,17 @@ const EditTalent = () => {
                   {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />
+               
 
                 <Tab
                   label="CV"
                   {...a11yProps(7)}
+                  style={{ textTransform: "capitalize" }}
+                />
+
+                <Tab
+                  label="Bio"
+                  {...a11yProps(8)}
                   style={{ textTransform: "capitalize" }}
                 />
 
@@ -2412,6 +2523,7 @@ const EditTalent = () => {
                   style={{ textTransform: "capitalize" }}
                 /> */}
               </Tabs>
+              
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="profile-image-edit-section  mt-5">
@@ -2456,7 +2568,7 @@ const EditTalent = () => {
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Legal First Name
-                          <span className="mandatory">*</span>
+                          {/* <span className="mandatory">*</span> */}
                         </label>
                         <input
                           type="text"
@@ -2507,7 +2619,7 @@ const EditTalent = () => {
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
                         Legal First Name
-                        <span className="mandatory">*</span>
+                        {/* <span className="mandatory">*</span> */}
                       </label>
                       <input
                         type="text"
@@ -2908,7 +3020,7 @@ const EditTalent = () => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label pay-info">
-                        Select 1 to 5 profession/skills that showcase your talents, experience, and passion
+                        Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion
                           <span className="mandatory">*</span>
                         </label>
                         <div>
@@ -3093,7 +3205,7 @@ const EditTalent = () => {
                 <div className="kids-form-section col-md-12 mb-3">
                 <label className="form-label"></label>
                 {/* <div className="kids-form-title"> */}
-                Select 1 to 6  company / client categories that best reflect your skills and interests for portfolio and job notifications
+                Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">
@@ -3571,6 +3683,7 @@ const EditTalent = () => {
                       )}
                     </div>
                   </div>
+                  
                   <div className="row">
                     <div className="col-md-6">
                       {talentData?.videoAudioUrls?.length === 0 && (
@@ -4058,6 +4171,8 @@ const EditTalent = () => {
                 </>
               )}
             </CustomTabPanel>
+
+           
             <CustomTabPanel value={valueTabs} index={7}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
@@ -4178,6 +4293,69 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
+        {/* added    */}
+        <CustomTabPanel value={valueTabs} index={8}>
+  <div className="update-portfolio-cards-wrapper">
+    <div className="bio-update-container">
+      {/* Check if we are editing */}
+      {isEditing ? (
+        // If in edit mode, show the textarea
+        <div>
+          <textarea
+            value={bio}
+            onChange={handleBioChange} // Handle bio change
+            placeholder="Tell us about yourself"
+            className={bioError ? 'error' : ''}
+            rows="4"
+            cols="50"
+          ></textarea>
+          {bioError && <p className="error-message">Bio field cannot be empty</p>}
+
+          {/* Combined button for Update Bio and Cancel Edit */}
+          <div className="bio-action-buttons">
+            <Button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className={isLoading ? 'loading' : 'edit-profileimg-btn'}
+              variant="text"
+              style={{ textTransform: 'capitalize' }}
+            >
+              {isLoading ? 'Updating...' : 'Update Bio'}
+            </Button>
+
+            {/* <Button
+              onClick={() => setIsEditing(false)} // Cancel edit mode
+              className="cancel-edit-btn"
+              variant="text"
+              style={{ textTransform: 'capitalize' }}
+            >
+              Cancel Edit
+            </Button> */}
+          </div>
+        </div>
+      ) : (
+        // If not in edit mode, display the bio (or the default placeholder if empty)
+        <p className="bio-display-text">
+          {talentData?.childAboutYou ? removeHtmlTags(talentData?.childAboutYou) : 'No bio available'}
+        </p>
+      )}
+
+      {/* Edit button */}
+      {!isEditing && (
+        <Button
+          onClick={() => setIsEditing(true)} // Set to edit mode
+          className="edit-profileimg-btn"
+          variant="text"
+          style={{ textTransform: 'capitalize' }}
+        >
+          Edit Bio
+        </Button>
+      )}
+    </div>
+  </div>
+</CustomTabPanel>
+
+
             {/* <CustomTabPanel value={valueTabs} index={7}>
               Reviews
             </CustomTabPanel> */}
@@ -4194,7 +4372,7 @@ const EditTalent = () => {
                   <span className="edit-profile-navigation-text">Back</span>
                 </div>
               )}
-              {!((talentData?.planName === "Basic" || talentData?.planName !== "Basic") && (valueTabs === 7 || valueTabs === 8)) && (
+              {!((talentData?.planName === "Basic" || talentData?.planName !== "Basic") && (valueTabs === 8 || valueTabs === 8)) && (
                 <div
                   className="edit-profile-navigation-btn"
                   onClick={() => {

@@ -1283,7 +1283,7 @@ const KidsformOne = () => {
                         <div className="kids-form-section">
                           <div className="mb-3">
                             <label className="form-label pay-info">
-                            Select 1 to 5 profession/skills that showcase your talents, experience, and passion
+                            Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion
                               <span className="mandatory">*</span>
                             </label>
                             <div>
@@ -1468,7 +1468,7 @@ const KidsformOne = () => {
                       </div>
                     </div>
                     <div className="kids-form-title-sub">
-                    Select 1 to 6  company / client categories that best reflect your skills and interests for portfolio and job notifications
+                    Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications
                       <span className="mandatory">*</span>
                     </div>
                     <div className="category-list">
