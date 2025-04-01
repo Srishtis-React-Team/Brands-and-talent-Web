@@ -223,7 +223,7 @@ const TalentHome = () => {
         <div className="brand-content-main">
           <div className="brand-headings-wrapper mobilevw">
             <div className="create-job-title w-50">
-              Welcome To Brands and Talent
+              Welcome To Brands & Talent
             </div>
             <div className="sample-profile" onClick={sampleProfileNavigate}>
               View Sample Profile

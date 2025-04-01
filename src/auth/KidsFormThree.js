@@ -267,14 +267,18 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         if (urls?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro to add more URLs.";
+            upgradeMessage = "To add more videos, please upgrade to pro or premium membership plan.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
-
           setMessage(
-            `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+            talentData?.planName === "Basic"
+              ? upgradeMessage
+              : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
           );
+          // setMessage(
+          //   `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+          // );
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);
@@ -330,14 +334,18 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         if (audioUrlsList?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro to add more URLs.";
+            upgradeMessage ="To add more audios, please upgrade to pro or premium membership plan.";/// "Upgrade to Pro to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
-
           setMessage(
-            `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
+            talentData?.planName === "Basic"
+              ? upgradeMessage
+              : `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
           );
+          // setMessage(
+          //   `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
+          // );
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);

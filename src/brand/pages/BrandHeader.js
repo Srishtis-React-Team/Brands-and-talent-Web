@@ -110,7 +110,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   };
 
   const gotomessage = (item) => {
-    navigate(`/message?${item?.talentId}`);
+    navigate(`/messages?${item?.talentId}`);
   };
 
   const getBrandNotification = async () => {
@@ -258,13 +258,13 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                         <NavLink to="/find-talent">Invite To Apply</NavLink>
                       </div>
                       <div className="navTxt">
-                        <NavLink to="/list-jobs">My Jobs</NavLink>
+                        <NavLink to="/my-jobs">My Jobs</NavLink>
                       </div>
                       <div className="navTxt">
                         <NavLink to="/applicants">Applicants</NavLink>
                       </div>
                       <div className="navTxt">
-                        <NavLink to="/favorite-talents">
+                        <NavLink to="/favourite-talents">
                           Favourite Talents
                         </NavLink>
                       </div>
@@ -272,7 +272,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                         <NavLink to="/brand-notification">Notification</NavLink>
                       </div>
                       <div className="navTxt">
-                        <NavLink to="/message">Messages</NavLink>
+                        <NavLink to="/messages">Messages</NavLink>
                       </div>
                       <div className="navTxt">
                         <NavLink to="/edit-brand-profile">Edit Profile</NavLink>

@@ -460,7 +460,7 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/list-jobs") {
+    } else if (route === "/my-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You must be logged in");
@@ -522,7 +522,7 @@ const Header = ({ onData }) => {
       } else if (currentUserId && currentUser_type == "brand") {
         navigate(route);
       }
-    } else if (route === "/favorite-talents") {
+    } else if (route === "/favourite-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You must be logged in");
@@ -840,19 +840,19 @@ const Header = ({ onData }) => {
                 <NavLink to="/find-talent">Invite To Apply</NavLink>
               </div>
               <div className="navTxt">
-                <NavLink to="/list-jobs">My Jobs</NavLink>
+                <NavLink to="/my-jobs">My Jobs</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/applicants">Applicants</NavLink>
               </div>
               <div className="navTxt">
-                <NavLink to="/favorite-talents">Favourite Talents</NavLink>
+                <NavLink to="/favourite-talents">Favourite Talents</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/brand-notification">Notification</NavLink>
               </div>
               <div className="navTxt">
-                <NavLink to="/message">Messages</NavLink>
+                <NavLink to="/messages">Messages</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/edit-brand-profile">Edit Profile</NavLink>

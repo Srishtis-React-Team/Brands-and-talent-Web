@@ -72,7 +72,7 @@ const BrandHome = () => {
     navigate("/create-jobs");
   };
   const listJob = () => {
-    navigate("/list-jobs");
+    navigate("/my-jobs");
   };
 
   const planBenefits = [
@@ -376,7 +376,7 @@ const BrandHome = () => {
                   </div>
                 </div>
               </div>
-              <div className="brand-plan-section">
+              {/* <div className="brand-plan-section">
                 <div className="planImg">
                   <img className="plan-backdrop-image" src={girl1} alt="" />
                 </div>
@@ -423,7 +423,7 @@ const BrandHome = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

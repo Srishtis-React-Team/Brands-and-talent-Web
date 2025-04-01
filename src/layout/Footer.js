@@ -263,7 +263,7 @@ const Footer = (props) => {
 
   const handleNavigationJobClick = () => {
     if (!currentUserId) {
-      setMessage("You must be logged in");
+      setMessage("Login as a Brand to use this feature");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -285,18 +285,20 @@ const Footer = (props) => {
 
   const handleNavigationBookedClick = () => {
     if (!currentUserId) {
-      setMessage("You must be logged in");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate("/login");
-      }, 1000);
+      navigate("/get-booked");
+      // setMessage("You must be logged in");
+      // setOpenPopUp(true);
+      // setTimeout(function () {
+      //   setOpenPopUp(false);
+      //   navigate("/login");
+      // }, 1000);
     }
-    if (currentUserType === "talent" && currentUserId) {
+    else if (currentUserType === "talent" && currentUserId) {
       navigate("/talent-dashboard");
-    } else if (currentUserType === "brand") {
+    } else if (currentUserType === "brand" && currentUserId) {
       navigate("/get-booked");
     } 
+  
   };
 
 

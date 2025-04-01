@@ -541,7 +541,7 @@ function Routing() {
             }
           />
           <Route
-            path="/list-jobs"
+            path="/my-jobs"
             element={
               <Suspense fallback={<Spinner />}>
                 <ListJobs />
@@ -581,7 +581,7 @@ function Routing() {
             }
           />
           <Route
-            path="/favorite-talents"
+            path="/favourite-talents"
             element={
               <Suspense fallback={<Spinner />}>
                 <BrandFavorites />
@@ -613,7 +613,7 @@ function Routing() {
             }
           />
           <Route
-            path="/message"
+            path="/messages"
             element={
               <Suspense fallback={<Spinner />}>
                 <MessageTalents />

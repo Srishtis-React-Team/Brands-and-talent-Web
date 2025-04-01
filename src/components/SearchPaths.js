@@ -17,7 +17,7 @@ const SearchPaths = () => {
     ...(currentUserType == "brand"
       ? [
           { routes: "/post-job", label: "Post Job" },
-          { routes: "/list-jobs", label: "List Jobs" },
+          { routes: "/my-jobs", label: "List Jobs" },
           { routes: "/create-jobs", label: "Create Jobs" },
           { routes: "/edit-brand-profile", label: "Edit Brand Profile" },
           { routes: "/brand-settings", label: "Brand Settings" },

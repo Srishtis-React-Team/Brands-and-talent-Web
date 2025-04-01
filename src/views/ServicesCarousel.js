@@ -176,7 +176,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         talentData?.planName != "Basic" &&
         talentData?.accountBlock == false
       ) {
-        navigate(`/message?${talentData?._id}`);
+        navigate(`/messages?${talentData?._id}`);
       } else if (talentData?.accountBlock == true) {
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
@@ -202,7 +202,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         brandData?.accountBlock == false && currentPlanName !=="Basic" && accountBlock ==false
       ) {
        
-        navigate(`/message?${talentData?._id}`);
+        navigate(`/messages?${talentData?._id}`);
       } else if (brandData?.accountBlock == true) {
         
         setMessage("Please upgrade your plan to access your profile");
@@ -214,7 +214,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
       } else if (talentData?.planName === "Basic" && currentPlanName !== "Basic") {
        
       
-        navigate(`/message?${talentData?._id}`);
+        navigate(`/messages?${talentData?._id}`);
        
       } else if (
         talentData?.planName !== "Basic" &&
@@ -248,11 +248,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         talentData?.accountBlock == false && currentPlanName !== "Basic" && accountBlock ==false
       ) {
        
-        navigate(`/message?${talentData?._id}`);
+        navigate(`/messages?${talentData?._id}`);
       }
       else if (talentData?.accountBlock == true) {
      
-        navigate(`/message?${talentData?._id}`);
+        navigate(`/messages?${talentData?._id}`);
        
       }
       else if (accountBlock == true) {
@@ -278,7 +278,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         brandData?.planName !== "Basic" &&
         brandData?.accountBlock == false
       ) {
-        navigate(`/message?${talentData?._id}`);
+        navigate(`/messages?${talentData?._id}`);
       } else if (brandData?.accountBlock == true) {
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);

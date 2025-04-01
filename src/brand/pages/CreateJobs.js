@@ -1047,6 +1047,7 @@ const handleForms = (tabName) => {
   };
   const handleApplyOption = (event) => {
     setSelectedApplyOption(event.target.value);
+    setHowLikeToApply(event.target.value);
     setApplyOptionError(false); // Clear error on selection
   };
   const selectEmploymentType = (event) => {
@@ -1363,6 +1364,7 @@ const handleForms = (tabName) => {
     }
   };
   const createGigs = async (type) => {
+ 
     if (type == "draft") {
       
       setIsDraftLoading(true);
@@ -1381,9 +1383,9 @@ const handleForms = (tabName) => {
     if (jobType === "") {
       setjobTypeError(true);
     }
-  // if(howLikeToApply===""){
-  //   setApplyOptionError(true);
-  // }
+  if(howLikeToApply===""){
+    setApplyOptionError(true);
+  }
   if(selectedApplyOption===""){
     setApplyOptionError(true);
   }
@@ -1406,10 +1408,15 @@ const handleForms = (tabName) => {
     if (skills.length == 0) {
       setSkillError(true);
     }
+    console.log("test 4",howLikeToApply)
+      
     if (
       jobTitle !== "" &&
       jobType !== "" &&
       skills !== "" &&
+      howLikeToApply!==""&&
+      howLikeToApply!==undefined&&
+      howLikeToApply!==null&&
     //  country !== "" &&
       category !== "" &&
       selectedApplyOption !== "" &&
@@ -1478,60 +1485,87 @@ const handleForms = (tabName) => {
         youTubeMax: youTubeMax,
         applyDescription: applyDescription,
       };
-
-      await ApiHelper.post(API.draftJob, formData)
+     
+        await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
+        
+          
+          
           if (resData.data.status === true) {
             if (type == "draft") {
              setIsDraftLoading(false);
-              
-              navigate("/list-jobs"); 
-            } else if (type == "post") {
+             navigate("/my-jobs", { state: { activeTab: "draft-jobs" } });
+            //  navigate("/list-jobs"); 
+            }
+            else if (type == "post") {
               setIsLoading(false);
             
-            // setMessage("Kindly review the job!");
-            // navigate("/preview-job", {
-            //   state: {
-            //     jobId: resData?.data?.data?._id,
-            //   },
-            // });
-            setMessage("Kindly review the job!");
-
-            setTimeout(() => {
-              setMessage(""); // Clear the message after a longer duration (e.g., 5 seconds)
-
-              navigate("/preview-job", {
-                state: {
-                  jobId: resData?.data?.data?._id,
-                },
-              });
-            }, 5000); // Display message for 5 seconds before navigating
-          
-            setOpenPopUp(true);
+              // Step 1: Show the "Kindly review the job!" message in a popup
+              setMessage("Kindly review the job!");
+              setOpenPopUp(true);
             
-            setTimeout(function () {
-              setOpenPopUp(false);
-              if (brandData?.planName === "Basic") {
-                setMessage(
-                  "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
-                  //"Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
-                );
-                setOpenPopUp(true);
-                setTimeout(function () {
-                  setOpenPopUp(false);
-                  navigate("/list-jobs");
-                }, 3000);
-              } else {
+              setTimeout(() => {
+                setOpenPopUp(false);
+            
+                // Step 2: Navigate to the preview job page (for both Basic and non-Basic plans)
                 navigate("/preview-job", {
                   state: {
                     jobId: resData?.data?.data?._id,
                   },
                 });
-              }
-            }, 2000);
-          } //added from 1460
+              }, 3000);
+              
+            }  
+          //   else if (type == "post") {
+          //     setIsLoading(false);
+            
+          //   // setMessage("Kindly review the job!");
+          //   // navigate("/preview-job", {
+          //   //   state: {
+          //   //     jobId: resData?.data?.data?._id,
+          //   //   },
+          //   // });
+          //   setMessage("Kindly review the job!");
+            
+          //   setTimeout(() => {
+           
+          //     setMessage(""); // Clear the message after a longer duration (e.g., 5 seconds)
+
+          //     navigate("/preview-job", {
+          //       state: {
+          //         jobId: resData?.data?.data?._id,
+          //       },
+          //     });
+          //   }, 3000); // Display message for 5 seconds before navigating
+          
+          //   setOpenPopUp(true);
+            
+          //   setTimeout(function () {
+          //     setOpenPopUp(false);
+          //     if (brandData?.planName === "Basic") {
+                
+          //       setMessage(
+          //         "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
+          //         //"Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
+          //       );
+          //       setOpenPopUp(true);
+          //       setTimeout(function () {
+          //         setOpenPopUp(false);
+          //         navigate("/list-jobs");
+          //       }, 3000);
+          //     } 
+          //     else {
+          //       navigate("/preview-job", {
+          //         state: {
+          //           jobId: resData?.data?.data?._id,
+          //         },
+          //       });
+          //     }
+          //   }, 2000);
+          // } //added from 1460
          
-          } else if (resData.data.status === false) {
+          }
+           else if (resData.data.status === false) {
             if (type == "draft") {
               setIsDraftLoading(false);
             } else if (type == "post") {
@@ -1548,6 +1582,8 @@ const handleForms = (tabName) => {
           }
         })
         .catch((err) => { });
+      
+     
     } else {
       setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
@@ -2270,7 +2306,7 @@ const handleForms = (tabName) => {
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-0">
                             <label className="form-label">
-                            Company / Client Category
+                            Job Category
                             
                               <span className="mandatory">*</span>
                             </label>
@@ -4205,6 +4241,24 @@ const handleForms = (tabName) => {
                 <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                   {/* Render the "Preview & Save Draft" button only if not editing */}
   
+                  {/* {!editData?.value && (
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            createGigs("draft")
+              .then(() => {
+                navigate("/list-jobs", { state: { activeTab: "draft-jobs" } });
+              })
+              .catch((error) => {
+                console.error("Error saving draft:", error);
+                navigate("/list-jobs", { state: { activeTab: "draft-jobs" } });
+              });
+          }}
+          className="createjob-btn"
+        >
+          {isDraftLoading ? "Loading..." : "Save Draft"}
+        </div>
+      )} */}
 
                    {!editData?.value && (
                     <div
