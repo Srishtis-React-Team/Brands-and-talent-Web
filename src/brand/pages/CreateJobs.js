@@ -231,6 +231,10 @@ const CreateJobs = () => {
 
   const [youTubeMinError, setYouTubeMinError] = useState("");
   const [youTubeMaxError, setYouTubeMaxError] = useState("");
+  //const [activeTab, setActiveTab] = useState("jobs"); // Default tab
+  const [activeTab, setActiveTab] = useState("jobs"); // Default tab
+  
+
 
   useEffect(() => {
     if (minPay && maxPay && parseInt(minPay) > parseInt(maxPay)) {
@@ -245,6 +249,8 @@ const CreateJobs = () => {
       setMaxPayError(""); // Clear error if valid
     }
   }, [minPay, maxPay]);
+
+
 
   useEffect(() => {
     if (
@@ -334,7 +340,7 @@ const CreateJobs = () => {
       setSelectedApplyOption(editData?.selectedApplyOption);
       setHiringCompany(editData?.hiringCompany);
       setSelectedBenefits(editData?.benefits);
-      setSelectedApplyOption(editData?.howLikeToApply);
+     // setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
       setInstaMin(editData?.instaMin);
@@ -488,6 +494,12 @@ const CreateJobs = () => {
     setIsDuplicateJob(true);
   };
 
+  
+
+const handleForms = (tabName) => {
+  setActiveTab(tabName); // Switch tab to 'draft-jobs'
+};
+
   const getJobsByID = async (jobId, type) => {
     if (type == "Posted") {
       const formData = {
@@ -519,11 +531,17 @@ const CreateJobs = () => {
         .catch((err) => { });
     }
   };
-
+ 
   useEffect(() => {
+   
     let initialHowToApply = [
-      `<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
+      `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+       <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}.Please include ${jobTitle} in the subject line.</p>`,
+
     ];
+   
+    
+    //`<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
 
     const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
@@ -549,7 +567,7 @@ const CreateJobs = () => {
         ? editJobData.applyDescription.join(" ").trim()
         : initialHowToApply[0];
 
-
+        
     // Convert HTML content to Draft.js content block
     const contentBlock = convertFromHTML(applyDescriptionContent);
 
@@ -628,7 +646,7 @@ const CreateJobs = () => {
   );
   const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
-  const [parentCountryError, setParentCountryError] = useState(false);
+  //const [parentCountryError, setParentCountryError] = useState(false);
   const [stateError, setStateError] = useState(false);
   const [cityError, setCityError] = useState(false);
   const [professionError, setProfessionError] = useState(false);
@@ -664,6 +682,7 @@ const CreateJobs = () => {
   const [kidsLegalLastName, setKidsLegalLastName] = useState("");
   const [kidsCity, setKidsCity] = useState("");
   const [jobType, setjobType] = useState("");
+  const [howLikeToApply, setHowLikeToApply] = useState("");
   const [gender, setGender] = useState([]);
   const [genderError, setGenderError] = useState("");
   const [nationality, setNationality] = useState([]);
@@ -690,16 +709,20 @@ const CreateJobs = () => {
   const [age, setAge] = useState("");
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [jobCurrency, setJobCurrency] = useState("");
-  const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
+ // const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
   const [hiringCompany, setHiringCompany] = useState("");
   const [dobError, setDobError] = useState(false);
   const [category, setCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
   const [applyDescription, setApplyDescription] = useState([]);
+  const [selectedApplyOption, setSelectedApplyOption] = useState("");
+  const [applyOptionError, setApplyOptionError] = useState(false);
 
-  const handleApplyOption = (e) => {
-    setSelectedApplyOption(e.target.value);
-  };
+  // const handleApplyOption = (e) => {
+  //   setSelectedApplyOption(e.target.value);
+  // };
+
+
 
   const [selectedOption, setCompensationChange] =
     useState("paid_collaboration");
@@ -921,6 +944,8 @@ const CreateJobs = () => {
 
   useEffect(() => { }, [updateDisabled]);
 
+ 
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -1022,6 +1047,11 @@ const CreateJobs = () => {
   const selectjobType = (event) => {
     setjobType(event.target.value);
     setjobTypeError(false);
+  };
+  const handleApplyOption = (event) => {
+    setSelectedApplyOption(event.target.value);
+    setHowLikeToApply(event.target.value);
+    setApplyOptionError(false); // Clear error on selection
   };
   const selectEmploymentType = (event) => {
     setEmploymentType(event.target.value);
@@ -1137,7 +1167,7 @@ const CreateJobs = () => {
   };
 
   const handleSelectedCountry = (event) => {
-    setParentCountryError(false);
+   // setParentCountryError(false);
 
     setCountry(event?.value);
     getStates(event?.value);
@@ -1205,9 +1235,9 @@ const CreateJobs = () => {
     if (jobCurrency === "") {
       setJobCurrencyError(true);
     }
-    if (country === "") {
-      setParentCountryError(true);
-    }
+    // if (country === "") {
+    //   setParentCountryError(true);
+    // }
     if (state === "") {
       setStateError(true);
     }
@@ -1220,12 +1250,19 @@ const CreateJobs = () => {
     if (employmentType == "") {
       setEmploymentError(true);
     }
+    // if(howLikeToApply==""){
+    //   setApplyOptionError(true);
+    // }
+    if(selectedApplyOption==""){
+      setApplyOptionError(true);
+    }
 
     if (
       jobTitle !== "" &&
       jobType !== "" &&
+      selectedApplyOption !== "" &&
       skills !== "" &&
-      country !== "" &&
+     // country !== "" &&
       category !== "" &&
       employmentType !== ""
     ) {
@@ -1255,7 +1292,7 @@ const CreateJobs = () => {
         hiringCompany: hiringCompany,
         whyWorkWithUs: whyWorkWithUs,
         hiringCompanyDescription: clientDescription,
-        howLikeToApply: selectedApplyOption,
+        howLikeToApply:selectedApplyOption,
         workSamples: portofolioFile,
         brandImage: brandImage,
         lastDateForApply: lastdateApply,
@@ -1330,7 +1367,9 @@ const CreateJobs = () => {
     }
   };
   const createGigs = async (type) => {
+ 
     if (type == "draft") {
+      
       setIsDraftLoading(true);
     } else if (type == "post") {
       setIsLoading(true);
@@ -1347,13 +1386,19 @@ const CreateJobs = () => {
     if (jobType === "") {
       setjobTypeError(true);
     }
+  if(howLikeToApply===""){
+    setApplyOptionError(true);
+  }
+  if(selectedApplyOption===""){
+    setApplyOptionError(true);
+  }
 
     if (jobCurrency === "") {
       setJobCurrencyError(true);
     }
-    if (country === "") {
-      setParentCountryError(true);
-    }
+    // if (country === "") {
+    //   setParentCountryError(true);
+    // }
     if (category == "") {
       setCategoryError(true);
     }
@@ -1366,12 +1411,18 @@ const CreateJobs = () => {
     if (skills.length == 0) {
       setSkillError(true);
     }
+    console.log("test 4",howLikeToApply)
+      
     if (
       jobTitle !== "" &&
       jobType !== "" &&
       skills !== "" &&
-      country !== "" &&
+      howLikeToApply!==""&&
+      howLikeToApply!==undefined&&
+      howLikeToApply!==null&&
+    //  country !== "" &&
       category !== "" &&
+      selectedApplyOption !== "" &&
       employmentType !== "" &&
       !minAgeError &&
       !maxAgeError &&
@@ -1417,7 +1468,7 @@ const CreateJobs = () => {
         hiringCompany: hiringCompany,
         whyWorkWithUs: whyWorkWithUs,
         hiringCompanyDescription: clientDescription,
-        howLikeToApply: selectedApplyOption,
+        howLikeToApply:selectedApplyOption,
         workSamples: portofolioFile,
         brandId: brandId,
         brandImage: brandImage,
@@ -1437,53 +1488,87 @@ const CreateJobs = () => {
         youTubeMax: youTubeMax,
         applyDescription: applyDescription,
       };
-
-      await ApiHelper.post(API.draftJob, formData)
+     
+        await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
+        
+          
+          
           if (resData.data.status === true) {
             if (type == "draft") {
-              setIsDraftLoading(false);
-            } else if (type == "post") {
-              setIsLoading(false);
+             setIsDraftLoading(false);
+             navigate("/my-jobs", { state: { activeTab: "draft-jobs" } });
+            //  navigate("/list-jobs"); 
             }
-            // setMessage("Kindly review the job!");
-            // navigate("/preview-job", {
-            //   state: {
-            //     jobId: resData?.data?.data?._id,
-            //   },
-            // });
-            setMessage("Kindly review the job!");
-
-            setTimeout(() => {
-              setMessage(""); // Clear the message after a longer duration (e.g., 5 seconds)
-
-              navigate("/preview-job", {
-                state: {
-                  jobId: resData?.data?.data?._id,
-                },
-              });
-            }, 5000); // Display message for 5 seconds before navigating
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              if (brandData?.planName === "Basic") {
-                setMessage(
-                  "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
-                );
-                setOpenPopUp(true);
-                setTimeout(function () {
-                  setOpenPopUp(false);
-                  navigate("/list-jobs");
-                }, 3000);
-              } else {
+            else if (type == "post") {
+              setIsLoading(false);
+            
+              // Step 1: Show the "Kindly review the job!" message in a popup
+              setMessage("Kindly review the job!");
+              setOpenPopUp(true);
+            
+              setTimeout(() => {
+                setOpenPopUp(false);
+            
+                // Step 2: Navigate to the preview job page (for both Basic and non-Basic plans)
                 navigate("/preview-job", {
                   state: {
                     jobId: resData?.data?.data?._id,
                   },
                 });
-              }
-            }, 2000);
-          } else if (resData.data.status === false) {
+              }, 3000);
+              
+            }  
+          //   else if (type == "post") {
+          //     setIsLoading(false);
+            
+          //   // setMessage("Kindly review the job!");
+          //   // navigate("/preview-job", {
+          //   //   state: {
+          //   //     jobId: resData?.data?.data?._id,
+          //   //   },
+          //   // });
+          //   setMessage("Kindly review the job!");
+            
+          //   setTimeout(() => {
+           
+          //     setMessage(""); // Clear the message after a longer duration (e.g., 5 seconds)
+
+          //     navigate("/preview-job", {
+          //       state: {
+          //         jobId: resData?.data?.data?._id,
+          //       },
+          //     });
+          //   }, 3000); // Display message for 5 seconds before navigating
+          
+          //   setOpenPopUp(true);
+            
+          //   setTimeout(function () {
+          //     setOpenPopUp(false);
+          //     if (brandData?.planName === "Basic") {
+                
+          //       setMessage(
+          //         "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
+          //         //"Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
+          //       );
+          //       setOpenPopUp(true);
+          //       setTimeout(function () {
+          //         setOpenPopUp(false);
+          //         navigate("/list-jobs");
+          //       }, 3000);
+          //     } 
+          //     else {
+          //       navigate("/preview-job", {
+          //         state: {
+          //           jobId: resData?.data?.data?._id,
+          //         },
+          //       });
+          //     }
+          //   }, 2000);
+          // } //added from 1460
+         
+          }
+           else if (resData.data.status === false) {
             if (type == "draft") {
               setIsDraftLoading(false);
             } else if (type == "post") {
@@ -1500,6 +1585,8 @@ const CreateJobs = () => {
           }
         })
         .catch((err) => { });
+      
+     
     } else {
       setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
@@ -1910,6 +1997,20 @@ const CreateJobs = () => {
     setYouTubeMax(event.target.value); // Update the state with the new value
   };
 
+  useEffect(() => {
+    if (jobTitle) {
+      const updatedHowToApply = `
+        <p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${jobTitle}</strong> in the subject line.</p>
+      `;
+      setApplyDescription([updatedHowToApply]);
+
+      const applyDescriptionContentBlocks = convertFromHTML(updatedHowToApply);
+      const applyDescriptionContentState = ContentState.createFromBlockArray(applyDescriptionContentBlocks);
+      setEditorStateApplyDescription(EditorState.createWithContent(applyDescriptionContentState));
+    }
+  }, [jobTitle]); // Runs whenever jobTitle changes
+
   const duplicateJob = () => {
     if (editJobData) {
       setSelectedTab("create-job");
@@ -1929,7 +2030,7 @@ const CreateJobs = () => {
       setSelectedApplyOption(editJobData?.selectedApplyOption);
       setHiringCompany(editJobData?.hiringCompany);
       setSelectedBenefits(editJobData?.benefits);
-      setSelectedApplyOption(editJobData?.howLikeToApply);
+      //setSelectedApplyOption(editJobData?.howLikeToApply);
       setPortofolioFile(editJobData?.workSamples);
       setJobCurrency(editJobData?.jobCurrency);
       setInstaMin(editJobData?.instaMin);
@@ -1948,7 +2049,26 @@ const CreateJobs = () => {
       setState(editJobData.state);
       getStates(editJobData.country);
       setKidsCity(editJobData.city);
-      setApplyDescription(editJobData?.applyDescription);
+
+        // Set Apply Description to initialHowToApply[0] when duplicating job
+
+        //addedd
+         // Set other job details
+      setApplyDescription([
+        `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${editJobData?.jobTitle}</strong> in the subject line.</p>`
+      ]);
+
+      
+    // const initialHowToApply = [
+    //   `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+    //    <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include ${editJobData?.jobTitle} in the subject line.</p>`
+    // ];
+    // setApplyDescription([initialHowToApply[0]]);
+    // console.log("initialHowToApply[0]",initialHowToApply[0])
+
+    //addedd
+     // setApplyDescription(editJobData?.applyDescription);  //2/4 matti
 
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersList.find((option) => option?.label === gender);
@@ -2059,18 +2179,24 @@ const CreateJobs = () => {
 
       //aadeddd
 
-      const applyDescriptionhtmlContent = editJobData?.applyDescription[0];
-      const applyDescriptionContentBlocks = convertFromHTML(
-        applyDescriptionhtmlContent
-      );
-      const applyDescriptionContentState = ContentState.createFromBlockArray(
-        applyDescriptionContentBlocks
-      );
-      const updateApplyDescription = EditorState.createWithContent(
-        applyDescriptionContentState
-      );
-      setEditorStateApplyDescription(updateApplyDescription);
-      setApplyDescription(editJobData?.applyDescription);
+      console.log("editJobData?.applyDescription[0];",editJobData?.applyDescription[0])
+
+
+    //  const applyDescriptionhtmlContent = editJobData?.applyDescription[0]; //2/4 matti
+      const applyDescriptionContentBlocks = convertFromHTML(applyDescription[0]);
+      const applyDescriptionContentState = ContentState.createFromBlockArray(applyDescriptionContentBlocks);
+      setEditorStateApplyDescription(EditorState.createWithContent(applyDescriptionContentState));
+      // const applyDescriptionContentBlocks = convertFromHTML(
+      //   applyDescriptionhtmlContent
+      // );
+      // const applyDescriptionContentState = ContentState.createFromBlockArray(
+      //   applyDescriptionContentBlocks
+      // );
+      // const updateApplyDescription = EditorState.createWithContent(
+      //   applyDescriptionContentState
+      // );
+      // setEditorStateApplyDescription(updateApplyDescription);
+      // setApplyDescription(editJobData?.applyDescription);
 
       //adeddd
       const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
@@ -2222,7 +2348,8 @@ const CreateJobs = () => {
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-0">
                             <label className="form-label">
-                              Category
+                            Job Category
+                            
                               <span className="mandatory">*</span>
                             </label>
                             <select
@@ -2233,7 +2360,7 @@ const CreateJobs = () => {
                               style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
-                                Select Category
+                              Job Category
                               </option>
                               {categoryList.map((option, index) => (
                                 <option
@@ -2278,7 +2405,8 @@ const CreateJobs = () => {
                           </div> */}
                           <div className="mb-0">
                             <label className="form-label">
-                              Country<span className="mandatory">*</span>
+                              Country
+                              {/* <span className="mandatory">*</span> */}
                             </label>
                             {/* <Select
                               placeholder="Search country..."
@@ -2306,11 +2434,11 @@ const CreateJobs = () => {
                               styles={customStylesProfession}
                             />
 
-                            {parentCountryError && (
+                            {/* {parentCountryError && (
                               <div className="invalid-fields">
                                 Please select Country
                               </div>
-                            )}
+                            )} */}
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
@@ -3954,6 +4082,7 @@ const CreateJobs = () => {
                 <div className="kids-form-section col-md-12 mb-3">
                   <label className="form-label">
                     How Would You Like to Receive Applications?
+                    <span className="mandatory">*</span>
                   </label>
                   <div className="application-condition-wrapper">
                     <div className="application-condition-radios">
@@ -3970,7 +4099,7 @@ const CreateJobs = () => {
                         className="compensation-labels form-label"
                         htmlFor="easy_apply"
                       >
-                        Easy Apply
+                        Quick apply
                       </label>
                     </div>
                     <div className="easy-apply-description">
@@ -3980,7 +4109,7 @@ const CreateJobs = () => {
                               to receive and manage applications directly
                               through your dashboard on this plaform.) */}
                       Make it simple for applicants to apply with one click.
-                      Choose "Easy Apply" to receive and manage applications
+                      Choose "Quick apply" to receive and manage applications
                       directly through your dashboard on our platform.
                     </div>
                   </div>
@@ -4035,6 +4164,12 @@ const CreateJobs = () => {
                       </div>
                     )}
                   </div>
+                  {applyOptionError && (
+                            <div className="invalid-fields">
+                            Please select how you would like to receive applications.
+                            </div>
+                          )}
+                
                 </div>
 
                 <div
@@ -4147,17 +4282,39 @@ const CreateJobs = () => {
 
                 <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                   {/* Render the "Preview & Save Draft" button only if not editing */}
-                  {!editData?.value && (
+  
+                  {/* {!editData?.value && (
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            createGigs("draft")
+              .then(() => {
+                navigate("/list-jobs", { state: { activeTab: "draft-jobs" } });
+              })
+              .catch((error) => {
+                console.error("Error saving draft:", error);
+                navigate("/list-jobs", { state: { activeTab: "draft-jobs" } });
+              });
+          }}
+          className="createjob-btn"
+        >
+          {isDraftLoading ? "Loading..." : "Save Draft"}
+        </div>
+      )} */}
+
+                   {!editData?.value && (
                     <div
                       onClick={(e) => {
                         e.preventDefault();
+                       
                         createGigs("draft");
                       }}
+                     
                       className="createjob-btn"
                     >
                       {isDraftLoading ? "Loading..." : "Save Draft"}
                     </div>
-                  )}
+                  )}  
 
                   {/* Render the "Update Job" button only if editing */}
                   {editData?.value && (
@@ -4250,6 +4407,8 @@ const CreateJobs = () => {
                           </div>
                         </div>
                       </div>
+
+                     
 
                       <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                         <div

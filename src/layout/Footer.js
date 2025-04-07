@@ -73,19 +73,19 @@ const Footer = (props) => {
     await ApiHelper.post(API.fetchContentByType, formData)
       .then((resData) => {
         if (resData) {
-          console.log("resDataresData",resData)
-          console.log("nnnnnnnnnnnnnnnnnnnnnnnn",resData?.data?.data?.content)
-          
+          console.log("resDataresData", resData)
+          console.log("nnnnnnnnnnnnnnnnnnnnnnnn", resData?.data?.data?.content)
+
           setCopyRightList(resData?.data?.data?.content);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   useEffect(() => {
     console.log(copyRightList, "copyRightList");
   }, [copyRightList]);
   const copyRightContent = copyRightList;
- 
+
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
@@ -96,7 +96,7 @@ const Footer = (props) => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const subscribe = async () => {
@@ -228,7 +228,7 @@ const Footer = (props) => {
           setContentsList(resData?.data?.data?.items[0]);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleNavigationClick = () => {
@@ -241,7 +241,7 @@ const Footer = (props) => {
       }, 1000);
     } else if (currentUserType === "brand" && currentUserId) {
       navigate("/find-talent");
-    } 
+    }
     // else if (
     //   currentUserType === "talent" &&
     //   talentData?.planName == "Basic"
@@ -253,13 +253,56 @@ const Footer = (props) => {
     //     navigate("/pricing");
     //   }, 3000);
     // }
-     else if (
+    else if (
       currentUserType === "talent" &&
       talentData?.planName != "Basic"
     ) {
       navigate("/find-talent");
     }
   };
+
+  const handleNavigationJobClick = () => {
+    if (!currentUserId) {
+      setMessage("Login as a Brand to use this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
+    }else if (currentUserType === "brand" && currentUserId) {
+      // Navigate to /create-jobs
+      window.location.href = "/create-jobs";
+    } else if (currentUserType === "talent") {
+      // Show message if the user is talent
+      setMessage("Please login as a brand to post a job.");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
+    }
+  };
+
+  const handleNavigationBookedClick = () => {
+    if (!currentUserId) {
+      navigate("/get-booked");
+      // setMessage("You must be logged in");
+      // setOpenPopUp(true);
+      // setTimeout(function () {
+      //   setOpenPopUp(false);
+      //   navigate("/login");
+      // }, 1000);
+    }
+    else if (currentUserType === "talent" && currentUserId) {
+      navigate("/talent-dashboard");
+    } else if (currentUserType === "brand" && currentUserId) {
+      navigate("/get-booked");
+    } 
+  
+  };
+
+
+  
 
   return (
     <>
@@ -414,12 +457,21 @@ const Footer = (props) => {
                 {/* <li>
                   <Link onClick={handleAirtableClick}>Register as Talent</Link>
                 </li> */}
+
+
                 <li onClick={() => handleNavigationClick()}>
                   <Link>Hire Talent</Link>
                 </li>
                 <li onClick={() => openModal()}>
                   <Link>Register as Talent</Link>
                 </li>
+                <li onClick={() => handleNavigationJobClick()}>
+                  <Link>Post a Job</Link>
+                </li>
+                <li onClick={() => handleNavigationBookedClick()}>
+                  <Link>Get Booked</Link>
+                </li>
+
 
                 {!currentUserId && (
                   <>
@@ -446,6 +498,8 @@ const Footer = (props) => {
                     </li>
                   </>
                 )}
+
+               
 
                 {/* <li>
                   <Link to="/resources" onClick={handleClick}>
@@ -583,9 +637,9 @@ const Footer = (props) => {
                   }}
                 ></i>
               </div>
-              <div style={{display:'flex',gap:'10px', marginTop:'10px'}}>
-                <span style={{fontWeight: 'bold'}}>We accept: </span>
-                <img style={{height:'22px'}} src={weAccept}></img>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <span style={{ fontWeight: 'bold' }}>We accept: </span>
+                <img style={{ height: '22px' }} src={weAccept}></img>
               </div>
             </div>
           </div>
@@ -598,14 +652,14 @@ const Footer = (props) => {
         </div>
 
         <section>
-        <div className="copyright-section">
-        <p className="descp" dangerouslySetInnerHTML={{ __html: copyRightContent }}></p>
-        <p>
-          <Link onClick={() => {}} to="/feedback">
-            <span className="feedback">Feedback & Reporting</span>
-          </Link>
-        </p>
-      </div>
+          <div className="copyright-section">
+            <p className="descp" dangerouslySetInnerHTML={{ __html: copyRightContent }}></p>
+            <p>
+              <Link onClick={() => { }} to="/feedback">
+                <span className="feedback">Feedback & Reporting</span>
+              </Link>
+            </p>
+          </div>
           {/* <div className="copyright-section">
             <p>
               © 2024 Brands & Talent Management | All Rights Reserved |

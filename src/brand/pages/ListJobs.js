@@ -14,7 +14,7 @@ import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
-import { useNavigate } from "react-router";
+import { useNavigate,useLocation } from "react-router";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
 import { NavLink } from "react-router-dom";
@@ -45,6 +45,27 @@ const ListJobs = () => {
   };
 
   useEffect(() => { }, [brandData]);
+
+  useEffect(() => {
+    const brandId = localStorage.getItem("brandId"); // Fetch brandId from localStorage
+  
+    if (!brandId) {
+      localStorage.setItem("type", "post job"); // Set type=post job in localStorage
+      console.log("Type saved:", localStorage.getItem("type")); // Debugging log
+
+      setMessage("You must be logged in");
+      setOpenPopUp(true);
+  
+      const timer = setTimeout(() => {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
+  
+      return () => clearTimeout(timer); // Cleanup function to prevent memory leaks
+    }
+  }, []);
+  
+
 
   const navigate = useNavigate();
 
@@ -77,6 +98,11 @@ const ListJobs = () => {
   const [draftJobs, showDraftJobs] = useState(false);
   const [postedJobs, showPostedJobs] = useState(false);
   const [allJobsList, setAllJobsList] = useState([]);
+  const location = useLocation();
+  
+  const [activeTab, setActiveTab] = useState("all-jobs");
+
+ 
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -84,16 +110,19 @@ const ListJobs = () => {
 
   function handleForms(e) {
     if (e == "all-jobs") {
+      setActiveTab(e);
       showAllJobs(true);
     } else {
       showAllJobs(false);
     }
     if (e == "draft-jobs") {
+      setActiveTab(e);
       showDraftJobs(true);
     } else {
       showDraftJobs(false);
     }
     if (e == "posted-jobs") {
+      setActiveTab(e);
       showPostedJobs(true);
     } else {
       showPostedJobs(false);
@@ -147,10 +176,19 @@ const ListJobs = () => {
   };
 
   useEffect(() => {
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location.state]);
+
+ 
+
+  useEffect(() => {
     if (allJobs && brandId != null) {
       getAllJobs("all-jobs", brandId);
     }
   }, [allJobs, brandId]);
+
 
   useEffect(() => {
     if (draftJobs && brandId != null) {
@@ -165,6 +203,7 @@ const ListJobs = () => {
   }, [postedJobs]);
 
   useEffect(() => { }, [allJobsList]);
+ 
 
   const postJob = async () => {
     if (alertpop?.jobObject?.adminApproved == true) {
@@ -189,14 +228,20 @@ const ListJobs = () => {
           }
         })
         .catch((err) => { });
-    } else {
+    }
+   
+    
+     else {
       setMessage(
-        "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
-       // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+        "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
+       // "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
+        // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
       );
       setOpenPopUp(true);
-      setTimeout(function () {
+      
+       setTimeout(function () {
         setOpenPopUp(false);
+       
         // setAllJobsList(resData.data.data, "resData.data.data");
         getAllJobs();
       }, 3000);
@@ -234,6 +279,64 @@ const ListJobs = () => {
       .catch((err) => { });
   };
 
+  const shareJob = async (job) => {
+    try {
+      const formattedJobTitle = job?.jobTitle
+        ?.trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
+  
+      const currentUserId = job?.brandId;
+      const currentUserType = "brand";
+  
+      localStorage.setItem("currentUserId", currentUserId);
+      localStorage.setItem("userId", currentUserId);
+      localStorage.setItem("currentUserType", currentUserType);
+  
+      const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${job?.jobId}`;
+  
+      const previewText = `Brands & Talent\n` +
+        `${jobUrl}`;
+  
+      await navigator.clipboard.writeText(previewText);
+  
+      setMessage("Job link copied to clipboard!");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+  
+  // const shareJob = async (job) => {
+  //   try {
+     
+  //     const formattedJobTitle = job?.jobTitle?.replace(/\s+/g, "-");
+  //     const currentUserId = job?.brandId; // Get brandId as userId
+  //     const currentUserType ="brand" // Get brandId as userId
+
+  //     localStorage.setItem("currentUserId", currentUserId);
+  //     localStorage.setItem("userId", currentUserId);
+  //     localStorage.setItem("currentUserType", currentUserType);
+     
+  //     const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${job?.jobId} `;
+  
+  //     await navigator.clipboard.writeText(jobUrl);
+  //     setMessage("Job link copied to clipboard!");
+  //     setOpenPopUp(true);
+  //     setTimeout(() => {
+  //       setOpenPopUp(false);
+  //     }, 2000);
+  //   } catch (err) {
+  //     console.error("Failed to copy:", err);
+  //   }
+  // };
+    
+
+
   return (
     <>
       <>
@@ -253,7 +356,15 @@ const ListJobs = () => {
           <div className="brand-content-main boxBg">
             <div className="create-job-title">My Jobs</div>
             <div className="individual-talent-tabs">
-              <div
+            <div
+        className={`individual-talent-tab-first ${
+          activeTab === "all-jobs" ? "individual-talent-tab-first-active-tab" : ""
+        }`}
+        onClick={() => handleForms("all-jobs")}
+      >
+        All Jobs
+      </div>
+              {/* <div
                 className={
                   allJobs
                     ? "individual-talent-tab-first-active-tab  individual-talent-tab-first"
@@ -264,8 +375,14 @@ const ListJobs = () => {
                 }}
               >
                 All Jobs
-              </div>
+              </div> */}
               <div
+        className={`individual-talent-tab ${activeTab === "draft-jobs" ? "active-tab" : ""}`}
+        onClick={() => handleForms("draft-jobs")}
+      >
+        Draft Jobs
+      </div>
+              {/* <div
                 className={
                   draftJobs
                     ? "active-tab individual-talent-tab"
@@ -276,8 +393,16 @@ const ListJobs = () => {
                 }}
               >
                 Draft Jobs
-              </div>
-              <div
+              </div> */}
+               <div
+        className={`individual-talent-tab ${activeTab === "posted-jobs" ? "active-tab" : ""}`}
+        onClick={() => handleForms("posted-jobs")}
+      >
+        Posted Jobs
+      </div>
+
+    
+              {/* <div
                 className={
                   postedJobs
                     ? "active-tab individual-talent-tab"
@@ -288,7 +413,8 @@ const ListJobs = () => {
                 }}
               >
                 Posted Jobs
-              </div>
+              </div> */}
+             
             </div>
 
             {allJobsList && allJobsList.length > 0 && (
@@ -338,7 +464,7 @@ const ListJobs = () => {
                                         job?.country,
                                       ]
                                         .filter(Boolean)
-                                        .join(", ")}
+                                        .join(", ")|| "No Data Added"}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
@@ -407,6 +533,113 @@ const ListJobs = () => {
                                 </div>
                               </div>
                               <div className="campaigns-wrapper-two">
+  <div className="campaign-company">
+    <div className="campaign-company-wrapper">
+      {job?.hiringCompany ? (
+        <>
+          <div className="campaign-initial">
+            {job.hiringCompany.charAt(0)}
+          </div>
+          <div className="campaign-company-name">
+            {job.hiringCompany}
+          </div>
+        </>
+      ) : null}
+    </div>
+
+    <div className="job-card-buttons">
+      <div className="manage-dropdown">
+        <div className="dropdown">
+          <button
+            className="btn manage-btn dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Manage
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a
+                className="dropdown-item"
+                onClick={() => {
+                  setAlertpop({
+                    status: true,
+                    jobId: job?._id,
+                    jobType: job?.type,
+                    label: "edit",
+                  });
+                }}
+              >
+                Edit Job
+              </a>
+            </li>
+          
+
+              {job?.type === "Posted" && ( // ✅ Only show "Share Job" for posted jobs
+                  <li>
+                    <a className="dropdown-item" onClick={() => shareJob(job)}>
+                      Share Job
+                    </a>
+                  </li>
+                )}
+
+            <li>
+              <a
+                className="dropdown-item"
+                onClick={() => {
+                  setAlertpop({
+                    status: true,
+                    jobId: job?._id,
+                    jobType: job?.type,
+                    label: "delete",
+                  });
+                }}
+              >
+                Delete Job
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {job?.type === "Draft" && (
+        <div
+          className="post-work-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            setAlertpop({
+              status: true,
+              jobId: job?._id,
+              jobType: job?.type,
+              label: "post-job",
+              jobObject: job,
+            });
+          }}
+        >
+          <i className="bi bi-briefcase-fill post-work-icon"></i>
+          <div className="post-campaign-text">Post Job</div>
+        </div>
+      )}
+
+      {job?.type === "Posted" && (
+        <div
+          className="preview-work-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            PreviewJob(job?._id);
+          }}
+        >
+          <i className="bi bi-eye-fill post-work-icon"></i>
+          <div className="preview-campaign-text">Preview Job</div>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+                              {/* <div className="campaigns-wrapper-two">
                                 <div className="campaign-company">
                                   {job?.hiringCompany && (
                                     <div className="campaign-company-wrapper">
@@ -450,6 +683,15 @@ const ListJobs = () => {
                                               Edit Job
                                             </a>
                                           </li>
+
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={() => shareJob(job)}
+                                            >
+                                          Share Job
+                                            </a>
+                                          </li>
                                           <li>
                                             <a
                                               className="dropdown-item"
@@ -468,6 +710,7 @@ const ListJobs = () => {
                                         </ul>
                                       </div>
                                     </div>
+
                                     {job?.type == "Draft" && (
                                       <>
                                         <div
@@ -508,7 +751,7 @@ const ListJobs = () => {
                                     )}
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </>

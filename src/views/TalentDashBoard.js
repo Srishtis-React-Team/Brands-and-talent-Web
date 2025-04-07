@@ -216,19 +216,20 @@ const TalentDashBoard = () => {
 
   const applyjobs = async (data) => {
     if (talentData?.accountBlock == false) {
-      if (talentData?.planName == "Basic") {
-        let upgradeMessage;
-        if (talentData?.planName === "Basic") {
-          upgradeMessage = "Upgrade to Pro to apply for this job.";
-        }
-        setMessage(`${upgradeMessage}`);
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 4000);
-      } else if (
+      // if (talentData?.planName == "Basic") {
+      //   let upgradeMessage;
+      //   if (talentData?.planName === "Basic") {
+      //     upgradeMessage = "Upgrade to Pro to apply for this job.";
+      //   }
+      //   setMessage(`${upgradeMessage}`);
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //   }, 4000);
+      // } else
+      if (
         talentData?.planName?.includes("Pro") ||
-        talentData?.planName == "Premium"
+        talentData?.planName == "Premium" ||talentData?.planName == "Basic"
       ) {
         setModalData(data);
         if (data?.isApplied != "Applied") {
@@ -562,18 +563,23 @@ const TalentDashBoard = () => {
   const contactUs = () => {
     navigate("/contact-support");
   };
-
   const shareJob = async (item) => {
-    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
-    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-    //const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
-    const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
-const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+    const formattedJobTitle = item?.jobTitle
+        ?.trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
+        const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${item?.jobId}`;
+  
+        const previewText = `Brands & Talent\n` +
+          `${jobUrl}`;
 
-
+   
+     // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+ 
 
     try {
-      await navigator.clipboard.writeText(jobUrl);
+      await navigator.clipboard.writeText(previewText);;
       // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
       setMessage("Job link copied to clipboard!");
       setOpenPopUp(true);
@@ -584,6 +590,27 @@ const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.
       console.error("Failed to copy:", err);
     }
   };
+//   const shareJob = async (item) => {
+//     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+//     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+//     //const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+//     const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+// const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+
+
+
+//     try {
+//       await navigator.clipboard.writeText(jobUrl);
+//       // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+//       setMessage("Job link copied to clipboard!");
+//       setOpenPopUp(true);
+//       setTimeout(function () {
+//         setOpenPopUp(false);
+//       }, 2000);
+//     } catch (err) {
+//       console.error("Failed to copy:", err);
+//     }
+//   };
   console.log("roilokipoffa-9412@yopmail.com",filterState)
 
   return (

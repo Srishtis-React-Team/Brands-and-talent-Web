@@ -17,7 +17,7 @@ const SearchPaths = () => {
     ...(currentUserType == "brand"
       ? [
           { routes: "/post-job", label: "Post Job" },
-          { routes: "/list-jobs", label: "List Jobs" },
+          { routes: "/my-jobs", label: "List Jobs" },
           { routes: "/create-jobs", label: "Create Jobs" },
           { routes: "/edit-brand-profile", label: "Edit Brand Profile" },
           { routes: "/brand-settings", label: "Brand Settings" },
@@ -57,7 +57,7 @@ const SearchPaths = () => {
     // { routes: "/favorite-talents", label: "Favorite Talents" },
 
     { routes: "/careers", label: "Careers" },
-    { routes: "/become-affiliate", label: "Become Affiliate" },
+    { routes: "/become-an-affiliate", label: "Become Affiliate" },
     { routes: "/investors", label: "Investors" },
     { routes: "/feedback", label: "Feedback Reporting" },
     { routes: "/about-us", label: "About Us" }, // Common route for all users

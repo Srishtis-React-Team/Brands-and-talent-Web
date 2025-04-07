@@ -70,17 +70,18 @@ const TalentSideMenu = ({ myState }) => {
 
   const handleNavigation = () => {
     if (talentData?.accountBlock == false) {
-      if (talentData?.adminApproved === true) {
-        navigate(`/edit-talent-profile?${talentData?._id}`);
-      } else {
-        setMessage(
-          "After your verification is approved, you can update your profile"
-        );
-        setOpenPopUp(true);
-        setTimeout(() => {
-          setOpenPopUp(false);
-        }, 2000);
-      }
+      navigate(`/edit-talent-profile?${talentData?._id}`);
+      // if (talentData?.adminApproved === true) {
+      //   navigate(`/edit-talent-profile?${talentData?._id}`);
+      // } else {
+      //   setMessage(
+      //     "After your verification is approved, you can update your profile"
+      //   );
+      //   setOpenPopUp(true);
+      //   setTimeout(() => {
+      //     setOpenPopUp(false);
+      //   }, 2000);
+      // }
     } else if (talentData?.accountBlock == true) {
       setMessage("Please upgrade your plan to access your profile");
       setOpenPopUp(true);
@@ -98,12 +99,12 @@ const TalentSideMenu = ({ myState }) => {
     await ApiHelper.post(`${API.allowPermission}`, formData)
       .then((resData) => {
         if (resData?.data?.msg == "Yes") {
-          navigate("/message");
+          navigate("/messages");
         } else if (resData?.data?.msg == "No") {
           if (talentData?.planName !== "Basic") {
-            navigate("/message");
+            navigate("/messages");
           } else {
-            setMessage("Please upgrade to pro plan to use this feature");
+            setMessage("To use this feature, please upgrade to a Pro or Premium membership plan.");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -253,7 +254,7 @@ const TalentSideMenu = ({ myState }) => {
           <div
             onClick={handleMessages}
             className={
-              location.pathname === "/message"
+              location.pathname === "/messages"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

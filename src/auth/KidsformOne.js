@@ -277,7 +277,7 @@ const KidsformOne = () => {
           setSelectedNationalityOptions(selectedNationalityOptions);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -460,7 +460,7 @@ const KidsformOne = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleSelectedCountry = (event) => {
@@ -493,7 +493,7 @@ const KidsformOne = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const getCities = async (data) => {
     const formData = data;
@@ -503,7 +503,7 @@ const KidsformOne = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const kidsSignUp = async () => {
@@ -615,9 +615,8 @@ const KidsformOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: `${kidsPreferedFirstName.replace(/ /g, "-")}-${
-          Math.floor(Math.random() * 900) + 100
-        }`,
+        publicUrl: `${kidsPreferedFirstName.replace(/ /g, "-")}-${Math.floor(Math.random() * 900) + 100
+          }`,
       };
       setIsLoading(true);
       if (!userId) {
@@ -1016,9 +1015,8 @@ const KidsformOne = () => {
                         </label>
                         <input
                           type="email"
-                          className={`form-control ${
-                            !isValidEmail ? "is-invalid" : "form-control"
-                          }`}
+                          className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
+                            }`}
                           onChange={handleEmailChange}
                           placeholder="Enter E-mail"
                           value={parentEmail}
@@ -1156,11 +1154,22 @@ const KidsformOne = () => {
                           )}
                           {talentPassword && passwordError && (
                             <div className="invalid-fields password-error-box">
-                              Your password must be at least 8 characters long
-                              and include at least: 1 capital letter (A, B,
-                              C...), 1 small letter (a, b, c...), 1 number (1,
-                              2, 3...), 1 special symbol (!, @, #...)
+                            Your password must be at least 8 characters long and include at least:
+                            <ul>
+                                <li>1 big letter (A, B, C…)</li>
+                                <li>1 small letter (a, b, c…)</li>
+                                <li>1 number (1, 2, 3…)</li>
+                                <li>1 special mark (!, @, #…)</li>
+                            </ul>
+                            Examples : <strong>Rosy@2025</strong>, <strong>Rina#2019</strong>, <strong>Kongka!2008</strong>, <strong>etc.</strong>
                             </div>
+                            // <div className="invalid-fields password-error-box">
+                             
+                            //   {/* Your password must be at least 8 characters long
+                            //   and include at least: 1 capital letter (A, B,
+                            //   C...), 1 small letter (a, b, c...), 1 number (1,
+                            //   2, 3...), 1 special symbol (!, @, #...) */}
+                            // </div>
                           )}
                         </div>
                       </div>
@@ -1274,7 +1283,7 @@ const KidsformOne = () => {
                         <div className="kids-form-section">
                           <div className="mb-3">
                             <label className="form-label pay-info">
-                              Profession / Skills (Choose any 1-5)
+                            Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion
                               <span className="mandatory">*</span>
                             </label>
                             <div>
@@ -1459,7 +1468,7 @@ const KidsformOne = () => {
                       </div>
                     </div>
                     <div className="kids-form-title-sub">
-                      Select 1 to 6 categories relevant to your profile
+                    Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications
                       <span className="mandatory">*</span>
                     </div>
                     <div className="category-list">

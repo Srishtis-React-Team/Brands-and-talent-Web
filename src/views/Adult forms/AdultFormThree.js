@@ -225,14 +225,18 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         if (urls?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro to add more URLs.";
+            upgradeMessage =  "To add more videos, please upgrade to pro or premium membership plan.";//"Upgrade to Pro to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
-
           setMessage(
-            `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+            talentData?.planName === "Basic"
+              ? upgradeMessage
+              : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
           );
+          // setMessage(
+          //   `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+          // );
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);
@@ -287,14 +291,19 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         if (audioUrlsList?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro to add more URLs.";
+            upgradeMessage =  "To add more audios, please upgrade to pro or premium membership plan.";//"Upgrade to Pro to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
-
           setMessage(
-            `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
+            talentData?.planName === "Basic"
+              ? upgradeMessage
+              : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
           );
+
+          // setMessage(
+          //   `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
+          // );
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);
@@ -520,7 +529,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
       if (portofolioFile?.length + imageFiles?.length > maxFiles) {
         let upgradeMessage;
         if (talentData?.planName === "Basic") {
-          upgradeMessage = "Upgrade to Pro to add more files.";
+          upgradeMessage = "Upgrade to Pro or Premium to add more files.";
         } else if (talentData?.planName === "Pro") {
           upgradeMessage = "Upgrade to Premium to add more files.";
         }
@@ -567,7 +576,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     } else {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "Upgrade to Pro to add resumes.";
+        upgradeMessage = "To add CV, please upgrade to pro or premium membership plan.";
       } else if (talentData?.planName === "Pro") {
         upgradeMessage = "Upgrade to Premium to add resumes.";
       }

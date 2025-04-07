@@ -814,7 +814,7 @@ const AdultFormOne = () => {
                           style={{ fontWeight: "bold", fontSize: "small" }}
                           className="adults-titles kids-form-title mb-2"
                         >
-                          Profession / Skills (Choose any 1-5)
+                        Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion:
                           <span className="mandatory">*</span>
                         </label>
 
@@ -1022,8 +1022,7 @@ const AdultFormOne = () => {
                   </div>
                   <div className="adults-titles kids-form-title mb-2">
                     <span style={{ fontWeight: "bold", fontSize: "small" }}>
-                      Select 1 to 6 categories that best reflect your skills and
-                      interests for portfolio and job notifications{" "}
+                    Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications{" "}
                       <span className="mandatory">*</span>
                     </span>
                   </div>

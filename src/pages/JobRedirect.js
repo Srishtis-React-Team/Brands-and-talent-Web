@@ -132,20 +132,21 @@ const JobRedirect = () => {
       return;
     } else if (userId && userType == "talent") {
       if (talentData?.accountBlock == false) {
-        if (talentData?.planName == "Basic") {
-          let upgradeMessage;
-          if (talentData?.planName === "Basic") {
-            upgradeMessage = "Upgrade to Pro to apply for this job.";
-          }
-          setMessage(`${upgradeMessage}`);
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-            navigate("/pricing");
-          }, 4000);
-        } else if (
+        // if (talentData?.planName == "Basic") {
+        //   let upgradeMessage;
+        //   if (talentData?.planName === "Basic") {
+        //     upgradeMessage = "Upgrade to Pro to apply for this job.";
+        //   }
+        //   setMessage(`${upgradeMessage}`);
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate("/pricing");
+        //   }, 4000);
+        // } else 
+        if (
           talentData?.planName?.includes("Pro") ||
-          talentData?.planName == "Premium"
+          talentData?.planName == "Premium" ||talentData?.planName == "Basic"
         ) {
           setModalData(data);
           if (data?.isApplied != "Applied") {
@@ -369,7 +370,7 @@ const JobRedirect = () => {
                                 jobData?.country,
                               ]
                                 .filter(Boolean)
-                                .join(", ")}
+                                .join(", ")|| "No Data Added"}
                             </span>
                           </span>
                         </span>

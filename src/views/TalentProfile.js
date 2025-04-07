@@ -370,13 +370,13 @@ const TalentProfile = () => {
 
   const handleOpenModal = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("The user is ineligible to receive an invitation for the job opening.");
+      setMessage("Please upgrade to Pro or Premium membership plan to invite this user.");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);
       }, 2000);
     } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to Pro plan to use this feature");
+      setMessage("Please upgrade to Pro or Premium plan to use this feature");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);
@@ -699,7 +699,7 @@ const TalentProfile = () => {
     await ApiHelper.post(`${API.findPlan}`, formData)
       .then((resData) => {
         if (resData?.data?.status == true) {
-          navigate(`/message?${talentData?._id}`);
+          navigate(`/messages?${talentData?._id}`);
         } else if (resData?.data?.status == false) {
           setMessage(`${resData?.data?.message}`);
           setOpenPopUp(true);
@@ -2724,7 +2724,7 @@ const TalentProfile = () => {
                               {reviews && (
                                 <>
                                   <div className="msgs">
-                                    Upgrade to pro plan to view talent reviews
+                                  Upgrade your plan to Pro or Premium to view talent reviews
                                   </div>
                                   <button
                                     className="view-cv"

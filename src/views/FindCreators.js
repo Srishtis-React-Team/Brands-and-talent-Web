@@ -535,7 +535,10 @@ const FindCreators = () => {
           setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
-        } else if (resData.data.status === false) {
+        } 
+        else if (resData.data.status === false) {
+         
+          setTalentList([]);
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -631,7 +634,8 @@ const FindCreators = () => {
   const toggleShowMore = (currentItem) => {
     if (!currentItem?.profession) return;
     setVisibleProfessions((prev) =>
-      Math.min(prev + 1, currentItem.profession.length)
+      prev === 2 ? currentItem.profession.length : 2
+    //  Math.min(prev + 1, currentItem.profession.length)
     );
   };
 
@@ -1024,7 +1028,9 @@ const FindCreators = () => {
                   <div className="gallery-section">
                     <div className="gallery-main find-creator-gallery-main p-0 m-0">
                       <div className="row favTalent px-2 mb-3">
-                        {talentList?.map((item) => {
+                      {talentList && talentList.length > 0 ? (
+                        talentList.map((item, index) => {
+                    
                           return (
                             <div className="col-sm-6 col-md-4 col-lg-3 px-1">
                               <div className="gallery-wrapper modalSpc mb-2">
@@ -1234,7 +1240,10 @@ const FindCreators = () => {
                               </div>
                             </div>
                           );
-                        })}
+                        })
+                      ) : (
+                        <div className="no-talent-message">No talents found</div>
+                      )}
                       </div>
                     </div>
                   </div>

@@ -211,6 +211,7 @@ const GetBooked = () => {
   };
   const viewJob = async (jobId) => {
     if (!currentUserId) {
+     
       setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -224,8 +225,9 @@ const GetBooked = () => {
           jobId: jobId,
         },
       });
-    } else if (currentUserId && currentUser_type == "brand") {
-     
+    } 
+    else if (currentUserId && currentUser_type == "brand") {
+      
       setMessage("Login as an talent to use this feature");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -234,21 +236,24 @@ const GetBooked = () => {
       }, 1000);
     }
   };
-  const shareJob = async (item) => {
-    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
-    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
 
-    
-   // const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
-   const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
-   const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+  const shareJob = async (item) => {
+    const formattedJobTitle = item?.jobTitle
+        ?.trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
+        const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${item?.jobId}`;
+  
+        const previewText = `Brands & Talent\n` +
+          `${jobUrl}`;
 
    
      // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
  
 
     try {
-      await navigator.clipboard.writeText(jobUrl);
+      await navigator.clipboard.writeText(previewText);;
       // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
       setMessage("Job link copied to clipboard!");
       setOpenPopUp(true);
@@ -259,6 +264,31 @@ const GetBooked = () => {
       console.error("Failed to copy:", err);
     }
   };
+  // const shareJob = async (item) => {
+  //   // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+  //   // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+
+    
+  //  // const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+  //  const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+  //  const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+
+   
+  //    // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+ 
+
+  //   try {
+  //     await navigator.clipboard.writeText(jobUrl);
+  //     // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+  //     setMessage("Job link copied to clipboard!");
+  //     setOpenPopUp(true);
+  //     setTimeout(function () {
+  //       setOpenPopUp(false);
+  //     }, 2000);
+  //   } catch (err) {
+  //     console.error("Failed to copy:", err);
+  //   }
+  // };
 
   const handleCloseModal = async () => {
     const formData = {
@@ -1079,10 +1109,25 @@ const GetBooked = () => {
                                 {item?.jobType} <i className="bi bi-dot"></i>
                               </span>
                               <span className="job-company_dtls">
+  <i className="bi bi-geo-alt-fill location-icon"></i>
+  {item?.state || item?.city ? (
+    <>
+      {item?.state ? item.state : ""} 
+      {item?.state && item?.city ? ", " : ""}
+      {item?.city ? item.city : ""} 
+    </>
+  ) : (
+    "No data added"
+  )}
+  <i className="bi bi-dot"></i> {/* Always render dot */}
+</span>
+
+                              {/* <span className="job-company_dtls">
                                 <i className="bi bi-geo-alt-fill location-icon"></i>
                                 {item?.state}, {item?.city}{" "}
                                 <i className="bi bi-dot"></i>
-                              </span>
+                                
+                              </span> */}
                               <span className="job-company_dtls">
                                 {item?.employmentType}{" "}
                                 <i className="bi bi-dot"></i>

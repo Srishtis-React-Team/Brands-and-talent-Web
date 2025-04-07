@@ -134,7 +134,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   useEffect(() => {}, [talentData]);
 
   const gotomessage = (item) => {
-    navigate(`/message?${item?.brandId}`);
+    navigate(`/messages?${item?.brandId}`);
   };
 
   const createHandleMenuClick = (menuItem) => {
@@ -156,17 +156,18 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
         navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
         if (talentData?.accountBlock == false) {
-          if (talentData?.adminApproved === true) {
-            navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
-          } else {
-            setMessage(
-              "After your verification is approved, you can update your profile"
-            );
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 2000);
-          }
+          navigate(`/edit-talent-profile?${talentData?._id}`);
+          // if (talentData?.adminApproved === true) {
+          //   navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+          // } else {
+          //   setMessage(
+          //     "After your verification is approved, you can update your profile"
+          //   );
+          //   setOpenPopUp(true);
+          //   setTimeout(function () {
+          //     setOpenPopUp(false);
+          //   }, 2000);
+          // }
         } else if (talentData?.accountBlock == true) {
           setMessage("Please upgrade your plan to access your profile");
           setOpenPopUp(true);
@@ -478,7 +479,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                         </div>
 
                         <div className="navTxt">
-                          <NavLink to="/message">Messages</NavLink>
+                          <NavLink to="/messages">Messages</NavLink>
                         </div>
 
                         <div className="navTxt">

@@ -388,11 +388,22 @@ const BrandSignup = React.memo((props) => {
 
                 {adultPasswordError && (
                   <div className="invalid-fields password-error-box">
-                    Your password must be at least 8 characters long and include
-                    at least: 1 capital letter (A, B, C...), 1 small letter (a,
-                    b, c...), 1 number (1, 2, 3...), 1 special symbol (!, @,
-                    #...)
+                  Your password must be at least 8 characters long and include at least:
+                  <ul>
+                  <li>1 big letter (A, B, C…)</li>
+                      <li>1 small letter (a, b, c…)</li>
+                      <li>1 number (1, 2, 3…)</li>
+                      <li>1 special mark (!, @, #…)</li>
+                  </ul>
+                  Examples : <strong>Rosy@2025</strong>, <strong>Rina#2019</strong>, <strong>Kongka!2008</strong>, <strong>etc.</strong>
                   </div>
+                  // <div className="invalid-fields password-error-box">
+                     
+                  //   {/* Your password must be at least 8 characters long and include
+                  //   at least: 1 capital letter (A, B, C...), 1 small letter (a,
+                  //   b, c...), 1 number (1, 2, 3...), 1 special symbol (!, @,
+                  //   #...) */}
+                  // </div>
                 )}
                 {passwordError && (
                   <div className="invalid-fields">Please enter Password</div>

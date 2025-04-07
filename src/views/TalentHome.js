@@ -176,17 +176,18 @@ const TalentHome = () => {
   const handleEditNavigation = () => {
     if (talentData) {
       if (talentData?.accountBlock == false) {
-        if (talentData?.adminApproved === true) {
-          navigate(`/edit-talent-profile?${talentData?._id}`);
-        } else {
-          setMessage(
-            "After your verification is approved, you can update your profile"
-          );
-          setOpenPopUp(true);
-          setTimeout(() => {
-            setOpenPopUp(false);
-          }, 2000);
-        }
+        navigate(`/edit-talent-profile?${talentData?._id}`);
+        // if (talentData?.adminApproved === true) {
+        //   navigate(`/edit-talent-profile?${talentData?._id}`);
+        // } else {
+        //   setMessage(
+        //     "After your verification is approved, you can update your profile"
+        //   );
+        //   setOpenPopUp(true);
+        //   setTimeout(() => {
+        //     setOpenPopUp(false);
+        //   }, 2000);
+        // }
       } else if (talentData?.accountBlock == true) {
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
@@ -222,7 +223,7 @@ const TalentHome = () => {
         <div className="brand-content-main">
           <div className="brand-headings-wrapper mobilevw">
             <div className="create-job-title w-50">
-              Welcome To Brands and Talent
+              Welcome To Brands & Talent
             </div>
             <div className="sample-profile" onClick={sampleProfileNavigate}>
               View Sample Profile
@@ -384,12 +385,19 @@ const TalentHome = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </div> */}
                 </div>
+                
                 <div className="doit-two col-md-4 text-center">
                   <img className="img-fluid" src={doitnow} alt="" />
                 </div>
+                {/* aadedd */}
+                <div className="sample-profile" onClick={sampleProfileNavigate}>
+                 View Sample Profile
+                </div>
+                 {/* aadedd */}
               </div>
             </div>
             <div className="doitnow">
+            
               <button
                 className="doit-btn"
                 onClick={() => {
@@ -398,8 +406,10 @@ const TalentHome = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               >
-                Update Profile Now
+                Update Profile Now 
               </button>
+
+             
             </div>
           </div>
         </div>

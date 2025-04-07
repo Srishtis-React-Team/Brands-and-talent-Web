@@ -287,19 +287,20 @@ const Header = ({ onData }) => {
       if (menuItem === "edit") {
         if (currentUser_type == "talent") {
           if (talentData?.accountBlock == false) {
-            if (talentData?.adminApproved === true) {
-              navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
-            } else {
-              handleClose();
+            navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+            // if (talentData?.adminApproved === true) {
+            //   navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+            // } else {
+            //   handleClose();
 
-              setMessage(
-                "After your verification is approved, you can update your profile"
-              );
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-              }, 2000);
-            }
+            //   setMessage(
+            //     "After your verification is approved, you can update your profile"
+            //   );
+            //   setOpenPopUp(true);
+            //   setTimeout(function () {
+            //     setOpenPopUp(false);
+            //   }, 2000);
+            // }
           } else if (talentData?.accountBlock == true) {
             setMessage("Please upgrade your plan to access your profile");
             setOpenPopUp(true);
@@ -459,7 +460,7 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/list-jobs") {
+    } else if (route === "/my-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You must be logged in");
@@ -521,7 +522,7 @@ const Header = ({ onData }) => {
       } else if (currentUserId && currentUser_type == "brand") {
         navigate(route);
       }
-    } else if (route === "/favorite-talents") {
+    } else if (route === "/favourite-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You must be logged in");
@@ -839,19 +840,19 @@ const Header = ({ onData }) => {
                 <NavLink to="/find-talent">Invite To Apply</NavLink>
               </div>
               <div className="navTxt">
-                <NavLink to="/list-jobs">My Jobs</NavLink>
+                <NavLink to="/my-jobs">My Jobs</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/applicants">Applicants</NavLink>
               </div>
               <div className="navTxt">
-                <NavLink to="/favorite-talents">Favourite Talents</NavLink>
+                <NavLink to="/favourite-talents">Favourite Talents</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/brand-notification">Notification</NavLink>
               </div>
               <div className="navTxt">
-                <NavLink to="/message">Messages</NavLink>
+                <NavLink to="/messages">Messages</NavLink>
               </div>
               <div className="navTxt">
                 <NavLink to="/edit-brand-profile">Edit Profile</NavLink>
@@ -1354,14 +1355,7 @@ const Header = ({ onData }) => {
                 we'd love to know more about you.
               </div>
               <div className="modal-buttons">
-                <div
-                  onClick={(e) => {
-                    userType("talent");
-                  }}
-                  className={talent ? "selected-register" : "choose-register"}
-                >
-                  I am a Talent
-                </div>
+               
                 <div
                   onClick={(e) => {
                     userType("brand");
@@ -1369,6 +1363,14 @@ const Header = ({ onData }) => {
                   className={brand ? "selected-register" : "choose-register"}
                 >
                   I am a Brand/Client
+                </div>
+                <div
+                  onClick={(e) => {
+                    userType("talent");
+                  }}
+                  className={talent ? "selected-register" : "choose-register"}
+                >
+                  I am a Talent
                 </div>
               </div>
               <div className="question-model">

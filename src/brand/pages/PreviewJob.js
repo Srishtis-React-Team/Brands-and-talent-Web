@@ -49,7 +49,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
-        navigate("/list-jobs", {
+        navigate("/my-jobs", {
           state: {
             jobId: jobId,
           },
@@ -91,7 +91,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate("/list-jobs", {
+            navigate("/my-jobs", {
               state: {
                 jobId: resData?.data?.data?._id,
               },
@@ -101,6 +101,12 @@ const PreviewJob = ({ data, onButtonClick }) => {
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setTimeout(function () {
+            navigate("/my-jobs", {
+              state: {
+                jobId: resData?.data?.data?._id,
+              },
+            });
+
             setOpenPopUp(false);
           }, 4000);
         }
@@ -222,7 +228,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         jobData?.country,
                       ]
                         .filter(Boolean)
-                        .join(", ")}
+                        .join(", ")|| "No Data Added"}
                     </span>
                   </span>
                 </span>
@@ -319,7 +325,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
 
                       {value.product_name && (
                         <>
-                          +&nbsp;
+                          &nbsp;
                           {isValidURL(value.product_name) ? (
                             <a
                               href={value.product_name}
@@ -744,7 +750,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
               )}
 
 
-              {jobData?.howLikeToApply !== "easy-apply" && (
+              {jobData?.howLikeToApply !== "easy-apply" ? 
                 <div className="job-about-section">
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
@@ -768,7 +774,22 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     )}
                   </div>
                 </div>
-              )}
+                  :<div className="job-about-section">
+                  <div className="job-feature-title">Quick Apply</div>
+                  <div className="job-about-values">
+                    {/* {jobData?.applyDescription ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+                        className="apply-description"
+                      />
+                    ) : ( */}
+                      <>
+                        Make it simple for applicants to apply with one click. Choose "Quick apply" to receive and manage applications directly through your dashboard on our platform.
+                       
+                      </>
+                    {/* )} */}
+                  </div>
+                </div>}
 
 
 
