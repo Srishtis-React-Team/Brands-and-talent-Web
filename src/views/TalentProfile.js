@@ -370,7 +370,7 @@ const TalentProfile = () => {
 
   const handleOpenModal = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("The user is ineligible to receive an invitation for the job opening.");
+      setMessage("Please upgrade to Pro or Premium membership plan to invite this user.");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);

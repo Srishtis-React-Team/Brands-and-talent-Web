@@ -298,6 +298,9 @@ const EditTalent = () => {
   const [isEditing, setIsEditing] = useState(false); // State to track if we are editing or viewing the bio
   const [bio, setBio] = useState(talentData?.childAboutYou || ''); // Initial bio data
   const [bioError, setBioError] = useState(false); // State for bio validation
+
+  const [messageNext, setMessageNext] = useState(""); // Holds the message to display in the popup
+  const [showPopup, setShowPopup] = useState(false); // Controls visibility of the popup
  
  //added
 
@@ -367,6 +370,8 @@ const EditTalent = () => {
       }
     }
   }, [isSubmitted, selectedCategories]);
+
+  
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
@@ -1197,7 +1202,7 @@ const EditTalent = () => {
     } else {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "Upgrade to Pro to add resumes.";
+        upgradeMessage = "To add CV, please upgrade to pro or premium membership plan.";
       } else if (talentData?.planName === "Pro") {
         upgradeMessage = "Upgrade to Premium to add resumes.";
       }
@@ -1662,6 +1667,7 @@ const EditTalent = () => {
   useEffect(() => { }, [portofolioFile]);
 
   const addService = () => {
+  
     setServices([
       ...services,
       {
@@ -1676,6 +1682,10 @@ const EditTalent = () => {
   const [serviceNameError, setServiceNameError] = useState(false);
   const [serviceAmountError, setServiceAmountError] = useState(false);
 
+
+
+
+  
   const submitServices = async () => {
     let hasError = false;
 
@@ -1835,7 +1845,21 @@ const EditTalent = () => {
     setBio(talentData?.childAboutYou || ""); // Sync bio with latest content
     setIsEditing(true);
   };
-  
+
+
+
+
+  const handleAddServiceClick = () => {
+    // Set the message for the popup when "Add Services" is clicked
+    setMessageNext("To add services, please upgrade to pro or premium membership plan");
+    setShowPopup(true); // Show the popup
+
+    // Automatically hide the popup after 3 seconds
+    setTimeout(() => {
+      setShowPopup(false); // Hide the popup after 3 seconds
+    }, 3000);
+  };
+
  
   
 
@@ -3787,8 +3811,48 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-            <CustomTabPanel value={valueTabs} index={5}>
-              {isBasic == false && (
+
+         <CustomTabPanel value={valueTabs} index={5}>
+          {/* addedd */}
+  {isBasic === true && (
+    <>
+      <div className="update-portfolio-section">
+        <div className="update-service-cards-wrapper edit-service-section-main">
+          {/* Button to trigger popup for basic members */}
+          <div
+                className="add-more-services-btn"
+                onClick={handleAddServiceClick}
+                variant="text"
+              >
+                <i className="bi bi-plus-circle-fill"></i> Add Services
+              </div>
+
+          {/* Popup that shows when showPopup is true */}
+          {showPopup && (
+            <div className="popup-container">
+              <div className="popup-message">
+                <p>{messageNext}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="add-service-btn-flex">
+            <Button
+              onClick={submitServices}
+              className="edit-profileimg-btn"
+              variant="text"
+              style={{ textTransform: "capitalize" }}
+            >
+              Submit
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  )}
+      {/* addedd */}
+
+ {isBasic == false && (
                 <>
                   <div className="update-portfolio-section">
                     <div className="update-service-cards-wrapper edit-service-section-main">
@@ -4144,7 +4208,10 @@ const EditTalent = () => {
                   </div>
                 </>
               )}
-            </CustomTabPanel>
+</CustomTabPanel>
+
+
+          
 
             <CustomTabPanel value={valueTabs} index={6}>
               {talentData && (

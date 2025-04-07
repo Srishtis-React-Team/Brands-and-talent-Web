@@ -46,6 +46,27 @@ const ListJobs = () => {
 
   useEffect(() => { }, [brandData]);
 
+  useEffect(() => {
+    const brandId = localStorage.getItem("brandId"); // Fetch brandId from localStorage
+  
+    if (!brandId) {
+      localStorage.setItem("type", "post job"); // Set type=post job in localStorage
+      console.log("Type saved:", localStorage.getItem("type")); // Debugging log
+
+      setMessage("You must be logged in");
+      setOpenPopUp(true);
+  
+      const timer = setTimeout(() => {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
+  
+      return () => clearTimeout(timer); // Cleanup function to prevent memory leaks
+    }
+  }, []);
+  
+
+
   const navigate = useNavigate();
 
   const customStylesAlert = {
@@ -258,21 +279,28 @@ const ListJobs = () => {
       .catch((err) => { });
   };
 
-
   const shareJob = async (job) => {
     try {
-      
-      const formattedJobTitle = job?.jobTitle?.replace(/\s+/g, "-");
-      const currentUserId = job?.brandId; // Get brandId as userId
-      const currentUserType ="brand" // Get brandId as userId
-
+      const formattedJobTitle = job?.jobTitle
+        ?.trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
+  
+      const currentUserId = job?.brandId;
+      const currentUserType = "brand";
   
       localStorage.setItem("currentUserId", currentUserId);
       localStorage.setItem("userId", currentUserId);
       localStorage.setItem("currentUserType", currentUserType);
-      const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${job?.jobId}`;
   
-      await navigator.clipboard.writeText(jobUrl);
+      const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${job?.jobId}`;
+  
+      const previewText = `Brands & Talent\n` +
+        `${jobUrl}`;
+  
+      await navigator.clipboard.writeText(previewText);
+  
       setMessage("Job link copied to clipboard!");
       setOpenPopUp(true);
       setTimeout(() => {
@@ -282,6 +310,30 @@ const ListJobs = () => {
       console.error("Failed to copy:", err);
     }
   };
+  
+  // const shareJob = async (job) => {
+  //   try {
+     
+  //     const formattedJobTitle = job?.jobTitle?.replace(/\s+/g, "-");
+  //     const currentUserId = job?.brandId; // Get brandId as userId
+  //     const currentUserType ="brand" // Get brandId as userId
+
+  //     localStorage.setItem("currentUserId", currentUserId);
+  //     localStorage.setItem("userId", currentUserId);
+  //     localStorage.setItem("currentUserType", currentUserType);
+     
+  //     const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${job?.jobId} `;
+  
+  //     await navigator.clipboard.writeText(jobUrl);
+  //     setMessage("Job link copied to clipboard!");
+  //     setOpenPopUp(true);
+  //     setTimeout(() => {
+  //       setOpenPopUp(false);
+  //     }, 2000);
+  //   } catch (err) {
+  //     console.error("Failed to copy:", err);
+  //   }
+  // };
     
 
 

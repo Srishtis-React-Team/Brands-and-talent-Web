@@ -385,12 +385,19 @@ const TalentHome = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </div> */}
                 </div>
+                
                 <div className="doit-two col-md-4 text-center">
                   <img className="img-fluid" src={doitnow} alt="" />
                 </div>
+                {/* aadedd */}
+                <div className="sample-profile" onClick={sampleProfileNavigate}>
+                 View Sample Profile
+                </div>
+                 {/* aadedd */}
               </div>
             </div>
             <div className="doitnow">
+            
               <button
                 className="doit-btn"
                 onClick={() => {
@@ -399,8 +406,10 @@ const TalentHome = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               >
-                Update Profile Now
+                Update Profile Now 
               </button>
+
+             
             </div>
           </div>
         </div>

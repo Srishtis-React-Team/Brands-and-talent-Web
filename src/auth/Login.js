@@ -32,7 +32,7 @@ const Login = () => {
 
     fetchToken();
   }, []);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -65,11 +65,11 @@ const Login = () => {
 
     extractValuesFromURL();
   }, []);
-  useEffect(() => {}, [userType]);
+  useEffect(() => { }, [userType]);
 
-  useEffect(() => {}, [selectedItem]);
+  useEffect(() => { }, [selectedItem]);
 
-  useEffect(() => {}, [currentUser_id]);
+  useEffect(() => { }, [currentUser_id]);
 
   const getUserIdLocalStorage = () => {
     return localStorage.getItem("userId");
@@ -86,7 +86,7 @@ const Login = () => {
       setEmailID(storedEmailID);
     }
   }, [paramsValue]);
-  useEffect(() => {}, [isLoading]);
+  useEffect(() => { }, [isLoading]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -118,6 +118,7 @@ const Login = () => {
       await ApiHelper.post(API.brandsLogin, formData)
         .then((resData) => {
           if (resData.data.status === true) {
+          
             setIsLoading(false);
             setMessage("Logged in Successfully!");
             setOpenPopUp(true);
@@ -125,9 +126,19 @@ const Login = () => {
               setOpenPopUp(false);
               setIsLoading(false);
               setBrandsLocalStorage(resData.data);
-              navigate(
-                `/client/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
-              );
+              const jobType = localStorage.getItem("type"); // Fetch jobType before using it
+              if (jobType === "post job") {
+               
+                localStorage.removeItem("type"); // Remove after redirection
+                navigate("/my-jobs");
+              } else {
+                navigate(
+                  `/client/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
+                );
+              }
+              // navigate(
+              //   `/client/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
+              // );
               // window.location.reload();
               // navigate(`/talent/${item.publicUrl}`, {
               //   state: { talentData: item },
@@ -143,7 +154,7 @@ const Login = () => {
             }, 1000);
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else if (selectedItem === "talent") {
       const formData = {
         email: talentEmail,
@@ -165,14 +176,14 @@ const Login = () => {
               setTalentLocalStorage(resData.data.data);
               const pendingJobId = localStorage.getItem("pendingJobId");
               const pendingJobTitle = localStorage.getItem("pendingJobTitle")
-              console.log("pendingJobTitle",pendingJobId)
+              console.log("pendingJobTitle", pendingJobId)
               if (pendingJobId) {
-               
+
                 localStorage.removeItem("pendingJobId");
                 localStorage.removeItem("pendingJobTitle");
                 navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
               } else {
-               
+
                 if (resData.data.type === "adult") {
                   navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
                   // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
@@ -242,7 +253,7 @@ const Login = () => {
     setData("talent-signup");
   };
 
-  const socialSignup = async (response, mediaType) => {};
+  const socialSignup = async (response, mediaType) => { };
 
   return (
     <>
@@ -254,17 +265,15 @@ const Login = () => {
           </div>
           <div className="choose-who">
             <div
-              className={`iam-brand ${
-                selectedItem === "brand" ? "selected" : ""
-              }`}
+              className={`iam-brand ${selectedItem === "brand" ? "selected" : ""
+                }`}
               onClick={() => handleClick("brand")}
             >
               I am a Brand/Client
             </div>
             <div
-              className={`iam-talent ${
-                selectedItem === "talent" ? "selected" : ""
-              }`}
+              className={`iam-talent ${selectedItem === "talent" ? "selected" : ""
+                }`}
               onClick={() => handleClick("talent")}
             >
               I am a Talent
