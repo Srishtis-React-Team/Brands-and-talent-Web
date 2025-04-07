@@ -634,7 +634,8 @@ const FindCreators = () => {
   const toggleShowMore = (currentItem) => {
     if (!currentItem?.profession) return;
     setVisibleProfessions((prev) =>
-      Math.min(prev + 1, currentItem.profession.length)
+      prev === 2 ? currentItem.profession.length : 2
+    //  Math.min(prev + 1, currentItem.profession.length)
     );
   };
 

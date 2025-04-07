@@ -104,7 +104,7 @@ const TalentSideMenu = ({ myState }) => {
           if (talentData?.planName !== "Basic") {
             navigate("/messages");
           } else {
-            setMessage("Please upgrade to pro plan to use this feature");
+            setMessage("To use this feature, please upgrade to a Pro or Premium membership plan.");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);

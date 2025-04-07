@@ -531,12 +531,15 @@ const handleForms = (tabName) => {
         .catch((err) => { });
     }
   };
-
+ 
   useEffect(() => {
+   
     let initialHowToApply = [
       `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}.Please include ${jobTitle} in the subject line.</p>`,
+
     ];
+   
     
     //`<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
 
@@ -564,7 +567,7 @@ const handleForms = (tabName) => {
         ? editJobData.applyDescription.join(" ").trim()
         : initialHowToApply[0];
 
-
+        
     // Convert HTML content to Draft.js content block
     const contentBlock = convertFromHTML(applyDescriptionContent);
 
@@ -1994,6 +1997,20 @@ const handleForms = (tabName) => {
     setYouTubeMax(event.target.value); // Update the state with the new value
   };
 
+  useEffect(() => {
+    if (jobTitle) {
+      const updatedHowToApply = `
+        <p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${jobTitle}</strong> in the subject line.</p>
+      `;
+      setApplyDescription([updatedHowToApply]);
+
+      const applyDescriptionContentBlocks = convertFromHTML(updatedHowToApply);
+      const applyDescriptionContentState = ContentState.createFromBlockArray(applyDescriptionContentBlocks);
+      setEditorStateApplyDescription(EditorState.createWithContent(applyDescriptionContentState));
+    }
+  }, [jobTitle]); // Runs whenever jobTitle changes
+
   const duplicateJob = () => {
     if (editJobData) {
       setSelectedTab("create-job");
@@ -2032,7 +2049,26 @@ const handleForms = (tabName) => {
       setState(editJobData.state);
       getStates(editJobData.country);
       setKidsCity(editJobData.city);
-      setApplyDescription(editJobData?.applyDescription);
+
+        // Set Apply Description to initialHowToApply[0] when duplicating job
+
+        //addedd
+         // Set other job details
+      setApplyDescription([
+        `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${editJobData?.jobTitle}</strong> in the subject line.</p>`
+      ]);
+
+      
+    // const initialHowToApply = [
+    //   `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+    //    <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include ${editJobData?.jobTitle} in the subject line.</p>`
+    // ];
+    // setApplyDescription([initialHowToApply[0]]);
+    // console.log("initialHowToApply[0]",initialHowToApply[0])
+
+    //addedd
+     // setApplyDescription(editJobData?.applyDescription);  //2/4 matti
 
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersList.find((option) => option?.label === gender);
@@ -2143,18 +2179,24 @@ const handleForms = (tabName) => {
 
       //aadeddd
 
-      const applyDescriptionhtmlContent = editJobData?.applyDescription[0];
-      const applyDescriptionContentBlocks = convertFromHTML(
-        applyDescriptionhtmlContent
-      );
-      const applyDescriptionContentState = ContentState.createFromBlockArray(
-        applyDescriptionContentBlocks
-      );
-      const updateApplyDescription = EditorState.createWithContent(
-        applyDescriptionContentState
-      );
-      setEditorStateApplyDescription(updateApplyDescription);
-      setApplyDescription(editJobData?.applyDescription);
+      console.log("editJobData?.applyDescription[0];",editJobData?.applyDescription[0])
+
+
+    //  const applyDescriptionhtmlContent = editJobData?.applyDescription[0]; //2/4 matti
+      const applyDescriptionContentBlocks = convertFromHTML(applyDescription[0]);
+      const applyDescriptionContentState = ContentState.createFromBlockArray(applyDescriptionContentBlocks);
+      setEditorStateApplyDescription(EditorState.createWithContent(applyDescriptionContentState));
+      // const applyDescriptionContentBlocks = convertFromHTML(
+      //   applyDescriptionhtmlContent
+      // );
+      // const applyDescriptionContentState = ContentState.createFromBlockArray(
+      //   applyDescriptionContentBlocks
+      // );
+      // const updateApplyDescription = EditorState.createWithContent(
+      //   applyDescriptionContentState
+      // );
+      // setEditorStateApplyDescription(updateApplyDescription);
+      // setApplyDescription(editJobData?.applyDescription);
 
       //adeddd
       const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
@@ -2318,7 +2360,7 @@ const handleForms = (tabName) => {
                               style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
-                                Select Company / Client Category
+                              Job Category
                               </option>
                               {categoryList.map((option, index) => (
                                 <option
@@ -4365,6 +4407,8 @@ const handleForms = (tabName) => {
                           </div>
                         </div>
                       </div>
+
+                     
 
                       <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                         <div

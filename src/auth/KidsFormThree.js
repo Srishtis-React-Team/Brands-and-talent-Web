@@ -616,7 +616,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     } else {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "Upgrade to Pro to add resumes.";
+        upgradeMessage = "'To add CV, please upgrade to pro or premium membership plan.";
       } else if (talentData?.planName === "Pro") {
         upgradeMessage = "Upgrade to Premium to add resumes.";
       }

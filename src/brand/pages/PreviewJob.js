@@ -325,7 +325,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
 
                       {value.product_name && (
                         <>
-                          +&nbsp;
+                          &nbsp;
                           {isValidURL(value.product_name) ? (
                             <a
                               href={value.product_name}
