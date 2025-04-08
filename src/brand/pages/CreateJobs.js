@@ -32,6 +32,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { format, parseISO } from "date-fns";
 import { FlashOnTwoTone } from "@mui/icons-material";
 import useFieldDatas from "../../config/useFieldDatas";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import styles
 
 const CreateJobs = () => {
   const {
@@ -56,6 +58,44 @@ const CreateJobs = () => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      ["blockquote", "code-block"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ direction: "rtl" }],
+      [{ align: [] }],
+      ["link", "image", "video", "formula"],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "color",
+    "background",
+    "script",
+    "blockquote",
+    "code-block",
+    "list",
+    "bullet",
+    "indent",
+    "direction",
+    "align",
+    "link",
+    "image",
+    "video",
+    "formula",
+  ];
 
   const location = useLocation();
   let { editData } = location.state || {};
@@ -233,8 +273,6 @@ const CreateJobs = () => {
   const [youTubeMaxError, setYouTubeMaxError] = useState("");
   //const [activeTab, setActiveTab] = useState("jobs"); // Default tab
   const [activeTab, setActiveTab] = useState("jobs"); // Default tab
-  
-
 
   useEffect(() => {
     if (minPay && maxPay && parseInt(minPay) > parseInt(maxPay)) {
@@ -249,8 +287,6 @@ const CreateJobs = () => {
       setMaxPayError(""); // Clear error if valid
     }
   }, [minPay, maxPay]);
-
-
 
   useEffect(() => {
     if (
@@ -299,7 +335,7 @@ const CreateJobs = () => {
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const customStylesProfession = {
@@ -322,7 +358,249 @@ const CreateJobs = () => {
     }
   }, [editData]);
 
+  // handle onChange event of the dropdown
+  const handleChange = (e) => {
+    setSelectedJobID(e?.value);
+    getJobsByID(e?.value, e?.type);
+    setIsDuplicateJob(true);
+  };
+
+  const handleForms = (tabName) => {
+    setActiveTab(tabName); // Switch tab to 'draft-jobs'
+  };
+
+  const getJobsByID = async (jobId, type) => {
+    if (type == "Posted") {
+      const formData = {
+        type: "brand",
+      };
+      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            if (resData.data.data) {
+              setEditJobData(resData.data.data, "resData.data.data");
+              updateJobFormDatas(resData.data.data);
+            }
+          }
+        })
+        .catch((err) => {});
+    } else if (type == "Draft") {
+      const formData = {
+        type: "brand",
+      };
+      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            if (resData.data.data) {
+              setEditJobData(resData.data.data, "resData.data.data");
+              updateJobFormDatas(resData.data.data);
+            }
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+
+  // useEffect(() => {
+  //   let initialHowToApply = [
+  //     `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
+  //   ];
+
+  //   const whyWorkWithUsContent = initialHowToApply[0];
+  //   const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+  //   let whyWorkWithUsContentState;
+  //   if (whyWorkWithUsContentBlocks) {
+  //     whyWorkWithUsContentState = ContentState.createFromBlockArray(
+  //       whyWorkWithUsContentBlocks
+  //     );
+  //   }
+
+  //   const updatewhyWorkWithUs = EditorState.createWithContent(
+  //     whyWorkWithUsContentState
+  //   );
+  //   setEditorStateHowToApply(updatewhyWorkWithUs);
+  //   setHowToApplyDescription(editJobData?.whyWorkWithUs);
+
+  // }, [brandData, jobTitle]);
+
+  const getAllJobs = async (id) => {
+    await ApiHelper.get(`${API.getAllJobs}${id}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setAllJobsList(resData.data.data, "resData.data.data getAllJobs");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    setBrandImage(localStorage.getItem("currentUserImage"));
+    if (brandId && brandId != null) {
+      getAllJobs(brandId);
+      getBrand();
+    }
+  }, [brandId, brandImage]);
+
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  const [editorStateJobDescription, setEditorStateJobDescription] = useState(
+    EditorState.createEmpty()
+  );
+  const [editorStateApplyDescription, setEditorStateApplyDescription] =
+    useState(EditorState.createEmpty());
+  const [editorStateJobRequirements, setEditorStateJobRequirements] = useState(
+    EditorState.createEmpty()
+  );
+  const [editorStateWhyWorkWithUs, setEditorStateWhyWorkWithUs] = useState(
+    EditorState.createEmpty()
+  );
+  const [editorStateClientDescription, setEditorStateClientDescription] =
+    useState(EditorState.createEmpty());
+
+  const [editorStateHowToApply, setEditorStateHowToApply] = useState(
+    EditorState.createEmpty()
+  );
+  const [showError, setShowError] = useState(false);
+  const [kidsFillData, setKidsFillData] = useState(null);
+  //const [parentCountryError, setParentCountryError] = useState(false);
+  const [stateError, setStateError] = useState(false);
+  const [cityError, setCityError] = useState(false);
+  const [professionError, setProfessionError] = useState(false);
+  const [preferedNameError, setPreferedNameError] = useState(false);
+  const [jobTypeError, setjobTypeError] = useState(false);
+  const [jobCurrencyError, setJobCurrencyError] = useState(false);
+  const [ethnicityError, setEthnicityError] = useState(false);
+  const [ageRangeError, setAgeRangeError] = useState(false);
+  const [languageError, setLanguageError] = useState(false);
+  const [addressError, setAddressError] = useState(false);
+  const [parentLastNameError, setparentLastNameError] = useState(false);
+  const [talentPasswordError, settalentPasswordError] = useState(false);
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] =
+    useState(false);
+  const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
+  const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedProfessions, setSelectedProfessions] = useState([]);
+  const [ageRange, setAgeRange] = useState("");
+  const [minAge, setMinAge] = useState("");
+  const [maxAge, setMaxAge] = useState("");
+  const [minAgeError, setMinAgeError] = useState("");
+  const [maxAgeError, setMaxAgeError] = useState("");
+  const [parentLastName, setParentLastName] = useState("");
+  const [zipCode, setzipCode] = useState("");
+  const [streetAddress, setstreetAddress] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [address, setAddress] = useState("");
+  const [kidsPreferedFirstName, setKidsPreferedFirstName] = useState("");
+  const [kidsPreferedLastName, setKidsPreferedLastName] = useState("");
+  const [kidsLegalFirstName, setKidsLegalFirstName] = useState("");
+  const [kidsLegalLastName, setKidsLegalLastName] = useState("");
+  const [kidsCity, setKidsCity] = useState("");
+  const [jobType, setjobType] = useState("");
+  const [howLikeToApply, setHowLikeToApply] = useState("");
+  const [gender, setGender] = useState([]);
+  const [genderError, setGenderError] = useState("");
+  const [nationality, setNationality] = useState([]);
+  const [ethnicity, setEthnicity] = useState("");
+  const [languages, setLanguages] = useState([]);
+  const [dateOfBirth, setDob] = useState("");
+  const [profession, setProfession] = useState([]);
+  const [jobDescription, setJobDescription] = useState("");
+  const [jobRequirements, setJobRequirements] = useState([]);
+  const [whyWorkWithUs, setWhyWorkWithUs] = useState("");
+  const [clientDescription, setClientDescription] = useState("");
+  const [howToApplyDescription, setHowToApplyDescription] = useState([]);
+  const [relevantCategories, setRelevantCategories] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [talentPassword, setTalentPassword] = useState("");
+  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [age, setAge] = useState("");
+  const [portofolioFile, setPortofolioFile] = useState([]);
+  const [jobCurrency, setJobCurrency] = useState("");
+  // const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
+  const [hiringCompany, setHiringCompany] = useState("");
+  const [dobError, setDobError] = useState(false);
+  const [category, setCategory] = useState("");
+  const [categoryError, setCategoryError] = useState(false);
+  const [applyDescription, setApplyDescription] = useState("");
+  const [selectedApplyOption, setSelectedApplyOption] = useState("");
+  const [applyOptionError, setApplyOptionError] = useState(false);
+
+  // const handleApplyOption = (e) => {
+  //   setSelectedApplyOption(e.target.value);
+  // };
+
+  const [selectedOption, setCompensationChange] =
+    useState("paid_collaboration");
+  const [type, setType] = useState(null);
+  const [currency, setCurrency] = useState(null);
+  const [productCurrency, setProductCurrency] = useState(null);
+  const [frequency, setfrequency] = useState(null);
+  const [productFrequency, setProductFrequency] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const [valueUSD, setValueUSD] = useState(null);
+  const [exactPay, setExactPay] = useState(null);
+  const [productValue, setProductValue] = useState(null);
+
+  const compensationChange = (event) => {
+    setCompensationChange(event.target.value);
+  };
+
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
+  };
+
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
+  const handleProductCurrencyChange = (event) => {
+    setProductCurrency(event.target.value);
+  };
+  const handleProductFrequencyChange = (event) => {
+    setProductFrequency(event.target.value);
+  };
+  const handleProductValueChange = (event) => {
+    setProductValue(event.target.value);
+  };
+  const onMinPayChange = (event) => {
+    setMinPay(event.target.value);
+  };
+  const onExactPayChange = (event) => {
+    setExactPay(event.target.value);
+  };
+  const onMaxPayChange = (event) => {
+    setMaxPay(event.target.value);
+  };
+
+  const handleFrequencyChange = (event) => {
+    setfrequency(event.target.value);
+  };
+
+  const selectJobCurrency = (event) => {
+    setJobCurrency(event.target.value);
+  };
+
+  const handleProductNameChange = (event) => {
+    setProductName(event.target.value);
+  };
+
+  const handleValueUSDChange = (event) => {
+    setValueUSD(event.target.value);
+  };
+
   const updateJobFormDatas = (editData) => {
+    console.log(editData, "editData_updateJobFormDatas");
     if (editData) {
       setCategory(editData?.category);
       setEmploymentType(editData?.employmentType);
@@ -340,7 +618,7 @@ const CreateJobs = () => {
       setSelectedApplyOption(editData?.selectedApplyOption);
       setHiringCompany(editData?.hiringCompany);
       setSelectedBenefits(editData?.benefits);
-     // setSelectedApplyOption(editData?.howLikeToApply);
+      // setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
       setInstaMin(editData?.instaMin);
@@ -442,344 +720,49 @@ const CreateJobs = () => {
         setSelectedPaymentOption("fixed");
         setAmount(editData?.paymentType?.amount);
       }
-      const jobDescriptionhtmlContent = editData?.jobDescription[0];
-      const jobDescriptionContentBlocks = convertFromHTML(
-        jobDescriptionhtmlContent
-      );
-      const jobDescriptionContentState = ContentState.createFromBlockArray(
-        jobDescriptionContentBlocks
-      );
-      const updateJobDescription = EditorState.createWithContent(
-        jobDescriptionContentState
-      );
-      setEditorStateJobDescription(updateJobDescription);
-      setJobDescription(editData?.jobDescription);
-      const whyWorkWithUsContent = editData?.whyWorkWithUs[0];
-      let whyWorkWithUsContentBlocks;
-      if (whyWorkWithUsContent) {
-        whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-      }
-      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-        whyWorkWithUsContentBlocks
-      );
-      const updatewhyWorkWithUs = EditorState.createWithContent(
-        whyWorkWithUsContentState
-      );
-      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-      setWhyWorkWithUs(editData?.whyWorkWithUs);
+      // const jobDescriptionhtmlContent = editData?.jobDescription[0];
+      // const jobDescriptionContentBlocks = convertFromHTML(
+      //   jobDescriptionhtmlContent
+      // );
+      // const jobDescriptionContentState = ContentState.createFromBlockArray(
+      //   jobDescriptionContentBlocks
+      // );
+      // const updateJobDescription = EditorState.createWithContent(
+      //   jobDescriptionContentState
+      // );
+      // setEditorStateJobDescription(updateJobDescription);
+      // setJobDescription(editData?.jobDescription);
+      // const whyWorkWithUsContent = editData?.whyWorkWithUs[0];
+      // let whyWorkWithUsContentBlocks;
+      // if (whyWorkWithUsContent) {
+      //   whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      // }
+      // const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+      //   whyWorkWithUsContentBlocks
+      // );
+      // const updatewhyWorkWithUs = EditorState.createWithContent(
+      //   whyWorkWithUsContentState
+      // );
+      // setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      // setWhyWorkWithUs(editData?.whyWorkWithUs);
 
-      const hiringCompanyDescriptionContent =
-        editData?.hiringCompanyDescription[0];
-      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-        hiringCompanyDescriptionContent
-      );
-      const hiringCompanyDescriptionContentState =
-        ContentState.createFromBlockArray(
-          hiringCompanyDescriptionContentBlocks
-        );
-      const hiringCompanyDescription = EditorState.createWithContent(
-        hiringCompanyDescriptionContentState
-      );
-      setEditorStateClientDescription(hiringCompanyDescription);
-      setClientDescription(editData?.hiringCompanyDescription);
+      // const hiringCompanyDescriptionContent =
+      //   editData?.hiringCompanyDescription[0];
+      // const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+      //   hiringCompanyDescriptionContent
+      // );
+      // const hiringCompanyDescriptionContentState =
+      //   ContentState.createFromBlockArray(
+      //     hiringCompanyDescriptionContentBlocks
+      //   );
+      // const hiringCompanyDescription = EditorState.createWithContent(
+      //   hiringCompanyDescriptionContentState
+      // );
+      // setEditorStateClientDescription(hiringCompanyDescription);
+      // setClientDescription(editData?.hiringCompanyDescription);
 
       setfrequency(frequencyValue);
     }
-  };
-
-  // handle onChange event of the dropdown
-  const handleChange = (e) => {
-    setSelectedJobID(e?.value);
-    getJobsByID(e?.value, e?.type);
-    setIsDuplicateJob(true);
-  };
-
-  
-
-const handleForms = (tabName) => {
-  setActiveTab(tabName); // Switch tab to 'draft-jobs'
-};
-
-  const getJobsByID = async (jobId, type) => {
-    if (type == "Posted") {
-      const formData = {
-        type: "brand",
-      };
-      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            if (resData.data.data) {
-              setEditJobData(resData.data.data, "resData.data.data");
-              updateJobFormDatas(resData.data.data);
-            }
-          }
-        })
-        .catch((err) => { });
-    } else if (type == "Draft") {
-      const formData = {
-        type: "brand",
-      };
-      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            if (resData.data.data) {
-              setEditJobData(resData.data.data, "resData.data.data");
-              updateJobFormDatas(resData.data.data);
-            }
-          }
-        })
-        .catch((err) => { });
-    }
-  };
- 
-  useEffect(() => {
-   
-    let initialHowToApply = [
-      `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
-       <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}.Please include ${jobTitle} in the subject line.</p>`,
-
-    ];
-   
-    
-    //`<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
-
-    const whyWorkWithUsContent = initialHowToApply[0];
-    const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-    let whyWorkWithUsContentState;
-    if (whyWorkWithUsContentBlocks) {
-      whyWorkWithUsContentState = ContentState.createFromBlockArray(
-        whyWorkWithUsContentBlocks
-      );
-    }
-
-    const updatewhyWorkWithUs = EditorState.createWithContent(
-      whyWorkWithUsContentState
-    );
-    setEditorStateHowToApply(updatewhyWorkWithUs);
-    setHowToApplyDescription(editJobData?.whyWorkWithUs);
-
-    // Check if applyDescription exists and is not empty
-
-
-    const applyDescriptionContent =
-      Array.isArray(editJobData?.applyDescription) &&
-        editJobData.applyDescription.length > 0
-        ? editJobData.applyDescription.join(" ").trim()
-        : initialHowToApply[0];
-
-        
-    // Convert HTML content to Draft.js content block
-    const contentBlock = convertFromHTML(applyDescriptionContent);
-
-    // Handle empty content block case
-    const contentState = ContentState.createFromBlockArray(
-      contentBlock.contentBlocks || [],
-      contentBlock.entityMap || {}
-    );
-
-    const initialEditorState = EditorState.createWithContent(contentState);
-    setEditorStateApplyDescription(initialEditorState);
-    setApplyDescription([applyDescriptionContent]);
-  }, [brandData, jobTitle, editJobData]);
-
-  // useEffect(() => {
-  //   let initialHowToApply = [
-  //     `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
-  //   ];
-
-  //   const whyWorkWithUsContent = initialHowToApply[0];
-  //   const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-  //   let whyWorkWithUsContentState;
-  //   if (whyWorkWithUsContentBlocks) {
-  //     whyWorkWithUsContentState = ContentState.createFromBlockArray(
-  //       whyWorkWithUsContentBlocks
-  //     );
-  //   }
-
-  //   const updatewhyWorkWithUs = EditorState.createWithContent(
-  //     whyWorkWithUsContentState
-  //   );
-  //   setEditorStateHowToApply(updatewhyWorkWithUs);
-  //   setHowToApplyDescription(editJobData?.whyWorkWithUs);
-
-  // }, [brandData, jobTitle]);
-
-  const getAllJobs = async (id) => {
-    await ApiHelper.get(`${API.getAllJobs}${id}`)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          if (resData.data.data) {
-            setAllJobsList(resData.data.data, "resData.data.data getAllJobs");
-          }
-        }
-      })
-      .catch((err) => { });
-  };
-
-  useEffect(() => {
-    setBrandId(localStorage.getItem("brandId"));
-    setBrandImage(localStorage.getItem("currentUserImage"));
-    if (brandId && brandId != null) {
-      getAllJobs(brandId);
-      getBrand();
-    }
-  }, [brandId, brandImage]);
-
-  const [showSidebar, setShowSidebar] = useState(true);
-
-  const [editorStateJobDescription, setEditorStateJobDescription] = useState(
-    EditorState.createEmpty()
-  );
-  const [editorStateApplyDescription, setEditorStateApplyDescription] =
-    useState(EditorState.createEmpty());
-  const [editorStateJobRequirements, setEditorStateJobRequirements] = useState(
-    EditorState.createEmpty()
-  );
-  const [editorStateWhyWorkWithUs, setEditorStateWhyWorkWithUs] = useState(
-    EditorState.createEmpty()
-  );
-  const [editorStateClientDescription, setEditorStateClientDescription] =
-    useState(EditorState.createEmpty());
-
-  const [editorStateHowToApply, setEditorStateHowToApply] = useState(
-    EditorState.createEmpty()
-  );
-  const [showError, setShowError] = useState(false);
-  const [kidsFillData, setKidsFillData] = useState(null);
-  //const [parentCountryError, setParentCountryError] = useState(false);
-  const [stateError, setStateError] = useState(false);
-  const [cityError, setCityError] = useState(false);
-  const [professionError, setProfessionError] = useState(false);
-  const [preferedNameError, setPreferedNameError] = useState(false);
-  const [jobTypeError, setjobTypeError] = useState(false);
-  const [jobCurrencyError, setJobCurrencyError] = useState(false);
-  const [ethnicityError, setEthnicityError] = useState(false);
-  const [ageRangeError, setAgeRangeError] = useState(false);
-  const [languageError, setLanguageError] = useState(false);
-  const [addressError, setAddressError] = useState(false);
-  const [parentLastNameError, setparentLastNameError] = useState(false);
-  const [talentPasswordError, settalentPasswordError] = useState(false);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] =
-    useState(false);
-  const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
-  const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedProfessions, setSelectedProfessions] = useState([]);
-  const [ageRange, setAgeRange] = useState("");
-  const [minAge, setMinAge] = useState("");
-  const [maxAge, setMaxAge] = useState("");
-  const [minAgeError, setMinAgeError] = useState("");
-  const [maxAgeError, setMaxAgeError] = useState("");
-  const [parentLastName, setParentLastName] = useState("");
-  const [zipCode, setzipCode] = useState("");
-  const [streetAddress, setstreetAddress] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [address, setAddress] = useState("");
-  const [kidsPreferedFirstName, setKidsPreferedFirstName] = useState("");
-  const [kidsPreferedLastName, setKidsPreferedLastName] = useState("");
-  const [kidsLegalFirstName, setKidsLegalFirstName] = useState("");
-  const [kidsLegalLastName, setKidsLegalLastName] = useState("");
-  const [kidsCity, setKidsCity] = useState("");
-  const [jobType, setjobType] = useState("");
-  const [howLikeToApply, setHowLikeToApply] = useState("");
-  const [gender, setGender] = useState([]);
-  const [genderError, setGenderError] = useState("");
-  const [nationality, setNationality] = useState([]);
-  const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState([]);
-  const [dateOfBirth, setDob] = useState("");
-  const [profession, setProfession] = useState([]);
-  const [jobDescription, setJobDescription] = useState([]);
-  const [jobRequirements, setJobRequirements] = useState([]);
-  const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
-  const [clientDescription, setClientDescription] = useState([]);
-  const [howToApplyDescription, setHowToApplyDescription] = useState([]);
-  const [relevantCategories, setRelevantCategories] = useState([]);
-  const [countryList, setCountryList] = useState([]);
-  const [stateList, setStateList] = useState([]);
-  const [cityList, setCityList] = useState([]);
-  const [talentPassword, setTalentPassword] = useState("");
-  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [isValidEmail, setIsValidEmail] = useState(true);
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [age, setAge] = useState("");
-  const [portofolioFile, setPortofolioFile] = useState([]);
-  const [jobCurrency, setJobCurrency] = useState("");
- // const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
-  const [hiringCompany, setHiringCompany] = useState("");
-  const [dobError, setDobError] = useState(false);
-  const [category, setCategory] = useState("");
-  const [categoryError, setCategoryError] = useState(false);
-  const [applyDescription, setApplyDescription] = useState([]);
-  const [selectedApplyOption, setSelectedApplyOption] = useState("");
-  const [applyOptionError, setApplyOptionError] = useState(false);
-
-  // const handleApplyOption = (e) => {
-  //   setSelectedApplyOption(e.target.value);
-  // };
-
-
-
-  const [selectedOption, setCompensationChange] =
-    useState("paid_collaboration");
-  const [type, setType] = useState(null);
-  const [currency, setCurrency] = useState(null);
-  const [productCurrency, setProductCurrency] = useState(null);
-  const [frequency, setfrequency] = useState(null);
-  const [productFrequency, setProductFrequency] = useState(null);
-  const [productName, setProductName] = useState(null);
-  const [valueUSD, setValueUSD] = useState(null);
-  const [exactPay, setExactPay] = useState(null);
-  const [productValue, setProductValue] = useState(null);
-
-  const compensationChange = (event) => {
-    setCompensationChange(event.target.value);
-  };
-
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
-  };
-
-  const handleCurrencyChange = (event) => {
-    setCurrency(event.target.value);
-  };
-  const handleProductCurrencyChange = (event) => {
-    setProductCurrency(event.target.value);
-  };
-  const handleProductFrequencyChange = (event) => {
-    setProductFrequency(event.target.value);
-  };
-  const handleProductValueChange = (event) => {
-    setProductValue(event.target.value);
-  };
-  const onMinPayChange = (event) => {
-    setMinPay(event.target.value);
-  };
-  const onExactPayChange = (event) => {
-    setExactPay(event.target.value);
-  };
-  const onMaxPayChange = (event) => {
-    setMaxPay(event.target.value);
-  };
-
-  const handleFrequencyChange = (event) => {
-    setfrequency(event.target.value);
-  };
-
-  const selectJobCurrency = (event) => {
-    setJobCurrency(event.target.value);
-  };
-
-  const handleProductNameChange = (event) => {
-    setProductName(event.target.value);
-  };
-
-  const handleValueUSDChange = (event) => {
-    setValueUSD(event.target.value);
   };
 
   const handleCompensationSubmit = () => {
@@ -942,9 +925,7 @@ const handleForms = (tabName) => {
     }
   }, []);
 
-  useEffect(() => { }, [updateDisabled]);
-
- 
+  useEffect(() => {}, [updateDisabled]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -1062,43 +1043,43 @@ const handleForms = (tabName) => {
     // setjobTypeError(false);
   };
 
-  const onEditorJobDescription = (editorState) => {
-    setJobDescription([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    setEditorStateJobDescription(editorState);
-  };
-  const onEditorApplyDescription = (editorState) => {
-    setApplyDescription([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    setEditorStateApplyDescription(editorState);
-  };
-  const onEditorRequirements = (editorState) => {
-    setJobRequirements([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    setEditorStateJobRequirements(editorState);
-  };
-  const onEditorWhyWorkWithUS = (editorState) => {
-    setWhyWorkWithUs([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    setEditorStateWhyWorkWithUs(editorState);
-  };
-  const onEditorClientDescription = (editorState) => {
-    setClientDescription([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    setEditorStateClientDescription(editorState);
-  };
+  // const onEditorJobDescription = (editorState) => {
+  //   setJobDescription([
+  //     draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //   ]);
+  //   setEditorStateJobDescription(editorState);
+  // };
+  // const onEditorApplyDescription = (editorState) => {
+  //   setApplyDescription([
+  //     draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //   ]);
+  //   setEditorStateApplyDescription(editorState);
+  // };
+  // const onEditorRequirements = (editorState) => {
+  //   setJobRequirements([
+  //     draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //   ]);
+  //   setEditorStateJobRequirements(editorState);
+  // };
+  // const onEditorWhyWorkWithUS = (editorState) => {
+  //   setWhyWorkWithUs([
+  //     draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //   ]);
+  //   setEditorStateWhyWorkWithUs(editorState);
+  // };
+  // const onEditorClientDescription = (editorState) => {
+  //   setClientDescription([
+  //     draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //   ]);
+  //   setEditorStateClientDescription(editorState);
+  // };
 
-  const onEditorHowToApply = (editorState) => {
-    setHowToApplyDescription([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    setEditorStateHowToApply(editorState);
-  };
+  // const onEditorHowToApply = (editorState) => {
+  //   setHowToApplyDescription([
+  //     draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //   ]);
+  //   setEditorStateHowToApply(editorState);
+  // };
 
   const handleProfessionChange = (selectedOptions) => {
     setSelectedProfessions(selectedOptions);
@@ -1122,7 +1103,7 @@ const handleForms = (tabName) => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getKidsData = async () => {
@@ -1163,11 +1144,11 @@ const handleForms = (tabName) => {
           setAge(resData.data.data?.age);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handleSelectedCountry = (event) => {
-   // setParentCountryError(false);
+    // setParentCountryError(false);
 
     setCountry(event?.value);
     getStates(event?.value);
@@ -1195,7 +1176,7 @@ const handleForms = (tabName) => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const getCities = async (data) => {
     const formData = data;
@@ -1205,7 +1186,7 @@ const handleForms = (tabName) => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const updateJob = async () => {
@@ -1253,7 +1234,7 @@ const handleForms = (tabName) => {
     // if(howLikeToApply==""){
     //   setApplyOptionError(true);
     // }
-    if(selectedApplyOption==""){
+    if (selectedApplyOption == "") {
       setApplyOptionError(true);
     }
 
@@ -1262,7 +1243,7 @@ const handleForms = (tabName) => {
       jobType !== "" &&
       selectedApplyOption !== "" &&
       skills !== "" &&
-     // country !== "" &&
+      // country !== "" &&
       category !== "" &&
       employmentType !== ""
     ) {
@@ -1292,7 +1273,7 @@ const handleForms = (tabName) => {
         hiringCompany: hiringCompany,
         whyWorkWithUs: whyWorkWithUs,
         hiringCompanyDescription: clientDescription,
-        howLikeToApply:selectedApplyOption,
+        howLikeToApply: selectedApplyOption,
         workSamples: portofolioFile,
         brandImage: brandImage,
         lastDateForApply: lastdateApply,
@@ -1333,7 +1314,7 @@ const handleForms = (tabName) => {
               }, 1000);
             }
           })
-          .catch((err) => { });
+          .catch((err) => {});
       } else if (editData?.type == "Posted") {
         await ApiHelper.post(`${API.editJob}${editData?.value}`, formData)
           .then((resData) => {
@@ -1356,7 +1337,7 @@ const handleForms = (tabName) => {
               }, 1000);
             }
           })
-          .catch((err) => { });
+          .catch((err) => {});
       }
     } else {
       setMessage("Please fill out all mandatory fields");
@@ -1367,9 +1348,7 @@ const handleForms = (tabName) => {
     }
   };
   const createGigs = async (type) => {
- 
     if (type == "draft") {
-      
       setIsDraftLoading(true);
     } else if (type == "post") {
       setIsLoading(true);
@@ -1386,12 +1365,12 @@ const handleForms = (tabName) => {
     if (jobType === "") {
       setjobTypeError(true);
     }
-  if(howLikeToApply===""){
-    setApplyOptionError(true);
-  }
-  if(selectedApplyOption===""){
-    setApplyOptionError(true);
-  }
+    if (howLikeToApply === "") {
+      setApplyOptionError(true);
+    }
+    if (selectedApplyOption === "") {
+      setApplyOptionError(true);
+    }
 
     if (jobCurrency === "") {
       setJobCurrencyError(true);
@@ -1411,16 +1390,16 @@ const handleForms = (tabName) => {
     if (skills.length == 0) {
       setSkillError(true);
     }
-    console.log("test 4",howLikeToApply)
-      
+    console.log("test 4", howLikeToApply);
+
     if (
       jobTitle !== "" &&
       jobType !== "" &&
       skills !== "" &&
-      howLikeToApply!==""&&
-      howLikeToApply!==undefined&&
-      howLikeToApply!==null&&
-    //  country !== "" &&
+      howLikeToApply !== "" &&
+      howLikeToApply !== undefined &&
+      howLikeToApply !== null &&
+      //  country !== "" &&
       category !== "" &&
       selectedApplyOption !== "" &&
       employmentType !== "" &&
@@ -1468,7 +1447,7 @@ const handleForms = (tabName) => {
         hiringCompany: hiringCompany,
         whyWorkWithUs: whyWorkWithUs,
         hiringCompanyDescription: clientDescription,
-        howLikeToApply:selectedApplyOption,
+        howLikeToApply: selectedApplyOption,
         workSamples: portofolioFile,
         brandId: brandId,
         brandImage: brandImage,
@@ -1488,28 +1467,24 @@ const handleForms = (tabName) => {
         youTubeMax: youTubeMax,
         applyDescription: applyDescription,
       };
-     
-        await ApiHelper.post(API.draftJob, formData)
+
+      await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
-        
-          
-          
           if (resData.data.status === true) {
             if (type == "draft") {
-             setIsDraftLoading(false);
-             navigate("/my-jobs", { state: { activeTab: "draft-jobs" } });
-            //  navigate("/list-jobs"); 
-            }
-            else if (type == "post") {
+              setIsDraftLoading(false);
+              navigate("/my-jobs", { state: { activeTab: "draft-jobs" } });
+              //  navigate("/list-jobs");
+            } else if (type == "post") {
               setIsLoading(false);
-            
+
               // Step 1: Show the "Kindly review the job!" message in a popup
               setMessage("Kindly review the job!");
               setOpenPopUp(true);
-            
+
               setTimeout(() => {
                 setOpenPopUp(false);
-            
+
                 // Step 2: Navigate to the preview job page (for both Basic and non-Basic plans)
                 navigate("/preview-job", {
                   state: {
@@ -1517,58 +1492,55 @@ const handleForms = (tabName) => {
                   },
                 });
               }, 3000);
-              
-            }  
-          //   else if (type == "post") {
-          //     setIsLoading(false);
-            
-          //   // setMessage("Kindly review the job!");
-          //   // navigate("/preview-job", {
-          //   //   state: {
-          //   //     jobId: resData?.data?.data?._id,
-          //   //   },
-          //   // });
-          //   setMessage("Kindly review the job!");
-            
-          //   setTimeout(() => {
-           
-          //     setMessage(""); // Clear the message after a longer duration (e.g., 5 seconds)
+            }
+            //   else if (type == "post") {
+            //     setIsLoading(false);
 
-          //     navigate("/preview-job", {
-          //       state: {
-          //         jobId: resData?.data?.data?._id,
-          //       },
-          //     });
-          //   }, 3000); // Display message for 5 seconds before navigating
-          
-          //   setOpenPopUp(true);
-            
-          //   setTimeout(function () {
-          //     setOpenPopUp(false);
-          //     if (brandData?.planName === "Basic") {
-                
-          //       setMessage(
-          //         "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
-          //         //"Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
-          //       );
-          //       setOpenPopUp(true);
-          //       setTimeout(function () {
-          //         setOpenPopUp(false);
-          //         navigate("/list-jobs");
-          //       }, 3000);
-          //     } 
-          //     else {
-          //       navigate("/preview-job", {
-          //         state: {
-          //           jobId: resData?.data?.data?._id,
-          //         },
-          //       });
-          //     }
-          //   }, 2000);
-          // } //added from 1460
-         
-          }
-           else if (resData.data.status === false) {
+            //   // setMessage("Kindly review the job!");
+            //   // navigate("/preview-job", {
+            //   //   state: {
+            //   //     jobId: resData?.data?.data?._id,
+            //   //   },
+            //   // });
+            //   setMessage("Kindly review the job!");
+
+            //   setTimeout(() => {
+
+            //     setMessage(""); // Clear the message after a longer duration (e.g., 5 seconds)
+
+            //     navigate("/preview-job", {
+            //       state: {
+            //         jobId: resData?.data?.data?._id,
+            //       },
+            //     });
+            //   }, 3000); // Display message for 5 seconds before navigating
+
+            //   setOpenPopUp(true);
+
+            //   setTimeout(function () {
+            //     setOpenPopUp(false);
+            //     if (brandData?.planName === "Basic") {
+
+            //       setMessage(
+            //         "Thank you for listing your job on BT. Our team will review and approve your post within two business days."
+            //         //"Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
+            //       );
+            //       setOpenPopUp(true);
+            //       setTimeout(function () {
+            //         setOpenPopUp(false);
+            //         navigate("/list-jobs");
+            //       }, 3000);
+            //     }
+            //     else {
+            //       navigate("/preview-job", {
+            //         state: {
+            //           jobId: resData?.data?.data?._id,
+            //         },
+            //       });
+            //     }
+            //   }, 2000);
+            // } //added from 1460
+          } else if (resData.data.status === false) {
             if (type == "draft") {
               setIsDraftLoading(false);
             } else if (type == "post") {
@@ -1584,9 +1556,7 @@ const handleForms = (tabName) => {
             }, 3000);
           }
         })
-        .catch((err) => { });
-      
-     
+        .catch((err) => {});
     } else {
       setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
@@ -1802,7 +1772,7 @@ const handleForms = (tabName) => {
     setSelectedTab(e.target.value);
   };
 
-  useEffect(() => { }, [showQuestions, employmentError, isDuplicateJob]);
+  useEffect(() => {}, [showQuestions, employmentError, isDuplicateJob]);
 
   const handleButtonClick = (data) => {
     setShowSidebar(!showSidebar);
@@ -1838,7 +1808,7 @@ const handleForms = (tabName) => {
       setSkillError(false);
     }
   }, [skills]);
-  useEffect(() => { }, [skills]);
+  useEffect(() => {}, [skills]);
 
   const skillsListing = [
     { title: "Actor" },
@@ -1941,8 +1911,8 @@ const handleForms = (tabName) => {
     setDobError(false);
   };
 
-  useEffect(() => { }, [lastdateApply]);
-  useEffect(() => { }, [category]);
+  useEffect(() => {}, [lastdateApply]);
+  useEffect(() => {}, [category]);
 
   useEffect(() => {
     if (minAge && maxAge && parseInt(minAge) > parseInt(maxAge)) {
@@ -2006,8 +1976,12 @@ const handleForms = (tabName) => {
       setApplyDescription([updatedHowToApply]);
 
       const applyDescriptionContentBlocks = convertFromHTML(updatedHowToApply);
-      const applyDescriptionContentState = ContentState.createFromBlockArray(applyDescriptionContentBlocks);
-      setEditorStateApplyDescription(EditorState.createWithContent(applyDescriptionContentState));
+      const applyDescriptionContentState = ContentState.createFromBlockArray(
+        applyDescriptionContentBlocks
+      );
+      setEditorStateApplyDescription(
+        EditorState.createWithContent(applyDescriptionContentState)
+      );
     }
   }, [jobTitle]); // Runs whenever jobTitle changes
 
@@ -2050,25 +2024,24 @@ const handleForms = (tabName) => {
       getStates(editJobData.country);
       setKidsCity(editJobData.city);
 
-        // Set Apply Description to initialHowToApply[0] when duplicating job
+      // Set Apply Description to initialHowToApply[0] when duplicating job
 
-        //addedd
-         // Set other job details
+      //addedd
+      // Set other job details
       setApplyDescription([
         `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
-        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${editJobData?.jobTitle}</strong> in the subject line.</p>`
+        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${editJobData?.jobTitle}</strong> in the subject line.</p>`,
       ]);
 
-      
-    // const initialHowToApply = [
-    //   `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
-    //    <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include ${editJobData?.jobTitle} in the subject line.</p>`
-    // ];
-    // setApplyDescription([initialHowToApply[0]]);
-    // console.log("initialHowToApply[0]",initialHowToApply[0])
+      // const initialHowToApply = [
+      //   `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+      //    <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include ${editJobData?.jobTitle} in the subject line.</p>`
+      // ];
+      // setApplyDescription([initialHowToApply[0]]);
+      // console.log("initialHowToApply[0]",initialHowToApply[0])
 
-    //addedd
-     // setApplyDescription(editJobData?.applyDescription);  //2/4 matti
+      //addedd
+      // setApplyDescription(editJobData?.applyDescription);  //2/4 matti
 
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersList.find((option) => option?.label === gender);
@@ -2164,28 +2137,36 @@ const handleForms = (tabName) => {
         setSelectedPaymentOption("fixed");
         setAmount(editJobData?.paymentType?.amount);
       }
-      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-      const jobDescriptionContentBlocks = convertFromHTML(
-        jobDescriptionhtmlContent
-      );
-      const jobDescriptionContentState = ContentState.createFromBlockArray(
-        jobDescriptionContentBlocks
-      );
-      const updateJobDescription = EditorState.createWithContent(
-        jobDescriptionContentState
-      );
-      setEditorStateJobDescription(updateJobDescription);
-      setJobDescription(editJobData?.jobDescription);
+      // const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+      // const jobDescriptionContentBlocks = convertFromHTML(
+      //   jobDescriptionhtmlContent
+      // );
+      // const jobDescriptionContentState = ContentState.createFromBlockArray(
+      //   jobDescriptionContentBlocks
+      // );
+      // const updateJobDescription = EditorState.createWithContent(
+      //   jobDescriptionContentState
+      // );
+      // setEditorStateJobDescription(updateJobDescription);
+      // setJobDescription(editJobData?.jobDescription);
 
       //aadeddd
 
-      console.log("editJobData?.applyDescription[0];",editJobData?.applyDescription[0])
+      // console.log(
+      //   "editJobData?.applyDescription[0];",
+      //   editJobData?.applyDescription[0]
+      // );
 
-
-    //  const applyDescriptionhtmlContent = editJobData?.applyDescription[0]; //2/4 matti
-      const applyDescriptionContentBlocks = convertFromHTML(applyDescription[0]);
-      const applyDescriptionContentState = ContentState.createFromBlockArray(applyDescriptionContentBlocks);
-      setEditorStateApplyDescription(EditorState.createWithContent(applyDescriptionContentState));
+      // //  const applyDescriptionhtmlContent = editJobData?.applyDescription[0]; //2/4 matti
+      // const applyDescriptionContentBlocks = convertFromHTML(
+      //   applyDescription[0]
+      // );
+      // const applyDescriptionContentState = ContentState.createFromBlockArray(
+      //   applyDescriptionContentBlocks
+      // );
+      // setEditorStateApplyDescription(
+      //   EditorState.createWithContent(applyDescriptionContentState)
+      // );
       // const applyDescriptionContentBlocks = convertFromHTML(
       //   applyDescriptionhtmlContent
       // );
@@ -2199,35 +2180,90 @@ const handleForms = (tabName) => {
       // setApplyDescription(editJobData?.applyDescription);
 
       //adeddd
-      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-        whyWorkWithUsContentBlocks
-      );
-      const updatewhyWorkWithUs = EditorState.createWithContent(
-        whyWorkWithUsContentState
-      );
-      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+      // const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+      // const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      // const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+      //   whyWorkWithUsContentBlocks
+      // );
+      // const updatewhyWorkWithUs = EditorState.createWithContent(
+      //   whyWorkWithUsContentState
+      // );
+      // setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      // setWhyWorkWithUs(editJobData?.whyWorkWithUs);
 
-      const hiringCompanyDescriptionContent =
-        editJobData?.hiringCompanyDescription[0];
-      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-        hiringCompanyDescriptionContent
-      );
-      const hiringCompanyDescriptionContentState =
-        ContentState.createFromBlockArray(
-          hiringCompanyDescriptionContentBlocks
-        );
-      const hiringCompanyDescription = EditorState.createWithContent(
-        hiringCompanyDescriptionContentState
-      );
-      setEditorStateClientDescription(hiringCompanyDescription);
-      setClientDescription(editJobData?.hiringCompanyDescription);
+      // const hiringCompanyDescriptionContent =
+      //   editJobData?.hiringCompanyDescription[0];
+      // const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+      //   hiringCompanyDescriptionContent
+      // );
+      // const hiringCompanyDescriptionContentState =
+      //   ContentState.createFromBlockArray(
+      //     hiringCompanyDescriptionContentBlocks
+      //   );
+      // const hiringCompanyDescription = EditorState.createWithContent(
+      //   hiringCompanyDescriptionContentState
+      // );
+      // setEditorStateClientDescription(hiringCompanyDescription);
+      // setClientDescription(editJobData?.hiringCompanyDescription);
 
       setfrequency(frequencyValue);
     }
   };
+
+  useEffect(() => {
+    let initialHowToApply = [
+      `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+       <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}.Please include ${jobTitle} in the subject line.</p>`,
+    ];
+
+    //`<p>Interested candidates should submit their resume and a link that contains a portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line.</p>\n`,
+
+    const whyWorkWithUsContent = initialHowToApply[0];
+    const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+    let whyWorkWithUsContentState;
+    if (whyWorkWithUsContentBlocks) {
+      whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+    }
+
+    const updatewhyWorkWithUs = EditorState.createWithContent(
+      whyWorkWithUsContentState
+    );
+    setEditorStateHowToApply(updatewhyWorkWithUs);
+    setHowToApplyDescription(editJobData?.whyWorkWithUs);
+
+    // Check if applyDescription exists and is not empty
+
+    const applyDescriptionContent = editJobData?.applyDescription
+      ? editJobData.applyDescription
+      : initialHowToApply[0];
+
+    // Convert HTML content to Draft.js content block
+    // const contentBlock = convertFromHTML(applyDescriptionContent);
+
+    // Handle empty content block case
+    // const contentState = ContentState.createFromBlockArray(
+    //   contentBlock.contentBlocks || [],
+    //   contentBlock.entityMap || {}
+    // );
+
+    // const initialEditorState = EditorState.createWithContent(contentState);
+    // setEditorStateApplyDescription(initialEditorState);
+    setApplyDescription(applyDescriptionContent);
+  }, [brandData, jobTitle, editJobData]);
+
+  const [value, setValue] = useState(""); // Editor content
+
+  const handleWhyWorkWithUsSave = () => {
+    console.log("Saved content:", value);
+    setWhyWorkWithUs(value);
+    // You can send `value` to your backend or save it elsewhere
+  };
+
+  useEffect(() => {
+    console.log(whyWorkWithUs, "whyWorkWithUs");
+  }, [whyWorkWithUs]);
 
   return (
     <>
@@ -2235,8 +2271,9 @@ const handleForms = (tabName) => {
         <BrandHeader toggleMenu={toggleMenu} />
         <div
           id="sidebarBrand"
-          className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-            }`}
+          className={`brand-sidebar ${
+            showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
         >
           <BrandSideMenu onButtonClick={handleButtonClick} />
         </div>
@@ -2348,8 +2385,7 @@ const handleForms = (tabName) => {
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-0">
                             <label className="form-label">
-                            Job Category
-                            
+                              Job Category
                               <span className="mandatory">*</span>
                             </label>
                             <select
@@ -2360,7 +2396,7 @@ const handleForms = (tabName) => {
                               style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
-                              Job Category
+                                Job Category
                               </option>
                               {categoryList.map((option, index) => (
                                 <option
@@ -2564,7 +2600,7 @@ const handleForms = (tabName) => {
                         <label className="form-label">
                           Gig/Job Description
                         </label>
-                        <Editor
+                        {/* <Editor
                           editorState={editorStateJobDescription}
                           editorStyle={{ overflow: "hidden" }}
                           toolbarClassName="toolbarClassName"
@@ -2590,7 +2626,7 @@ const handleForms = (tabName) => {
                             link: { inDropdown: true },
                             history: { inDropdown: true },
                           }}
-                        />
+                        /> */}
                       </div>
 
                       <div className="kids-form-row row">
@@ -3221,14 +3257,16 @@ const handleForms = (tabName) => {
                             <div className="kids-form-section col-md-6 mb-3">
                               {questions?.map((question, index) => (
                                 <div className=" mb-2" key={index}>
-                                  <label className="form-label mb-2">{`Question ${index + 1
-                                    }:`}</label>
+                                  <label className="form-label mb-2">{`Question ${
+                                    index + 1
+                                  }:`}</label>
                                   <div className="question-input-wrapper">
                                     <input
                                       type="text"
                                       className="form-control "
-                                      placeholder={`Enter Question ${index + 1
-                                        }`}
+                                      placeholder={`Enter Question ${
+                                        index + 1
+                                      }`}
                                       value={question}
                                       id={`question${index + 1}`}
                                       onChange={(event) =>
@@ -3629,282 +3667,282 @@ const handleForms = (tabName) => {
                                 )}
                                 {selectedOption ===
                                   "paid_collaboration_and_gift" && (
-                                    <>
-                                      <div className="compensation-row row">
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Pay Type
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              onChange={handleTypeChange}
-                                              value={type}
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Pay Type
-                                              </option>
-                                              <option value="exact_pay">
-                                                Exact Pay
-                                              </option>
-                                              <option value="pay_range">
-                                                Pay Range
-                                              </option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        {type === "exact_pay" && (
-                                          <>
-                                            <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                              <div className="">
-                                                <label className="form-label">
-                                                  Exact Pay
-                                                </label>
-                                                <div className="creators-filter-select creator-age-wrapper">
-                                                  <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Exact Pay"
-                                                    value={exactPay}
-                                                    onChange={(e) => {
-                                                      onExactPayChange(e);
-                                                    }}
-                                                  ></input>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </>
-                                        )}
-                                        {type == "pay_range" && (
-                                          <>
-                                            <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                              <div className="payWidth">
-                                                <label className="form-label">
-                                                  Minimum Pay
-                                                </label>
-                                                <div className="creators-filter-select creator-age-wrapper">
-                                                  <div>
-                                                    <input
-                                                      type="number"
-                                                      className="form-control"
-                                                      placeholder="Minimum Pay"
-                                                      value={minPay}
-                                                      onChange={(e) => {
-                                                        onMinPayChange(e);
-                                                      }}
-                                                      min={1}
-                                                    ></input>
-                                                    {minPayError && (
-                                                      <div
-                                                        className="invalid-fields"
-                                                        style={{}}
-                                                      >
-                                                        {minPayError}
-                                                      </div>
-                                                    )}{" "}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                              <div className="payWidth">
-                                                <label className="form-label">
-                                                  Maximum Pay
-                                                </label>
-                                                <div className="creators-filter-select creator-age-wrapper">
-                                                  <div>
-                                                    <input
-                                                      type="number"
-                                                      className="form-control"
-                                                      placeholder="Maximum Pay"
-                                                      value={maxPay}
-                                                      onChange={(e) => {
-                                                        onMaxPayChange(e);
-                                                      }}
-                                                      style={{}}
-                                                      min={1}
-                                                    ></input>
-                                                    {maxPayError && (
-                                                      <div
-                                                        className="invalid-fields"
-                                                        style={{}}
-                                                      >
-                                                        {maxPayError}
-                                                      </div>
-                                                    )}{" "}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </>
-                                        )}
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Currency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={currency}
-                                              onChange={handleCurrencyChange}
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Currency
-                                              </option>
-                                              {currencyList?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option?.value}
-                                                  >
-                                                    {option?.title}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Frequency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={frequency}
-                                              onChange={handleFrequencyChange}
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Frequency
-                                              </option>
-                                              {frequencyOptions?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option}
-                                                  >
-                                                    {option}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
+                                  <>
+                                    <div className="compensation-row row">
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Pay Type
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            onChange={handleTypeChange}
+                                            value={type}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Pay Type
+                                            </option>
+                                            <option value="exact_pay">
+                                              Exact Pay
+                                            </option>
+                                            <option value="pay_range">
+                                              Pay Range
+                                            </option>
+                                          </select>
                                         </div>
                                       </div>
-                                      <div className="compensation-row row">
-                                        <div className="kids-form-section col-md-4 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Product/Gift Name (or) Product link
-                                            </label>
+                                      {type === "exact_pay" && (
+                                        <>
+                                          <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                            <div className="">
+                                              <label className="form-label">
+                                                Exact Pay
+                                              </label>
+                                              <div className="creators-filter-select creator-age-wrapper">
+                                                <input
+                                                  type="text"
+                                                  className="form-control"
+                                                  placeholder="Exact Pay"
+                                                  value={exactPay}
+                                                  onChange={(e) => {
+                                                    onExactPayChange(e);
+                                                  }}
+                                                ></input>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </>
+                                      )}
+                                      {type == "pay_range" && (
+                                        <>
+                                          <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                            <div className="payWidth">
+                                              <label className="form-label">
+                                                Minimum Pay
+                                              </label>
+                                              <div className="creators-filter-select creator-age-wrapper">
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Minimum Pay"
+                                                    value={minPay}
+                                                    onChange={(e) => {
+                                                      onMinPayChange(e);
+                                                    }}
+                                                    min={1}
+                                                  ></input>
+                                                  {minPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{}}
+                                                    >
+                                                      {minPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                            <div className="payWidth">
+                                              <label className="form-label">
+                                                Maximum Pay
+                                              </label>
+                                              <div className="creators-filter-select creator-age-wrapper">
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Maximum Pay"
+                                                    value={maxPay}
+                                                    onChange={(e) => {
+                                                      onMaxPayChange(e);
+                                                    }}
+                                                    style={{}}
+                                                    min={1}
+                                                  ></input>
+                                                  {maxPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{}}
+                                                    >
+                                                      {maxPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </>
+                                      )}
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Currency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={currency}
+                                            onChange={handleCurrencyChange}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Currency
+                                            </option>
+                                            {currencyList?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option?.value}
+                                                >
+                                                  {option?.title}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Frequency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={frequency}
+                                            onChange={handleFrequencyChange}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Frequency
+                                            </option>
+                                            {frequencyOptions?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option}
+                                                >
+                                                  {option}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="compensation-row row">
+                                      <div className="kids-form-section col-md-4 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Product/Gift Name (or) Product link
+                                          </label>
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            value={productName}
+                                            onChange={handleProductNameChange}
+                                            placeholder="Enter Product/Gift Name (or) Product link"
+                                          ></input>
+                                        </div>
+                                      </div>
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Product/Gift Value
+                                          </label>
+                                          <div className="creators-filter-select creator-age-wrapper">
                                             <input
-                                              type="text"
+                                              type="number"
                                               className="form-control"
-                                              value={productName}
-                                              onChange={handleProductNameChange}
-                                              placeholder="Enter Product/Gift Name (or) Product link"
+                                              placeholder="Product/Gift Value"
+                                              value={productValue}
+                                              onChange={(e) => {
+                                                handleProductValueChange(e);
+                                              }}
+                                              min={0}
                                             ></input>
                                           </div>
                                         </div>
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Product/Gift Value
-                                            </label>
-                                            <div className="creators-filter-select creator-age-wrapper">
-                                              <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Product/Gift Value"
-                                                value={productValue}
-                                                onChange={(e) => {
-                                                  handleProductValueChange(e);
-                                                }}
-                                                min={0}
-                                              ></input>
-                                            </div>
-                                          </div>
-                                        </div>
+                                      </div>
 
-                                        <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className=" ">
-                                            <label className="form-label">
-                                              Currency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={productCurrency}
-                                              onChange={
-                                                handleProductCurrencyChange
-                                              }
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Currency
-                                              </option>
-                                              {currencyList?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option?.value}
-                                                  >
-                                                    {option?.title}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div className="kids-form-section col-md-2 mb-3">
-                                          <div className="">
-                                            <label className="form-label">
-                                              Frequency
-                                            </label>
-                                            <select
-                                              className="form-select"
-                                              aria-label="Default select example"
-                                              value={productFrequency}
-                                              onChange={
-                                                handleProductFrequencyChange
-                                              }
-                                              style={{
-                                                fontSize: "14px",
-                                              }}
-                                            >
-                                              <option value="" disabled selected>
-                                                Select Frequency
-                                              </option>
-                                              {frequencyOptions?.map(
-                                                (option, index) => (
-                                                  <option
-                                                    key={index}
-                                                    value={option}
-                                                  >
-                                                    {option}
-                                                  </option>
-                                                )
-                                              )}
-                                            </select>
-                                          </div>
+                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                        <div className=" ">
+                                          <label className="form-label">
+                                            Currency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={productCurrency}
+                                            onChange={
+                                              handleProductCurrencyChange
+                                            }
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Currency
+                                            </option>
+                                            {currencyList?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option?.value}
+                                                >
+                                                  {option?.title}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
                                         </div>
                                       </div>
-                                    </>
-                                  )}
+                                      <div className="kids-form-section col-md-2 mb-3">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Frequency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={productFrequency}
+                                            onChange={
+                                              handleProductFrequencyChange
+                                            }
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Frequency
+                                            </option>
+                                            {frequencyOptions?.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option}
+                                                >
+                                                  {option}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -4018,7 +4056,18 @@ const handleForms = (tabName) => {
 
                 <div className="rich-editor mb-4">
                   <label className="form-label">Why Work With Us</label>
-                  <Editor
+
+                  <ReactQuill
+                    theme="snow"
+                    value={whyWorkWithUs}
+                    onChange={setWhyWorkWithUs}
+                    modules={modules}
+                    formats={formats}
+                    placeholder="Start typing here..."
+                    style={{ height: "55px", marginBottom: "50px" }}
+                  />
+
+                  {/* <Editor
                     editorState={editorStateWhyWorkWithUs}
                     editorStyle={{ overflow: "hidden" }}
                     toolbarClassName="toolbarClassName"
@@ -4044,13 +4093,13 @@ const handleForms = (tabName) => {
                       link: { inDropdown: true },
                       history: { inDropdown: true },
                     }}
-                  />
+                  /> */}
                 </div>
                 <div className="rich-editor mb-4">
                   <label className="form-label">
                     Hiring Company/Client Description
                   </label>
-                  <Editor
+                  {/* <Editor
                     editorState={editorStateClientDescription}
                     editorStyle={{ overflow: "hidden" }}
                     toolbarClassName="toolbarClassName"
@@ -4076,7 +4125,7 @@ const handleForms = (tabName) => {
                       link: { inDropdown: true },
                       history: { inDropdown: true },
                     }}
-                  />
+                  /> */}
                 </div>
 
                 <div className="kids-form-section col-md-12 mb-3">
@@ -4134,7 +4183,7 @@ const handleForms = (tabName) => {
 
                     {selectedApplyOption === "how_to_apply" && (
                       <div className="rich-editor mb-4">
-                        <Editor
+                        {/* <Editor
                           editorState={editorStateApplyDescription}
                           editorStyle={{ overflow: "hidden" }}
                           toolbarClassName="toolbarClassName"
@@ -4160,16 +4209,15 @@ const handleForms = (tabName) => {
                             link: { inDropdown: true },
                             history: { inDropdown: true },
                           }}
-                        />
+                        /> */}
                       </div>
                     )}
                   </div>
                   {applyOptionError && (
-                            <div className="invalid-fields">
-                            Please select how you would like to receive applications.
-                            </div>
-                          )}
-                
+                    <div className="invalid-fields">
+                      Please select how you would like to receive applications.
+                    </div>
+                  )}
                 </div>
 
                 <div
@@ -4282,7 +4330,7 @@ const handleForms = (tabName) => {
 
                 <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                   {/* Render the "Preview & Save Draft" button only if not editing */}
-  
+
                   {/* {!editData?.value && (
         <div
           onClick={(e) => {
@@ -4302,19 +4350,18 @@ const handleForms = (tabName) => {
         </div>
       )} */}
 
-                   {!editData?.value && (
+                  {!editData?.value && (
                     <div
                       onClick={(e) => {
                         e.preventDefault();
-                       
+
                         createGigs("draft");
                       }}
-                     
                       className="createjob-btn"
                     >
                       {isDraftLoading ? "Loading..." : "Save Draft"}
                     </div>
-                  )}  
+                  )}
 
                   {/* Render the "Update Job" button only if editing */}
                   {editData?.value && (
@@ -4407,8 +4454,6 @@ const handleForms = (tabName) => {
                           </div>
                         </div>
                       </div>
-
-                     
 
                       <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                         <div
