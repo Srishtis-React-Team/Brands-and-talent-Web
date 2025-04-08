@@ -21,9 +21,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
 
-
-
-
   const getJobsByID = async () => {
     const formData = {
       type: "brand",
@@ -32,7 +29,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
       .then((resData) => {
         setJobData(resData.data.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const toggleMenu = () => {
@@ -68,9 +65,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
     }
   }, [brandId]);
 
-
-
-
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
       .then((resData) => {
@@ -80,7 +74,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const postJob = async () => {
@@ -111,7 +105,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
           }, 4000);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -129,8 +123,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const viewUpdateFile = (item) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
-
-
 
   // const convertLinks = (text) => {
   //   if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
@@ -159,8 +151,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
     });
   };
 
-
-
   const isValidURL = (string) => {
     try {
       new URL(string);
@@ -176,8 +166,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
         <BrandHeader toggleMenu={toggleMenu} />
         <div
           id="sidebarBrand"
-          className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-            }`}
+          className={`brand-sidebar ${
+            showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
         >
           <BrandSideMenu />
         </div>
@@ -228,7 +219,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         jobData?.country,
                       ]
                         .filter(Boolean)
-                        .join(", ")|| "No Data Added"}
+                        .join(", ") || "No Data Added"}
                     </span>
                   </span>
                 </span>
@@ -280,10 +271,10 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         value !== null && value !== undefined && value !== ""
                     )
                 ) && (
-                    <>
-                      <span className="font-600">Compensation :&nbsp;</span>
-                    </>
-                  )}
+                  <>
+                    <span className="font-600">Compensation :&nbsp;</span>
+                  </>
+                )}
 
                 {/* {jobData?.paymentType?.label} */}
                 {jobData.compensation &&
@@ -354,8 +345,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   ))}
               </div>
 
-
-
               <div className="job-features-benefits pb-0">
                 <div className="row">
                   <div className="job-features col-md-6">
@@ -383,8 +372,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
                             </span>
                           </li>
                         )}
-
-
 
                         {jobData?.skills && jobData.skills.length > 0 ? (
                           <li className="job-features-li">
@@ -436,8 +423,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           </li>
                         )}
 
-
-
                         {jobData?.languages &&
                           jobData?.languages?.length > 0 && (
                             <li className="job-features-li">
@@ -458,7 +443,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                             </li>
                           )}
                         {jobData?.nationality &&
-                          jobData.nationality.length > 0 ? (
+                        jobData.nationality.length > 0 ? (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
                               Nationality :
@@ -495,75 +480,76 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           jobData?.fbMin ||
                           jobData?.twitterMin ||
                           jobData?.youTubeMin) && (
-                            <li className="job-features-li">
-                              <div className="social-followers-container">
-                                <span className="job-feature-heading">
-                                  Social Media Followers Count:
-                                </span>
-                                <ul className="followers-list">
-                                  {jobData?.instaMin && (
-                                    <li>
-                                      Instagram Followers:
-                                      <span className="job-feature-values">
-                                        {jobData?.instaMin} - {jobData?.instaMax}
-                                      </span>
-                                    </li>
-                                  )}
+                          <li className="job-features-li">
+                            <div className="social-followers-container">
+                              <span className="job-feature-heading">
+                                Social Media Followers Count:
+                              </span>
+                              <ul className="followers-list">
+                                {jobData?.instaMin && (
+                                  <li>
+                                    Instagram Followers:
+                                    <span className="job-feature-values">
+                                      {jobData?.instaMin} - {jobData?.instaMax}
+                                    </span>
+                                  </li>
+                                )}
 
-                                  {jobData?.tikTokMin && (
-                                    <li>
-                                      TikTok Followers:
-                                      <span className="job-feature-values">
-                                        {jobData?.tikTokMin} - {jobData?.tikTokMax}
-                                      </span>
-                                    </li>
-                                  )}
+                                {jobData?.tikTokMin && (
+                                  <li>
+                                    TikTok Followers:
+                                    <span className="job-feature-values">
+                                      {jobData?.tikTokMin} -{" "}
+                                      {jobData?.tikTokMax}
+                                    </span>
+                                  </li>
+                                )}
 
-                                  {jobData?.linkedInMin && (
-                                    <li>
-                                      LinkedIn Followers:
-                                      <span className="job-feature-values">
-                                        {jobData?.linkedInMin} - {jobData?.linkedInMax}
-                                      </span>
-                                    </li>
-                                  )}
+                                {jobData?.linkedInMin && (
+                                  <li>
+                                    LinkedIn Followers:
+                                    <span className="job-feature-values">
+                                      {jobData?.linkedInMin} -{" "}
+                                      {jobData?.linkedInMax}
+                                    </span>
+                                  </li>
+                                )}
 
-                                  {jobData?.fbMin && (
-                                    <li>
-                                      Facebook Followers:
-                                      <span className="job-feature-values">
-                                        {jobData?.fbMin} - {jobData?.fbMax}
-                                      </span>
-                                    </li>
-                                  )}
+                                {jobData?.fbMin && (
+                                  <li>
+                                    Facebook Followers:
+                                    <span className="job-feature-values">
+                                      {jobData?.fbMin} - {jobData?.fbMax}
+                                    </span>
+                                  </li>
+                                )}
 
-                                  {jobData?.twitterMin && (
-                                    <li>
-                                      Twitter(X) Followers:
-                                      <span className="job-feature-values">
-                                        {jobData?.twitterMin} - {jobData?.twitterMax}
-                                      </span>
-                                    </li>
-                                  )}
+                                {jobData?.twitterMin && (
+                                  <li>
+                                    Twitter(X) Followers:
+                                    <span className="job-feature-values">
+                                      {jobData?.twitterMin} -{" "}
+                                      {jobData?.twitterMax}
+                                    </span>
+                                  </li>
+                                )}
 
-                                  {jobData?.youTubeMin && (
-                                    <li>
-                                      YouTube Followers:
-                                      <span className="job-feature-values">
-                                        {jobData?.youTubeMin} - {jobData?.youTubeMax}
-                                      </span>
-                                    </li>
-                                  )}
-                                </ul>
-                              </div>
-                            </li>
-                          )}
-
-
+                                {jobData?.youTubeMin && (
+                                  <li>
+                                    YouTube Followers:
+                                    <span className="job-feature-values">
+                                      {jobData?.youTubeMin} -{" "}
+                                      {jobData?.youTubeMax}
+                                    </span>
+                                  </li>
+                                )}
+                              </ul>
+                            </div>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>
-
                 </div>
               </div>
               <div className="job-questions-section">
@@ -591,31 +577,36 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   <div className="job-about-section">
                     <div className="job-feature-title">Job Description</div>
 
-                   
-<div className="job-about-values">
-  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
-    jobData.jobDescription.some((htmlContent) => {
-      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-      return cleanedContent && cleanedContent !== "<p></p>";
-    }) ? (
-      jobData.jobDescription.map((htmlContent, index) => {
-        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-        return cleanedContent && cleanedContent !== "<p></p>" ? (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: cleanedContent }}
-          />
-        ) : null;
-      })
-    ) : (
-      <div>No Data Added</div>
-    )
-  ) : (
-    <div>No Data Added</div>
-  )}
-</div>
-
-
+                    <div className="job-about-values">
+                      {Array.isArray(jobData?.jobDescription) &&
+                      jobData.jobDescription.length > 0 ? (
+                        jobData.jobDescription.some((htmlContent) => {
+                          const cleanedContent = htmlContent
+                            .trim()
+                            .replace(/\n/g, "");
+                          return cleanedContent && cleanedContent !== "<p></p>";
+                        }) ? (
+                          jobData.jobDescription.map((htmlContent, index) => {
+                            const cleanedContent = htmlContent
+                              .trim()
+                              .replace(/\n/g, "");
+                            return cleanedContent &&
+                              cleanedContent !== "<p></p>" ? (
+                              <div
+                                key={index}
+                                dangerouslySetInnerHTML={{
+                                  __html: cleanedContent,
+                                }}
+                              />
+                            ) : null;
+                          })
+                        ) : (
+                          <div>No Data Added</div>
+                        )
+                      ) : (
+                        <div>No Data Added</div>
+                      )}
+                    </div>
 
                     {/* <div className="job-about-values">
                       {jobData?.jobDescription.map((htmlContent, index) => (
@@ -634,49 +625,46 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </div>
               )}
 
-
-
-              {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
+              {jobData?.whyWorkWithUs && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Why Work With Us</div>
                     <div className="job-about-values">
-                      {jobData?.whyWorkWithUs &&
-                        jobData?.whyWorkWithUs?.map((htmlContent, index) => (
-                          <div
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: htmlContent }}
-                          />
-                        ))}
+                      {jobData?.whyWorkWithUs && (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: jobData.whyWorkWithUs,
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 </>
               )}
 
-              {jobData?.hiringCompanyDescription &&
-                jobData?.hiringCompanyDescription?.length > 0 && (
-                  <>
-                    <div className="job-about-section">
-                      <div className="job-feature-title">
-                        Hiring Company Description
-                      </div>
-                      <div className="job-about-values">
-                        {jobData?.hiringCompanyDescription &&
-                          jobData?.hiringCompanyDescription?.map(
-                            (htmlContent, index) => (
-                              <div
-                                key={index}
-                                dangerouslySetInnerHTML={{
-                                  __html: htmlContent,
-                                }}
-                              />
-                            )
-                          )}
-                      </div>
+              {jobData?.hiringCompanyDescription && (
+                <>
+                  <div className="job-about-section">
+                    <div className="job-feature-title">
+                      Hiring Company Description
                     </div>
-                  </>
-                )}
-              {jobData?.workSamples && jobData?.workSamples?.length > 0 && (
+                    <div className="job-about-values">
+                      {jobData?.hiringCompanyDescription &&
+                        jobData?.hiringCompanyDescription?.map(
+                          (htmlContent, index) => (
+                            <div
+                              key={index}
+                              dangerouslySetInnerHTML={{
+                                __html: htmlContent,
+                              }}
+                            />
+                          )
+                        )}
+                    </div>
+                  </div>
+                </>
+              )}
+              {jobData?.workSamples && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Project brief / TOR</div>
@@ -749,19 +737,24 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </>
               )}
 
-
-              {jobData?.howLikeToApply !== "easy-apply" ? 
+              {jobData?.howLikeToApply !== "easy-apply" ? (
                 <div className="job-about-section">
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
                     {jobData?.applyDescription ? (
                       <div
-                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+                        dangerouslySetInnerHTML={{
+                          __html: convertLinks(
+                            jobData?.applyDescription.join(" ")
+                          ),
+                        }}
                         className="apply-description"
                       />
                     ) : (
                       <>
-                        Interested candidates should submit their resume and a link that contains a portfolio from the Brands & Talent website to
+                        Interested candidates should submit their resume and a
+                        link that contains a portfolio from the Brands & Talent
+                        website to
                         <span className="how-apply-terms-link">
                           {brandData?.brandEmail}
                         </span>
@@ -774,7 +767,8 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     )}
                   </div>
                 </div>
-                  :<div className="job-about-section">
+              ) : (
+                <div className="job-about-section">
                   <div className="job-feature-title">Quick Apply</div>
                   <div className="job-about-values">
                     {/* {jobData?.applyDescription ? (
@@ -783,16 +777,15 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         className="apply-description"
                       />
                     ) : ( */}
-                      <>
-                        Make it simple for applicants to apply with one click. Choose "Quick apply" to receive and manage applications directly through your dashboard on our platform.
-                       
-                      </>
+                    <>
+                      Make it simple for applicants to apply with one click.
+                      Choose "Quick apply" to receive and manage applications
+                      directly through your dashboard on our platform.
+                    </>
                     {/* )} */}
                   </div>
-                </div>}
-
-
-
+                </div>
+              )}
 
               {jobData?.type == "Draft" && (
                 <>
