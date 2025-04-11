@@ -62,12 +62,32 @@ const BrandsOtp = React.memo((props) => {
     }
   };
 
+  // const handlePaste = (e) => {
+  //   const pastedData = e.clipboardData.getData("Text").split("");
+  //   if (pastedData.length === 4) {
+  //     setOtp(pastedData);
+  //     inputRefs.current[3].focus();
+  //   }
+  // };
   const handlePaste = (e) => {
-    const pastedData = e.clipboardData.getData("Text").split("");
-    if (pastedData.length === 4) {
-      setOtp(pastedData);
-      inputRefs.current[3].focus();
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData("Text");
+    const cleaned = pastedText.replace(/\D/g, "").slice(0, 4);
+
+    if (cleaned.length === 0) return;
+
+    const newOtp = [...otp];
+    for (let i = 0; i < cleaned.length; i++) {
+      newOtp[i] = cleaned[i];
+      if (inputRefs.current[i]) {
+        inputRefs.current[i].value = cleaned[i];
+      }
     }
+
+    setOtp(newOtp);
+
+    const nextIndex = cleaned.length < 4 ? cleaned.length : 3;
+    inputRefs.current[nextIndex]?.focus();
   };
 
   const handleVerify = () => {
@@ -177,8 +197,29 @@ const BrandsOtp = React.memo((props) => {
           <div className="otp-enter">Please enter the OTP we just sent to</div>
           <div className="otp-mail">{userEmail}</div>
           <div className="otp-boxes">
-            <div onPaste={handlePaste}>
-              {otp.map((value, index) => (
+            {/* <div onPaste={handlePaste}> */}
+            {otp.map((value, index) => (
+          <input
+              key={index}
+              type="text"
+              maxLength="1"
+              className="otp"
+              value={value}
+              onChange={(e) => handleChange(e.target.value, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              onPaste={handlePaste}
+              ref={(el) => (inputRefs.current[index] = el)}
+              style={{
+                width: "50px",
+                height: "50px",
+                fontSize: "24px",
+                textAlign: "center",
+                marginRight: "10px",
+              }}
+            />
+          ))}
+        
+              {/* {otp.map((value, index) => (
                 <input
                   key={index}
                   type="text"
@@ -197,7 +238,7 @@ const BrandsOtp = React.memo((props) => {
                   }}
                 />
               ))}
-            </div>
+            </div> */}
           </div>
           <div className="verify-otp" onClick={handleVerify}>
             {isLoading ? "Loading..." : "Verify Now"}

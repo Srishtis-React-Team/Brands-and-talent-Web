@@ -477,3 +477,10 @@
 .rdw-link-modal {
   height: 228px !important;
 }
+
+.custom-quill-editor .ql-tooltip.ql-editing {
+  left: 50% !important; /* Center the tooltip horizontally */
+  
+}
+
+

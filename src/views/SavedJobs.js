@@ -50,7 +50,7 @@ const SavedJobs = () => {
           setAllJobsList(resData?.data?.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   function PreviewJob(jobId) {
@@ -65,7 +65,7 @@ const SavedJobs = () => {
     setShowSidebar(!showSidebar);
   };
 
-  useEffect(() => {}, [allJobsList]);
+  useEffect(() => { }, [allJobsList]);
 
   const addToSavedJobs = async (data) => {
     const formData = {
@@ -124,9 +124,8 @@ const SavedJobs = () => {
       <TalentHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <TalentSideMenu />
       </div>
@@ -173,32 +172,49 @@ const SavedJobs = () => {
                                   <i className="bi bi-dot"></i>
                                 </span>
                                 <span className="job-company_dtls">
+                                  {(job?.gigDetails?.city || job?.gigDetails?.state || job?.gigDetails?.country) ? (
+                                    <>
+                                      <i className="bi bi-geo-alt-fill location-icon"></i>
+                                      {job?.gigDetails?.city}
+                                      {job?.gigDetails?.city && (job?.gigDetails?.state || job?.gigDetails?.country) && ', '}
+                                      {job?.gigDetails?.state}
+                                      {job?.gigDetails?.state && job?.gigDetails?.country && ', '}
+                                      {job?.gigDetails?.country}
+
+                                    </>
+                                  ) : (
+                                    <>No data added</>
+                                  )}
+                                  <i className="bi bi-dot"></i>
+                                </span>
+                                {/* <span className="job-company_dtls">
                                   <i className="bi bi-geo-alt-fill location-icon"></i>
                                   {job?.gigDetails?.city && (
                                     <>{job?.gigDetails?.city}</>
                                   )}{" "}
-                                  {/* Display city if it exists */}
+                                 
                                   {job?.gigDetails?.city &&
                                     (job?.gigDetails?.state ||
                                       job?.gigDetails?.country) && (
                                       <span>, </span>
                                     )}{" "}
-                                  {/* Show comma if city exists and either state or country exists */}
+                                 
                                   {job?.gigDetails?.state && (
                                     <>{job?.gigDetails?.state}</>
                                   )}{" "}
-                                  {/* Display state if it exists */}
+                                
                                   {job?.gigDetails?.state &&
                                     job?.gigDetails?.country && (
                                       <span>, </span>
                                     )}{" "}
-                                  {/* Show comma if state exists and country exists */}
+                                
                                   {job?.gigDetails?.country && (
                                     <>{job?.gigDetails?.country}</>
                                   )}{" "}
-                                  {/* Display country if it exists */}
+                                 
                                   <i className="bi bi-dot"></i>
-                                </span>
+                                </span> */}
+
                                 <span className="job-company_dtls">
                                   {job?.gigDetails?.employmentType}{" "}
                                   <i className="bi bi-dot"></i>
@@ -213,14 +229,14 @@ const SavedJobs = () => {
                                   )[0] === "paid_collaboration_and_gift"
                                     ? "Paid Collaboration + Product/Gift"
                                     : Object.keys(
-                                        job?.gigDetails?.compensation
-                                      )[0] === "product_gift"
-                                    ? "Product/Gift"
-                                    : Object.keys(
+                                      job?.gigDetails?.compensation
+                                    )[0] === "product_gift"
+                                      ? "Product/Gift"
+                                      : Object.keys(
                                         job?.gigDetails?.compensation
                                       )[0] === "paid_collaboration"
-                                    ? "Paid Collaboration"
-                                    : ""}
+                                        ? "Paid Collaboration"
+                                        : ""}
 
                                   {/* {Object.keys(job?.gigDetails?.compensation)[0]
                                     ?.split("_")

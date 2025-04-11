@@ -563,23 +563,46 @@ const TalentDashBoard = () => {
   const contactUs = () => {
     navigate("/contact-support");
   };
-  const shareJob = async (item) => {
-    const formattedJobTitle = item?.jobTitle
-        ?.trim()
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
-        const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${item?.jobId}`;
+  // const shareJob = async (item) => {
+  //   const formattedJobTitle = item?.jobTitle
+  //       ?.trim()
+  //       .toLowerCase()
+  //       .replace(/\s+/g, "-")
+  //       .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
+  //       const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${item?.jobId}`;
   
-        const previewText = `Brands & Talent\n` +
-          `${jobUrl}`;
+  //       // const previewText = `Brands & Talent\n` +
+  //       //   `${jobUrl}`;
+  //      const previewText = `Brands & Talent\n${jobUrl}`;
+         
 
    
-     // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+  //    // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
  
 
+  //   try {
+  //     await navigator.clipboard.writeText(previewText);;
+  //     // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+  //     setMessage("Job link copied to clipboard!");
+  //     setOpenPopUp(true);
+  //     setTimeout(function () {
+  //       setOpenPopUp(false);
+  //     }, 2000);
+  //   } catch (err) {
+  //     console.error("Failed to copy:", err);
+  //   }
+  // };
+  const shareJob = async (item) => {
+    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+    //const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+    const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+
+
+
     try {
-      await navigator.clipboard.writeText(previewText);;
+      await navigator.clipboard.writeText(jobUrl);
       // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
       setMessage("Job link copied to clipboard!");
       setOpenPopUp(true);
@@ -590,27 +613,6 @@ const TalentDashBoard = () => {
       console.error("Failed to copy:", err);
     }
   };
-//   const shareJob = async (item) => {
-//     // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
-//     // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-//     //const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
-//     const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
-// const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
-
-
-
-//     try {
-//       await navigator.clipboard.writeText(jobUrl);
-//       // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
-//       setMessage("Job link copied to clipboard!");
-//       setOpenPopUp(true);
-//       setTimeout(function () {
-//         setOpenPopUp(false);
-//       }, 2000);
-//     } catch (err) {
-//       console.error("Failed to copy:", err);
-//     }
-//   };
   console.log("roilokipoffa-9412@yopmail.com",filterState)
 
   return (
@@ -1320,6 +1322,22 @@ const TalentDashBoard = () => {
                         </div>
                       )}
                       {modalData?.jobDescription &&
+  typeof modalData.jobDescription === "string" &&
+  modalData.jobDescription.trim().replace(/\n/g, "") !== "" &&
+  modalData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" && (
+    <>
+      <div className="model-about-title">About the job</div>
+      <div className="model-job-about-values">
+        <div
+          dangerouslySetInnerHTML={{
+            __html: modalData.jobDescription.trim().replace(/\n/g, ""),
+          }}
+        />
+      </div>
+    </>
+)}
+
+                      {/* {modalData?.jobDescription &&
                         modalData?.jobDescription.length > 0 && (
                           <>
                             <div className="model-about-title">
@@ -1338,7 +1356,7 @@ const TalentDashBoard = () => {
                               )}
                             </div>
                           </>
-                        )}
+                        )} */}
                     </div>
 
                     <div className="modal-footer">

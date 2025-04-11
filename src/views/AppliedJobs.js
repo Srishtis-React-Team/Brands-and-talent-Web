@@ -53,7 +53,7 @@ const AppliedJobs = () => {
       .then((resData) => {
         setJobData(resData.data.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   function PreviewJob(jobId) {
@@ -94,7 +94,7 @@ const AppliedJobs = () => {
       .then((resData) => {
         setAllJobsList(resData?.data?.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const postJob = async () => {
@@ -119,15 +119,15 @@ const AppliedJobs = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
     getJobsByID();
   }, []);
-  useEffect(() => {}, [jobData]);
-  useEffect(() => {}, [jobId]);
-  useEffect(() => {}, [allJobsList]);
+  useEffect(() => { }, [jobData]);
+  useEffect(() => { }, [jobId]);
+  useEffect(() => { }, [allJobsList]);
 
   const createJob = () => {
     navigate("/talent-dashboard");
@@ -138,9 +138,8 @@ const AppliedJobs = () => {
       <TalentHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <TalentSideMenu />
       </div>
@@ -186,23 +185,40 @@ const AppliedJobs = () => {
                                   {job?.jobType} <i className="bi bi-dot"></i>
                                 </span>
                                 <span className="job-company_dtls">
+                                  {(job?.city || job?.state || job?.country) ? (
+                                    <>
+                                      <i className="bi bi-geo-alt-fill location-icon"></i>
+                                      {job?.city}
+                                      {job?.city && (job?.state || job?.country) && ', '}
+                                      {job?.state}
+                                      {job?.state && job?.country && ', '}
+                                      {job?.country}
+
+                                    </>
+                                  ) : (
+                                    <>No data added</>
+                                  )}
+                                  <i className="bi bi-dot"></i>
+                                </span>
+
+                                {/* <span className="job-company_dtls">
                                   <i className="bi bi-geo-alt-fill location-icon"></i>
                                   {job?.city && <>{job?.city}</>}{" "}
-                                  {/* Display city if it exists */}
+                                 
                                   {job?.city &&
                                     (job?.state || job?.country) && (
                                       <span>, </span>
                                     )}{" "}
-                                  {/* Show comma if city exists and either state or country exists */}
+                                
                                   {job?.state && <>{job?.state}</>}{" "}
-                                  {/* Display state if it exists */}
+                                 
                                   {job?.state && job?.country && (
                                     <span>, </span>
                                   )}{" "}
-                                  {/* Show comma if state exists and country exists */}
+                                 
                                   {job?.country && <>{job?.country}</>}{" "}
                                   <i className="bi bi-dot"></i>
-                                </span>
+                                </span> */}
                                 <span className="job-company_dtls">
                                   {job?.employmentType}{" "}
                                   <i className="bi bi-dot"></i>
@@ -212,15 +228,15 @@ const AppliedJobs = () => {
                                 </span>
                                 <span className="job-company_dtls">
                                   {Object.keys(job?.compensation)[0] ===
-                                  "paid_collaboration_and_gift"
+                                    "paid_collaboration_and_gift"
                                     ? "Paid Collaboration + Product/Gift"
                                     : Object.keys(job?.compensation)[0] ===
                                       "product_gift"
-                                    ? "Product/Gift"
-                                    : Object.keys(job?.compensation)[0] ===
-                                      "paid_collaboration"
-                                    ? "Paid Collaboration"
-                                    : ""}
+                                      ? "Product/Gift"
+                                      : Object.keys(job?.compensation)[0] ===
+                                        "paid_collaboration"
+                                        ? "Paid Collaboration"
+                                        : ""}
 
                                   {/* {Object.keys(job?.compensation)[0]
                                     ?.split("_")

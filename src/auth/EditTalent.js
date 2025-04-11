@@ -870,12 +870,13 @@ const EditTalent = () => {
               setIsLoading(false);
               setMessage("Updated Successfully!");
               scrollToTop();
-
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
+                setMyState(true);
               }, 1000);
-            } else if (resData.data.status === false) {
+            } 
+            else if (resData.data.status === false) {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
@@ -2500,47 +2501,48 @@ const EditTalent = () => {
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
-                <Tab
-                  label="Social Media"
+                 <Tab
+                  label="Bio"
                   {...a11yProps(2)}
-                  style={{ textTransform: "capitalize" }}
-                />
-                <Tab
-                  label="Portfolio"
-                  {...a11yProps(3)}
-                  style={{ textTransform: "capitalize" }}
-                />
-                <Tab
-                  label="Videos & Audios"
-                  {...a11yProps(4)}
                   style={{ textTransform: "capitalize" }}
                 />
 
                 <Tab
-                  label="Services"
+                  label="Social Media"
+                  {...a11yProps(3)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Portfolio"
+                  {...a11yProps(4)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Videos & Audios"
                   {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
                 />
 
                 <Tab
-                  label="Features"
+                  label="Services"
                   {...a11yProps(6)}
+                  style={{ textTransform: "capitalize" }}
+                />
+
+                <Tab
+                  label="Features"
+                  {...a11yProps(7)}
                   style={{ textTransform: "capitalize" }}
                 />
                
 
                 <Tab
                   label="CV"
-                  {...a11yProps(7)}
-                  style={{ textTransform: "capitalize" }}
-                />
-
-                <Tab
-                  label="Bio"
                   {...a11yProps(8)}
                   style={{ textTransform: "capitalize" }}
                 />
 
+                
                 {/* <Tab
                   label="Reviews"
                   {...a11yProps(7)}
@@ -3332,7 +3334,71 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={2}>
+
+              {/* added    */}
+        <CustomTabPanel value={valueTabs} index={2}>
+  <div className="update-portfolio-cards-wrapper">
+    <div className="bio-update-container">
+      {/* Check if we are editing */}
+      {isEditing ? (
+        // If in edit mode, show the textarea
+        <div>
+          <textarea
+            value={bio}
+            onChange={handleBioChange} // Handle bio change
+            placeholder="Tell us about yourself"
+            className={bioError ? 'error' : ''}
+            rows="10"
+            cols="80"
+            style={{ padding: '12px' }} // Add padding here
+          ></textarea>
+          {bioError && <p className="error-message">Bio field cannot be empty</p>}
+
+          {/* Combined button for Update Bio and Cancel Edit */}
+          <div className="bio-action-buttons">
+            <Button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className={isLoading ? 'loading' : 'edit-profileimg-btn'}
+              variant="text"
+              style={{ textTransform: 'capitalize' }}
+            >
+              {isLoading ? 'Updating...' : 'Update Bio'}
+            </Button>
+
+            {/* <Button
+              onClick={() => setIsEditing(false)} // Cancel edit mode
+              className="cancel-edit-btn"
+              variant="text"
+              style={{ textTransform: 'capitalize' }}
+            >
+              Cancel Edit
+            </Button> */}
+          </div>
+        </div>
+      ) : (
+        // If not in edit mode, display the bio (or the default placeholder if empty)
+        <p className="bio-display-text">
+          {talentData?.childAboutYou ? removeHtmlTags(talentData?.childAboutYou) : 'No bio available'}
+        </p>
+      )}
+
+      {/* Edit button */}
+      {!isEditing && (
+        <Button
+          onClick={() => setIsEditing(true)} // Set to edit mode
+          className="edit-profileimg-btn"
+          variant="text"
+          style={{ textTransform: 'capitalize' }}
+        >
+          Edit Bio
+        </Button>
+      )}
+    </div>
+  </div>
+</CustomTabPanel>
+
+            <CustomTabPanel value={valueTabs} index={3}>
               {talentData && (
                 <>
                   <div className="mt-4">
@@ -3346,7 +3412,7 @@ const EditTalent = () => {
                 </>
               )}
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={3}>
+            <CustomTabPanel value={valueTabs} index={4}>
               <div className="update-portfolio-section ">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Portfolio </div>
@@ -3526,7 +3592,7 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-            <CustomTabPanel value={valueTabs} index={4}>
+            <CustomTabPanel value={valueTabs} index={5}>
               <div className="update-portfolio-section ">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Videos & Audios</div>
@@ -3812,7 +3878,7 @@ const EditTalent = () => {
             </CustomTabPanel>
 
 
-         <CustomTabPanel value={valueTabs} index={5}>
+         <CustomTabPanel value={valueTabs} index={6}>
           {/* addedd */}
   {isBasic === true && (
     <>
@@ -4213,7 +4279,7 @@ const EditTalent = () => {
 
           
 
-            <CustomTabPanel value={valueTabs} index={6}>
+            <CustomTabPanel value={valueTabs} index={7}>
               {talentData && (
                 <>
                   <div className="features-section mt-4">
@@ -4240,7 +4306,7 @@ const EditTalent = () => {
             </CustomTabPanel>
 
            
-            <CustomTabPanel value={valueTabs} index={7}>
+            <CustomTabPanel value={valueTabs} index={8}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
                 {talentData?.cv?.length === 0 && (
@@ -4360,68 +4426,7 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-        {/* added    */}
-        <CustomTabPanel value={valueTabs} index={8}>
-  <div className="update-portfolio-cards-wrapper">
-    <div className="bio-update-container">
-      {/* Check if we are editing */}
-      {isEditing ? (
-        // If in edit mode, show the textarea
-        <div>
-          <textarea
-            value={bio}
-            onChange={handleBioChange} // Handle bio change
-            placeholder="Tell us about yourself"
-            className={bioError ? 'error' : ''}
-            rows="4"
-            cols="50"
-          ></textarea>
-          {bioError && <p className="error-message">Bio field cannot be empty</p>}
-
-          {/* Combined button for Update Bio and Cancel Edit */}
-          <div className="bio-action-buttons">
-            <Button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className={isLoading ? 'loading' : 'edit-profileimg-btn'}
-              variant="text"
-              style={{ textTransform: 'capitalize' }}
-            >
-              {isLoading ? 'Updating...' : 'Update Bio'}
-            </Button>
-
-            {/* <Button
-              onClick={() => setIsEditing(false)} // Cancel edit mode
-              className="cancel-edit-btn"
-              variant="text"
-              style={{ textTransform: 'capitalize' }}
-            >
-              Cancel Edit
-            </Button> */}
-          </div>
-        </div>
-      ) : (
-        // If not in edit mode, display the bio (or the default placeholder if empty)
-        <p className="bio-display-text">
-          {talentData?.childAboutYou ? removeHtmlTags(talentData?.childAboutYou) : 'No bio available'}
-        </p>
-      )}
-
-      {/* Edit button */}
-      {!isEditing && (
-        <Button
-          onClick={() => setIsEditing(true)} // Set to edit mode
-          className="edit-profileimg-btn"
-          variant="text"
-          style={{ textTransform: 'capitalize' }}
-        >
-          Edit Bio
-        </Button>
-      )}
-    </div>
-  </div>
-</CustomTabPanel>
-
+      
 
             {/* <CustomTabPanel value={valueTabs} index={7}>
               Reviews
