@@ -236,49 +236,27 @@ const GetBooked = () => {
       }, 1000);
     }
   };
-
-  const shareJob = async (item) => {
-    const formattedJobTitle = item?.jobTitle
-        ?.trim()
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
-        const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${item?.jobId}`;
-  
-        const previewText = `Brands & Talent\n` +
-          `${jobUrl}`;
-
-   
-     // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
  
 
-    try {
-      await navigator.clipboard.writeText(previewText);;
-      // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
-      setMessage("Job link copied to clipboard!");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-      }, 2000);
-    } catch (err) {
-      console.error("Failed to copy:", err);
-    }
-  };
+ 
+  
   // const shareJob = async (item) => {
-  //   // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
-  //   // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-
-    
-  //  // const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
-  //  const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
-  //  const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+  //   const formattedJobTitle = item?.jobTitle
+  //       ?.trim()
+  //       .toLowerCase()
+  //       .replace(/\s+/g, "-")
+  //       .replace(/[^a-zA-Z0-9\-]/g, ""); // Clean title for URL
+  //       const jobUrl = `https://brandsandtalent.com/jobs/view/${formattedJobTitle}/${item?.jobId}`;
+  
+  //       //const previewText = `${jobUrl}`;
+  //        const previewText = `Brands & Talent\n${jobUrl}`;
 
    
   //    // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
  
 
   //   try {
-  //     await navigator.clipboard.writeText(jobUrl);
+  //     await navigator.clipboard.writeText(previewText);;
   //     // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
   //     setMessage("Job link copied to clipboard!");
   //     setOpenPopUp(true);
@@ -289,6 +267,31 @@ const GetBooked = () => {
   //     console.error("Failed to copy:", err);
   //   }
   // };
+  const shareJob = async (item) => {
+    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
+    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
+
+    
+   // const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
+   const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+   const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
+
+   
+     // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
+ 
+
+    try {
+      await navigator.clipboard.writeText(jobUrl);
+      // alert("Job link copied to clipboard!"); // Optional: Show feedback to the use
+      setMessage("Job link copied to clipboard!");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   const handleCloseModal = async () => {
     const formData = {

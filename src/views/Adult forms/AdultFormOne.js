@@ -201,6 +201,10 @@ const AdultFormOne = () => {
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [nationality, setNationality] = useState([]);
+  // Auto-filled fields
+  const [preferredChildFirstname, setPreferredChildFirstname] = useState("");
+  const [preferredChildLastName, setPreferredChildLastName] = useState("");
+
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
@@ -409,6 +413,19 @@ const AdultFormOne = () => {
     if (completedJobs === "") {
       setJobsCompletedError(true);
     }
+console.log("adultsPreferedFirstName",adultsPreferedFirstName)
+// Check for public URL availability if the preferred first name has changed
+let publicUrl = adultsPreferedFirstName.replace(/ /g, "-");
+
+try {
+  const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+    preferredChildFirstname: adultsPreferedFirstName,
+  });
+
+  // If the name is taken, append a random number to make it unique
+  if (checkNameResponse.data.status !== true) {
+    publicUrl = `${publicUrl}-${Math.floor(Math.random() * 900) + 100}`;
+  }
 
     let formData = {
       adultLegalFirstName: adultsLegalFirstName,
@@ -432,7 +449,8 @@ const AdultFormOne = () => {
       childCity: kidsCity,
       age: age,
       noOfJobsCompleted: completedJobs,
-      publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
+      publicUrl: publicUrl, // Updated public URL after checking
+     // publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
     };
 
     if (
@@ -475,7 +493,7 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: selectedPublicUrl,
+        publicUrl:publicUrl//selectedPublicUrl,
       };
 
       if (userId) {
@@ -509,6 +527,12 @@ const AdultFormOne = () => {
         setOpenPopUp(false);
       }, 1000);
     }
+  } catch (err) {
+    setIsLoading(false);
+    setMessage("Error occurred, please try again.");
+    setOpenPopUp(true);
+    setTimeout(() => setOpenPopUp(false), 1000);
+  }
   };
 
   const handleProfessionChange = (selectedOptions) => {
@@ -767,6 +791,16 @@ const AdultFormOne = () => {
   }, []);
 
   useEffect(() => {}, [maritalStatus]);
+
+   // Sync preferred names into main name fields
+   useEffect(() => {
+    setPreferredChildFirstname(adultsPreferedFirstName);
+  }, [adultsPreferedFirstName]);
+
+  useEffect(() => {
+    setPreferredChildLastName(adultsPreferedLastName);
+  }, [adultsPreferedLastName]);
+
 
   return (
     <>
@@ -1111,7 +1145,61 @@ const AdultFormOne = () => {
                       )}
                     </div>
                   </div>
+                  {/* added */}
                   <div className="kids-form-row row">
+  {/* Preferred First Name */}
+  <div className="kids-form-section col-md-6 mb-3">
+    <label className="form-label">Preferred First Name</label>
+    <span className="mandatory">*</span>
+    <input
+      type="text"
+      className="form-control"
+      onChange={(e) => {
+        adultsPrefferedFirstNameChange(e);
+        setAdultsPreferedFirstNameError(false);
+      }}
+      onKeyDown={handleAdultPrefferedFirstNameKeyPress}
+      placeholder="Enter Preferred First Name"
+      value={adultsPreferedFirstName}
+    />
+    {adultsPreferedFirstNameError && (
+      <div className="invalid-fields">
+        Please enter Preferred First Name
+      </div>
+    )}
+    {adultsPrefferedFirstNameLetterError && (
+      <div className="invalid-fields">Only Letters Allowed</div>
+    )}
+  </div>
+
+  {/* Preferred Last Name */}
+  <div className="kids-form-section col-md-6 mb-3">
+    <label className="form-label">Preferred Last Name</label>
+    <span className="mandatory">*</span>
+    <input
+      type="text"
+      className="form-control"
+      onChange={(e) => {
+        adultsPrefferedLastNameChange(e);
+        setAdultsPreferedLastNameError(false);
+      }}
+      onKeyDown={handleAdultPrefferedLastNameKeyPress}
+      placeholder="Enter Preferred Last Name"
+      value={adultsPreferedLastName}
+    />
+    {adultsPreferedLastNameError && (
+      <div className="invalid-fields">
+        Please enter Preferred Last Name
+      </div>
+    )}
+    {adultsPrefferedLastNameLetterError && (
+      <div className="invalid-fields">Only Letters Allowed</div>
+    )}
+  </div>
+</div>
+
+                  {/* addedd */}
+                  {/* <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Preferred First Name</label>{" "}
                       <span className="mandatory">*</span>
@@ -1162,7 +1250,7 @@ const AdultFormOne = () => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Country</label>

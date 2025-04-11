@@ -62,12 +62,32 @@ const KidsOTP = () => {
     }
   };
 
+  // const handlePaste = (e) => {
+  //   const pastedData = e.clipboardData.getData("Text").split("");
+  //   if (pastedData.length === 4) {
+  //     setOtp(pastedData);
+  //     inputsRef.current[3].focus();
+  //   }
+  // };
   const handlePaste = (e) => {
-    const pastedData = e.clipboardData.getData("Text").split("");
-    if (pastedData.length === 4) {
-      setOtp(pastedData);
-      inputsRef.current[3].focus();
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData("Text");
+    const cleaned = pastedText.replace(/\D/g, "").slice(0, 4);
+
+    if (cleaned.length === 0) return;
+
+    const newOtp = [...otp];
+    for (let i = 0; i < cleaned.length; i++) {
+      newOtp[i] = cleaned[i];
+      if (inputsRef.current[i]) {
+        inputsRef.current[i].value = cleaned[i];
+      }
     }
+
+    setOtp(newOtp);
+
+    const nextIndex = cleaned.length < 4 ? cleaned.length : 3;
+    inputsRef.current[nextIndex]?.focus();
   };
 
   const handleVerify = () => {
@@ -77,6 +97,7 @@ const KidsOTP = () => {
     inputsRef.current[0].focus();
   };
 
+
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
@@ -85,6 +106,7 @@ const KidsOTP = () => {
 
     await ApiHelper.post(API.otpVerification, formData)
       .then((resData) => {
+        console.log("resData.data.data", resData.data.data)
         if (resData.data.status === true) {
           setMessage("Successfully Verified");
           setOpenPopUp(true);
@@ -94,6 +116,14 @@ const KidsOTP = () => {
           setTimeout(function () {
             let successData = "verified";
             localStorage.setItem("userEmail", resData.data.data.parentEmail);
+            localStorage.setItem("currentUser",resData.data.data.userId);
+            localStorage.setItem("currentUserType", resData.data.data.userType);
+            localStorage.setItem(
+              "talentName",
+              `${resData.data.data.preferredChildFirstname} ${resData.data.data.preferredChildLastName}`
+            );
+            setUserId(userId);
+
             navigate(
               `/talent-kids-teen-social-media-connections?userId=${userId}&userEmail=${userEmail}`
             );
@@ -106,7 +136,7 @@ const KidsOTP = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const otpResend = () => {
@@ -183,7 +213,7 @@ const KidsOTP = () => {
           <div className="otp-enter">Please enter the OTP we just sent to</div>
           <div className="otp-mail">{userEmail}</div>
           <div className="otp-boxes">
-            <div onPaste={handlePaste}>
+            {/* <div onPaste={handlePaste}>
               {otp.map((value, index) => (
                 <input
                   key={index}
@@ -203,7 +233,27 @@ const KidsOTP = () => {
                   }}
                 />
               ))}
-            </div>
+            </div> */}
+              {otp.map((value, index) => (
+          <input
+              key={index}
+              type="text"
+              maxLength="1"
+              className="otp"
+              value={value}
+              onChange={(e) => handleChange(e.target.value, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              onPaste={handlePaste}
+              ref={(el) => (inputsRef.current[index] = el)}
+              style={{
+                width: "50px",
+                height: "50px",
+                fontSize: "24px",
+                textAlign: "center",
+                marginRight: "10px",
+              }}
+            />
+          ))}
           </div>
           <div className="verify-otp" onClick={handleVerify}>
             Verify Now

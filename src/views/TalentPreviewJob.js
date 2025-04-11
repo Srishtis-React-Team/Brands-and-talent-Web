@@ -821,7 +821,28 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   )}
               </div>
 
-              {jobData?.jobDescription &&
+
+              {jobData?.jobDescription && jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+
+    <div className="job-about-values">
+      <div
+        dangerouslySetInnerHTML={{
+          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+        }}
+      />
+    </div>
+  </div>
+) : (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+    <div className="job-about-values">No Data Added</div>
+  </div>
+)}
+
+
+              {/* {jobData?.jobDescription &&
                 jobData?.jobDescription.length > 0 && (
                   <>
                     <div className="job-about-section">
@@ -851,20 +872,23 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   )}
 </div>
 
-                      {/* <div className="job-about-values">
-                        {jobData?.jobDescription &&
-                          jobData?.jobDescription?.map((htmlContent, index) => (
-                            <div
-                              key={index}
-                              dangerouslySetInnerHTML={{ __html: htmlContent }}
-                            />
-                          ))}
-                      </div> */}
+                    
                     </div>
                   </>
-                )}
+                )} */}
+                {jobData?.whyWorkWithUs && (
+  <div className="job-about-section">
+    <div className="job-feature-title">Why Work With Us</div>
+    <div className="job-about-values">
+      <div
+        dangerouslySetInnerHTML={{ __html: jobData.whyWorkWithUs }}
+      />
+    </div>
+  </div>
+)}
 
-              {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
+
+              {/* {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Why Work With Us</div>
@@ -879,9 +903,22 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                     </div>
                   </div>
                 </>
-              )}
+              )} */}
+              {jobData?.hiringCompanyDescription && (
+  <div className="job-about-section">
+    <div className="job-feature-title">Hiring Company Description</div>
+    <div className="job-about-values">
+      <div
+        dangerouslySetInnerHTML={{
+          __html: jobData.hiringCompanyDescription,
+        }}
+      />
+    </div>
+  </div>
+)}
 
-              {jobData?.hiringCompanyDescription &&
+
+              {/* {jobData?.hiringCompanyDescription &&
                 jobData?.hiringCompanyDescription?.length > 0 && (
                   <>
                     <div className="job-about-section">
@@ -903,7 +940,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                       </div>
                     </div>
                   </>
-                )}
+                )} */}
               {jobData?.workSamples && jobData?.workSamples?.length > 0 && (
                 <>
                   <div className="job-about-section">
@@ -984,7 +1021,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <div className="job-about-values">
                     {jobData?.applyDescription ? (
                       <div
-                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription.join(" ")) }}
+                        dangerouslySetInnerHTML={{ __html: convertLinks(jobData?.applyDescription) }}
                         className="apply-description"
                       />
                     ) : (

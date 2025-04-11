@@ -30,7 +30,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { format, parseISO } from "date-fns";
-import { FlashOnTwoTone } from "@mui/icons-material";
+import { ContactsOutlined, FlashOnTwoTone } from "@mui/icons-material";
 import useFieldDatas from "../../config/useFieldDatas";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import styles
@@ -73,6 +73,7 @@ const CreateJobs = () => {
       ["link", "image", "video", "formula"],
       ["clean"],
     ],
+  
   };
 
   const formats = [
@@ -652,7 +653,7 @@ const CreateJobs = () => {
 
       setSelectedLanguageOptions(selectedOptions);
 
-      if (nationalitiesList.length > 0) {
+      if (nationalitiesList?.length > 0) {
         const nationalitiesList = editData?.nationality?.map((language) => {
           return nationalitiesList.find((option) => option?.label === language);
         });
@@ -831,7 +832,7 @@ const CreateJobs = () => {
     setQuestions([...questions, ""]);
     // setQuestions([...questions]);
     setTimeout(() => {
-      const newQuestionIndex = questions.length;
+      const newQuestionIndex = questions?.length;
       const input = document.getElementById(`question${newQuestionIndex}`);
       if (input) {
         input.focus();
@@ -965,7 +966,7 @@ const CreateJobs = () => {
 
   const selectLanguage = (selectedOptions) => {
     setLanguageError(false);
-    if (!selectedOptions || selectedOptions.length === 0) {
+    if (!selectedOptions || selectedOptions?.length === 0) {
       // Handle case when all options are cleared
       setLanguages([]); // Clear the languages state
       setSelectedLanguageOptions([]);
@@ -981,7 +982,7 @@ const CreateJobs = () => {
   };
 
   const selectNationality = (selectedOptions) => {
-    if (!selectedOptions || selectedOptions.length === 0) {
+    if (!selectedOptions || selectedOptions?.length === 0) {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
       setSelectedNationalityOptions([]);
@@ -1002,7 +1003,7 @@ const CreateJobs = () => {
 
   const selectGender = (selectedOptions) => {
     setGenderError(false);
-    if (!selectedOptions || selectedOptions.length === 0) {
+    if (!selectedOptions || selectedOptions?.length === 0) {
       // Handle case when all options are cleared
       setGender([]); // Clear the languages state
       setSelectedGenderOptions([]);
@@ -1030,9 +1031,10 @@ const CreateJobs = () => {
     setjobTypeError(false);
   };
   const handleApplyOption = (event) => {
-    setSelectedApplyOption(event.target.value);
-    setHowLikeToApply(event.target.value);
-    setApplyOptionError(false); // Clear error on selection
+    console.log("t.value",event.target.value)
+     setSelectedApplyOption(event.target.value);
+     setHowLikeToApply(event.target.value);
+     setApplyOptionError(false); // Clear error on selection
   };
   const selectEmploymentType = (event) => {
     setEmploymentType(event.target.value);
@@ -1194,7 +1196,7 @@ const CreateJobs = () => {
       setjobTitleError(true);
     }
 
-    if (selectedProfessions.length === 0) {
+    if (selectedProfessions?.length === 0) {
       setProfessionError(true);
     }
 
@@ -1358,7 +1360,7 @@ const CreateJobs = () => {
       setjobTitleError(true);
     }
 
-    if (selectedProfessions.length === 0) {
+    if (selectedProfessions?.length === 0) {
       setProfessionError(true);
     }
 
@@ -1387,7 +1389,7 @@ const CreateJobs = () => {
     if (lastdateApply == null) {
       setDeadlineError(true);
     }
-    if (skills.length == 0) {
+    if (skills?.length == 0) {
       setSkillError(true);
     }
     console.log("test 4", howLikeToApply);
@@ -1420,7 +1422,7 @@ const CreateJobs = () => {
       !minPayError &&
       !maxPayError &&
       lastdateApply != null &&
-      skills.length != 0
+      skills?.length != 0
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -1804,7 +1806,7 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    if (skills.length > 0) {
+    if (skills?.length > 0) {
       setSkillError(false);
     }
   }, [skills]);
@@ -1967,23 +1969,29 @@ const CreateJobs = () => {
     setYouTubeMax(event.target.value); // Update the state with the new value
   };
 
-  useEffect(() => {
-    if (jobTitle) {
-      const updatedHowToApply = `
-        <p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
-        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${jobTitle}</strong> in the subject line.</p>
-      `;
-      setApplyDescription([updatedHowToApply]);
+  // useEffect(() => {
+  //   if (jobTitle) {
+  //     console.log("jobTitle updateddsfjdkgkhj",jobTitle)
+  //     const updatedHowToApply = `
+  //       <p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+  //       <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${jobTitle}</strong> in the subject line.</p>
+  //     `;
+  //    // setApplyDescription([updatedHowToApply]);
+  //     const applyDescriptionContent = updatedHowToApply;
+  //     setApplyDescription(applyDescriptionContent);
+  //     console.log("updatedHowToApply",updatedHowToApply)
 
-      const applyDescriptionContentBlocks = convertFromHTML(updatedHowToApply);
-      const applyDescriptionContentState = ContentState.createFromBlockArray(
-        applyDescriptionContentBlocks
-      );
-      setEditorStateApplyDescription(
-        EditorState.createWithContent(applyDescriptionContentState)
-      );
-    }
-  }, [jobTitle]); // Runs whenever jobTitle changes
+  //     // const applyDescriptionContentBlocks = convertFromHTML(updatedHowToApply);
+  //     // const applyDescriptionContentState = ContentState.createFromBlockArray(
+  //     //   applyDescriptionContentBlocks
+  //     // );
+  //     // setEditorStateApplyDescription(
+  //     //   EditorState.createWithContent(applyDescriptionContentState)
+  //     // );
+  //   }
+  // }, [jobTitle]); // Runs whenever jobTitle changes
+
+  
 
   const duplicateJob = () => {
     if (editJobData) {
@@ -2029,20 +2037,12 @@ const CreateJobs = () => {
       //addedd
       // Set other job details
       setApplyDescription([
-        `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+      
+        `<p>Sample Application2222 Instructions (Customize as Needed Before Posting):<br/></p>
         <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${editJobData?.jobTitle}</strong> in the subject line.</p>`,
       ]);
 
-      // const initialHowToApply = [
-      //   `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
-      //    <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include ${editJobData?.jobTitle} in the subject line.</p>`
-      // ];
-      // setApplyDescription([initialHowToApply[0]]);
-      // console.log("initialHowToApply[0]",initialHowToApply[0])
-
-      //addedd
-      // setApplyDescription(editJobData?.applyDescription);  //2/4 matti
-
+     
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersList.find((option) => option?.label === gender);
       });
@@ -2137,29 +2137,32 @@ const CreateJobs = () => {
         setSelectedPaymentOption("fixed");
         setAmount(editJobData?.paymentType?.amount);
       }
-      // const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-      // const jobDescriptionContentBlocks = convertFromHTML(
-      //   jobDescriptionhtmlContent
-      // );
-      // const jobDescriptionContentState = ContentState.createFromBlockArray(
-      //   jobDescriptionContentBlocks
-      // );
-      // const updateJobDescription = EditorState.createWithContent(
-      //   jobDescriptionContentState
-      // );
-      // setEditorStateJobDescription(updateJobDescription);
-      // setJobDescription(editJobData?.jobDescription);
+      const jobDescriptionhtmlContent = editJobData?.jobDescription;
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editJobData?.jobDescription);
 
       //aadeddd
 
-      // console.log(
-      //   "editJobData?.applyDescription[0];",
-      //   editJobData?.applyDescription[0]
-      // );
+      console.log(
+        "editJobData?.applyDescription[0];",
+        editJobData?.applyDescription
+      );
+    
 
-      // //  const applyDescriptionhtmlContent = editJobData?.applyDescription[0]; //2/4 matti
+       const applyDescriptionhtmlContent = editJobData?.applyDescription[0]; //2/4 matti
+        console.log("applyDescriptionhtmlContent",applyDescriptionhtmlContent)
+      // console.log("applyDescription",applyDescription)
       // const applyDescriptionContentBlocks = convertFromHTML(
-      //   applyDescription[0]
+      //   applyDescription
       // );
       // const applyDescriptionContentState = ContentState.createFromBlockArray(
       //   applyDescriptionContentBlocks
@@ -2167,52 +2170,56 @@ const CreateJobs = () => {
       // setEditorStateApplyDescription(
       //   EditorState.createWithContent(applyDescriptionContentState)
       // );
-      // const applyDescriptionContentBlocks = convertFromHTML(
-      //   applyDescriptionhtmlContent
-      // );
-      // const applyDescriptionContentState = ContentState.createFromBlockArray(
-      //   applyDescriptionContentBlocks
-      // );
-      // const updateApplyDescription = EditorState.createWithContent(
-      //   applyDescriptionContentState
-      // );
-      // setEditorStateApplyDescription(updateApplyDescription);
-      // setApplyDescription(editJobData?.applyDescription);
+      const applyDescriptionContentBlocks = convertFromHTML(
+        applyDescriptionhtmlContent
+      );
+      const applyDescriptionContentState = ContentState.createFromBlockArray(
+        applyDescriptionContentBlocks
+      );
+      const updateApplyDescription = EditorState.createWithContent(
+        applyDescriptionContentState
+      );
+      setEditorStateApplyDescription(updateApplyDescription);
+      setApplyDescription(editJobData?.applyDescription);
 
       //adeddd
-      // const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-      // const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-      // const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-      //   whyWorkWithUsContentBlocks
-      // );
-      // const updatewhyWorkWithUs = EditorState.createWithContent(
-      //   whyWorkWithUsContentState
-      // );
-      // setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-      // setWhyWorkWithUs(editJobData?.whyWorkWithUs);
-
-      // const hiringCompanyDescriptionContent =
-      //   editJobData?.hiringCompanyDescription[0];
-      // const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-      //   hiringCompanyDescriptionContent
-      // );
-      // const hiringCompanyDescriptionContentState =
-      //   ContentState.createFromBlockArray(
-      //     hiringCompanyDescriptionContentBlocks
-      //   );
-      // const hiringCompanyDescription = EditorState.createWithContent(
-      //   hiringCompanyDescriptionContentState
-      // );
-      // setEditorStateClientDescription(hiringCompanyDescription);
-      // setClientDescription(editJobData?.hiringCompanyDescription);
+      console.log("whyWorkWithUs",whyWorkWithUs)
+      
+      const whyWorkWithUsContent = editJobData?.whyWorkWithUs;
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+     
+      const hiringCompanyDescriptionContent =
+        editJobData?.hiringCompanyDescription;
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState =
+        ContentState.createFromBlockArray(
+          hiringCompanyDescriptionContentBlocks
+        );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+   
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editJobData?.hiringCompanyDescription);
 
       setfrequency(frequencyValue);
     }
   };
 
   useEffect(() => {
+    console.log('33333333333333333333333333')
     let initialHowToApply = [
-      `<p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+      `<p>Sample Application 3333 Instructions (Customize as Needed Before Posting):<br/></p>
        <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}.Please include ${jobTitle} in the subject line.</p>`,
     ];
 
@@ -2230,15 +2237,17 @@ const CreateJobs = () => {
     const updatewhyWorkWithUs = EditorState.createWithContent(
       whyWorkWithUsContentState
     );
+    
     setEditorStateHowToApply(updatewhyWorkWithUs);
     setHowToApplyDescription(editJobData?.whyWorkWithUs);
 
     // Check if applyDescription exists and is not empty
+console.log("editJobData?.applyDescription",editJobData?.applyDescription)
 
     const applyDescriptionContent = editJobData?.applyDescription
       ? editJobData.applyDescription
       : initialHowToApply[0];
-
+     
     // Convert HTML content to Draft.js content block
     // const contentBlock = convertFromHTML(applyDescriptionContent);
 
@@ -2251,6 +2260,21 @@ const CreateJobs = () => {
     // const initialEditorState = EditorState.createWithContent(contentState);
     // setEditorStateApplyDescription(initialEditorState);
     setApplyDescription(applyDescriptionContent);
+    console.log("applyDescriptionContent",applyDescriptionContent)
+    if(jobTitle){
+
+      
+          console.log("jobTitle updateddsfjdkgkhj",jobTitle)
+          const updatedHowToApply = `
+            <p>Sample Application Instructions (Customize as Needed Before Posting):<br/></p>
+            <p>Interested candidates should submit their Resume along with their Brands & Talent (BT) portfolio link to ${brandData?.brandEmail}. Please include <strong>${jobTitle}</strong> in the subject line.</p>
+          `;
+        
+          setApplyDescription(updatedHowToApply);
+          console.log("updatedHowToApply",updatedHowToApply)
+    
+
+    }
   }, [brandData, jobTitle, editJobData]);
 
   const [value, setValue] = useState(""); // Editor content
@@ -2597,9 +2621,33 @@ const CreateJobs = () => {
                       </div>
 
                       <div className="rich-editor mb-4">
-                        <label className="form-label">
-                          Gig/Job Description
-                        </label>
+                        <label className="form-label"> Gig/Job Description  
+                        
+
+                        <ReactQuill
+  value={jobDescription}
+  onChange={setJobDescription}
+  modules={modules}
+  formats={formats}
+  placeholder="Start typing here..."
+  style={{ maxHeight: "200px", overflowY: "auto", marginBottom: "10px" }}
+  className="custom-quill-editor"
+/>
+
+</label>
+
+                         
+                          {/* <ReactQuill
+                    theme="snow"
+                    value={jobDescription}
+                    onChange={setJobDescription}
+                    modules={modules}
+                    formats={formats}
+                    placeholder="Start typing here..."
+                    style={{ height: "45px", marginBottom: "40px" }}
+                  /> */}
+                      
+               
                         {/* <Editor
                           editorState={editorStateJobDescription}
                           editorStyle={{ overflow: "hidden" }}
@@ -4056,8 +4104,18 @@ const CreateJobs = () => {
 
                 <div className="rich-editor mb-4">
                   <label className="form-label">Why Work With Us</label>
-
                   <ReactQuill
+  value={whyWorkWithUs}
+  onChange={setWhyWorkWithUs}
+  modules={modules}
+  formats={formats}
+  placeholder="Start typing here..."
+  style={{ maxHeight: "200px", overflowY: "auto", marginBottom: "10px" }}
+   className="custom-quill-editor"
+/>
+
+
+                  {/* <ReactQuill
                     theme="snow"
                     value={whyWorkWithUs}
                     onChange={setWhyWorkWithUs}
@@ -4065,7 +4123,7 @@ const CreateJobs = () => {
                     formats={formats}
                     placeholder="Start typing here..."
                     style={{ height: "55px", marginBottom: "50px" }}
-                  />
+                  /> */}
 
                   {/* <Editor
                     editorState={editorStateWhyWorkWithUs}
@@ -4099,6 +4157,26 @@ const CreateJobs = () => {
                   <label className="form-label">
                     Hiring Company/Client Description
                   </label>
+                  <ReactQuill
+  value={clientDescription}
+  onChange={setClientDescription}
+  modules={modules}
+  formats={formats}
+  placeholder="Start typing here..."
+  style={{ maxHeight: "200px", overflowY: "auto", marginBottom: "10px" }}
+   className="custom-quill-editor"
+/>
+
+
+                  {/* <ReactQuill
+                    theme="snow"
+                    value={hiringCompany}
+                    onChange={setHiringCompany}
+                    modules={modules}
+                    formats={formats}
+                    placeholder="Start typing here..."
+                    style={{ height: "55px", marginBottom: "50px" }}
+                  /> */}
                   {/* <Editor
                     editorState={editorStateClientDescription}
                     editorStyle={{ overflow: "hidden" }}
@@ -4183,6 +4261,26 @@ const CreateJobs = () => {
 
                     {selectedApplyOption === "how_to_apply" && (
                       <div className="rich-editor mb-4">
+
+<ReactQuill
+  value={applyDescription}
+  onChange={setApplyDescription}
+  modules={modules}
+  formats={formats}
+  placeholder="Start typing here..."
+  style={{ maxHeight: "200px", overflowY: "auto", marginBottom: "10px" }}
+   className="custom-quill-editor"
+/>
+
+                        {/* <ReactQuill
+                    theme="snow"
+                    value={applyDescription}
+                    onChange={setApplyDescription}
+                    modules={modules}
+                    formats={formats}
+                    placeholder="Start typing here..."
+                    style={{ height: "55px", marginBottom: "50px" }}
+                  /> */}
                         {/* <Editor
                           editorState={editorStateApplyDescription}
                           editorStyle={{ overflow: "hidden" }}

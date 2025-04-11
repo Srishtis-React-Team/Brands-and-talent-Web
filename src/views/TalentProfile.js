@@ -700,14 +700,23 @@ const TalentProfile = () => {
       .then((resData) => {
         if (resData?.data?.status == true) {
           navigate(`/messages?${talentData?._id}`);
-        } else if (resData?.data?.status == false) {
-          setMessage(`${resData?.data?.message}`);
+        } else if (resData?.data?.status === false || resData?.data?.message === 'User need to renew the plan') {
+          setMessage(resData?.data?.message);
           setOpenPopUp(true);
-          setTimeout(function () {
+          setTimeout(() => {
             setOpenPopUp(false);
-            navigate(`/pricing`);
+            navigate(resData?.data?.message === 'User need to renew the plan' ? `/find-talent` : `/pricing`);
           }, 3000);
         }
+        
+        // else if (resData?.data?.status == false) {
+        //   setMessage(`${resData?.data?.message}`);
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate(`/pricing`);
+        //   }, 3000);
+        // }
       })
       .catch((err) => {});
 
