@@ -418,15 +418,20 @@ console.log("adultsPreferedFirstName",adultsPreferedFirstName)
 let publicUrl = adultsPreferedFirstName.replace(/ /g, "-");
 
 try {
+  // const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+  //   preferredChildFirstname: adultsPreferedFirstName,
+  // });
   const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
     preferredChildFirstname: adultsPreferedFirstName,
+    userId: userId || "", // Send it if updating
   });
+  
 
   // If the name is taken, append a random number to make it unique
-  if (checkNameResponse.data.status !== true) {
+  if (checkNameResponse.data.status !== true &&   checkNameResponse.data.data !==  "same") {
     publicUrl = `${publicUrl}-${Math.floor(Math.random() * 900) + 100}`;
   }
-
+ 
     let formData = {
       adultLegalFirstName: adultsLegalFirstName,
       adultLegalLastName: adultsLegalLastName,
