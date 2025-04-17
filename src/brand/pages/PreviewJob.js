@@ -245,6 +245,7 @@ console.log("jobDatacccccccccccccccc",jobData?.jobDescription)
                   <span className="">{jobData?.jobType}</span>
                 </span>
               </div>
+              
 
               <div className="company-location">
                 <span className="font-600">Category :&nbsp; </span>
@@ -687,7 +688,75 @@ console.log("jobDatacccccccccccccccc",jobData?.jobDescription)
                   </div>
                 </>
               )} */}
-              {jobData?.workSamples && (
+
+{jobData?.workSamples && (
+  <div className="job-about-section">
+    <div className="job-feature-title">Project brief / TOR</div>
+    <div className="service-files-main">
+      <div>
+        {jobData.workSamples.length > 0 ? (
+          jobData.workSamples.map((item, index) => (
+            <div className="update-portfolio-cards" key={item._id || index}>
+              <div className="update-portfolio-icon">
+                <div className="file-section">
+                  {item.type === "image" && (
+                    <div className="fileType">
+                      <i className="bi bi-card-image"></i>
+                    </div>
+                  )}
+                  {item.type === "audio" && (
+                    <div className="fileType">
+                      <i className="bi bi-mic-fill"></i>
+                    </div>
+                  )}
+                  {item.type === "video" && (
+                    <div className="fileType">
+                      <i className="bi bi-play-circle-fill"></i>
+                    </div>
+                  )}
+                  {item.type === "document" && (
+                    <div className="fileType">
+                      <i className="bi bi-file-earmark-richtext"></i>
+                    </div>
+                  )}
+                  <div className="update-portfolio-fileName">
+                    {item.title}
+                  </div>
+                  <div className="update-portfolio-action">
+                    <i
+                      className="bi bi-three-dots-vertical"
+                      type="button"
+                      id={`dropdownMenuButton-${index}`}
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    ></i>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby={`dropdownMenuButton-${index}`}
+                    >
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          onClick={() => viewUpdateFile(item)}
+                        >
+                          View
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-muted">No data added</div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+              {/* {jobData?.workSamples && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Project brief / TOR</div>
@@ -753,12 +822,14 @@ console.log("jobDatacccccccccccccccc",jobData?.jobDescription)
                                 </div>
                               </>
                             );
-                          })}
+                          })
+                          
+                          }
                       </div>
                     </div>
                   </div>
                 </>
-              )}
+              )} */}
 
               {jobData?.howLikeToApply !== "easy-apply" ? (
                 <div className="job-about-section">

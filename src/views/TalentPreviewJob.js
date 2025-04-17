@@ -230,10 +230,10 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
       //     setOpenPopUp(false);
       //   }, 4000);
       // } 
-    //  else
-       if (
+      //  else
+      if (
         talentData?.planName?.includes("Pro") ||
-        talentData?.planName == "Premium" ||talentData?.planName == "Basic"
+        talentData?.planName == "Premium" || talentData?.planName == "Basic"
       ) {
         setModalData(data);
         if (data?.isApplied != "Applied") {
@@ -403,7 +403,42 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                 <div className="company-name">{jobData?.hiringCompany}</div>
               </div>
 
-              <div className="company-location">
+              <div
+  className="company-location"
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "100%", // Optional: limit width if needed
+  }}
+>
+  <span className="font-600">Location :&nbsp;</span>
+  <span
+    className="job-feature-values"
+    style={{
+      display: "inline-block",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      maxWidth: "100%",
+    }}
+  >
+    {[
+      jobData?.jobLocation,
+      jobData?.city,
+      jobData?.state,
+      jobData?.country,
+    ]
+      .filter(Boolean)
+      .join(", ") || "No Data Added"}
+  </span>
+</div>
+
+
+              {/* <div className="company-location">
                 <span className="font-600">
                   Location :&nbsp; </span>
                 <span>
@@ -416,11 +451,11 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                         jobData?.country,
                       ]
                         .filter(Boolean)
-                        .join(", ")|| "No Data Added"}
+                        .join(", ") || "No Data Added"}
                     </span>
                   </span>
                 </span>
-              </div>
+              </div> */}
 
               <div className="company-location">
                 <span className="font-600">
@@ -447,12 +482,19 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <span className="job-feature-heading">{jobData?.jobType}</span>
                 </span>
               </div>
-              <div className="company-location">
-                <span className="font-600">
-                  Category :&nbsp;
-                </span>
-                <span className="job-feature-heading">{jobData?.category}</span>
+              <div
+                className="company-location"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  whiteSpace: 'nowrap',
+                  gap: '6px',
+                }}
+              >
+                <span className="font-600" style={{ margin: 0 }}>Category :</span>
+                <span className="job-feature-heading" style={{ margin: 0 }}>{jobData?.category}</span>
               </div>
+
 
               <div className="company-location comp-main">
                 {/* {jobData.compensation &&
@@ -823,23 +865,23 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
 
               {jobData?.jobDescription && jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
-  <div className="job-about-section">
-    <div className="job-feature-title">Job Description</div>
+                <div className="job-about-section">
+                  <div className="job-feature-title">Job Description</div>
 
-    <div className="job-about-values">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
-        }}
-      />
-    </div>
-  </div>
-) : (
-  <div className="job-about-section">
-    <div className="job-feature-title">Job Description</div>
-    <div className="job-about-values">No Data Added</div>
-  </div>
-)}
+                  <div className="job-about-values">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="job-about-section">
+                  <div className="job-feature-title">Job Description</div>
+                  <div className="job-about-values">No Data Added</div>
+                </div>
+              )}
 
 
               {/* {jobData?.jobDescription &&
@@ -876,16 +918,16 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                     </div>
                   </>
                 )} */}
-                {jobData?.whyWorkWithUs && (
-  <div className="job-about-section">
-    <div className="job-feature-title">Why Work With Us</div>
-    <div className="job-about-values">
-      <div
-        dangerouslySetInnerHTML={{ __html: jobData.whyWorkWithUs }}
-      />
-    </div>
-  </div>
-)}
+              {jobData?.whyWorkWithUs && (
+                <div className="job-about-section">
+                  <div className="job-feature-title">Why Work With Us</div>
+                  <div className="job-about-values">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: jobData.whyWorkWithUs }}
+                    />
+                  </div>
+                </div>
+              )}
 
 
               {/* {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
@@ -905,17 +947,17 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                 </>
               )} */}
               {jobData?.hiringCompanyDescription && (
-  <div className="job-about-section">
-    <div className="job-feature-title">Hiring Company Description</div>
-    <div className="job-about-values">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: jobData.hiringCompanyDescription,
-        }}
-      />
-    </div>
-  </div>
-)}
+                <div className="job-about-section">
+                  <div className="job-feature-title">Hiring Company Description</div>
+                  <div className="job-about-values">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: jobData.hiringCompanyDescription,
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
 
 
               {/* {jobData?.hiringCompanyDescription &&
@@ -941,7 +983,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                     </div>
                   </>
                 )} */}
-              {jobData?.workSamples && jobData?.workSamples?.length > 0 && (
+              {/* {jobData?.workSamples && jobData?.workSamples?.length > 0 && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Project brief / TOR</div>
@@ -1012,6 +1054,72 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                     </div>
                   </div>
                 </>
+              )} */}
+              {jobData?.workSamples && (
+                <div className="job-about-section">
+                  <div className="job-feature-title">Project brief / TOR</div>
+                  <div className="service-files-main">
+                    <div>
+                      {jobData.workSamples.length > 0 ? (
+                        jobData.workSamples.map((item, index) => (
+                          <div className="update-portfolio-cards" key={item._id || index}>
+                            <div className="update-portfolio-icon">
+                              <div className="file-section">
+                                {item.type === "image" && (
+                                  <div className="fileType">
+                                    <i className="bi bi-card-image"></i>
+                                  </div>
+                                )}
+                                {item.type === "audio" && (
+                                  <div className="fileType">
+                                    <i className="bi bi-mic-fill"></i>
+                                  </div>
+                                )}
+                                {item.type === "video" && (
+                                  <div className="fileType">
+                                    <i className="bi bi-play-circle-fill"></i>
+                                  </div>
+                                )}
+                                {item.type === "document" && (
+                                  <div className="fileType">
+                                    <i className="bi bi-file-earmark-richtext"></i>
+                                  </div>
+                                )}
+                                <div className="update-portfolio-fileName">
+                                  {item.title}
+                                </div>
+                                <div className="update-portfolio-action">
+                                  <i
+                                    className="bi bi-three-dots-vertical"
+                                    type="button"
+                                    id={`dropdownMenuButton-${index}`}
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  ></i>
+                                  <ul
+                                    className="dropdown-menu"
+                                    aria-labelledby={`dropdownMenuButton-${index}`}
+                                  >
+                                    <li>
+                                      <a
+                                        className="dropdown-item"
+                                        onClick={() => viewUpdateFile(item)}
+                                      >
+                                        View
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-muted">No data added</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               )}
 
 
