@@ -239,6 +239,7 @@ const TalentProfile = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setCvList(resData.data.data);
+        
         }
       })
       .catch((err) => {});
@@ -296,11 +297,26 @@ const TalentProfile = () => {
     setSelectedJob(e?.value);
   };
 
-  const handleView = (imageUrl) => {
-    let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
-    window.open(viewImage, "_blank");
+  // const handleView = (imageUrl) => {
+  //   let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
+  //   window.open(viewImage, "_blank");
+  // };
+  const handleView = (file) => {
+    if (!file?.fileData) return;
+  
+    const fileUrl = `${API.userFilePath}${file.fileData}`;
+    const extension = file.fileData.split('.').pop().toLowerCase();
+  
+    if (extension === 'pdf') {
+      window.open(fileUrl, '_blank');
+    } else if (['doc', 'docx'].includes(extension)) {
+      const googleViewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(fileUrl)}&embedded=true`;
+      window.open(googleViewerUrl, '_blank');
+    } else {
+      alert('Unsupported file type');
+    }
   };
-
+  
   function handleForms(e) {
     setTest("features set");
     if (e == "services") {
@@ -792,7 +808,6 @@ const TalentProfile = () => {
     // }
   };
 
- 
 
   return (
     <>
@@ -1712,7 +1727,7 @@ const TalentProfile = () => {
 
                                 {photosList.length === 0 && (
                                   <>
-                                    <div>Photos not added</div>
+                                    <div>No data added</div>
                                   </>
                                 )}
                                 {talentData?.adminApproved === false &&
@@ -1881,7 +1896,7 @@ const TalentProfile = () => {
                                   {urlsList?.length === 0 && (
                                     <>
                                       <div className="msgs">
-                                        Videos are not added
+                                      No data added
                                       </div>
                                     </>
                                   )}
@@ -2085,7 +2100,7 @@ const TalentProfile = () => {
     )}
 
     {audiosList?.length === 0 && (
-      <div className="msgs">Audios are not added</div>
+      <div className="msgs">No data added</div>
     )}
   </div>
 </div>
@@ -2117,7 +2132,7 @@ const TalentProfile = () => {
                                     {!talentData?.services?.length === 0 && (
                                       <>
                                         <div className="msgs">
-                                          Services not added
+                                        No data added
                                         </div>
                                       </>
                                     )}
@@ -2181,7 +2196,22 @@ const TalentProfile = () => {
                               </div>
                               <div className="cvAdjust padSpace">
                                 <div className="cvlist-wrapper row p-0">
-                                  {cvList.map((pdf) => {
+                               
+                                {cvList.map((pdf) => (
+  <div className="col-md-4 padSpace" key={pdf.id}>
+    <div className="cv-card">
+      <div className="d-flex align-items-center">
+        <i className="fa-solid fa-file"></i>
+        <div className="fileName">{pdf.title}</div>
+      </div>
+      <button className="view-cv" onClick={() => handleView(pdf)}>
+        View
+      </button>
+    </div>
+  </div>
+))}
+
+                                  {/* {cvList.map((pdf) => {
                                     return (
                                       <>
                                         <>
@@ -2196,6 +2226,7 @@ const TalentProfile = () => {
                                                   {pdf.title}
                                                 </div>
                                               </div>
+                                            
                                               <button
                                                 className="view-cv"
                                                 onClick={() => handleView(pdf)}
@@ -2207,10 +2238,10 @@ const TalentProfile = () => {
                                         </>
                                       </>
                                     );
-                                  })}
+                                  })} */}
                                   {cvList.length === 0 && (
                                     <>
-                                      <div className="msgs">CV not added</div>
+                                      <div className="msgs">No data added</div>
                                     </>
                                   )}
                                   {talentData?.adminApproved === false &&
@@ -2261,7 +2292,7 @@ const TalentProfile = () => {
                                 photosList.length === 0 && (
                                   <>
                                     <div className="msgs">
-                                      Photos are not added
+                                    No data added
                                     </div>
                                   </>
                                 )}
@@ -2277,8 +2308,90 @@ const TalentProfile = () => {
                                 )}
                             </div>
                           )}
-
                           {videos && (
+  <>
+    <div className="models-photos videoWraper">
+      <div className="service-list-main w-100">
+        <div className="row">
+          {/* Videos Section */}
+          <p className="pb-2">Videos</p>
+          {urlsList?.some(url => isYouTubeUrl(url) || isVimeoUrl(url) || isVideoUrl(url)) ? (
+            urlsList.map((url, index) => (
+              (isYouTubeUrl(url) || isVimeoUrl(url) || isVideoUrl(url)) && (
+                <div key={index} className="col-md-6 mb-4">
+                  <div className="media-item">
+                    {isYouTubeUrl(url) ? (
+                      <iframe
+                        src={getYouTubeEmbedUrl(url)}
+                        title={`youtube-video-${index}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="video-frame w-100"
+                        style={{ height: "300px" }}
+                      ></iframe>
+                    ) : isVimeoUrl(url) ? (
+                      <iframe
+                        src={getVimeoEmbedUrl(url)}
+                        title={`vimeo-video-${index}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="video-frame w-100"
+                        style={{ height: "300px" }}
+                      ></iframe>
+                    ) : (
+                      <video
+                        controls
+                        src={url}
+                        className="video-frame w-100"
+                        style={{ height: "300px" }}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  </div>
+                </div>
+              )
+            ))
+          ) : (
+            <div className="msgs">No data added</div>
+          )}
+
+          {/* Admin Approval Notice */}
+          {talentData?.adminApproved === false &&
+            urlsList?.length > 0 &&
+            !userId && (
+              <div className="msgs">
+                Videos will be visible only after admin approval
+              </div>
+            )}
+
+          {/* Audios Section */}
+          <p className="pb-2 mt-4">Audios</p>
+          {urlsList?.some(url => isAudioUrl(url)) ? (
+            urlsList.map((url, index) => (
+              isAudioUrl(url) && (
+                <div key={index} className="col-md-6 mb-4">
+                  <div className="media-item">
+                    <audio controls src={url} className="audio-player w-100">
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                </div>
+              )
+            ))
+          ) : (
+            <div className="msgs">No data added</div>
+          )}
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
+{/* 
+                          {commtented aiswaryavideos && (
                             <>
                               <div className="models-photos videoWraper">
                                 <div className="service-list-main w-100">
@@ -2353,7 +2466,7 @@ const TalentProfile = () => {
                                     {urlsList?.length === 0 && (
                                       <>
                                         <div className="msgs">
-                                          Videos are not added
+                                        No data added
                                         </div>
                                       </>
                                     )}
@@ -2361,7 +2474,7 @@ const TalentProfile = () => {
                                 </div>
                               </div>
                             </>
-                          )}
+                          )} commtented aiswarya*/}
                          {/* {videos && (
   <>
     <p className="fw-bold">Audios</p>
@@ -2458,7 +2571,7 @@ const TalentProfile = () => {
 
 {videos && (
   <>
-    <p>Audios</p>
+    {/* <p>Audios</p> */}
     <div className="service-list-main w-100">
       <div className="row">
         {audiosList && (
@@ -2554,7 +2667,7 @@ const TalentProfile = () => {
                               {featuresList.length === 0 && (
                                 <>
                                   <div className="msgs">
-                                    Features are not added
+                                  No data added
                                   </div>
                                 </>
                               )}
@@ -2598,7 +2711,7 @@ const TalentProfile = () => {
 
                               {cvList.length === 0 && (
                                 <>
-                                  <div className="msgs"> CV not added</div>
+                                  <div className="msgs">No data added</div>
                                 </>
                               )}
                               {talentData?.adminApproved === false &&
@@ -2709,7 +2822,7 @@ const TalentProfile = () => {
                                     <>
                                       <div className="msgs">
                                         {" "}
-                                        Reviews are not added
+                                        No data added
                                       </div>
                                     </>
                                   )}

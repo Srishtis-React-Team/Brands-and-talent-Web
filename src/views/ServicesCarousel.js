@@ -411,7 +411,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
         {(!servicesList.length ||
           !servicesList.some((item) => item.serviceName)) && (
-            <div>No Services Available</div>
+            <div>No data added</div>
           )}
       </div>
 

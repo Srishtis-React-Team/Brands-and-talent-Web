@@ -259,6 +259,7 @@ const AdultFormOne = () => {
   };
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
+    setKidsCityError(false);
   };
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
@@ -404,9 +405,12 @@ const AdultFormOne = () => {
     if (country === "") {
       setCountryError(true);
     }
-    if (address === "") {
-      setAddressError(true);
+    if (kidsCity === "") {
+      setKidsCityError(true);
     }
+    // if (address === "") {
+    //   setAddressError(true);
+    // }
     if (age === "") {
       setAgeError(true);
     }
@@ -471,7 +475,9 @@ try {
       dateOfBirth !== "" &&
       adultsPhone !== "" &&
       country !== "" &&
-      address !== "" &&
+      kidsCity !== "" &&
+      kidsCity !== undefined &&
+      //address !== "" &&
       age !== "" &&
       completedJobs !== "" &&
       !mobileValidationError
@@ -505,6 +511,7 @@ try {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
           .then((resData) => {
             if (resData.data.status === true) {
+              console.log("kidsciryy",kidsCity)
               setIsLoading(false);
               setMessage("Updated Successfully!");
               setOpenPopUp(true);
@@ -1297,6 +1304,7 @@ try {
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">City</label>
+                      <span className="mandatory">*</span>
                       <Select
                         placeholder="Select City..."
                         options={cityList?.map((city) => ({
@@ -1309,6 +1317,11 @@ try {
                         onChange={handleSelectedCity}
                         isSearchable={true}
                       />
+                       {kidsCityError && (
+                        <div className="invalid-fields">
+                          Please select City
+                        </div>
+                      )}
                     </div>
                     <div className="kids-form-section col-md-6">
                       <label className="form-label">Phone</label>
@@ -1477,7 +1490,7 @@ try {
                       >
                         Address
                       </label>
-                      <span className="mandatory">*</span>
+                      {/* <span className="mandatory">*</span> */}
                       <textarea
                         className="address-textarea"
                         style={{ width: "100%", height: "150px !important" }}
