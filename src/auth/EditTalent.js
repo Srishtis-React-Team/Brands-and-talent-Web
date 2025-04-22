@@ -2022,7 +2022,7 @@ const EditTalent = () => {
   const updatePublicUrl = async () => {
     if (talentData?.type === "kids") {
       const formData = {
-        publicUrl: publicUrl,
+        publicUrl: publicUrl.toLowerCase(),
       };
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
         .then((resData) => {
@@ -2034,6 +2034,7 @@ const EditTalent = () => {
             setTimeout(function () {
               setOpenPopUp(false);
               setMyState(true);
+              window.location.reload(); // 🔄 Refresh page
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
@@ -2063,6 +2064,8 @@ const EditTalent = () => {
             setTimeout(function () {
               setOpenPopUp(false);
               setMyState(true);
+              window.scrollTo(0, 0); // 👆 Scroll to top
+              window.location.reload(); // 🔄 Then refresh page
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
@@ -2970,6 +2973,7 @@ const EditTalent = () => {
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">City</label>
+                    <span className="mandatory">*</span>
                     <Select
                       placeholder="Select City..."
                       options={cityList?.map((city) => ({
@@ -2982,6 +2986,11 @@ const EditTalent = () => {
                       onChange={handleSelectedCity}
                       isSearchable={true}
                     />
+                     {cityError && (
+                      <div className="invalid-fields">
+                        Please select City
+                      </div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">
@@ -3019,7 +3028,8 @@ const EditTalent = () => {
                       htmlFor="exampleFormControlTextarea1"
                       className="form-label"
                     >
-                      Address<span className="mandatory">*</span>
+                      Address
+                      {/* <span className="mandatory">*</span> */}
                     </label>
                     <textarea
                       className="contact-us-textarea w-100"
@@ -3031,9 +3041,9 @@ const EditTalent = () => {
                         setAddressError(false);
                       }}
                     ></textarea>
-                    {addressError && (
+                    {/* {addressError && (
                       <div className="invalid-fields">Please enter Address</div>
-                    )}
+                    )} */}
                   </div>
                 </div>
                 {talentData?.type === "kids" && (
@@ -3269,7 +3279,7 @@ const EditTalent = () => {
                   )}
                 <div className="row">
                   <div className="kids-form-section  col-md-9 mb-3 mt-3">
-                    <label className="form-label">Public Url</label>
+                    <label className="form-label">Edit your public profile url</label>
                     <div className="public-url-wrapper">
                       {!publicUrlEdit && (
                         <>

@@ -510,6 +510,8 @@ const EditBrands = () => {
           setTimeout(function () {
             setOpenPopUp(false);
             setMyState(true);
+            window.scrollTo(0, 0);      // 👆 Ensures scroll position is at the top
+            window.location.reload();   // 🔄 Refreshes the current page
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
@@ -1171,7 +1173,7 @@ const EditBrands = () => {
 
                 <div className="row">
                   <div className="kids-form-section  col-md-9 mb-3 mt-3">
-                    <label className="form-label">Public Url</label>
+                    <label className="form-label">Edit your public profile url</label>
                     <div className="public-url-wrapper">
                       {!publicUrlEdit && (
                         <>

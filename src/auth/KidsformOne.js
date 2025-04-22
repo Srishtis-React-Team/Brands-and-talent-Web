@@ -533,10 +533,13 @@ const KidsformOne = () => {
     if (country === "") {
       setParentCountryError(true);
     }
-
-    if (address === "") {
-      setAddressError(true);
+    if (kidsCity === "") {
+      setCityError(true);
     }
+
+    // if (address === "") {
+    //   setAddressError(true);
+    // }
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
@@ -576,7 +579,9 @@ const KidsformOne = () => {
       gender !== "" &&
       parentMobile !== "" &&
       country !== "" &&
-      address !== "" &&
+      kidsCity !== "" &&
+      kidsCity !== undefined &&
+     // address !== "" &&
       selectedProfessions.length !== 0 &&
       selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
@@ -1105,6 +1110,7 @@ const KidsformOne = () => {
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">City</label>
+                          <span className="mandatory">*</span>
                         <Select
                           placeholder="Select City..."
                           options={cityList?.map((city) => ({
@@ -1119,6 +1125,11 @@ const KidsformOne = () => {
                           onChange={handleSelectedCity}
                           isSearchable={true}
                         />
+                          {cityError  && (
+                        <div className="invalid-fields">
+                          Please select City
+                        </div>
+                      )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
@@ -1281,7 +1292,8 @@ const KidsformOne = () => {
                           htmlFor="exampleFormControlTextarea1"
                           className="form-label"
                         >
-                          Address<span className="mandatory">*</span>
+                          Address
+                          {/* <span className="mandatory">*</span> */}
                         </label>
                         <textarea
                           style={{ width: "100%", height: "150px !important" }}
@@ -1294,11 +1306,11 @@ const KidsformOne = () => {
                             setAddressError(false);
                           }}
                         ></textarea>
-                        {addressError && (
+                        {/* {addressError && (
                           <div className="invalid-fields">
                             Please enter Address
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
