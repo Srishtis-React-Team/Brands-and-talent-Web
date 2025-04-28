@@ -237,6 +237,7 @@ const AdultFormOne = () => {
   const [languagesError, setLanguagesError] = useState(false);
   const [dateOfBirthError, setDobError] = useState(false);
   const [kidsEmailError, setKidsEmailError] = useState(false);
+   const [stateError, setStateError] = useState(false);
 
   useEffect(() => {
     getCountries();
@@ -251,6 +252,7 @@ const AdultFormOne = () => {
     setCountryError(false);
   };
   const handleSelectedState = (state) => {
+    setStateError(false);
     setState(state?.label);
     getCities({
       countryName: country,
@@ -408,6 +410,9 @@ const AdultFormOne = () => {
     if (kidsCity === "") {
       setKidsCityError(true);
     }
+    if(state===""){
+      setStateError(true);
+    }
     // if (address === "") {
     //   setAddressError(true);
     // }
@@ -477,6 +482,7 @@ try {
       country !== "" &&
       kidsCity !== "" &&
       kidsCity !== undefined &&
+      state !==""&&
       //address !== "" &&
       age !== "" &&
       completedJobs !== "" &&
@@ -1289,6 +1295,7 @@ try {
                     </div>
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">State</label>
+                      <span className="mandatory">*</span>
                       <Select
                         placeholder="Select state..."
                         options={stateList?.map((state) => ({
@@ -1299,6 +1306,11 @@ try {
                         onChange={handleSelectedState}
                         isSearchable={true}
                       />
+                      {stateError && (
+                        <div className="invalid-fields">
+                          Please select State
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="kids-form-row row">

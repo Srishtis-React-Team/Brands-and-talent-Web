@@ -2034,7 +2034,7 @@ const EditTalent = () => {
             setTimeout(function () {
               setOpenPopUp(false);
               setMyState(true);
-              window.location.reload(); // 🔄 Refresh page
+              // window.location.reload(); // 🔄 Then refresh page
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
@@ -2064,8 +2064,8 @@ const EditTalent = () => {
             setTimeout(function () {
               setOpenPopUp(false);
               setMyState(true);
-              window.scrollTo(0, 0); // 👆 Scroll to top
-              window.location.reload(); // 🔄 Then refresh page
+              // window.scrollTo(0, 0); // 👆 Scroll to top
+              // window.location.reload(); // 🔄 Then refresh page
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
