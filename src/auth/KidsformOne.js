@@ -536,6 +536,9 @@ const KidsformOne = () => {
     if (kidsCity === "") {
       setCityError(true);
     }
+    if(state ===""){
+      setStateError(true);
+    }
 
     // if (address === "") {
     //   setAddressError(true);
@@ -581,6 +584,7 @@ const KidsformOne = () => {
       country !== "" &&
       kidsCity !== "" &&
       kidsCity !== undefined &&
+      state !==""&&
      // address !== "" &&
       selectedProfessions.length !== 0 &&
       selectedCategories.length != 0 &&
@@ -1092,6 +1096,7 @@ const KidsformOne = () => {
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">State</label>
+                        <span className="mandatory">*</span>
                         <Select
                           placeholder="Select state..."
                           options={stateList?.map((state) => ({
