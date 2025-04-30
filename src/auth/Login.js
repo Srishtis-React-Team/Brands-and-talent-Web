@@ -175,14 +175,21 @@ const Login = () => {
 
               setTalentLocalStorage(resData.data.data);
               const pendingJobId = localStorage.getItem("pendingJobId");
-              const pendingJobTitle = localStorage.getItem("pendingJobTitle")
+              const pendingJobTitle = localStorage.getItem("pendingJobTitle");
+              const type = localStorage.getItem("type"); 
               console.log("pendingJobTitle", pendingJobId)
-              if (pendingJobId) {
+              if (pendingJobId && type !== 'admin') {
 
                 localStorage.removeItem("pendingJobId");
                 localStorage.removeItem("pendingJobTitle");
                 navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
-              } else {
+              }else if (type === 'admin' && pendingJobId) {
+                
+                localStorage.removeItem("pendingJobId");
+                localStorage.removeItem("pendingJobTitle");
+            
+                navigate(`/jobs/views/${pendingJobTitle}/${pendingJobId}`);
+            }else {
 
                 if (resData.data.type === "adult") {
                   navigate(`/talent-home?${resData?.data?.data?.user?._id}`);

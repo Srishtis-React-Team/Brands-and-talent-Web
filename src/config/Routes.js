@@ -104,6 +104,8 @@ const EditFeatures = lazy(() => import("../pages/EditFeatures"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
 const LocationComponent = lazy(() => import("../components/LocationComponent"));
 const JobRedirect = lazy(() => import("../pages/JobRedirect"));
+const JobAdminRedirect = lazy(() => import("../pages/JobAdminRedirect"));
+
 
 function Routing() {
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -772,7 +774,16 @@ function Routing() {
               </Suspense>
             }
           />
+          <Route
+            path="/jobs/views/:jobTitle/:jobId"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <JobAdminRedirect />
+              </Suspense>
+            }
+          />
         </Routes>
+      
 
         {openPopUp && (
           <PopUp message={message} onClose={() => setOpenPopUp(false)} />
