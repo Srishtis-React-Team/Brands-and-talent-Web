@@ -321,3 +321,24 @@ button.btn.gift-payment-btn {
     z-index: 99999999999999999999999 !important;
   }
 }
+.upload-hyper {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.upload-hyper:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.upload-modal {
+  z-index: 9999999999999999 !important;
+}
+
+.verification-footer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
