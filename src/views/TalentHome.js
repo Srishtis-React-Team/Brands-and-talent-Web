@@ -406,7 +406,7 @@ const TalentHome = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               >
-                Update Profile Now 
+                Create / Update Profile Now
               </button>
 
              

@@ -708,6 +708,8 @@ const Header = ({ onData }) => {
     }
   };
 
+   {console.log("currentUserId",currentUserId)}
+
   useEffect(() => {}, [talentData, brandData]);
   const location = useLocation();
   const isLoginPage = location.pathname.includes("/login");
@@ -763,6 +765,7 @@ const Header = ({ onData }) => {
             <Dropdown className="usr-s">
               <MenuButton className="profile-image-header">
                 <div className="talent-profile-icon">
+                 
                   {talentData?.image && (
                     <>
                       <img

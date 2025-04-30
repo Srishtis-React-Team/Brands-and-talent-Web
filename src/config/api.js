@@ -103,6 +103,7 @@ export const API = {
   deleteAudioUrls: BASEURL + "users/deleteAudioUrls",
   directKidsLogin: BASEURL + "users/directKidsLogin",
   CurrentPlanName: BASEURL + "users/CurrentPlanName",
+  publicUrlCheck:BASEURL + "users/publicUrlCheck",
 
   reportReview: BASEURL + "users/reportReview",
 

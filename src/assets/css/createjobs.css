@@ -477,3 +477,34 @@
 .rdw-link-modal {
   height: 228px !important;
 }
+/* 
+.custom-quill-editor .ql-tooltip.ql-editing {
+  left: 40% !important; 
+ 
+} */
+.custom-quill-editor .ql-tooltip.ql-editing {
+  position: absolute !important; /* Ensure it is positioned absolutely */
+  left: 50% !important; /* Center the tooltip horizontally */
+  transform: translateX(-50%) !important; /* Adjust for perfect centering */
+  z-index: 1000 !important; /* Bring it to the front */
+  top: auto !important; /* Make sure it's not offset vertically from default position */
+  bottom: 100% !important; /* Position it just above the selection */
+}
+
+
+
+/* .custom-quill-editor .ql-tooltip.ql-editing {
+  top: 42px !important; 
+  left: 630px !important; 
+  transform: none !important;
+  z-index: 1000 !important;
+} */
+
+
+
+
+
+
+
+
+

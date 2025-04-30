@@ -159,7 +159,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
       return false;
     }
   };
-
+console.log("jobDatacccccccccccccccc",jobData?.jobDescription)
   return (
     <>
       <>
@@ -245,6 +245,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   <span className="">{jobData?.jobType}</span>
                 </span>
               </div>
+              
 
               <div className="company-location">
                 <span className="font-600">Category :&nbsp; </span>
@@ -572,7 +573,26 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     </>
                   )}
               </div>
-              {jobData?.jobDescription && jobData?.jobDescription.length > 0 ? (
+
+              <div className="job-about-section">
+  <div className="job-feature-title">Job Description</div>
+  <div className="job-about-values">
+    {jobData?.jobDescription &&
+    typeof jobData.jobDescription === "string" &&
+    jobData.jobDescription.trim().replace(/\n/g, "") !== "" &&
+    jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+        }}
+      />
+    ) : (
+      <div>No Data Added</div>
+    )}
+  </div>
+</div>
+
+              {/* {jobData?.jobDescription && jobData?.jobDescription.length > 0 ? (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Job Description</div>
@@ -608,14 +628,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       )}
                     </div>
 
-                    {/* <div className="job-about-values">
-                      {jobData?.jobDescription.map((htmlContent, index) => (
-                        <div
-                          key={index}
-                          dangerouslySetInnerHTML={{ __html: htmlContent }}
-                        />
-                      ))}
-                    </div> */}
+                   
                   </div>
                 </>
               ) : (
@@ -623,7 +636,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   <div className="job-feature-title">Job Description</div>
                   <div className="job-about-values">No Data Added</div>
                 </div>
-              )}
+              )} */}
 
               {jobData?.whyWorkWithUs && (
                 <>
@@ -641,8 +654,19 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   </div>
                 </>
               )}
+{jobData?.hiringCompanyDescription && (
+  <div className="job-about-section">
+    <div className="job-feature-title">Hiring Company Description</div>
+    <div
+      className="job-about-values"
+      dangerouslySetInnerHTML={{
+        __html: jobData.hiringCompanyDescription,
+      }}
+    />
+  </div>
+)}
 
-              {jobData?.hiringCompanyDescription && (
+              {/* {jobData?.hiringCompanyDescription && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">
@@ -663,8 +687,76 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     </div>
                   </div>
                 </>
-              )}
-              {jobData?.workSamples && (
+              )} */}
+
+{jobData?.workSamples && (
+  <div className="job-about-section">
+    <div className="job-feature-title">Project brief / TOR</div>
+    <div className="service-files-main">
+      <div>
+        {jobData.workSamples.length > 0 ? (
+          jobData.workSamples.map((item, index) => (
+            <div className="update-portfolio-cards" key={item._id || index}>
+              <div className="update-portfolio-icon">
+                <div className="file-section">
+                  {item.type === "image" && (
+                    <div className="fileType">
+                      <i className="bi bi-card-image"></i>
+                    </div>
+                  )}
+                  {item.type === "audio" && (
+                    <div className="fileType">
+                      <i className="bi bi-mic-fill"></i>
+                    </div>
+                  )}
+                  {item.type === "video" && (
+                    <div className="fileType">
+                      <i className="bi bi-play-circle-fill"></i>
+                    </div>
+                  )}
+                  {item.type === "document" && (
+                    <div className="fileType">
+                      <i className="bi bi-file-earmark-richtext"></i>
+                    </div>
+                  )}
+                  <div className="update-portfolio-fileName">
+                    {item.title}
+                  </div>
+                  <div className="update-portfolio-action">
+                    <i
+                      className="bi bi-three-dots-vertical"
+                      type="button"
+                      id={`dropdownMenuButton-${index}`}
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    ></i>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby={`dropdownMenuButton-${index}`}
+                    >
+                      <li>
+                        <a
+                          className="dropdown-item"
+                          onClick={() => viewUpdateFile(item)}
+                        >
+                          View
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-muted">No data added</div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+              {/* {jobData?.workSamples && (
                 <>
                   <div className="job-about-section">
                     <div className="job-feature-title">Project brief / TOR</div>
@@ -730,12 +822,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
                                 </div>
                               </>
                             );
-                          })}
+                          })
+                          
+                          }
                       </div>
                     </div>
                   </div>
                 </>
-              )}
+              )} */}
 
               {jobData?.howLikeToApply !== "easy-apply" ? (
                 <div className="job-about-section">
@@ -744,11 +838,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     {jobData?.applyDescription ? (
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: convertLinks(
-                            jobData?.applyDescription.join(" ")
-                          ),
+                          __html: convertLinks(jobData?.applyDescription),
                         }}
                         className="apply-description"
+                        //   __html: convertLinks(
+                        //     jobData?.applyDescription.join(" ")
+                        //   ),
+                        // }}
+                        // className="apply-description"
                       />
                     ) : (
                       <>

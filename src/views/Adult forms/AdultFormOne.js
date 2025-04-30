@@ -201,6 +201,10 @@ const AdultFormOne = () => {
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [nationality, setNationality] = useState([]);
+  // Auto-filled fields
+  const [preferredChildFirstname, setPreferredChildFirstname] = useState("");
+  const [preferredChildLastName, setPreferredChildLastName] = useState("");
+
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
@@ -233,6 +237,7 @@ const AdultFormOne = () => {
   const [languagesError, setLanguagesError] = useState(false);
   const [dateOfBirthError, setDobError] = useState(false);
   const [kidsEmailError, setKidsEmailError] = useState(false);
+   const [stateError, setStateError] = useState(false);
 
   useEffect(() => {
     getCountries();
@@ -247,6 +252,7 @@ const AdultFormOne = () => {
     setCountryError(false);
   };
   const handleSelectedState = (state) => {
+    setStateError(false);
     setState(state?.label);
     getCities({
       countryName: country,
@@ -255,6 +261,7 @@ const AdultFormOne = () => {
   };
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
+    setKidsCityError(false);
   };
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
@@ -400,16 +407,40 @@ const AdultFormOne = () => {
     if (country === "") {
       setCountryError(true);
     }
-    if (address === "") {
-      setAddressError(true);
+    if (kidsCity === "") {
+      setKidsCityError(true);
     }
+    if(state===""){
+      setStateError(true);
+    }
+    // if (address === "") {
+    //   setAddressError(true);
+    // }
     if (age === "") {
       setAgeError(true);
     }
     if (completedJobs === "") {
       setJobsCompletedError(true);
     }
+console.log("adultsPreferedFirstName",adultsPreferedFirstName)
+// Check for public URL availability if the preferred first name has changed
+let publicUrl = adultsPreferedFirstName.replace(/ /g, "-");
 
+try {
+  // const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+  //   preferredChildFirstname: adultsPreferedFirstName,
+  // });
+  const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+    preferredChildFirstname: adultsPreferedFirstName,
+    userId: userId || "", // Send it if updating
+  });
+  
+
+  // If the name is taken, append a random number to make it unique
+  if (checkNameResponse.data.status !== true &&   checkNameResponse.data.data !==  "same") {
+    publicUrl = `${publicUrl}-${Math.floor(Math.random() * 900) + 100}`;
+  }
+ 
     let formData = {
       adultLegalFirstName: adultsLegalFirstName,
       adultLegalLastName: adultsLegalLastName,
@@ -432,7 +463,8 @@ const AdultFormOne = () => {
       childCity: kidsCity,
       age: age,
       noOfJobsCompleted: completedJobs,
-      publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
+      publicUrl: publicUrl, // Updated public URL after checking
+     // publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
     };
 
     if (
@@ -448,7 +480,10 @@ const AdultFormOne = () => {
       dateOfBirth !== "" &&
       adultsPhone !== "" &&
       country !== "" &&
-      address !== "" &&
+      kidsCity !== "" &&
+      kidsCity !== undefined &&
+      state !==""&&
+      //address !== "" &&
       age !== "" &&
       completedJobs !== "" &&
       !mobileValidationError
@@ -475,13 +510,14 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: selectedPublicUrl,
+        publicUrl:publicUrl//selectedPublicUrl,
       };
 
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
           .then((resData) => {
             if (resData.data.status === true) {
+              console.log("kidsciryy",kidsCity)
               setIsLoading(false);
               setMessage("Updated Successfully!");
               setOpenPopUp(true);
@@ -509,6 +545,12 @@ const AdultFormOne = () => {
         setOpenPopUp(false);
       }, 1000);
     }
+  } catch (err) {
+    setIsLoading(false);
+    setMessage("Error occurred, please try again.");
+    setOpenPopUp(true);
+    setTimeout(() => setOpenPopUp(false), 1000);
+  }
   };
 
   const handleProfessionChange = (selectedOptions) => {
@@ -767,6 +809,16 @@ const AdultFormOne = () => {
   }, []);
 
   useEffect(() => {}, [maritalStatus]);
+
+   // Sync preferred names into main name fields
+   useEffect(() => {
+    setPreferredChildFirstname(adultsPreferedFirstName);
+  }, [adultsPreferedFirstName]);
+
+  useEffect(() => {
+    setPreferredChildLastName(adultsPreferedLastName);
+  }, [adultsPreferedLastName]);
+
 
   return (
     <>
@@ -1111,7 +1163,61 @@ const AdultFormOne = () => {
                       )}
                     </div>
                   </div>
+                  {/* added */}
                   <div className="kids-form-row row">
+  {/* Preferred First Name */}
+  <div className="kids-form-section col-md-6 mb-3">
+    <label className="form-label">Preferred First Name</label>
+    <span className="mandatory">*</span>
+    <input
+      type="text"
+      className="form-control"
+      onChange={(e) => {
+        adultsPrefferedFirstNameChange(e);
+        setAdultsPreferedFirstNameError(false);
+      }}
+      onKeyDown={handleAdultPrefferedFirstNameKeyPress}
+      placeholder="Enter Preferred First Name"
+      value={adultsPreferedFirstName}
+    />
+    {adultsPreferedFirstNameError && (
+      <div className="invalid-fields">
+        Please enter Preferred First Name
+      </div>
+    )}
+    {adultsPrefferedFirstNameLetterError && (
+      <div className="invalid-fields">Only Letters Allowed</div>
+    )}
+  </div>
+
+  {/* Preferred Last Name */}
+  <div className="kids-form-section col-md-6 mb-3">
+    <label className="form-label">Preferred Last Name</label>
+    <span className="mandatory">*</span>
+    <input
+      type="text"
+      className="form-control"
+      onChange={(e) => {
+        adultsPrefferedLastNameChange(e);
+        setAdultsPreferedLastNameError(false);
+      }}
+      onKeyDown={handleAdultPrefferedLastNameKeyPress}
+      placeholder="Enter Preferred Last Name"
+      value={adultsPreferedLastName}
+    />
+    {adultsPreferedLastNameError && (
+      <div className="invalid-fields">
+        Please enter Preferred Last Name
+      </div>
+    )}
+    {adultsPrefferedLastNameLetterError && (
+      <div className="invalid-fields">Only Letters Allowed</div>
+    )}
+  </div>
+</div>
+
+                  {/* addedd */}
+                  {/* <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Preferred First Name</label>{" "}
                       <span className="mandatory">*</span>
@@ -1162,7 +1268,7 @@ const AdultFormOne = () => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Country</label>
@@ -1189,6 +1295,7 @@ const AdultFormOne = () => {
                     </div>
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">State</label>
+                      <span className="mandatory">*</span>
                       <Select
                         placeholder="Select state..."
                         options={stateList?.map((state) => ({
@@ -1199,11 +1306,17 @@ const AdultFormOne = () => {
                         onChange={handleSelectedState}
                         isSearchable={true}
                       />
+                      {stateError && (
+                        <div className="invalid-fields">
+                          Please select State
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">City</label>
+                      <span className="mandatory">*</span>
                       <Select
                         placeholder="Select City..."
                         options={cityList?.map((city) => ({
@@ -1216,6 +1329,11 @@ const AdultFormOne = () => {
                         onChange={handleSelectedCity}
                         isSearchable={true}
                       />
+                       {kidsCityError && (
+                        <div className="invalid-fields">
+                          Please select City
+                        </div>
+                      )}
                     </div>
                     <div className="kids-form-section col-md-6">
                       <label className="form-label">Phone</label>
@@ -1384,7 +1502,7 @@ const AdultFormOne = () => {
                       >
                         Address
                       </label>
-                      <span className="mandatory">*</span>
+                      {/* <span className="mandatory">*</span> */}
                       <textarea
                         className="address-textarea"
                         style={{ width: "100%", height: "150px !important" }}

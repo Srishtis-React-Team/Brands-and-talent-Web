@@ -533,10 +533,16 @@ const KidsformOne = () => {
     if (country === "") {
       setParentCountryError(true);
     }
-
-    if (address === "") {
-      setAddressError(true);
+    if (kidsCity === "") {
+      setCityError(true);
     }
+    if(state ===""){
+      setStateError(true);
+    }
+
+    // if (address === "") {
+    //   setAddressError(true);
+    // }
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
@@ -576,7 +582,10 @@ const KidsformOne = () => {
       gender !== "" &&
       parentMobile !== "" &&
       country !== "" &&
-      address !== "" &&
+      kidsCity !== "" &&
+      kidsCity !== undefined &&
+      state !==""&&
+     // address !== "" &&
       selectedProfessions.length !== 0 &&
       selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
@@ -590,6 +599,24 @@ const KidsformOne = () => {
       mobileValidationError == false &&
       !passwordError
     ) {
+      try {
+              
+              // ✅ Step 1: Check public URL availability
+              const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+                preferredChildFirstname: kidsPreferedFirstName,
+              });
+        
+              // ✅ Step 2: Generate publicUrl based on availability
+              let publicUrl = "";
+              if (checkNameResponse.data.status === true) {
+                // Name is available
+                publicUrl = kidsPreferedFirstName.replace(/ /g, "-");
+              } else {
+                // Name is already taken
+                publicUrl = `${kidsPreferedFirstName.replace(/ /g, "-")}-${
+                  Math.floor(Math.random() * 900) + 100
+                }`;
+              }
       const formData = {
         parentFirstName: parentFirstName,
         parentLastName: parentLastName,
@@ -615,8 +642,8 @@ const KidsformOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: `${kidsPreferedFirstName.replace(/ /g, "-")}-${Math.floor(Math.random() * 900) + 100
-          }`,
+        publicUrl: publicUrl//`${kidsPreferedFirstName.replace(/ /g, "-")}-${Math.floor(Math.random() * 900) + 100
+          //}`,
       };
       setIsLoading(true);
       if (!userId) {
@@ -671,6 +698,15 @@ const KidsformOne = () => {
             setIsLoading(false);
           });
       }
+    } catch (error) {
+      console.error("Signup Error:", error);
+      setIsLoading(false);
+      setMessage("Something went wrong, please try again.");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    }
     } else {
       setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
@@ -1060,6 +1096,7 @@ const KidsformOne = () => {
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">State</label>
+                        <span className="mandatory">*</span>
                         <Select
                           placeholder="Select state..."
                           options={stateList?.map((state) => ({
@@ -1078,6 +1115,7 @@ const KidsformOne = () => {
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">City</label>
+                          <span className="mandatory">*</span>
                         <Select
                           placeholder="Select City..."
                           options={cityList?.map((city) => ({
@@ -1092,6 +1130,11 @@ const KidsformOne = () => {
                           onChange={handleSelectedCity}
                           isSearchable={true}
                         />
+                          {cityError  && (
+                        <div className="invalid-fields">
+                          Please select City
+                        </div>
+                      )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
@@ -1254,7 +1297,8 @@ const KidsformOne = () => {
                           htmlFor="exampleFormControlTextarea1"
                           className="form-label"
                         >
-                          Address<span className="mandatory">*</span>
+                          Address
+                          {/* <span className="mandatory">*</span> */}
                         </label>
                         <textarea
                           style={{ width: "100%", height: "150px !important" }}
@@ -1267,11 +1311,11 @@ const KidsformOne = () => {
                             setAddressError(false);
                           }}
                         ></textarea>
-                        {addressError && (
+                        {/* {addressError && (
                           <div className="invalid-fields">
                             Please enter Address
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
 

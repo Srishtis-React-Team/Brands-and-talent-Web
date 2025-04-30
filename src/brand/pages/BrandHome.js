@@ -278,7 +278,7 @@ const BrandHome = () => {
                                 jobsList?.country,
                               ]
                                 .filter(Boolean)
-                                .join(", ")}
+                                .join(", ")|| "No Data Added"}
                             </span>
                             <i className="bi bi-dot"></i>
                             <span className="job-company-name">

@@ -47,7 +47,7 @@ const AdultSignup = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setAdultEmail(resData?.data?.data?.adultEmail);
-          setAdultName(resData?.data?.data?.adultName);
+          setPreferredChildFirstname(resData?.data?.data?.preferredChildFirstname);
         }
       })
       .catch((err) => {});
@@ -63,6 +63,11 @@ const AdultSignup = () => {
   const [adultConfirmPassword, setAdultConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [nameError, setNameError] = useState(false);
+  const [preferredChildFirstname, setPreferredChildFirstname] = useState('');
+  const [preferredChildLastName, setPreferredChildLastName] = useState('');
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [googleUser, setGoogleUser] = useState();
@@ -169,13 +174,22 @@ const AdultSignup = () => {
         }, 1000);
       });
   };
+
+  
   const adultSignUp = async () => {
     if (adultEmail === "") {
       setEmailError(true);
     }
-    if (adultName === "") {
-      setNameError(true);
+    // if (adultName === "") {
+    //   setNameError(true);
+    // }
+    if (preferredChildFirstname === "") {
+      setFirstNameError(true);
     }
+    if (preferredChildLastName === "") {
+      setLastNameError(true);
+    }
+    
     if (adultPassword === "") {
       setPasswordError(true);
     }
@@ -188,16 +202,38 @@ const AdultSignup = () => {
       adultConfirmPassword !== "" &&
       passwordMatch === true &&
       !adultPasswordError &&
-      adultName
+      preferredChildFirstname &&
+      preferredChildLastName
+      //adultName
     ) {
+      try {
+       
+        // ✅ Step 1: Check public URL availability
+        const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+          preferredChildFirstname: preferredChildFirstname,
+        });
+  
+        // ✅ Step 2: Generate publicUrl based on availability
+        let publicUrl = "";
+        if (checkNameResponse.data.status === true) {
+          // Name is available
+          publicUrl = preferredChildFirstname.replace(/ /g, "-");
+        } else {
+          // Name is already taken
+          publicUrl = `${preferredChildFirstname.replace(/ /g, "-")}-${
+            Math.floor(Math.random() * 900) + 100
+          }`;
+        }
       const formData = {
         adultEmail: adultEmail,
         talentPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
-        adultName: adultName,
-        publicUrl: `${adultName.replace(/ /g, "-")}-${
-          Math.floor(Math.random() * 900) + 100
-        }`,
+        preferredChildFirstname: preferredChildFirstname,
+        preferredChildLastName:preferredChildLastName,
+        publicUrl: publicUrl,
+        // publicUrl: `${preferredChildFirstname.replace(/ /g, "-")}-${
+        //   Math.floor(Math.random() * 900) + 100
+        // }`,
         image: {
           fileData: "5cf3b581-deb2-4366-8949-43e7f1086165.webp",
           id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
@@ -265,6 +301,15 @@ const AdultSignup = () => {
             }, 1000);
           });
       }
+    } catch (error) {
+      console.error("Signup Error:", error);
+      setIsLoading(false);
+      setMessage("Something went wrong, please try again.");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    }
     } else {
       setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
@@ -364,8 +409,67 @@ const AdultSignup = () => {
                   )}
                 </div>
               </div>
-
               <div className="mb-3">
+  <label className="form-label">
+   First Name<span className="mandatory">*</span>
+  </label>
+  <div className="form-group has-search">
+    <span className="fa fa-user form-control-feedback"></span>
+    <input
+      type="text"
+      className="form-control adult-signup-inputs"
+      placeholder="Your First Name"
+      onChange={(e) => {
+        // setPreferredChildFirstname(e.target.value);
+        // setNameError(false);
+        const inputValue = e.target.value;
+        setPreferredChildFirstname(inputValue);
+
+        // Check if the input contains any non-letter characters
+        const letterRegex = /^[A-Za-z]+$/;
+        if (!letterRegex.test(inputValue)) {
+          setFirstNameError(true);  // Show error if input contains non-letters
+        } else {
+          setFirstNameError(false); // Hide error if input is valid
+        }
+      }}
+      value={preferredChildFirstname}
+    />
+    {firstNameError  && <div className="invalid-fields"> Only letters are allowed</div>}
+  </div>
+</div>
+
+<div className="mb-3">
+  <label className="form-label">
+   Last Name<span className="mandatory">*</span>
+  </label>
+  <div className="form-group has-search">
+    <span className="fa fa-user form-control-feedback"></span>
+    <input
+      type="text"
+      className="form-control adult-signup-inputs"
+      placeholder="Your LastName"
+      onChange={(e) => {
+        // setPreferredChildLastName(e.target.value);
+        // setNameError(false);
+        const inputValue = e.target.value;
+        setPreferredChildLastName(inputValue);
+
+        // Check if the input contains any non-letter characters
+        const letterRegex = /^[A-Za-z]+$/;
+        if (!letterRegex.test(inputValue)) {
+          setLastNameError(true);  // Show error if input contains non-letters
+        } else {
+          setLastNameError(false); // Hide error if input is valid
+        }
+      }}
+      value={preferredChildLastName}
+    />
+    {lastNameError  && <div className="invalid-fields">  Only letters are allowed</div>}
+  </div>
+</div>
+
+              {/* <div className="mb-3">
                 <label className="form-label">
                   Name<span className="mandatory">*</span>
                 </label>
@@ -383,7 +487,8 @@ const AdultSignup = () => {
                   ></input>
                   {nameError && <div className="invalid-fields"> Name</div>}
                 </div>
-              </div>
+              </div> */}
+
 
               <div className="mb-3">
                 <label className="form-label">

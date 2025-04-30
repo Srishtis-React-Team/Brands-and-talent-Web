@@ -10,7 +10,10 @@ import "../assets/css/createjobs.css";
 import Loader from "../views/Loader";
 import { tr } from "date-fns/locale";
 import CurrentUser from "../CurrentUser";
-const JobRedirect = () => {
+
+const mobilelogo = require("../assets/images/mobilelogo.png");
+const btLogo = require("../assets/images/LOGO.png");
+const JobAdminsRedirect = () => {
   const { jobId, jobTitle } = useParams();
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -31,9 +34,9 @@ const JobRedirect = () => {
 
 
 
-  useEffect(() => {
-    fetchUserId(); // Call the function
-  }, [currentUserId]); // Runs when currentUserId changes
+//   useEffect(() => {
+//     fetchUserId(); // Call the function
+//   }, [currentUserId]); // Runs when currentUserId changes
 
 
 
@@ -45,23 +48,23 @@ const JobRedirect = () => {
 
   const [modalData, setModalData] = useState(null);
 
-  const fetchUserId = async () => {
-    const userId = localStorage.getItem("userId");
+//   const fetchUserId = async () => {
+//     const userId = localStorage.getItem("userId");
 
 
-    if (!userId) {
+//     if (!userId) {
 
-      setMessage("You must be logged in");
-      setOpenPopUp(true);
-      setTimeout(() => {
-        setOpenPopUp(false);
-        navigate("/login");
-      }, 2000);
-      return null;  // Return null explicitly to indicate no user
-    }
+//       setMessage("You must be logged in");
+//       setOpenPopUp(true);
+//       setTimeout(() => {
+//         setOpenPopUp(false);
+//         navigate("/login");
+//       }, 2000);
+//       return null;  // Return null explicitly to indicate no user
+//     }
 
-    return userId;  // Return userId if found
-  };
+//     return userId;  // Return userId if found
+//   };
 
 
   const getTalentById = async () => {
@@ -114,65 +117,7 @@ const JobRedirect = () => {
       });
   };
 
-  const applyjobs = async (data) => {
-    const userId = localStorage.getItem("userId");
-    const userType = localStorage.getItem("currentUserType");
-    if (!userId) {
 
-      // Redirect to "/get-booked" or "/get-booked/:jobId" based on jobId availability
-      localStorage.setItem("pendingJobId", jobId);
-      localStorage.setItem("pendingJobTitle", jobTitle)
-
-      setMessage("You must be logged in");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate("/login");
-      }, 2000);
-      return;
-    } else if (userId && userType == "talent") {
-      if (talentData?.accountBlock == false) {
-        // if (talentData?.planName == "Basic") {
-        //   let upgradeMessage;
-        //   if (talentData?.planName === "Basic") {
-        //     upgradeMessage = "Upgrade to Pro to apply for this job.";
-        //   }
-        //   setMessage(`${upgradeMessage}`);
-        //   setOpenPopUp(true);
-        //   setTimeout(function () {
-        //     setOpenPopUp(false);
-        //     navigate("/pricing");
-        //   }, 4000);
-        // } else 
-        if (
-          talentData?.planName?.includes("Pro") ||
-          talentData?.planName == "Premium" ||talentData?.planName == "Basic"
-        ) {
-          setModalData(data);
-          if (data?.isApplied != "Applied") {
-            const modalElement = document.getElementById("viewJobApplyModal");
-            const bootstrapModal = new window.bootstrap.Modal(modalElement);
-            bootstrapModal.show();
-          }
-        }
-      } else if (talentData?.accountBlock == true) {
-        setMessage("Please upgrade your plan to access your profile");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate(`/pricing`);
-        }, 3000);
-      }
-
-      // if (userType === "talent") {
-      //   navigate("/talent-dashboard");
-      // } else if (userType === "brand") {
-      //   navigate("/list-jobs");
-      // } else {
-      //   navigate("/"); // Default fallback
-      // }
-    }
-  };
 
   const isValidURL = (string) => {
     try {
@@ -271,7 +216,19 @@ const JobRedirect = () => {
   return (
     <>
       <>
-        <Header />
+      <div
+  className="icon btn-logo"
+  onClick={() => {
+    navigate("/");
+  }}
+  style={{ marginBottom: "2rem" }} // ← Add this line
+>
+  <div style={{ marginTop: "2rem" }}>
+    <img alt="img" className="btLogo" src={btLogo} />
+  </div>
+</div>
+
+
         {jobData && (
           <>
             <div className="unique-job">
@@ -280,14 +237,14 @@ const JobRedirect = () => {
               from !== "dashboard" ? "not-viewjob" : ""
             }`} */}
                 <div>
-                  <div className="brand-content-main preview-main-box boxBg scrlInner scroll">
-                    <div className="preview-section-one">
+                  <div className="brand-content-main preview-main-box boxBg scrlInner scroll" style={{ marginTop: "-3rem" }}>
+                  <div className="preview-section-one">
                       <div className="job-main-details">
                         <div className="preview-job-name">
                           {jobData?.jobTitle}
                         </div>
                       </div>
-
+{/* 
                       {(jobData?.howLikeToApply ===
                         "easy-apply" ||
                         jobData?.isApplied == "Applied") && (
@@ -321,25 +278,25 @@ const JobRedirect = () => {
                                 "Applied" && <div>Applied</div>}
                             </div>
                           </>
-                        )}
+                        )} */}
                       {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
-                      {jobData?.howLikeToApply === "how_to_apply" && (
+                      {/* {jobData?.howLikeToApply === "how_to_apply" && (
                         <div className="apply-section">
                           <button className="apply-btn" onClick={() =>
                             setShowPopup(true)}>
                             Apply
                           </button>
                         </div>
-                      )}
+                      )} */}
 
                       {/* Popup Modal */}
-                      {showPopup && (
+                      {/* {showPopup && (
                         <div className="popup-overlay">
                           <div className="popup-content">
                             <p>Kindly follow the application instructions</p>
                           </div>
                         </div>
-                      )}
+                      )} */}
 
                     </div>
                     <div className="preview-section-two">
@@ -807,44 +764,7 @@ const JobRedirect = () => {
 )}
 
 
-                      {/* {jobData?.jobDescription &&
-                        jobData?.jobDescription.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Job Description
-                              </div>
-                              
-                            
-<div className="job-about-values">
-  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
-    jobData.jobDescription.some((htmlContent) => {
-      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-      return cleanedContent && cleanedContent !== "<p></p>";
-    }) ? (
-      jobData.jobDescription.map((htmlContent, index) => {
-        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-        return cleanedContent && cleanedContent !== "<p></p>" ? (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: cleanedContent }}
-          />
-        ) : null;
-      })
-    ) : (
-      <div>No Data Added</div>
-    )
-  ) : (
-    <div>No Data Added</div>
-  )}
-</div>
-
-
-                             
-                            </div>
-                          </>
-                        )} */}
-
+                     
 {jobData?.whyWorkWithUs && (
   <div className="job-about-section">
     <div className="job-feature-title">Why Work With Us</div>
@@ -859,29 +779,7 @@ const JobRedirect = () => {
 )}
 
 
-                      {/* {jobData?.whyWorkWithUs &&
-                        jobData?.whyWorkWithUs.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Why Work With Us
-                              </div>
-                              <div className="job-about-values">
-                                {jobData?.whyWorkWithUs &&
-                                  jobData?.whyWorkWithUs?.map(
-                                    (htmlContent, index) => (
-                                      <div
-                                        key={index}
-                                        dangerouslySetInnerHTML={{
-                                          __html: htmlContent,
-                                        }}
-                                      />
-                                    )
-                                  )}
-                              </div>
-                            </div>
-                          </>
-                        )} */}
+                  
                         {jobData?.hiringCompanyDescription && (
   <div className="job-about-section">
     <div className="job-feature-title">Hiring Company Description</div>
@@ -896,104 +794,6 @@ const JobRedirect = () => {
 )}
 
 
-                      {/* {jobData?.hiringCompanyDescription &&
-                        jobData?.hiringCompanyDescription?.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Hiring Company Description
-                              </div>
-                              <div className="job-about-values">
-                                {jobData?.hiringCompanyDescription &&
-                                  jobData?.hiringCompanyDescription?.map(
-                                    (htmlContent, index) => (
-                                      <div
-                                        key={index}
-                                        dangerouslySetInnerHTML={{
-                                          __html: htmlContent,
-                                        }}
-                                      />
-                                    )
-                                  )}
-                              </div>
-                            </div>
-                          </>
-                        )} */}
-                      {/* {jobData?.workSamples &&
-                        jobData?.workSamples?.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Project brief / TOR
-                              </div>
-                              <div className="service-files-main">
-                                <div className="w-100">
-                                  {jobData?.workSamples?.length > 0 &&
-                                    jobData?.workSamples?.map((item) => {
-                                      return (
-                                        <>
-                                          <div className="update-portfolio-cards project-file-wrapper">
-                                            <div className="update-portfolio-icon">
-                                              <div className="file-section">
-                                                {item.type === "image" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-card-image"></i>
-                                                  </div>
-                                                )}
-                                                {item.type === "audio" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-mic-fill"></i>
-                                                  </div>
-                                                )}
-                                                {item.type === "video" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-play-circle-fill"></i>
-                                                  </div>
-                                                )}
-                                                {item.type === "document" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-file-earmark-richtext"></i>
-                                                  </div>
-                                                )}
-                                                <div className="update-portfolio-fileName">
-                                                  {item.title}
-                                                </div>
-                                                <div className="update-portfolio-action">
-                                                  <i
-                                                    className="bi bi-three-dots-vertical"
-                                                    type="button"
-                                                    id="dropdownMenuButton1"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                  ></i>
-                                                  <ul
-                                                    className="dropdown-menu"
-                                                    aria-labelledby="dropdownMenuButton1"
-                                                  >
-                                                    <li>
-                                                      <a
-                                                        className="dropdown-item"
-                                                        onClick={() =>
-                                                          viewUpdateFile(item)
-                                                        }
-                                                      >
-                                                        View
-                                                      </a>
-                                                    </li>
-                                                  </ul>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="update-portfolio-action"></div>
-                                          </div>
-                                        </>
-                                      );
-                                    })}
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        )} */}
                         {jobData?.workSamples && (
   <div className="job-about-section">
     <div className="job-feature-title">Project brief / TOR</div>
@@ -1266,4 +1066,4 @@ const JobRedirect = () => {
   );
 };
 
-export default JobRedirect;
+export default JobAdminsRedirect;
