@@ -8,6 +8,7 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import CurrentUser from "../CurrentUser";
 import { useNavigate } from "react-router";
 import PopUp from "../components/PopUp";
+import UploadModal from "./UploadModal";
 
 const TalentSideMenu = ({ myState }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
@@ -18,6 +19,7 @@ const TalentSideMenu = ({ myState }) => {
   const [talentData, setTalentData] = useState();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getTalentById();
@@ -104,7 +106,9 @@ const TalentSideMenu = ({ myState }) => {
           if (talentData?.planName !== "Basic") {
             navigate("/messages");
           } else {
-            setMessage("To use this feature, please upgrade to a Pro or Premium membership plan.");
+            setMessage(
+              "To use this feature, please upgrade to a Pro or Premium membership plan."
+            );
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -116,6 +120,39 @@ const TalentSideMenu = ({ myState }) => {
       .catch((err) => {});
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = (resData) => {
+    handleClose();
+    getTalentById();
+    if (resData.data.status === true) {
+      setIsLoading(false);
+      setMessage("Updated Successfully");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    } else if (resData.data.status === false) {
+      setIsLoading(false);
+      setMessage(resData.message);
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    console.log(talentData?.isVerificationUpload, "talentData");
+  }, [talentData]);
   return (
     <>
       <nav className="brand-sidebar-container">
@@ -160,6 +197,21 @@ const TalentSideMenu = ({ myState }) => {
               <div className="talent-category">Talent</div>
             </div>
           </div>
+          {talentData?.isVerificationUpload == true && (
+            <>
+              <div className="talents-plan-info">
+                <div
+                  className="upload-hyper"
+                  onClick={() => {
+                    handleClickOpen();
+                  }}
+                >
+                  Verify now
+                </div>
+              </div>
+            </>
+          )}
+
           <div className="talents-plan-info">
             <div className="talent-plan-name">
               Plan : <span>{talentData?.planName}</span>
@@ -360,6 +412,13 @@ const TalentSideMenu = ({ myState }) => {
         </div>
       </nav>
       {openPopUp && <PopUp message={message} />}
+
+      <UploadModal
+        open={open}
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+        talentData={talentData}
+      />
     </>
   );
 };
