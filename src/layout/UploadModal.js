@@ -19,6 +19,9 @@ import axios from "axios";
 import { ApiHelper } from "../helpers/ApiHelper";
 import Axios from "axios";
 import PopUp from "../components/PopUp";
+
+// import { Menu, MenuItem, IconButton } from "@mui/material";
+
 const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
   const [idType, setIdType] = useState("");
   const [verificationID, setVerificationID] = useState([]);
@@ -35,32 +38,6 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
   const audiotype = require("../assets/icons/audiotype.png");
-  // Single function to handle menu open
-  const handleIdClick = (event, item, index) => {
-    setIdAnchor(event.currentTarget);
-    setSelectedIdItem(item); // Set the selected item
-    setIdIndex(index);
-  };
-
-  const handleIdClose = (index) => {
-    setIdAnchor(null);
-    setSelectedIdItem(null); // Reset the selected item when closing the menu
-    setIdIndex(index);
-  };
-
-  const handleVerificationDelete = (index) => {
-    setVerificationID((prevIds) => {
-      // Create a copy of the previous state
-      const ids = [...prevIds];
-      // Remove the image at the specified index
-      ids.splice(index, 1);
-      return ids;
-    });
-  };
-  const handleView = (item) => {
-    let viewImage = `${API.userFilePath}${item.fileData}`;
-    window.open(viewImage, "_blank");
-  };
 
   const allowedTypes = [
     "image/jpeg",
@@ -146,32 +123,72 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
   const submit = async () => {
     setIsLoading(true);
 
-    if (talentData?.type === "kids") {
-      const formData = {
-        verificationId: [verificationID],
-      };
-      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
-        .then((resData) => {
-          onSubmit(resData);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
-    }
+    if (
+      verificationID &&
+      verificationID.id &&
+      verificationID.title &&
+      verificationID.fileData &&
+      verificationID.type
+    ) {
+      // ✅ All fields are present and truthy
+      console.log("Valid verificationID", verificationID);
+      if (talentData?.type === "kids") {
+        const formData = {
+          verificationId: [verificationID],
+        };
+        await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+          .then((resData) => {
+            onSubmit(resData);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+          });
+      }
 
-    if (talentData?.type === "adults") {
-      const formData = {
-        verificationId: [verificationID],
-      };
-      await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
-        .then((resData) => {
-          console.log(resData.data.status, "resData_verificaation_adult");
-          onSubmit(resData);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+      if (talentData?.type === "adults") {
+        const formData = {
+          verificationId: [verificationID],
+        };
+        await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
+          .then((resData) => {
+            console.log(resData.data.status, "resData_verificaation_adult");
+            onSubmit(resData);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+          });
+      }
+    } else {
+      // ❌ One or more fields are missing or invalid
+      console.log("Invalid or incomplete verificationID");
     }
+  };
+
+  // States
+  const [menuAnchor, setMenuAnchor] = useState(null);
+
+  // Handlers
+  const handleMenuOpen = (event) => {
+    setMenuAnchor(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
+
+  const handleView = () => {
+    // your logic to view the file
+    console.log("Viewing", verificationID);
+    let viewImage = `${API.userFilePath}${verificationID.fileData}`;
+    window.open(viewImage, "_blank");
+    handleMenuClose();
+  };
+
+  const handleDelete = () => {
+    // your logic to delete the file
+    console.log("Deleting", verificationID);
+    setVerificationID([]);
+    handleMenuClose();
   };
 
   return (
@@ -186,17 +203,17 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
           onClose(); // Allow dialog to close for other reasons
         }}
         fullWidth
-        maxWidth="sm"
+        maxWidth="md"
       >
-        <div className="d-flex justify-content-between" onClick={onClose}>
-          <DialogTitle>Upload Verification Documents</DialogTitle>
-          <div className="closeicon">
+        <div className="verify-title">
+          <div>Upload Verification Documents</div>
+          <div className="verify-closeicon" onClick={onClose}>
             <i className="bi bi-x-lg "></i>
           </div>
         </div>
         <DialogContent style={{ marginBottom: "60px" }}>
           <div className="kids-form-row row">
-            <div className="kids-form-section col-md-6 mb-3 mt-3">
+            <div className="kids-form-section col-md-6 mt-3">
               <label className="form-label">ID Type</label>
               <select
                 className="form-select"
@@ -221,7 +238,8 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
               <img src={idCard} alt="" />
             </div>
             <div className="id-text" htmlFor="id-upload">
-              Upload Parents ID
+              {talentData?.type === "kids" && <>Upload Parents ID</>}
+              {talentData?.type === "adults" && <>Upload Verification ID</>}
             </div>
             <label className="id-choose" htmlFor="id-upload">
               Choose ID
@@ -272,36 +290,35 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
                   <div className="update-portfolio-action">
                     <IconButton
                       aria-label="more"
-                      aria-controls="dropdown-menu-single"
+                      aria-controls="file-menu"
                       aria-haspopup="true"
-                      onClick={(event) =>
-                        handleIdClick(event, verificationID, 0)
-                      }
+                      onClick={handleMenuOpen}
                     >
                       <MoreVertIcon />
                     </IconButton>
                     <Menu
-                      id="dropdown-menu-single"
-                      anchorEl={idAnchor}
-                      open={Boolean(idAnchor)}
-                      onClose={() => handleIdClose(0)}
+                      id="file-menu"
+                      anchorEl={menuAnchor}
+                      open={Boolean(menuAnchor)}
+                      onClose={handleMenuClose}
+                      disablePortal
+                      container={document.body} // fallback
+                      PaperProps={{
+                        style: {
+                          zIndex: 1601, // Must be higher than MUI Dialog (z-index ~1300–1500)
+                        },
+                      }}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
                     >
-                      <MenuItem
-                        onClick={() => {
-                          handleIdClose(0);
-                          handleView(verificationID);
-                        }}
-                      >
-                        View
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleIdClose(0);
-                          handleVerificationDelete(0);
-                        }}
-                      >
-                        Delete
-                      </MenuItem>
+                      <MenuItem onClick={handleView}>View</MenuItem>
+                      <MenuItem onClick={handleDelete}>Delete</MenuItem>
                     </Menu>
                   </div>
                 </div>
@@ -315,6 +332,7 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
                 submit();
               }}
               className="step-continue"
+              disabled={verificationID.length === 0}
             >
               Save
             </button>

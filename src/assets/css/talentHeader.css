@@ -341,4 +341,21 @@ button.btn.gift-payment-btn {
   display: flex;
   justify-content: end;
   align-items: center;
+  margin-top: 30px;
+}
+
+.verify-title {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.step-continue:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.MuiDialog-root {
+  overflow: visible !important;
 }
