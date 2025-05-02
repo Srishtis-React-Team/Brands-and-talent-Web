@@ -151,6 +151,8 @@ const FindCreators = () => {
     checkUserStatus();
   }, []);
 
+  const isBrandUser = localStorage.getItem("brandId");
+
   const checkUserStatus = async () => {
     const formData = {
       user_id: "65fbf4bcd8acb33fc6a706f7",
@@ -1089,7 +1091,24 @@ const FindCreators = () => {
                                       </div>
                                     );
                                   })()}
-                                  {!item.isFavorite && (
+                                      {isBrandUser && !item.isFavorite && (
+      <img
+        className="heart-icon"
+        src={heartIcon}
+        onClick={() => addFavorite(item)}
+        alt="Add to favorites"
+      />
+    )}
+
+    {isBrandUser && item.isFavorite === true && (
+      <img
+        className="heart-icon"
+        src={favoruiteIcon}
+        onClick={() => removeFavorite(item)}
+        alt="Remove from favorites"
+      />
+    )}
+                                  {/* {!item.isFavorite && (
                                     <img
                                       className="heart-icon"
                                       src={heartIcon}
@@ -1102,7 +1121,7 @@ const FindCreators = () => {
                                       src={favoruiteIcon}
                                       onClick={() => removeFavorite(item)}
                                     ></img>
-                                  )}
+                                  )} */}
                                 </div>
                                 <div className="galCont">
                                   <div className="content">
