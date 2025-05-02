@@ -203,7 +203,7 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
           onClose(); // Allow dialog to close for other reasons
         }}
         fullWidth
-        maxWidth="sm"
+        maxWidth="md"
       >
         <div className="verify-title">
           <div>Upload Verification Documents</div>
@@ -213,7 +213,7 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
         </div>
         <DialogContent style={{ marginBottom: "60px" }}>
           <div className="kids-form-row row">
-            <div className="kids-form-section col-md-6 mb-3 mt-3">
+            <div className="kids-form-section col-md-6 mt-3">
               <label className="form-label">ID Type</label>
               <select
                 className="form-select"
@@ -238,7 +238,8 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
               <img src={idCard} alt="" />
             </div>
             <div className="id-text" htmlFor="id-upload">
-              Upload Parents ID
+              {talentData?.type === "kids" && <>Upload Parents ID</>}
+              {talentData?.type === "adults" && <>Upload Verification ID</>}
             </div>
             <label className="id-choose" htmlFor="id-upload">
               Choose ID
