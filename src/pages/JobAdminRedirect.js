@@ -228,7 +228,6 @@ const JobAdminsRedirect = () => {
   </div>
 </div>
 
-
         {jobData && (
           <>
             <div className="unique-job">
@@ -244,61 +243,35 @@ const JobAdminsRedirect = () => {
                           {jobData?.jobTitle}
                         </div>
                       </div>
-{/* 
-                      {(jobData?.howLikeToApply ===
-                        "easy-apply" ||
-                        jobData?.isApplied == "Applied") && (
-                          <>
-                            <div
-                              className={
-                                jobData?.isApplied === "Apply Now"
-                                  ? "apply-now-btn"
-                                  : "apply-now-btn applied-btn"
-                              }
-                              onClick={() => {
-                                applyjobs(jobData);
-                              }}
-                            >
-                              {jobData?.isApplied == "Applied" && (
-                                <>
-                                  <i className="bi bi-check-circle-fill"></i>
-                                </>
-                              )}
-                              {jobData?.isApplied ==
-                                "Apply Now" && (
-                                  <>
-                                    <i className="bi bi-briefcase-fill"></i>
-                                  </>
-                                )}
-                              {jobData?.isApplied ===
-                                "Apply Now" && (
-                                  <div>Quick Apply</div>
-                                )}
-                              {jobData?.isApplied ===
-                                "Applied" && <div>Applied</div>}
-                            </div>
-                          </>
-                        )} */}
-                      {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
-                      {/* {jobData?.howLikeToApply === "how_to_apply" && (
-                        <div className="apply-section">
-                          <button className="apply-btn" onClick={() =>
-                            setShowPopup(true)}>
-                            Apply
-                          </button>
-                        </div>
-                      )} */}
-
-                      {/* Popup Modal */}
-                      {/* {showPopup && (
-                        <div className="popup-overlay">
-                          <div className="popup-content">
-                            <p>Kindly follow the application instructions</p>
-                          </div>
-                        </div>
-                      )} */}
 
                     </div>
+                    
+<div
+  style={{
+     marginTop: "0.5rem",
+    backgroundColor: "#fff",
+   // padding: "1rem",
+    marginLeft: "80rem",
+    display: "inline-block",
+    borderRadius: "4px",
+    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)"
+  }}
+>
+  <button
+    onClick={() => (window.location.href = "https://brandsandtalent.com/admin/dashboard/brands")}
+    style={{
+      padding: "0.5rem 1rem",
+      backgroundColor: "#fff", // white background
+      color: "#000", // corrected color value
+      border: "1px solid #ccc", // subtle border
+      borderRadius: "4px",
+      cursor: "pointer"
+    }}
+  >
+    ← Back
+  </button>
+</div>
+
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">
                         <img
@@ -758,7 +731,7 @@ const JobAdminsRedirect = () => {
   </div>
 ) : (
   <div className="job-about-section">
-    <div className="job-feature-title">Job Descriptionss</div>
+    <div className="job-feature-title">Job Descriptions</div>
     <div className="job-about-values">No Data Added</div>
   </div>
 )}

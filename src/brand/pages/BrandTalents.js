@@ -572,6 +572,7 @@ const BrandTalents = () => {
       Math.min(prev + 1, currentItem.profession.length)
     );
   };
+  const isBrandUser = localStorage.getItem("brandId");
 
   return (
     <>
@@ -1052,7 +1053,24 @@ const BrandTalents = () => {
                                             </div>
                                           );
                                         })()}
-                                        {!item.isFavorite && (
+                                                                            {isBrandUser && !item.isFavorite && (
+      <img
+        className="heart-icon"
+        src={heartIcon}
+        onClick={() => addFavorite(item)}
+        alt="Add to favorites"
+      />
+    )}
+
+    {isBrandUser && item.isFavorite === true && (
+      <img
+        className="heart-icon"
+        src={favoruiteIcon}
+        onClick={() => removeFavorite(item)}
+        alt="Remove from favorites"
+      />
+    )}
+                                        {/* {!item.isFavorite && (
                                           <img
                                             className="heart-icon"
                                             src={heartIcon}
@@ -1065,7 +1083,7 @@ const BrandTalents = () => {
                                             src={favoruiteIcon}
                                             onClick={() => removeFavorite(item)}
                                           ></img>
-                                        )}
+                                        )} */}
                                       </div>
                                       <div className="galCont">
                                         <div className="content">

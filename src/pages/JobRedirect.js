@@ -801,7 +801,7 @@ const JobRedirect = () => {
   </div>
 ) : (
   <div className="job-about-section">
-    <div className="job-feature-title">Job Descriptionss</div>
+    <div className="job-feature-title">Job Descriptions</div>
     <div className="job-about-values">No Data Added</div>
   </div>
 )}
