@@ -225,7 +225,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         if (urls?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage =  "To add more videos, please upgrade to pro or premium membership plan.";//"Upgrade to Pro to add more URLs.";
+            upgradeMessage =
+              "To add more videos, please upgrade to pro or premium membership plan."; //"Upgrade to Pro to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
@@ -291,7 +292,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         if (audioUrlsList?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage =  "To add more audios, please upgrade to pro or premium membership plan.";//"Upgrade to Pro to add more URLs.";
+            upgradeMessage =
+              "To add more audios, please upgrade to pro or premium membership plan."; //"Upgrade to Pro to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
@@ -576,7 +578,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     } else {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "To add CV, please upgrade to pro or premium membership plan.";
+        upgradeMessage =
+          "To add CV, please upgrade to pro or premium membership plan.";
       } else if (talentData?.planName === "Pro") {
         upgradeMessage = "Upgrade to Premium to add resumes.";
       }
@@ -922,11 +925,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
             if (talentData?.planName == "Basic") {
               const pendingJobId = localStorage.getItem("pendingJobId");
               const pendingJobTitle = localStorage.getItem("pendingJobTitle");
-          if (pendingJobId) {
-            localStorage.removeItem("pendingJobId");
-            localStorage.removeItem("pendingJobTitle");
-            navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
-          } else {
+              if (pendingJobId) {
+                localStorage.removeItem("pendingJobId");
+                localStorage.removeItem("pendingJobTitle");
+                navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
+              } else {
                 navigate(`/talent/${talentData.publicUrl}`, {
                   state: { talentData: talentData },
                 });

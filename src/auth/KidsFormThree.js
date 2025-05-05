@@ -267,7 +267,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         if (urls?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage = "To add more videos, please upgrade to pro or premium membership plan.";
+            upgradeMessage =
+              "To add more videos, please upgrade to pro or premium membership plan.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
@@ -334,7 +335,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         if (audioUrlsList?.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage ="To add more audios, please upgrade to pro or premium membership plan.";/// "Upgrade to Pro to add more URLs.";
+            upgradeMessage =
+              "To add more audios, please upgrade to pro or premium membership plan."; /// "Upgrade to Pro to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Premium to add more URLs.";
           }
@@ -616,7 +618,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     } else {
       let upgradeMessage;
       if (talentData?.planName === "Basic") {
-        upgradeMessage = "'To add CV, please upgrade to pro or premium membership plan.";
+        upgradeMessage =
+          "'To add CV, please upgrade to pro or premium membership plan.";
       } else if (talentData?.planName === "Pro") {
         upgradeMessage = "Upgrade to Premium to add resumes.";
       }
@@ -992,7 +995,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           // if (pendingJobId) {
           //   localStorage.removeItem("pendingJobId");
           //   navigate(`/jobs/view/${pendingJobId}`);
-          // } 
+          // }
           const pendingJobId = localStorage.getItem("pendingJobId");
           const pendingJobTitle = localStorage.getItem("pendingJobTitle");
           if (pendingJobId) {
@@ -1657,7 +1660,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       <img src={idCard} alt="" />
                     </div>
                     <div className="id-text" htmlFor="id-upload">
-                      Upload Parents ID
+                      Upload Verification ID
                     </div>
                     <label className="id-choose" htmlFor="id-upload">
                       Choose ID
