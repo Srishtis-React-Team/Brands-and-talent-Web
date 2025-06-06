@@ -359,3 +359,11 @@ button.btn.gift-payment-btn {
 .MuiDialog-root {
   overflow: visible !important;
 }
+
+.verification-badge {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #2e7d32;
+}
+

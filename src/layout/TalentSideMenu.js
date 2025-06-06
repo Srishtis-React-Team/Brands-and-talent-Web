@@ -197,6 +197,31 @@ const TalentSideMenu = ({ myState }) => {
               <div className="talent-category">Talent</div>
             </div>
           </div>
+
+          {talentData?.isVerificationUpload === true && (
+  <div className="talents-plan-info">
+    {talentData?.adminApproved === true ? (
+      // ✅ Show verified badge
+      <div className="verification-badge" style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ fontSize: "18px", color: "green", marginRight: "8px" }}>✅</span>
+        <span style={{ color: "green", fontWeight: "bold" }}>Verified</span>
+      </div>
+    ) : (
+      // ➕ Show Add verification badge link
+      <div
+        className="upload-hyper"
+        onClick={handleClickOpen}
+        style={{ cursor: "pointer", color: "#007bff", textDecoration: "underline" }}
+      >
+        Add verification badge
+      </div>
+    )}
+  </div>
+)}
+
+
+       
+{/*   
           {talentData?.isVerificationUpload == true && (
             <>
               <div className="talents-plan-info">
@@ -206,11 +231,11 @@ const TalentSideMenu = ({ myState }) => {
                     handleClickOpen();
                   }}
                 >
-                  Verify now
+                 Add verification badge
                 </div>
               </div>
             </>
-          )}
+          )}  */}
 
           <div className="talents-plan-info">
             <div className="talent-plan-name">

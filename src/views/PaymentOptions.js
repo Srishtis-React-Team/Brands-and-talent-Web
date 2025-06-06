@@ -42,6 +42,7 @@ const PaymentOptions = ({
   const [tran_id, setTran_id] = useState("");
   const [payOption, setPayOption] = useState(false);
   const userId = localStorage.getItem("userId");
+  const brandId = localStorage.getItem("brandId");
   const currentUser = localStorage.getItem("currentUser");
   const userEmail = localStorage.getItem("userEmail");
   const currentUserType = localStorage.getItem("currentUserType");
@@ -64,7 +65,7 @@ const PaymentOptions = ({
     const userData = {
       subscriptionPlan: selectedPaymentPeriod,
       planName: planType,
-      user_id: userId,
+      user_id: userId||brandId,
       transId: tran_id,
       paymentStatus: "Pending",
       coupon: appliedCouponCode ? appliedCouponCode : "",
@@ -74,19 +75,24 @@ const PaymentOptions = ({
       API.subscriptionPlan,
       userData
     );
+    console.log("responseSubscription",responseSubscription.data.publicUrl)
+
     let url;
-    if (location.pathname == "/pricing") {
+    if (location.pathname == "/pricing"&&currentUserType!='brand') {
       url = `/talent-home`;
-    } else if (location.pathname == "/talent-signup-plan-details") {
+    } else if (location.pathname == "/talent-signup-plan-details"&&currentUserType!='brand') {
       const userType = localStorage.getItem('userType');
       if (userType == 'adult') {
         url = `/talent-signup-files-details?${userId}`;
       } else {
         url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
       }
-    } else if('/talent-signup-plan-details'){
+    } else if('/talent-signup-plan-details'&&currentUserType!='brand'){
       url = `/talent-signup-files-details?${userId}`;
-    }else {
+    }else if(currentUserType=='brand'){
+      url =`/client/${responseSubscription.data.publicUrl}`;
+    }
+    else {
       url = success_url;
     }
     navigate(url);
@@ -112,7 +118,7 @@ const PaymentOptions = ({
 
     let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
     const obj = {
-      userId,
+      userId:userId||brandId,
       code: inputValue,
       totalAmount: selectedAmount,
       subscriptionPlan: selectedPaymentPeriod,
