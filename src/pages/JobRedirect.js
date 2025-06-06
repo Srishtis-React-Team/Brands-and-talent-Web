@@ -259,19 +259,11 @@ const JobRedirect = () => {
       return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="apply-Description">${cleanUrl}</a>`;
     });
   };
-
-
-
-
-
-
-
-
-
-  return (
+return (
     <>
       <>
         <Header />
+        
         {jobData && (
           <>
             <div className="unique-job">

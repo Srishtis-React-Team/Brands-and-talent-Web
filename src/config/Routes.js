@@ -104,7 +104,7 @@ const EditFeatures = lazy(() => import("../pages/EditFeatures"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
 const LocationComponent = lazy(() => import("../components/LocationComponent"));
 const JobRedirect = lazy(() => import("../pages/JobRedirect"));
-const JobAdminRedirect = lazy(() => import("../pages/JobAdminRedirect"));
+const JobAdminRedirect =lazy(()=> import("../pages/JobAdminRedirect"));
 
 
 function Routing() {

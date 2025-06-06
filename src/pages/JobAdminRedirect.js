@@ -13,7 +13,7 @@ import CurrentUser from "../CurrentUser";
 
 const mobilelogo = require("../assets/images/mobilelogo.png");
 const btLogo = require("../assets/images/LOGO.png");
-const JobAdminsRedirect = () => {
+const JobAdminRedirect = () => {
   const { jobId, jobTitle } = useParams();
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -104,7 +104,7 @@ const JobAdminsRedirect = () => {
       talentId: userId
     };
     setLoading(true);
-    await ApiHelper.post(`${API.fetchByJobUrl}`, formData)
+    await ApiHelper.post(`${API.fetchByJobUrlInAdmin}`, formData)
       .then((resData) => {
         setLoading(false);
         console.log("resData.data.data", resData.data.data)
@@ -204,16 +204,14 @@ const JobAdminsRedirect = () => {
       return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="apply-Description">${cleanUrl}</a>`;
     });
   };
+  useEffect(() => {
+    const favicon = document.querySelector("link[rel='icon']") || document.createElement("link");
+    favicon.rel = "icon";
+    favicon.href = "/favicon.ico"; // or "/favicon.png" if that's your file
+    document.head.appendChild(favicon);
+  }, []);
 
-
-
-
-
-
-
-
-
-  return (
+ return (
     <>
       <>
       <div
@@ -245,7 +243,38 @@ const JobAdminsRedirect = () => {
                       </div>
 
                     </div>
-                    
+                    <button
+  onClick={() => {
+    const type = localStorage.getItem("type");
+    if (type === "adminbranddetails") {
+      window.location.href = "https://brandsandtalent.com/admin/dashboard/brands";
+    } 
+    else if(type==="jobpost"){
+      window.location.href = "https://brandsandtalent.com/admin/dashboard/job-post";
+    }else {
+      window.location.href = "https://brandsandtalent.com/admin/dashboard/notifications";
+    }
+  }}
+  style={{
+    padding: "0.25rem 0.5rem",
+    backgroundColor: "#fff",
+    color: "#000",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    fontSize: "0.9rem",
+    lineHeight: "1",
+    position: "relative",
+    left: "1000px"  // moves 7 pixels to the right
+  }}
+  
+>
+  ← Back
+</button>
+
+
+{/*                     
 <div
   style={{
      marginTop: "0.5rem",
@@ -258,7 +287,15 @@ const JobAdminsRedirect = () => {
   }}
 >
   <button
-    onClick={() => (window.location.href = "https://brandsandtalent.com/admin/dashboard/brands")}
+   onClick={() => {
+    const type = localStorage.getItem("type");
+    if (type === "adminbranddetails") {
+      window.location.href = "https://brandsandtalent.com/admin/dashboard/brands";
+    } else {
+      window.location.href = "https://brandsandtalent.com/admin/dashboard/notifications";
+    }
+  }}
+    // onClick={() => (window.location.href = "https://brandsandtalent.com/admin/dashboard/brands")}
     style={{
       padding: "0.5rem 1rem",
       backgroundColor: "#fff", // white background
@@ -270,7 +307,7 @@ const JobAdminsRedirect = () => {
   >
     ← Back
   </button>
-</div>
+</div> */}
 
                     <div className="preview-section-two">
                       <div className="d-flex align-items-center">
@@ -1039,4 +1076,4 @@ const JobAdminsRedirect = () => {
   );
 };
 
-export default JobAdminsRedirect;
+export default JobAdminRedirect;

@@ -119,6 +119,7 @@ export const API = {
   getAllJobs: BASEURL + "gigs/getAllJobs/",
   getJobsByID: BASEURL + "gigs/getJobsByID/",
   fetchByJobUrl: BASEURL + "gigs/fetchByJobUrl",
+  fetchByJobUrlInAdmin: BASEURL + "gigs/fetchByJobUrlInAdmin",
   getAnyJobById: BASEURL + "gigs/getAnyJobById/",
   getDraftJobsByID: BASEURL + "gigs/getDraftJobsByID/",
   getBrandDraftJobsByID: BASEURL + "gigs/getBrandDraftJobsByID/",
