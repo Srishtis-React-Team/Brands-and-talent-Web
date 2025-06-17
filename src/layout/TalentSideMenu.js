@@ -197,8 +197,45 @@ const TalentSideMenu = ({ myState }) => {
               <div className="talent-category">Talent</div>
             </div>
           </div>
+          {console.log("talentData",talentData)}
 
           {talentData?.isVerificationUpload === true && (
+  <div className="talents-plan-info">
+    {talentData?.adminApproved === true ? (
+      // ✅ Show verified badge
+      <div className="verification-badge" style={{ display: "flex", alignItems: "center" }}>
+        <span style={{ fontSize: "18px", color: "green", marginRight: "8px" }}>✅</span>
+        <span style={{ color: "green", fontWeight: "bold" }}>Verified</span>
+      </div>
+    ) : (
+      // ➕ Show Add verification badge link with hover message if Basic
+      <div
+        className="upload-hyper"
+        onClick={() => {
+          if (talentData?.planName !== "Basic") {
+            handleClickOpen();
+          }
+        }}
+        style={{
+          cursor: talentData?.planName === "Basic" ? "not-allowed" : "pointer",
+          color: "#007bff",
+          textDecoration: "underline",
+        }}
+        title={
+          talentData?.planName === "Basic"
+            ? "Kindly upgrade to Pro or Premium membership to display ✅ Verified badge"
+            : ""
+        }
+      >
+        Add verification badge
+      </div>
+    )}
+  </div>
+)}
+
+
+
+          {/* {talentData?.isVerificationUpload === true && (
   <div className="talents-plan-info">
     {talentData?.adminApproved === true ? (
       // ✅ Show verified badge
@@ -217,25 +254,8 @@ const TalentSideMenu = ({ myState }) => {
       </div>
     )}
   </div>
-)}
+)} */}
 
-
-       
-{/*   
-          {talentData?.isVerificationUpload == true && (
-            <>
-              <div className="talents-plan-info">
-                <div
-                  className="upload-hyper"
-                  onClick={() => {
-                    handleClickOpen();
-                  }}
-                >
-                 Add verification badge
-                </div>
-              </div>
-            </>
-          )}  */}
 
           <div className="talents-plan-info">
             <div className="talent-plan-name">

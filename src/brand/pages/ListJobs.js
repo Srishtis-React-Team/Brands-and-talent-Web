@@ -160,6 +160,7 @@ const ListJobs = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Job Deleted Successfully");
+          window.location.reload();
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
