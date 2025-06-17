@@ -657,21 +657,64 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
   ];
 
-  const verificationUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      if (!allowedTypes.includes(fileData.type)) {
-        setMessage("Only images and documents are allowed.");
-        setOpenPopUp(true);
-        setTimeout(() => {
-          setOpenPopUp(false);
-        }, 1000);
-        return;
+    const verificationUpload = async (event) => {
+      // Fetch latest talentData before proceeding
+      try {
+        const resData = await ApiHelper.post(`${API.getTalentById}${userId}`);
+        if (resData?.data?.status && resData.data.data) {
+          const talent = resData.data.data;
+          console.log("talentData", talent.planName);
+    
+          // 1. Block for Basic plan
+          if (talent.planName === "Basic") {
+            setMessage("ID upload is available only for Pro or Premium plans. Please upgrade.");
+            setOpenPopUp(true);
+            setTimeout(() => {
+              setOpenPopUp(false);
+            }, 3000);
+            return;
+          }
+    
+          // 2. Proceed with file upload
+          if (event.target.files && event.target.files[0]) {
+            const fileData = event.target.files[0];
+    
+            if (!allowedTypes.includes(fileData.type)) {
+              setMessage("Only images and documents are allowed.");
+              setOpenPopUp(true);
+              setTimeout(() => {
+                setOpenPopUp(false);
+              }, 1000);
+              return;
+            }
+    
+            uploadVerificationID(fileData);
+          }
+    
+          event.target.value = null;
+        } else {
+          console.error("Failed to fetch talent data");
+        }
+      } catch (err) {
+        console.error("Error in verificationUpload:", err);
       }
-      uploadVerificationID(fileData);
-    }
-    event.target.value = null;
-  };
+    };
+
+  // const verificationUpload = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     let fileData = event.target.files[0];
+  //     if (!allowedTypes.includes(fileData.type)) {
+  //       setMessage("Only images and documents are allowed.");
+  //       setOpenPopUp(true);
+  //       setTimeout(() => {
+  //         setOpenPopUp(false);
+  //       }, 1000);
+  //       return;
+  //     }
+  //     uploadVerificationID(fileData);
+  //   }
+  //   event.target.value = null;
+  // };
 
   const getFileType = (fileType) => {
     if (fileType.startsWith("image/")) {
