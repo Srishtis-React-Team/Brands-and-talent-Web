@@ -201,7 +201,7 @@ const TalentSideMenu = ({ myState }) => {
 
           {talentData?.isVerificationUpload === true && (
   <div className="talents-plan-info">
-    {talentData?.adminApproved === true ? (
+    {talentData?.idVerified === true? (  //talentData?.adminApproved === true && 
       // ✅ Show verified badge
       <div className="verification-badge" style={{ display: "flex", alignItems: "center" }}>
         <span style={{ fontSize: "18px", color: "green", marginRight: "8px" }}>✅</span>

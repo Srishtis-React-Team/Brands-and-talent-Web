@@ -207,7 +207,7 @@ const ListJobs = () => {
  
 
   const postJob = async () => {
-    if (alertpop?.jobObject?.adminApproved == true) {
+    if (alertpop?.jobObject) {//?.adminApproved == true
       await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
         .then((resData) => {
           if (resData.data.status === true) {
@@ -225,6 +225,7 @@ const ListJobs = () => {
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
+              window.location.reload();
               getAllJobs("posted-jobs", brandId);
             }, 1000);
           }
@@ -239,6 +240,7 @@ const ListJobs = () => {
        // "Thank you for posting your job. BT team will review and approve your job within 2 working days. Subscribe to pro/premium membership for instant approval."
         // "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
       );
+      window.location.reload(); // hard refresh to re-render sidebar too
       setOpenPopUp(true);
       
        setTimeout(function () {

@@ -918,9 +918,9 @@ const TalentProfile = () => {
                     </div> */}
                           <></>
                         </div>
-
+                          
                         <div className="talent-details">
-                          {talentData?.planName !== "Basic" && (
+                        {talentData?.idVerified == true && (  //talentData?.planName !== "Basic"
                             <>
                               <div className="talent-details-wrapper">
                                 <div className="talent-verified">
