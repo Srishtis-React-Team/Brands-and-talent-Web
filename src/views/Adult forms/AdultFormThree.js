@@ -1659,7 +1659,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                       <img src={idCard} alt="" />
                     </div>
                     <div className="id-text" htmlFor="id-upload">
-                      Upload Parents ID
+                      Upload ID
                     </div>
                     <label className="id-choose" htmlFor="id-upload">
                       Choose ID

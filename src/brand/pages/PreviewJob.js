@@ -20,6 +20,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const [jobData, setJobData] = useState("");
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
+  
 
   const getJobsByID = async () => {
     const formData = {

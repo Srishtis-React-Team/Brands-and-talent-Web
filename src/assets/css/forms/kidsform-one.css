@@ -1155,7 +1155,7 @@
   height: 25px;
   position: absolute;
   top: 0;
-  right: 8px;
+  /* right: 8px; */
   border-radius: 50%;
   display: flex;
   justify-content: center;
