@@ -30,25 +30,6 @@ const AdultPricing = ({ onDataFromChild, ...props }) => {
 
   const editKids = async () => {
     navigate(`/talent-signup-files-details?${userId}`);
-    // const formData = {
-    // };
-    // setIsLoading(true);
-    // await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
-    //   .then((resData) => {
-    //     if (resData.data.status === true) {
-    //       setIsLoading(false);
-    //       setMessage("Updated Successfully!");
-    //       setOpenPopUp(true);
-    //       setTimeout(function () {
-    //         setOpenPopUp(false);
-    //         navigate(`/talent-signup-files-details?${queryString}`);
-    //       }, 1000);
-    //     } else {
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setIsLoading(false);
-    //   });
   };
   const goBack = async () => {
     navigate(`/talent-signup-social-medias-details?${queryString}`);

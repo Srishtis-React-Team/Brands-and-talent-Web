@@ -49,16 +49,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
     fetchLoggedUser(); // Call the function
   }, [currentUserId]); // Runs when currentUserId changes
 
-
-  // useEffect(() => {
-  //   if (currentUserId) {
-  //     console.log("Navigating to Preview Job Talent...");
-  //     navigate("/preview-job-talent");
-
-  //   }
-  // }, [currentUserId, navigate]); 
-
-
   const fetchLoggedUser = async () => {
     const userId = localStorage.getItem("userId");
 
@@ -404,59 +394,38 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
 
               <div
-  className="company-location"
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "4px",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "100%", // Optional: limit width if needed
-  }}
->
-  <span className="font-600">Location :&nbsp;</span>
-  <span
-    className="job-feature-values"
-    style={{
-      display: "inline-block",
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      maxWidth: "100%",
-    }}
-  >
-    {[
-      jobData?.jobLocation,
-      jobData?.city,
-      jobData?.state,
-      jobData?.country,
-    ]
-      .filter(Boolean)
-      .join(", ") || "No Data Added"}
-  </span>
-</div>
-
-
-              {/* <div className="company-location">
-                <span className="font-600">
-                  Location :&nbsp; </span>
-                <span>
-                  <span>
-                    <span className="job-feature-values">
-                      {[
-                        jobData?.jobLocation,
-                        jobData?.city,
-                        jobData?.state,
-                        jobData?.country,
-                      ]
-                        .filter(Boolean)
-                        .join(", ") || "No Data Added"}
-                    </span>
-                  </span>
+                className="company-location"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "100%", // Optional: limit width if needed
+                }}
+              >
+                <span className="font-600">Location :&nbsp;</span>
+                <span
+                  className="job-feature-values"
+                  style={{
+                    display: "inline-block",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "100%",
+                  }}
+                >
+                  {[
+                    jobData?.jobLocation,
+                    jobData?.city,
+                    jobData?.state,
+                    jobData?.country,
+                  ]
+                    .filter(Boolean)
+                    .join(", ") || "No Data Added"}
                 </span>
-              </div> */}
-
+              </div>
               <div className="company-location">
                 <span className="font-600">
                   Application Deadline :&nbsp;
@@ -497,15 +466,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
 
               <div className="company-location comp-main">
-                {/* {jobData.compensation &&
-                  Object.keys(jobData.compensation).length > 0 && (
-                    <>
-                      <span className="job-feature-heading">
-                        Compensation :&nbsp;{" "}
-                      </span>
-                    </>
-                  )} */}
-
                 {[
                   jobData?.compensation?.paid_collaboration,
                   jobData?.compensation?.product_gift,
@@ -882,42 +842,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <div className="job-about-values">No Data Added</div>
                 </div>
               )}
-
-
-              {/* {jobData?.jobDescription &&
-                jobData?.jobDescription.length > 0 && (
-                  <>
-                    <div className="job-about-section">
-                      <div className="job-feature-title">Job Description</div>
-                      
-                   
-<div className="job-about-values">
-  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
-    jobData.jobDescription.some((htmlContent) => {
-      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-      return cleanedContent && cleanedContent !== "<p></p>";
-    }) ? (
-      jobData.jobDescription.map((htmlContent, index) => {
-        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-        return cleanedContent && cleanedContent !== "<p></p>" ? (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: cleanedContent }}
-          />
-        ) : null;
-      })
-    ) : (
-      <div>No Data Added</div>
-    )
-  ) : (
-    <div>No Data Added</div>
-  )}
-</div>
-
-                    
-                    </div>
-                  </>
-                )} */}
               {jobData?.whyWorkWithUs && (
                 <div className="job-about-section">
                   <div className="job-feature-title">Why Work With Us</div>
@@ -928,24 +852,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   </div>
                 </div>
               )}
-
-
-              {/* {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
-                <>
-                  <div className="job-about-section">
-                    <div className="job-feature-title">Why Work With Us</div>
-                    <div className="job-about-values">
-                      {jobData?.whyWorkWithUs &&
-                        jobData?.whyWorkWithUs?.map((htmlContent, index) => (
-                          <div
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: htmlContent }}
-                          />
-                        ))}
-                    </div>
-                  </div>
-                </>
-              )} */}
               {jobData?.hiringCompanyDescription && (
                 <div className="job-about-section">
                   <div className="job-feature-title">Hiring Company Description</div>
@@ -958,103 +864,6 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   </div>
                 </div>
               )}
-
-
-              {/* {jobData?.hiringCompanyDescription &&
-                jobData?.hiringCompanyDescription?.length > 0 && (
-                  <>
-                    <div className="job-about-section">
-                      <div className="job-feature-title">
-                        Hiring Company Description
-                      </div>
-                      <div className="job-about-values">
-                        {jobData?.hiringCompanyDescription &&
-                          jobData?.hiringCompanyDescription?.map(
-                            (htmlContent, index) => (
-                              <div
-                                key={index}
-                                dangerouslySetInnerHTML={{
-                                  __html: htmlContent,
-                                }}
-                              />
-                            )
-                          )}
-                      </div>
-                    </div>
-                  </>
-                )} */}
-              {/* {jobData?.workSamples && jobData?.workSamples?.length > 0 && (
-                <>
-                  <div className="job-about-section">
-                    <div className="job-feature-title">Project brief / TOR</div>
-                    <div className="service-files-main">
-                      <div className="w-100">
-                        {jobData?.workSamples?.length > 0 &&
-                          jobData?.workSamples?.map((item) => {
-                            return (
-                              <>
-                                <div className="update-portfolio-cards project-file-wrapper">
-                                  <div className="update-portfolio-icon">
-                                    <div className="file-section">
-                                      {item.type === "image" && (
-                                        <div className="fileType">
-                                          <i className="bi bi-card-image"></i>
-                                        </div>
-                                      )}
-                                      {item.type === "audio" && (
-                                        <div className="fileType">
-                                          <i className="bi bi-mic-fill"></i>
-                                        </div>
-                                      )}
-                                      {item.type === "video" && (
-                                        <div className="fileType">
-                                          <i className="bi bi-play-circle-fill"></i>
-                                        </div>
-                                      )}
-                                      {item.type === "document" && (
-                                        <div className="fileType">
-                                          <i className="bi bi-file-earmark-richtext"></i>
-                                        </div>
-                                      )}
-                                      <div className="update-portfolio-fileName">
-                                        {item.title}
-                                      </div>
-                                      <div className="update-portfolio-action">
-                                        <i
-                                          className="bi bi-three-dots-vertical"
-                                          type="button"
-                                          id="dropdownMenuButton1"
-                                          data-bs-toggle="dropdown"
-                                          aria-expanded="false"
-                                        ></i>
-                                        <ul
-                                          className="dropdown-menu"
-                                          aria-labelledby="dropdownMenuButton1"
-                                        >
-                                          <li>
-                                            <a
-                                              className="dropdown-item"
-                                              onClick={() =>
-                                                viewUpdateFile(item)
-                                              }
-                                            >
-                                              View
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="update-portfolio-action"></div>
-                                </div>
-                              </>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )} */}
               {jobData?.workSamples && (
                 <div className="job-about-section">
                   <div className="job-feature-title">Project brief / TOR</div>

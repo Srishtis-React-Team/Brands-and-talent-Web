@@ -235,9 +235,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
               ? upgradeMessage
               : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
           );
-          // setMessage(
-          //   `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
-          // );
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);
@@ -657,22 +654,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
   
 
-  // const verificationUpload = (event) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     let fileData = event.target.files[0];
-  //     if (!allowedTypes.includes(fileData.type)) {
-  //       setMessage("Only images and documents are allowed.");
-  //       setOpenPopUp(true);
-  //       setTimeout(() => {
-  //         setOpenPopUp(false);
-  //       }, 1000);
-  //       return;
-  //     }
-  //     uploadVerificationID(fileData);
-  //   }
-  //   event.target.value = null;
-  // };
-
   const getFileType = (fileType) => {
     if (fileType.startsWith("image/")) {
       return "image";
@@ -840,14 +821,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     });
   };
 
-  // const handlePortofolioDelete = (index) => {
-  //   setPortofolioFile((prevImages) => {
-  //     const updatedImages = [...prevImages];
-  //     updatedImages.splice(index, 1);
-  //     return updatedImages;
-  //   });
-  // };
-
+  
   const handlePortofolioDelete = (index) => {
     setPortofolioFile((prevImages) => {
       // Filter out the item at the specified index
@@ -1531,83 +1505,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="features-section">
-                    {/* {featuresList && (
-                      <>
-                        {featuresList.map((item, index) => (
-                          <div
-                            key={index}
-                            className="mb-3 mr-3 features-input-wrapper"
-                          >
-                            <label className="form-label">{item.label}</label>
-                            {creatableOptions.includes(item.label) ? (
-                              <CreatableSelect
-                                onKeyDown={handleKeyDown}
-                                isClearable
-                                options={item.options.map((option) => ({
-                                  value: option,
-                                  label: option,
-                                }))}
-                                isValidNewOption={isValidNewOption}
-                                onInputChange={handleInputChange}
-                                onChange={(selectedOption) => {
-                                  const value = selectedOption.value;
-                                  // Check if the value is a valid number and is non-negative
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    handleFeaturesChange(
-                                      item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    );
-                                  }
-                                }}
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : creatableInputOptions.includes(item.label) ? (
-                              <input
-                                min="0"
-                                type="number"
-                                onKeyDown={handleKeyDown}
-                                className="form-control features-select"
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    handleFeaturesChange(item.label, value);
-                                  }
-                                }}
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : (
-                              <select
-                                className="form-select features-select"
-                                aria-label="Default select example"
-                                onChange={(e) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    e.target.value
-                                  )
-                                }
-                                defaultValue=""
-                              >
-                                <option value="" disabled>
-                                  {item.label}
-                                </option>
-                                {item.options.map((option, idx) => (
-                                  <option key={idx} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                            )}
-                          </div>
-                        ))}
-                      </>
-                    )} */}
-
+                   
                     <EditFeatures
                       featuresStructure={featuresList}
                       featureValues={features}

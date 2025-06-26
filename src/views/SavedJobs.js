@@ -187,33 +187,6 @@ const SavedJobs = () => {
                                   )}
                                   <i className="bi bi-dot"></i>
                                 </span>
-                                {/* <span className="job-company_dtls">
-                                  <i className="bi bi-geo-alt-fill location-icon"></i>
-                                  {job?.gigDetails?.city && (
-                                    <>{job?.gigDetails?.city}</>
-                                  )}{" "}
-                                 
-                                  {job?.gigDetails?.city &&
-                                    (job?.gigDetails?.state ||
-                                      job?.gigDetails?.country) && (
-                                      <span>, </span>
-                                    )}{" "}
-                                 
-                                  {job?.gigDetails?.state && (
-                                    <>{job?.gigDetails?.state}</>
-                                  )}{" "}
-                                
-                                  {job?.gigDetails?.state &&
-                                    job?.gigDetails?.country && (
-                                      <span>, </span>
-                                    )}{" "}
-                                
-                                  {job?.gigDetails?.country && (
-                                    <>{job?.gigDetails?.country}</>
-                                  )}{" "}
-                                 
-                                  <i className="bi bi-dot"></i>
-                                </span> */}
 
                                 <span className="job-company_dtls">
                                   {job?.gigDetails?.employmentType}{" "}
@@ -238,14 +211,6 @@ const SavedJobs = () => {
                                         ? "Paid Collaboration"
                                         : ""}
 
-                                  {/* {Object.keys(job?.gigDetails?.compensation)[0]
-                                    ?.split("_")
-                                    .map(
-                                      (word) =>
-                                        word.charAt(0).toUpperCase() +
-                                        word.slice(1)
-                                    )
-                                    .join(" ")} */}
                                 </span>
                               </div>
                               <div className="mb-2">
