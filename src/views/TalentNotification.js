@@ -108,7 +108,7 @@ const TalentNotification = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getTalentNotification = async () => {
@@ -118,7 +118,7 @@ const TalentNotification = () => {
           setNotifications(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -134,7 +134,7 @@ const TalentNotification = () => {
           getTalentNotification();
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
     navigate("/preview-job-talent", {
       state: {
         jobId: item?.gigId,
@@ -152,7 +152,7 @@ const TalentNotification = () => {
           getTalentNotification();
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const createJobAlert = async (item) => {
@@ -200,7 +200,7 @@ const TalentNotification = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
     setIsLoading(false);
   };
 
@@ -224,9 +224,8 @@ const TalentNotification = () => {
       <TalentHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <TalentSideMenu />
       </div>
@@ -267,11 +266,10 @@ const TalentNotification = () => {
                         <>
                           <div
                             key={index}
-                            className={`talent-notification-card ${
-                              item.read
+                            className={`talent-notification-card ${item.read
                                 ? "notification-read"
                                 : "notification-unread"
-                            }`}
+                              }`}
                           >
                             {/* changed */}
                             <div className="notification-card-flex">
@@ -306,32 +304,6 @@ const TalentNotification = () => {
                                 {item?.talentNotificationMessage}&nbsp;
                               </div>
                               {/* changed */}
-
-                              {/*                             
-                            <div className="notification-card-flex">
-                              
-                              <img
-                                className="notification-card-image"
-                                src={`${API.userFilePath}${item?.brandDetails?.brandImage[0]?.fileData}`}
-                                alt=""
-                              />
-                              {!item?.brandDetails?.brandImage[0] && (
-                                <>
-                                  <img
-                                    className="notification-card-image"
-                                    src={avatarImage}
-                                    alt=""
-                                  />
-                                </>
-                              )}
-                              <div
-                                className="notification-card-content "
-                                onClick={() => {
-                                  viewNotification(item);
-                                }}
-                              >
-                                {item?.talentNotificationMessage}&nbsp;
-                              </div> */}
                             </div>
 
                             <div className="notification-card-actions">
@@ -417,21 +389,21 @@ const TalentNotification = () => {
                         onClick={(e) => {
                           if (
                             talentData?.subscriptionType !==
-                              subscriptionCategory &&
+                            subscriptionCategory &&
                             talentData?.isSubscribed
                           ) {
                             // User is subscribed and changing their subscription type
                             createJobAlert(); // Re-subscribe to a different type
                           } else if (
                             talentData?.subscriptionType !==
-                              subscriptionCategory &&
+                            subscriptionCategory &&
                             !talentData?.isSubscribed
                           ) {
                             // User is not subscribed and selecting a different subscription
                             createJobAlert();
                           } else if (
                             talentData?.subscriptionType ===
-                              subscriptionCategory &&
+                            subscriptionCategory &&
                             talentData?.isSubscribed
                           ) {
                             // User is subscribed and wants to unsubscribe
@@ -446,9 +418,9 @@ const TalentNotification = () => {
                           subscriptionCategory && !talentData?.isSubscribed
                           ? "Subscribe"
                           : talentData?.subscriptionType ===
-                              subscriptionCategory && talentData?.isSubscribed
-                          ? "Unsubscribe"
-                          : "Subscribe"}
+                            subscriptionCategory && talentData?.isSubscribed
+                            ? "Unsubscribe"
+                            : "Subscribe"}
                       </Button>
                     </div>
                   </div>

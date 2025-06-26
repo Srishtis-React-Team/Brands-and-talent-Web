@@ -136,10 +136,10 @@ const AdultFormOne = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
-  useEffect(() => {}, [talentData]);
+  useEffect(() => { }, [talentData]);
 
   const customStyles = {
     control: (provided, state) => ({
@@ -237,7 +237,7 @@ const AdultFormOne = () => {
   const [languagesError, setLanguagesError] = useState(false);
   const [dateOfBirthError, setDobError] = useState(false);
   const [kidsEmailError, setKidsEmailError] = useState(false);
-   const [stateError, setStateError] = useState(false);
+  const [stateError, setStateError] = useState(false);
 
   useEffect(() => {
     getCountries();
@@ -270,7 +270,7 @@ const AdultFormOne = () => {
           setCountryList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getStates = async (data) => {
@@ -283,7 +283,7 @@ const AdultFormOne = () => {
           setStateList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const getCities = async (data) => {
     const formData = data;
@@ -293,7 +293,7 @@ const AdultFormOne = () => {
           setCityList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const ethnicityOptions = [
@@ -410,7 +410,7 @@ const AdultFormOne = () => {
     if (kidsCity === "") {
       setKidsCityError(true);
     }
-    if(state===""){
+    if (state === "") {
       setStateError(true);
     }
     // if (address === "") {
@@ -422,72 +422,25 @@ const AdultFormOne = () => {
     if (completedJobs === "") {
       setJobsCompletedError(true);
     }
-console.log("adultsPreferedFirstName",adultsPreferedFirstName)
-// Check for public URL availability if the preferred first name has changed
-let publicUrl = adultsPreferedFirstName.replace(/ /g, "-");
+    console.log("adultsPreferedFirstName", adultsPreferedFirstName)
+    // Check for public URL availability if the preferred first name has changed
+    let publicUrl = adultsPreferedFirstName.replace(/ /g, "-");
 
-try {
-  // const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
-  //   preferredChildFirstname: adultsPreferedFirstName,
-  // });
-  const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
-    preferredChildFirstname: adultsPreferedFirstName,
-    userId: userId || "", // Send it if updating
-  });
-  
+    try {
+      // const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+      //   preferredChildFirstname: adultsPreferedFirstName,
+      // });
+      const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
+        preferredChildFirstname: adultsPreferedFirstName,
+        userId: userId || "", // Send it if updating
+      });
 
-  // If the name is taken, append a random number to make it unique
-  if (checkNameResponse.data.status !== true &&   checkNameResponse.data.data !==  "same") {
-    publicUrl = `${publicUrl}-${Math.floor(Math.random() * 900) + 100}`;
-  }
- 
-    let formData = {
-      adultLegalFirstName: adultsLegalFirstName,
-      adultLegalLastName: adultsLegalLastName,
-      preferredChildFirstname: adultsPreferedFirstName,
-      preferredChildLastName: adultsPreferedLastName,
-      profession: selectedProfessions,
-      relevantCategories: selectedCategories,
-      childGender: gender,
-      maritalStatus: maritalStatus,
-      childNationality: nationality,
-      childEthnicity: ethnicity,
-      languages: languages,
-      childDob: dateOfBirth,
-      childPhone: adultsPhone,
-      contactEmail: "",
-      childLocation: address,
-      parentCountry: country,
-      parentState: state,
-      parentAddress: address,
-      childCity: kidsCity,
-      age: age,
-      noOfJobsCompleted: completedJobs,
-      publicUrl: publicUrl, // Updated public URL after checking
-     // publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
-    };
 
-    if (
-      adultsLegalFirstName !== "" &&
-      adultsLegalLastName !== "" &&
-      adultsPreferedFirstName !== "" &&
-      adultsPreferedLastName !== "" &&
-      selectedProfessions.length !== 0 &&
-      selectedCategories.length != 0 &&
-      selectedCategories.length <= 6 &&
-      gender !== "" &&
-      languages.length !== 0 &&
-      dateOfBirth !== "" &&
-      adultsPhone !== "" &&
-      country !== "" &&
-      kidsCity !== "" &&
-      kidsCity !== undefined &&
-      state !==""&&
-      //address !== "" &&
-      age !== "" &&
-      completedJobs !== "" &&
-      !mobileValidationError
-    ) {
+      // If the name is taken, append a random number to make it unique
+      if (checkNameResponse.data.status !== true && checkNameResponse.data.data !== "same") {
+        publicUrl = `${publicUrl}-${Math.floor(Math.random() * 900) + 100}`;
+      }
+
       let formData = {
         adultLegalFirstName: adultsLegalFirstName,
         adultLegalLastName: adultsLegalLastName,
@@ -510,47 +463,94 @@ try {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl:publicUrl//selectedPublicUrl,
+        publicUrl: publicUrl, // Updated public URL after checking
+        // publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
       };
 
-      if (userId) {
-        await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
-          .then((resData) => {
-            if (resData.data.status === true) {
-              console.log("kidsciryy",kidsCity)
+      if (
+        adultsLegalFirstName !== "" &&
+        adultsLegalLastName !== "" &&
+        adultsPreferedFirstName !== "" &&
+        adultsPreferedLastName !== "" &&
+        selectedProfessions.length !== 0 &&
+        selectedCategories.length != 0 &&
+        selectedCategories.length <= 6 &&
+        gender !== "" &&
+        languages.length !== 0 &&
+        dateOfBirth !== "" &&
+        adultsPhone !== "" &&
+        country !== "" &&
+        kidsCity !== "" &&
+        kidsCity !== undefined &&
+        state !== "" &&
+        //address !== "" &&
+        age !== "" &&
+        completedJobs !== "" &&
+        !mobileValidationError
+      ) {
+        let formData = {
+          adultLegalFirstName: adultsLegalFirstName,
+          adultLegalLastName: adultsLegalLastName,
+          preferredChildFirstname: adultsPreferedFirstName,
+          preferredChildLastName: adultsPreferedLastName,
+          profession: selectedProfessions,
+          relevantCategories: selectedCategories,
+          childGender: gender,
+          maritalStatus: maritalStatus,
+          childNationality: nationality,
+          childEthnicity: ethnicity,
+          languages: languages,
+          childDob: dateOfBirth,
+          childPhone: adultsPhone,
+          contactEmail: "",
+          childLocation: address,
+          parentCountry: country,
+          parentState: state,
+          parentAddress: address,
+          childCity: kidsCity,
+          age: age,
+          noOfJobsCompleted: completedJobs,
+          publicUrl: publicUrl//selectedPublicUrl,
+        };
+
+        if (userId) {
+          await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
+            .then((resData) => {
+              if (resData.data.status === true) {
+                console.log("kidsciryy", kidsCity)
+                setIsLoading(false);
+                setMessage("Updated Successfully!");
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                  navigate(`/talent-signup-social-medias-details?${userId}`);
+                }, 1000);
+              } else if (resData.data.status === false) {
+                setIsLoading(false);
+                setMessage(resData.data.message);
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                }, 1000);
+              }
+            })
+            .catch((err) => {
               setIsLoading(false);
-              setMessage("Updated Successfully!");
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-                navigate(`/talent-signup-social-medias-details?${userId}`);
-              }, 1000);
-            } else if (resData.data.status === false) {
-              setIsLoading(false);
-              setMessage(resData.data.message);
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-              }, 1000);
-            }
-          })
-          .catch((err) => {
-            setIsLoading(false);
-          });
+            });
+        }
+      } else {
+        setMessage("Kindly complete all mandatory fields");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
       }
-    } else {
-      setMessage("Kindly complete all mandatory fields");
+    } catch (err) {
+      setIsLoading(false);
+      setMessage("Error occurred, please try again.");
       setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-      }, 1000);
+      setTimeout(() => setOpenPopUp(false), 1000);
     }
-  } catch (err) {
-    setIsLoading(false);
-    setMessage("Error occurred, please try again.");
-    setOpenPopUp(true);
-    setTimeout(() => setOpenPopUp(false), 1000);
-  }
   };
 
   const handleProfessionChange = (selectedOptions) => {
@@ -808,10 +808,10 @@ try {
     };
   }, []);
 
-  useEffect(() => {}, [maritalStatus]);
+  useEffect(() => { }, [maritalStatus]);
 
-   // Sync preferred names into main name fields
-   useEffect(() => {
+  // Sync preferred names into main name fields
+  useEffect(() => {
     setPreferredChildFirstname(adultsPreferedFirstName);
   }, [adultsPreferedFirstName]);
 
@@ -866,7 +866,7 @@ try {
                           style={{ fontWeight: "bold", fontSize: "small" }}
                           className="adults-titles kids-form-title mb-2"
                         >
-                        Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion:
+                          Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion:
                           <span className="mandatory">*</span>
                         </label>
 
@@ -1074,7 +1074,7 @@ try {
                   </div>
                   <div className="adults-titles kids-form-title mb-2">
                     <span style={{ fontWeight: "bold", fontSize: "small" }}>
-                    Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications{" "}
+                      Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications{" "}
                       <span className="mandatory">*</span>
                     </span>
                   </div>
@@ -1165,61 +1165,9 @@ try {
                   </div>
                   {/* added */}
                   <div className="kids-form-row row">
-  {/* Preferred First Name */}
-  <div className="kids-form-section col-md-6 mb-3">
-    <label className="form-label">Preferred First Name</label>
-    <span className="mandatory">*</span>
-    <input
-      type="text"
-      className="form-control"
-      onChange={(e) => {
-        adultsPrefferedFirstNameChange(e);
-        setAdultsPreferedFirstNameError(false);
-      }}
-      onKeyDown={handleAdultPrefferedFirstNameKeyPress}
-      placeholder="Enter Preferred First Name"
-      value={adultsPreferedFirstName}
-    />
-    {adultsPreferedFirstNameError && (
-      <div className="invalid-fields">
-        Please enter Preferred First Name
-      </div>
-    )}
-    {adultsPrefferedFirstNameLetterError && (
-      <div className="invalid-fields">Only Letters Allowed</div>
-    )}
-  </div>
-
-  {/* Preferred Last Name */}
-  <div className="kids-form-section col-md-6 mb-3">
-    <label className="form-label">Preferred Last Name</label>
-    <span className="mandatory">*</span>
-    <input
-      type="text"
-      className="form-control"
-      onChange={(e) => {
-        adultsPrefferedLastNameChange(e);
-        setAdultsPreferedLastNameError(false);
-      }}
-      onKeyDown={handleAdultPrefferedLastNameKeyPress}
-      placeholder="Enter Preferred Last Name"
-      value={adultsPreferedLastName}
-    />
-    {adultsPreferedLastNameError && (
-      <div className="invalid-fields">
-        Please enter Preferred Last Name
-      </div>
-    )}
-    {adultsPrefferedLastNameLetterError && (
-      <div className="invalid-fields">Only Letters Allowed</div>
-    )}
-  </div>
-</div>
-
-                  {/* addedd */}
-                  {/* <div className="kids-form-row row">
+                    {/* Preferred First Name */}
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Preferred First Name</label>{" "}
+                      <label className="form-label">Preferred First Name</label>
                       <span className="mandatory">*</span>
                       <input
                         type="text"
@@ -1229,22 +1177,22 @@ try {
                           setAdultsPreferedFirstNameError(false);
                         }}
                         onKeyDown={handleAdultPrefferedFirstNameKeyPress}
-                        placeholder="Enter Preferred  First Name"
+                        placeholder="Enter Preferred First Name"
                         value={adultsPreferedFirstName}
-                      ></input>
+                      />
                       {adultsPreferedFirstNameError && (
                         <div className="invalid-fields">
                           Please enter Preferred First Name
                         </div>
                       )}
                       {adultsPrefferedFirstNameLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters Allowed
-                        </div>
+                        <div className="invalid-fields">Only Letters Allowed</div>
                       )}
                     </div>
+
+                    {/* Preferred Last Name */}
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Preferred Last name</label>{" "}
+                      <label className="form-label">Preferred Last Name</label>
                       <span className="mandatory">*</span>
                       <input
                         type="text"
@@ -1253,22 +1201,20 @@ try {
                           adultsPrefferedLastNameChange(e);
                           setAdultsPreferedLastNameError(false);
                         }}
-                        value={adultsPreferedLastName}
                         onKeyDown={handleAdultPrefferedLastNameKeyPress}
-                        placeholder="Preferred  Legal Last name"
-                      ></input>
+                        placeholder="Enter Preferred Last Name"
+                        value={adultsPreferedLastName}
+                      />
                       {adultsPreferedLastNameError && (
                         <div className="invalid-fields">
                           Please enter Preferred Last Name
                         </div>
                       )}
                       {adultsPrefferedLastNameLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters Allowed
-                        </div>
+                        <div className="invalid-fields">Only Letters Allowed</div>
                       )}
                     </div>
-                  </div> */}
+                  </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Country</label>
@@ -1329,7 +1275,7 @@ try {
                         onChange={handleSelectedCity}
                         isSearchable={true}
                       />
-                       {kidsCityError && (
+                      {kidsCityError && (
                         <div className="invalid-fields">
                           Please select City
                         </div>
@@ -1338,16 +1284,6 @@ try {
                     <div className="kids-form-section col-md-6">
                       <label className="form-label">Phone</label>
                       <span className="mandatory">*</span>
-                      {/* <input
-                          type="number"
-                          className="form-control"
-                          minLength="15"
-                          onChange={(e) => {
-                            setAdultsPhone(e.target.value);
-                            setAdultsPhoneError(false);
-                          }}
-                          placeholder="Enter Phone number"
-                        ></input> */}
                       <MuiPhoneNumber
                         sx={{ "& svg": { height: "1em" } }}
                         countryCodeEditable={false}
@@ -1520,27 +1456,7 @@ try {
                         </div>
                       )}
                     </div>
-                    {/* <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Email</label>
-                      <span className="mandatory">*</span>
-                      <input
-                        type="email"
-                        className={`form-control ${
-                          isValidEmail ? "" : "is-invalid"
-                        }`}
-                        value={kidsEmail}
-                        onChange={handleKidsEmailChange}
-                        placeholder="Enter E-mail"
-                      />
-                      {!isValidEmail && (
-                        <div className="invalid-feedback">
-                          Please enter a valid email address.
-                        </div>
-                      )}
-                      {kidsEmailError && (
-                        <div className="invalid-fields">Please enter Email</div>
-                      )}
-                    </div> */}
+
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
                         Projects Completed
@@ -1570,9 +1486,7 @@ try {
                       )}
                     </div>
                   </div>
-                  {/* <div className="adults-titles kids-form-title">
-                    <span>Contact Details</span>
-                  </div> */}
+
                 </div>
               </div>
             </div>

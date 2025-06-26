@@ -60,12 +60,6 @@ const AppliedJobs = () => {
     navigate("/preview-job-talent", {
       state: { from: "applied-jobs", jobId: jobId },
     });
-
-    // navigate("/preview-job-talent", {
-    //   state: {
-    //     jobId: jobId,
-    //   },
-    // });
   }
 
   const toggleMenu = () => {
@@ -200,25 +194,6 @@ const AppliedJobs = () => {
                                   )}
                                   <i className="bi bi-dot"></i>
                                 </span>
-
-                                {/* <span className="job-company_dtls">
-                                  <i className="bi bi-geo-alt-fill location-icon"></i>
-                                  {job?.city && <>{job?.city}</>}{" "}
-                                 
-                                  {job?.city &&
-                                    (job?.state || job?.country) && (
-                                      <span>, </span>
-                                    )}{" "}
-                                
-                                  {job?.state && <>{job?.state}</>}{" "}
-                                 
-                                  {job?.state && job?.country && (
-                                    <span>, </span>
-                                  )}{" "}
-                                 
-                                  {job?.country && <>{job?.country}</>}{" "}
-                                  <i className="bi bi-dot"></i>
-                                </span> */}
                                 <span className="job-company_dtls">
                                   {job?.employmentType}{" "}
                                   <i className="bi bi-dot"></i>
@@ -237,15 +212,6 @@ const AppliedJobs = () => {
                                         "paid_collaboration"
                                         ? "Paid Collaboration"
                                         : ""}
-
-                                  {/* {Object.keys(job?.compensation)[0]
-                                    ?.split("_")
-                                    .map(
-                                      (word) =>
-                                        word.charAt(0).toUpperCase() +
-                                        word.slice(1)
-                                    )
-                                    .join(" ")} */}
                                 </span>
                               </div>
                               <div className="mb-2">

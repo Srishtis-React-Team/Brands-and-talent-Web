@@ -50,10 +50,10 @@ const AdultFormTwo = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
-  useEffect(() => {}, [talentData]);
+  useEffect(() => { }, [talentData]);
 
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -104,12 +104,12 @@ const AdultFormTwo = () => {
             setOpenPopUp(false);
 
             const pendingJobId = localStorage.getItem("pendingJobId");
-          const pendingJobTitle = localStorage.getItem("pendingJobTitle");
-          if (pendingJobId) {
-            localStorage.removeItem("pendingJobId");
-            localStorage.removeItem("pendingJobTitle");
-            navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
-          }  else {
+            const pendingJobTitle = localStorage.getItem("pendingJobTitle");
+            if (pendingJobId) {
+              localStorage.removeItem("pendingJobId");
+              localStorage.removeItem("pendingJobTitle");
+              navigate(`/jobs/view/${pendingJobTitle}/${pendingJobId}`);
+            } else {
               navigate(`/talent/${talentData?.publicUrl}`, {
                 state: { talentData: talentData },
               });
@@ -194,7 +194,7 @@ const AdultFormTwo = () => {
     ]);
   };
 
-  const serviceFilesUpload = () => {};
+  const serviceFilesUpload = () => { };
 
   const uploadProfile = async (fileData, callback) => {
     // Your upload logic remains the same
@@ -214,7 +214,7 @@ const AdultFormTwo = () => {
         type: resData?.data?.data?.filetype,
       };
       callback(fileObj); // Call the callback with the uploaded file object
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const handleView = (imageUrl) => {
@@ -223,9 +223,9 @@ const AdultFormTwo = () => {
   };
 
   // Function to handle deleting image
-  const handleServiceFilesDelete = (item, index) => {};
+  const handleServiceFilesDelete = (item, index) => { };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -245,9 +245,9 @@ const AdultFormTwo = () => {
       prevInputs.map((service) =>
         service.uniqueId === serviceUniqueId
           ? {
-              ...service,
-              files: service.files.filter((file) => file.id !== fileId),
-            }
+            ...service,
+            files: service.files.filter((file) => file.id !== fileId),
+          }
           : service
       )
     );
@@ -295,11 +295,6 @@ const AdultFormTwo = () => {
                   <div>
                     {inputs.map((input, serviceIndex) => (
                       <>
-                        {/* <div className="adults-titles">
-                          {inputs.length > 1 && serviceIndex === 0
-                            ? "Services"
-                            : `Services (set ${serviceIndex + 1})`}
-                        </div> */}
                         <div key={serviceIndex}>
                           <div className="">
                             <div className="">

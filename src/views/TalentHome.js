@@ -44,7 +44,7 @@ const TalentHome = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const checkTransaction = async () => {
@@ -93,13 +93,13 @@ const TalentHome = () => {
           setNotifications(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
 
-  useEffect(() => {}, [notificationList]);
+  useEffect(() => { }, [notificationList]);
 
   const navigate = useNavigate();
 
@@ -133,7 +133,7 @@ const TalentHome = () => {
           openDoItNowModal();
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const doItNowRef = useRef(null);
@@ -165,7 +165,7 @@ const TalentHome = () => {
         } else {
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     closeDoItNowModal();
     setTimeout(() => {
@@ -177,17 +177,6 @@ const TalentHome = () => {
     if (talentData) {
       if (talentData?.accountBlock == false) {
         navigate(`/edit-talent-profile?${talentData?._id}`);
-        // if (talentData?.adminApproved === true) {
-        //   navigate(`/edit-talent-profile?${talentData?._id}`);
-        // } else {
-        //   setMessage(
-        //     "After your verification is approved, you can update your profile"
-        //   );
-        //   setOpenPopUp(true);
-        //   setTimeout(() => {
-        //     setOpenPopUp(false);
-        //   }, 2000);
-        // }
       } else if (talentData?.accountBlock == true) {
         setMessage("Please upgrade your plan to access your profile");
         setOpenPopUp(true);
@@ -208,9 +197,8 @@ const TalentHome = () => {
       <TalentHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
+        className={`brand-sidebar ${showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
+          }`}
       >
         <TalentSideMenu />
       </div>
@@ -344,12 +332,6 @@ const TalentHome = () => {
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content ">
             <div className="modal-header">
-              {/* <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button> */}
             </div>
             <div className="modal-body talent-popup-body pt-1">
               <div className="doitnow-main row">
@@ -378,26 +360,20 @@ const TalentHome = () => {
                       ></div>
                     </div>
                   </div>
-                  {/* <div className="talent-popup-description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-                    repellat corporis corrupti aliquid laboriosam neque ratione
-                    fuga. <br></br>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </div> */}
                 </div>
-                
+
                 <div className="doit-two col-md-4 text-center">
                   <img className="img-fluid" src={doitnow} alt="" />
                 </div>
                 {/* aadedd */}
                 <div className="sample-profile" onClick={sampleProfileNavigate}>
-                 View Sample Profile
+                  View Sample Profile
                 </div>
-                 {/* aadedd */}
+                {/* aadedd */}
               </div>
             </div>
             <div className="doitnow">
-            
+
               <button
                 className="doit-btn"
                 onClick={() => {
@@ -409,7 +385,7 @@ const TalentHome = () => {
                 Create / Update Profile Now
               </button>
 
-             
+
             </div>
           </div>
         </div>

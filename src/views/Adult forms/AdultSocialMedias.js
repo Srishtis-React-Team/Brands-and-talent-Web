@@ -184,8 +184,8 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
       });
   };
 
-  useEffect(() => {}, [twitterFollowersCount]);
-  useEffect(() => {}, [youtubesFollowers]);
+  useEffect(() => { }, [twitterFollowersCount]);
+  useEffect(() => { }, [youtubesFollowers]);
 
   const validateInstagramUrl = (url) => {
     const instagramUrlPattern =
@@ -479,7 +479,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
           setThreadsUrl(resData.data.data.threadsUrl || "");
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (
@@ -825,55 +825,6 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="Or-seperator">Or</div>
-
-                  {/* <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper d-flex">
-                        <div className="media-info">
-                          <div className="mediaIcon">
-                            <img src={instagram} alt="" />
-                          </div>
-                          <div className="media-text">Instagram</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper d-flex">
-                        <div className="media-info">
-                          <div className="mediaIcon">
-                            <img src={fbLogo} alt="" />
-                          </div>
-                          <div className="media-text">Facebook</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div> */}
-                  {/* <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper d-flex">
-                        <div className="media-info">
-                          <div className="mediaIcon">
-                            <img src={tikTok} alt="" />
-                          </div>
-                          <div className="media-text">TikTok</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper d-flex">
-                        <div className="media-info">
-                          <div className="mediaIcon">
-                            <img src={linkdin} alt="" />
-                          </div>
-                          <div className="media-text">LinkedIn</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div> */}
                   <div className="kids-form-row row spcBtm">
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper d-flex">
@@ -912,19 +863,6 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="kids-form-row row spcBtm">
-                    <div className="kids-form-section col-md-6 ">
-                      <div className="media-wrapper d-flex">
-                        <div className="media-info">
-                          <div className="mediaIcon">
-                            <img className="thread-fill" src={threads} alt="" />
-                          </div>
-                          <div className="media-text">Threads</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -983,8 +921,8 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                     isTwitter
                       ? twitterUserName
                       : isYoutube
-                      ? youtubeChannelID
-                      : ""
+                        ? youtubeChannelID
+                        : ""
                   }
                   onChange={(e) => {
                     handleTwitterUserNameChange(e);
@@ -994,8 +932,8 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                     isTwitter
                       ? "Twitter user name"
                       : isYoutube
-                      ? "YouTube Channel ID"
-                      : ""
+                        ? "YouTube Channel ID"
+                        : ""
                   }
                 ></input>
                 {twitterUserNameError && (

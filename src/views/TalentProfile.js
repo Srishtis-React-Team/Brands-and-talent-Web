@@ -99,26 +99,6 @@ const TalentProfile = () => {
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-
-  // const selectedTalent = location.state && location.state.talentData;
-
-  // const checkUser = (id, data) => {
-  //   const localID = localStorage.getItem("userId");
-
-  //   if (localID && id) {
-  //     if (localID !== id) {
-  //       // navigate("/login");
-  //       setTalentData(data);
-  //     } else if (localID == id) {
-
-  //     }
-  //   }
-  // };
-
-  // if (!talentData && !userId) {
-  //   navigate("/login");
-  // }
-
   useEffect(() => {
     const storedUserId =
       localStorage.getItem("userId") || localStorage.getItem("currentUser");
@@ -142,19 +122,6 @@ const TalentProfile = () => {
     } else if (queryString) {
       // getTalentById(queryString);
     }
-    // if (selectedTalent?._id) {
-    //   getTalentById(selectedTalent?._id);
-    //   fetchPhotos();
-    //   fetchVideoAudios();
-    //   fetchFeatures();
-    //   fetchCV();
-    //   fetchReviews();
-    //   fetchURLS();
-    // } else if (storedUserId) {
-    //   getTalentById(storedUserId);
-    // } else if (queryString) {
-    //   getTalentById(queryString);
-    // }
   }, [talentData]);
 
   const fetchPhotos = async () => {
@@ -172,7 +139,7 @@ const TalentProfile = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const fetchVideoAudios = async () => {
@@ -180,8 +147,7 @@ const TalentProfile = () => {
       user: userId ? userId : null,
     };
     await ApiHelper.post(
-      `${API.unifiedDataFetch}${
-        talentData?._id ? talentData?._id : queryString
+      `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : queryString
       }/2`,
       formData
     )
@@ -190,15 +156,14 @@ const TalentProfile = () => {
           setURLList(resData.data.videoList);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const fetchURLS = async () => {
     const formData = {
       user: userId ? userId : null,
     };
     await ApiHelper.post(
-      `${API.unifiedDataFetch}${
-        talentData?._id ? talentData?._id : queryString
+      `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : queryString
       }/8`,
       formData
     )
@@ -207,15 +172,14 @@ const TalentProfile = () => {
           setAudiosList(resData.data.audioList);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const fetchFeatures = async () => {
     const formData = {
       user: userId ? userId : null,
     };
     await ApiHelper.post(
-      `${API.unifiedDataFetch}${
-        talentData?._id ? talentData?._id : queryString
+      `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : queryString
       }/4`,
       formData
     )
@@ -224,33 +188,31 @@ const TalentProfile = () => {
           setFeaturesList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const fetchCV = async () => {
     const formData = {
       user: userId ? userId : null,
     };
     await ApiHelper.post(
-      `${API.unifiedDataFetch}${
-        talentData?._id ? talentData?._id : queryString
+      `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : queryString
       }/3`,
       formData
     )
       .then((resData) => {
         if (resData.data.status === true) {
           setCvList(resData.data.data);
-        
+
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const fetchReviews = async () => {
     const formData = {
       user: userId ? userId : null,
     };
     await ApiHelper.post(
-      `${API.unifiedDataFetch}${
-        talentData?._id ? talentData?._id : queryString
+      `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : queryString
       }/7`,
       formData
     )
@@ -259,19 +221,8 @@ const TalentProfile = () => {
           setreviewsList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
-
-  // const getTalentById = async (talent_id) => {
-  //   await ApiHelper.post(`${API.getTalentById}${talent_id}`)
-  //     .then((resData) => {
-  //       if (resData) {
-  //         setTalentData(resData.data.data);
-  //       }
-  //     })
-  //     .catch((err) => {});
-  // };
-
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
     setBrandImage(localStorage.getItem("currentUserImage"));
@@ -290,23 +241,19 @@ const TalentProfile = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleChange = (e) => {
     setSelectedJob(e?.value);
   };
 
-  // const handleView = (imageUrl) => {
-  //   let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
-  //   window.open(viewImage, "_blank");
-  // };
   const handleView = (file) => {
     if (!file?.fileData) return;
-  
+
     const fileUrl = `${API.userFilePath}${file.fileData}`;
     const extension = file.fileData.split('.').pop().toLowerCase();
-  
+
     if (extension === 'pdf') {
       window.open(fileUrl, '_blank');
     } else if (['doc', 'docx'].includes(extension)) {
@@ -316,7 +263,7 @@ const TalentProfile = () => {
       alert('Unsupported file type');
     }
   };
-  
+
   function handleForms(e) {
     setTest("features set");
     if (e == "services") {
@@ -412,44 +359,6 @@ const TalentProfile = () => {
       }
     }
   };
-  
-
-  // const handleOpenModal = () => {
-  //   if (currentUserType == "brand" && talentData?.planName === "Basic") {
-  //     setMessage(
-  //       "The user is ineligible to receive an invitation for the job opening."
-  //     );
-  //     inviteTalentNotification();
-  //     setOpenPopUp(true);
-  //     setTimeout(function () {
-  //       setOpenPopUp(false);
-  //       // navigate(`/pricing`);
-  //     }, 2000);
-  //   } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
-  //     setMessage("Please upgrade to pro plan to use this feature");
-  //     inviteTalentNotification();
-  //     setOpenPopUp(true);
-  //     setTimeout(function () {
-  //       setOpenPopUp(false);
-  //       navigate(`/pricing`);
-  //     }, 2000);
-  //   } else {
-  //     if (currentUserType == "talent") {
-  //       setMessage("Please log in as a Brand/Client and post a job first");
-  //       setOpenPopUp(true);
-  //       setTimeout(function () {
-  //         setOpenPopUp(false);
-  //         navigate("/login");
-  //       }, 3000);
-  //     } else if (currentUserType == "brand") {
-  //       setShowModal(true);
-  //     }
-  //   }
-  //   // window.open(
-  //   //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-  //   //   "_blank"
-  //   // );
-  // };
 
   const inviteTalentNotification = async () => {
     const formData = {
@@ -507,7 +416,7 @@ const TalentProfile = () => {
             }
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else if (brandData?.accountBlock == true) {
       setMessage("Please upgrade your plan to access your profile");
       setOpenPopUp(true);
@@ -556,7 +465,7 @@ const TalentProfile = () => {
           bootstrapModal.hide();
         }, 2000);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
@@ -664,7 +573,7 @@ const TalentProfile = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const [isOwnTalent, setIsOwnTalent] = useState(null);
@@ -701,7 +610,7 @@ const TalentProfile = () => {
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
         setTalentData(resData?.data?.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const messageNow = async () => {
@@ -724,88 +633,8 @@ const TalentProfile = () => {
             navigate(resData?.data?.message === 'User need to renew the plan' ? `/find-talent` : `/pricing`);
           }, 3000);
         }
-        
-        // else if (resData?.data?.status == false) {
-        //   setMessage(`${resData?.data?.message}`);
-        //   setOpenPopUp(true);
-        //   setTimeout(function () {
-        //     setOpenPopUp(false);
-        //     navigate(`/pricing`);
-        //   }, 3000);
-        // }
       })
-      .catch((err) => {});
-
-    // if (isOwnTalent == true) {
-    //   if (talentData?.planName == "Basic") {
-    //     setMessage("Please upgrade to pro plan to use this feature");
-    //     setOpenPopUp(true);
-    //     setTimeout(function () {
-    //       setOpenPopUp(false);
-    //       navigate(`/pricing`);
-    //     }, 3000);
-    //   } else if (
-    //     talentData?.planName != "Basic" &&
-    //     talentData?.accountBlock == false
-    //   ) {
-    //     navigate(`/message?${talentData?._id}`);
-    //   } else if (talentData?.accountBlock == true) {
-    //     setMessage("Please upgrade your plan to access your profile");
-    //     setOpenPopUp(true);
-    //     setTimeout(function () {
-    //       setOpenPopUp(false);
-    //       navigate(`/pricing`);
-    //     }, 3000);
-    //   }
-    // } else if (isOwnTalent == false && isAdminApproved == true) {
-    //   if (brandData?.planName === "Basic") {
-    //     setMessage("Please upgrade to pro plan to use this feature");
-    //     setOpenPopUp(true);
-    //     setTimeout(function () {
-    //       setOpenPopUp(false);
-    //       navigate(`/pricing`);
-    //     }, 3000);
-    //   } else if (
-    //     brandData?.planName !== "Basic" &&
-    //     brandData?.accountBlock == false
-    //   ) {
-    //     navigate(`/message?${talentData?._id}`);
-    //   } else if (brandData?.accountBlock == true) {
-    //     setMessage("Please upgrade your plan to access your profile");
-    //     setOpenPopUp(true);
-    //     setTimeout(function () {
-    //       setOpenPopUp(false);
-    //       navigate(`/pricing`);
-    //     }, 3000);
-    //   }
-    //   if (talentData?.planName != "Basic") {
-    //     // alert("block01");
-    //     navigate(`/message?${talentData?._id}`);
-    //   } else if (talentData?.planName == "Basic") {
-    //     navigate(`/pricing`);
-    //   }
-    // } else if (currentUserType == "brand") {
-    //   if (brandData?.planName === "Basic") {
-    //     setMessage("Please upgrade to premium plan to use this feature");
-    //     setOpenPopUp(true);
-    //     setTimeout(function () {
-    //       setOpenPopUp(false);
-    //       navigate(`/pricing`);
-    //     }, 3000);
-    //   } else if (
-    //     brandData?.planName !== "Basic" &&
-    //     brandData?.accountBlock == false
-    //   ) {
-    //     navigate(`/message?${talentData?._id}`);
-    //   } else if (brandData?.accountBlock == true) {
-    //     setMessage("Please upgrade your plan to access your profile");
-    //     setOpenPopUp(true);
-    //     setTimeout(function () {
-    //       setOpenPopUp(false);
-    //       navigate(`/pricing`);
-    //     }, 3000);
-    //   }
-    // }
+      .catch((err) => { });
   };
 
 
@@ -828,17 +657,6 @@ const TalentProfile = () => {
               from={"message"}
             />
           )}
-
-          {/* {!currentUser_type && !userId && (
-            <>
-              <section>
-                <div className="popular-header">
-                  <div className="header-title">Profile</div>
-                </div>
-              </section>
-            </>
-          )} */}
-
           <section>
             <div className="container">
               <div className="talent-profile-main">
@@ -864,11 +682,10 @@ const TalentProfile = () => {
                         {talentData?.planName != "Basic" && (
                           <>
                             <div
-                              className={`planName ${
-                                talentData?.planName === "Premium"
+                              className={`planName ${talentData?.planName === "Premium"
                                   ? "premium"
                                   : "pro"
-                              }`}
+                                }`}
                             >
                               <span>
                                 <i className="bi bi-star-fill"></i>
@@ -876,8 +693,8 @@ const TalentProfile = () => {
                               {talentData?.planName === "Pro (Popular)"
                                 ? "Pro"
                                 : talentData?.planName === "Premium"
-                                ? "Premium"
-                                : talentData?.planName}
+                                  ? "Premium"
+                                  : talentData?.planName}
                             </div>
                           </>
                         )}
@@ -885,42 +702,11 @@ const TalentProfile = () => {
                       <div className="individual-talents-details">
                         <div className="individual-talent-name">
                           <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
-                          {/* {talentData?.planName != "Basic" && (
-                        <>
-                          <div
-                            className={`planName ${
-                              talentData?.planName === "Premium"
-                                ? "premium"
-                                : "pro"
-                            }`}
-                          >
-                            <span>
-                              <i className="bi bi-star-fill"></i>
-                            </span>
-                            {talentData?.planName}
-                          </div>
-                        </>
-                      )} */}
-
-                          {/* {talentData?.planName != "Basic" && (
-                        <>
-                          <div className="talent-verified">
-                            <span className="blue-shield-wrapper">
-                              <img
-                                className="blue-shield"
-                                src={blueShield}
-                              ></img>
-                            </span>
-                            Verified
-                          </div>
-                        </>
-                      )}
-                    </div> */}
                           <></>
                         </div>
-                          
+
                         <div className="talent-details">
-                        {talentData?.idVerified == true && (  //talentData?.planName !== "Basic"
+                          {talentData?.idVerified == true && (  //talentData?.planName !== "Basic"
                             <>
                               <div className="talent-details-wrapper">
                                 <div className="talent-verified">
@@ -1031,334 +817,334 @@ const TalentProfile = () => {
                           talentData?.threadsUrl ||
                           talentData?.facebookUrl ||
                           talentData?.twitterUrl) && (
-                          <>
-                            <div className="talents-social-wrapper mt-4">
-                              <div className="row">
-                                {(talentData?.instaFollowers ||
-                                  talentData?.instagramUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.instagramUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.instagramUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.instagramUrl) {
-                                        window.open(
-                                          talentData.instagramUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={instaLogo} alt="Instagram" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.instaFollowers ? (
-                                          <p>{talentData.instaFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.instaFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                            <>
+                              <div className="talents-social-wrapper mt-4">
+                                <div className="row">
+                                  {(talentData?.instaFollowers ||
+                                    talentData?.instagramUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.instagramUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.instagramUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.instagramUrl) {
+                                            window.open(
+                                              talentData.instagramUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={instaLogo} alt="Instagram" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.instaFollowers ? (
+                                              <p>{talentData.instaFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.instaFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
 
-                                {(talentData?.facebookFollowers ||
-                                  talentData?.facebookUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.facebookUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.facebookUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.facebookUrl) {
-                                        window.open(
-                                          talentData.facebookUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={fbIcon} alt="Facebook" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.facebookFollowers ? (
-                                          <p>{talentData.facebookFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.facebookFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                                  {(talentData?.facebookFollowers ||
+                                    talentData?.facebookUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.facebookUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.facebookUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.facebookUrl) {
+                                            window.open(
+                                              talentData.facebookUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={fbIcon} alt="Facebook" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.facebookFollowers ? (
+                                              <p>{talentData.facebookFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.facebookFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
 
-                                {(talentData?.tiktokFollowers ||
-                                  talentData?.tikTokUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.tikTokUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.tikTokUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.tikTokUrl) {
-                                        window.open(
-                                          talentData.tikTokUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={tiktok} alt="TikTok" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.tiktokFollowers ? (
-                                          <p>{talentData.tiktokFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.tiktokFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                                  {(talentData?.tiktokFollowers ||
+                                    talentData?.tikTokUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.tikTokUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.tikTokUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.tikTokUrl) {
+                                            window.open(
+                                              talentData.tikTokUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={tiktok} alt="TikTok" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.tiktokFollowers ? (
+                                              <p>{talentData.tiktokFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.tiktokFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
 
-                                {(talentData?.linkedinFollowers ||
-                                  talentData?.linkedinUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.linkedinUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.linkedinUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.linkedinUrl) {
-                                        window.open(
-                                          talentData.linkedinUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={linkdin} alt="LinkedIn" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.linkedinFollowers ? (
-                                          <p>{talentData.linkedinFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.linkedinFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                                  {(talentData?.linkedinFollowers ||
+                                    talentData?.linkedinUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.linkedinUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.linkedinUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.linkedinUrl) {
+                                            window.open(
+                                              talentData.linkedinUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={linkdin} alt="LinkedIn" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.linkedinFollowers ? (
+                                              <p>{talentData.linkedinFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.linkedinFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
 
-                                {(talentData?.twitterFollowers ||
-                                  talentData?.twitterUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.twitterUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.twitterUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.twitterUrl) {
-                                        window.open(
-                                          talentData.twitterUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={twitterLogo} alt="Twitter" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.twitterFollowers ? (
-                                          <p>{talentData.twitterFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.twitterFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                                  {(talentData?.twitterFollowers ||
+                                    talentData?.twitterUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.twitterUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.twitterUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.twitterUrl) {
+                                            window.open(
+                                              talentData.twitterUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={twitterLogo} alt="Twitter" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.twitterFollowers ? (
+                                              <p>{talentData.twitterFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.twitterFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
 
-                                {(talentData?.threadsFollowers ||
-                                  talentData?.threadsUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.threadsUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.threadsUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.threadsUrl) {
-                                        window.open(
-                                          talentData.threadsUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={threadLogo} alt="Threads" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.threadsFollowers ? (
-                                          <p>{talentData.threadsFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.threadsFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                                  {(talentData?.threadsFollowers ||
+                                    talentData?.threadsUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.threadsUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.threadsUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.threadsUrl) {
+                                            window.open(
+                                              talentData.threadsUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={threadLogo} alt="Threads" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.threadsFollowers ? (
+                                              <p>{talentData.threadsFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.threadsFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
 
-                                {(talentData?.youtubeFollowers ||
-                                  talentData?.youTubeUrl) && (
-                                  <div
-                                    className="talents-social col-md-6"
-                                    style={{
-                                      cursor: talentData?.youTubeUrl
-                                        ? "pointer"
-                                        : "default",
-                                      position: "relative",
-                                    }}
-                                    data-tooltip={
-                                      talentData?.youTubeUrl
-                                        ? "Click here"
-                                        : "No link provided"
-                                    }
-                                    onClick={() => {
-                                      if (talentData?.youTubeUrl) {
-                                        window.open(
-                                          talentData.youTubeUrl,
-                                          "_blank"
-                                        );
-                                      }
-                                    }}
-                                  >
-                                    <div className="logoSocial">
-                                      <img src={youtubeLogo} alt="YouTube" />
-                                    </div>
-                                    <div className="social-followers-count-section">
-                                      <div className="social-count">
-                                        {talentData?.youtubeFollowers ? (
-                                          <p>{talentData.youtubeFollowers}</p>
-                                        ) : (
-                                          <div className="click-url">
-                                            Click here
-                                          </div>
-                                        )}
-                                      </div>
-                                      {talentData?.youtubeFollowers && (
-                                        <div className="followers-text">
-                                          Followers
+                                  {(talentData?.youtubeFollowers ||
+                                    talentData?.youTubeUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.youTubeUrl
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.youTubeUrl
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.youTubeUrl) {
+                                            window.open(
+                                              talentData.youTubeUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={youtubeLogo} alt="YouTube" />
                                         </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                )}
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.youtubeFollowers ? (
+                                              <p>{talentData.youtubeFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.youtubeFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                </div>
                               </div>
-                            </div>
-                          </>
-                        )}
+                            </>
+                          )}
 
                         <>
                           <div
@@ -1463,73 +1249,6 @@ const TalentProfile = () => {
                             </div>
                           </div>
                         </div>
-
-                        {/* <div className="talent-rates">
-                          <div className="title">
-                            {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
-                            Rates
-                          </div>
-                          {talentData &&
-                            talentData.profession &&
-                            talentData.profession.map((item, index) => (
-                              <>
-                                <div key={index}>
-                                  {(item?.perHourSalary ||
-                                    item?.perDaySalary ||
-                                    item?.perMonthSalary ||
-                                    item?.perPostSalary ||
-                                    item?.perImageSalary) && (
-                                    <>
-                                      <div className="talent-profession-name">
-                                        {item?.value}{" "}
-                                        {item?.openToOffers === true && (
-                                          <span>(Negotiable)</span>
-                                        )}
-                                      </div>
-                                    </>
-                                  )}
-
-                                  {item?.perHourSalary && (
-                                    <>
-                                      <div className="talent-profession-value">
-                                        ${item?.perHourSalary} per hour{" "}
-                                      </div>
-                                    </>
-                                  )}
-                                  {item?.perDaySalary && (
-                                    <>
-                                      <div className="talent-profession-value">
-                                        ${item?.perDaySalary} per day
-                                      </div>
-                                    </>
-                                  )}
-
-                                  {item?.perMonthSalary && (
-                                    <>
-                                      <div className="talent-profession-value">
-                                        ${item?.perMonthSalary} per month
-                                      </div>
-                                    </>
-                                  )}
-                                  {item?.perPostSalary && (
-                                    <>
-                                      <div className="talent-profession-value">
-                                        ${item?.perPostSalary} per post
-                                      </div>
-                                    </>
-                                  )}
-                                  {item?.perImageSalary && (
-                                    <>
-                                      <div className="talent-profession-value">
-                                        ${item?.perImageSalary} per image
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </>
-                            ))}
-                        </div> */}
-
                         <div className="talent-rates">
                           {talentData?.profession?.some(
                             (item) =>
@@ -1539,56 +1258,56 @@ const TalentProfile = () => {
                               item?.perPostSalary ||
                               item?.perImageSalary
                           ) && (
-                            <>
-                              <div className="title">
-                                {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
-                                Rates
-                              </div>
-                              {talentData.profession.map((item, index) => (
-                                <div key={index}>
-                                  {(item?.perHourSalary ||
-                                    item?.perDaySalary ||
-                                    item?.perMonthSalary ||
-                                    item?.perPostSalary ||
-                                    item?.perImageSalary) && (
-                                    <>
-                                      <div className="talent-profession-name">
-                                        {item?.value}{" "}
-                                        {item?.openToOffers === true && (
-                                          <span>(Negotiable)</span>
-                                        )}
-                                      </div>
-                                    </>
-                                  )}
-                                  {item?.perHourSalary && (
-                                    <div className="talent-profession-value">
-                                      ${item?.perHourSalary} per hour
-                                    </div>
-                                  )}
-                                  {item?.perDaySalary && (
-                                    <div className="talent-profession-value">
-                                      ${item?.perDaySalary} per day
-                                    </div>
-                                  )}
-                                  {item?.perMonthSalary && (
-                                    <div className="talent-profession-value">
-                                      ${item?.perMonthSalary} per month
-                                    </div>
-                                  )}
-                                  {item?.perPostSalary && (
-                                    <div className="talent-profession-value">
-                                      ${item?.perPostSalary} per post
-                                    </div>
-                                  )}
-                                  {item?.perImageSalary && (
-                                    <div className="talent-profession-value">
-                                      ${item?.perImageSalary} per image
-                                    </div>
-                                  )}
+                              <>
+                                <div className="title">
+                                  {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
+                                  Rates
                                 </div>
-                              ))}
-                            </>
-                          )}
+                                {talentData.profession.map((item, index) => (
+                                  <div key={index}>
+                                    {(item?.perHourSalary ||
+                                      item?.perDaySalary ||
+                                      item?.perMonthSalary ||
+                                      item?.perPostSalary ||
+                                      item?.perImageSalary) && (
+                                        <>
+                                          <div className="talent-profession-name">
+                                            {item?.value}{" "}
+                                            {item?.openToOffers === true && (
+                                              <span>(Negotiable)</span>
+                                            )}
+                                          </div>
+                                        </>
+                                      )}
+                                    {item?.perHourSalary && (
+                                      <div className="talent-profession-value">
+                                        ${item?.perHourSalary} per hour
+                                      </div>
+                                    )}
+                                    {item?.perDaySalary && (
+                                      <div className="talent-profession-value">
+                                        ${item?.perDaySalary} per day
+                                      </div>
+                                    )}
+                                    {item?.perMonthSalary && (
+                                      <div className="talent-profession-value">
+                                        ${item?.perMonthSalary} per month
+                                      </div>
+                                    )}
+                                    {item?.perPostSalary && (
+                                      <div className="talent-profession-value">
+                                        ${item?.perPostSalary} per post
+                                      </div>
+                                    )}
+                                    {item?.perImageSalary && (
+                                      <div className="talent-profession-value">
+                                        ${item?.perImageSalary} per image
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </>
+                            )}
                         </div>
                       </div>
                     </div>
@@ -1740,74 +1459,24 @@ const TalentProfile = () => {
                                       </div>
                                     </>
                                   )}
-
-                                {/* {photosList.length === 0 &&
-                              talentData?.adminApproved === false && (
-                                <>
-                                  <div>
-                                    Data will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )} */}
                               </div>
-
-                              {/* <div className="portofolio-section">
-                            <div className="portofolio-title mt-4">
-                              Social Media Posts
-                            </div>
-                          </div>
-                          <p>No Social Media Posts Available</p> */}
-                              {/* <CardCarousel /> */}
-
-                              {/* <div className="portofolio-section">
-                            <div className="portofolio-title">Reviews</div>
-                            <div
-                              className="view-all"
-                              onClick={(e) => {
-                                handleForms("reviews");
-                              }}
-                            >
-                              View All
-                            </div>
-                          </div> */}
-
-                              {/* <div className="reviews-section">
-                            <div className="rating-talent">
-                              <div className="num">
-                                {talentData?.averageStarRatings}
-                              </div>
-                              <img src={white_star}></img>
-                            </div>
-                            <div className="content">
-                              <div className="title">
-                                Studio Shoot for Unrecognisable Ecommerce
-                              </div>
-                              <div className="description">
-                                Kate is a delight to work with, beautiful both
-                                punctual & professional. She knew exactly what
-                                was required and everything was effortless.
-                              </div>
-                            </div>
-                          </div> */}
-
                               <div className="portofolio-section">
                                 <div className="portofolio-title">
                                   Videos & Audios
                                 </div>
                                 {((urlsList && urlsList.length > 0) ||
                                   (audiosList && audiosList.length > 0)) && (
-                                  <>
-                                    <div
-                                      className="view-all"
-                                      onClick={(e) => {
-                                        handleForms("videos");
-                                      }}
-                                    >
-                                      View All
-                                    </div>
-                                  </>
-                                )}
+                                    <>
+                                      <div
+                                        className="view-all"
+                                        onClick={(e) => {
+                                          handleForms("videos");
+                                        }}
+                                      >
+                                        View All
+                                      </div>
+                                    </>
+                                  )}
                               </div>
 
                               <p className="pb-2">Videos</p>
@@ -1896,214 +1565,78 @@ const TalentProfile = () => {
                                   {urlsList?.length === 0 && (
                                     <>
                                       <div className="msgs">
-                                      No data added
+                                        No data added
                                       </div>
                                     </>
                                   )}
                                 </div>
                               </div>
-                              {/* <p className="fw-bold">Audios</p>
-
-<div className="service-list-main w-100">
-  <div className="cvAdjust padSpace w-100">
-    {audiosList?.length > 0 ? (
-      <div className="cvlist-wrapper row">
-        {audiosList.map((url, index) => (
-          <div className="col-md-4 padSpace" key={index}>
-            <div className="cv-card p-3">
-              <div className="d-flex align-items-center mb-2">
-                <i className="fa-solid fa-file text-primary me-2"></i>
-                <div className="fileName audio-url-style text-truncate w-75">
-                  {url.split("/").pop()}
-                </div>
-              </div>
-
-              <audio controls className="w-100">
-                <source src={url} type="audio/mp3" />
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <div className="msgs">Audios are not added</div>
-    )}
-
-    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
-      <div className="msgs">Audios will be visible only after admin approval</div>
-    )}
-  </div>
-</div> */}
-
-                              {/* <p>Audios</p>
+                              <p>Audios</p>
 
                               <div className="service-list-main w-100">
-                                <div className="cvAdjust padSpace w-100">
+                                <div className="row">
+                                  {/* <div className="cvAdjust padSpace w-100"> */}
                                   {audiosList && (
-                                    <div className="cvlist-wrapper row">
+                                    <div>
+                                      {/* <div className="cvlist-wrapper row"> */}
                                       {audiosList.map((url) => {
+                                        const isMp3 = url.endsWith(".mp3");
+                                        const fileName = url.split("/").pop(); // Extracts the file name from URL
                                         return (
-                                          <>
-                                            <>
-                                              <div className="col-md-4 padSpace">
-                                                <div
-                                                  className="cv-card "
-                                                  key={url}
+                                          // <div className="col-md-4 padSpace" key={index}>
+                                          <div className="cv-card" key={url}>
+                                            <div className="d-flex align-items-center">
+                                              <i className="fa-solid fa-file"></i>
+                                              <div className="fileName audio-url-style">{fileName}</div>
+                                            </div>
+                                            {isMp3 ? (
+                                              <>
+                                                <button
+                                                  className="view-cv"
+                                                  onClick={() =>
+                                                    setPlayingUrl(playingUrl === url ? null : url)
+                                                  }
                                                 >
-                                                  <div className="d-flex align-items-center">
-                                                    <i className="fa-solid fa-file"></i>
-                                                    <div className="fileName audio-url-style ">
-                                                      {url}
-                                                    </div>
-                                                  </div>
-                                                  <button
-                                                    className="view-cv"
-                                                    onClick={() =>
-                                                      window.open(url)
-                                                    }
+                                                  {playingUrl === url ? "Pause" : "Play"}
+                                                </button>
+
+                                                {playingUrl === url && (
+                                                  <audio
+                                                    controls
+                                                    autoPlay
+                                                    className="w-100"
+                                                    onEnded={() => setPlayingUrl(null)}
                                                   >
-                                                    Play
-                                                  </button>
-                                                </div>{" "}
-                                              </div>
-                                            </>
-                                          </>
+                                                    <source src={url} type="audio/mpeg" />
+                                                    Your browser does not support the audio tag.
+                                                  </audio>
+                                                )}
+                                              </>
+                                            ) : (
+                                              <button
+                                                className="view-cv"
+                                                onClick={() => window.open(url, "_blank")}
+                                              >
+                                                Play
+                                                {/* <i className="fa-solid fa-external-link"></i> */}
+                                              </button>
+                                            )}
+                                          </div>
+                                          // </div>
                                         );
                                       })}
                                     </div>
                                   )}
 
-                                  {talentData?.adminApproved === false &&
-                                    audiosList?.length > 0 &&
-                                    !userId && (
-                                      <>
-                                        <div className="msgs">
-                                          Audios will be visible only after
-                                          admin approval
-                                        </div>
-                                      </>
-                                    )}
+                                  {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
+                                    <div className="msgs">Audios will be visible only after admin approval</div>
+                                  )}
 
                                   {audiosList?.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        Audios are not added
-                                      </div>
-                                    </>
+                                    <div className="msgs">No data added</div>
                                   )}
                                 </div>
-                              </div> */}
-
-{/* <p>Audios</p>
-
-<div className="service-list-main w-100">
-  <div className="cvAdjust padSpace w-100">
-    {audiosList && (
-      <div className="cvlist-wrapper row">
-        {audiosList.map((url, index) => {
-          const isMp3 = url.endsWith(".mp3");
-          return (
-            <div className="col-md-4 padSpace" key={index}>
-              <div className="cv-card">
-                <div className="d-flex align-items-center">
-                  <i className="fa-solid fa-file"></i>
-                  <div className="fileName audio-url-style">{url}</div>
-                </div>
-                {isMp3 ? (
-                  <audio controls className="w-100">
-                    <source src={url} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                  </audio>
-                ) : (
-                  <button className="view-cv" onClick={() => window.open(url)}>
-                    Open
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    )}
-
-    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
-      <div className="msgs">Audios will be visible only after admin approval</div>
-    )}
-
-    {audiosList?.length === 0 && (
-      <div className="msgs">Audios are not added</div>
-    )}
-  </div>
-</div>
-
- */}
- <p>Audios</p>
-
-<div className="service-list-main w-100">
-<div className="row">
-  {/* <div className="cvAdjust padSpace w-100"> */}
-    {audiosList && (
-      <div>
-       {/* <div className="cvlist-wrapper row"> */}
-        {audiosList.map((url) => {
-          const isMp3 = url.endsWith(".mp3");
-          const fileName = url.split("/").pop(); // Extracts the file name from URL
-          return (
-            // <div className="col-md-4 padSpace" key={index}>
-              <div className="cv-card"key={url}>
-                <div className="d-flex align-items-center">
-                  <i className="fa-solid fa-file"></i>
-                  <div className="fileName audio-url-style">{fileName}</div>
-                </div>
-             {isMp3 ? (
-                    <>
-                      <button
-                        className="view-cv"
-                        onClick={() =>
-                          setPlayingUrl(playingUrl === url ? null : url)
-                        }
-                      >
-                        {playingUrl === url ? "Pause" : "Play"}
-                      </button>
-
-                      {playingUrl === url && (
-                        <audio
-                          controls
-                          autoPlay
-                          className="w-100"
-                          onEnded={() => setPlayingUrl(null)}
-                        >
-                          <source src={url} type="audio/mpeg" />
-                          Your browser does not support the audio tag.
-                        </audio>
-                      )}
-                    </>
-                  ) : (
-                    <button
-                      className="view-cv"
-                      onClick={() => window.open(url, "_blank")}
-                    >
-                      Play
-                      {/* <i className="fa-solid fa-external-link"></i> */}
-                    </button>
-                )}
-              </div>
-            // </div>
-          );
-        })}
-      </div>
-    )}
-
-    {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
-      <div className="msgs">Audios will be visible only after admin approval</div>
-    )}
-
-    {audiosList?.length === 0 && (
-      <div className="msgs">No data added</div>
-    )}
-  </div>
-</div>
+                              </div>
 
 
 
@@ -2132,7 +1665,7 @@ const TalentProfile = () => {
                                     {!talentData?.services?.length === 0 && (
                                       <>
                                         <div className="msgs">
-                                        No data added
+                                          No data added
                                         </div>
                                       </>
                                     )}
@@ -2148,37 +1681,6 @@ const TalentProfile = () => {
                                       )}
                                   </>
                                 )}
-
-                              {/* <div className="service-list-main">
-                            {videoAudioList.map((item) => (
-                              <div
-                                className="item model-picture-wrapper"
-                                key={item.id}
-                              >
-                                {item.type === "video" && (
-                                  <video className="video-style " controls>
-                                    <source
-                                      src={`${API.userFilePath}${item.fileData}`}
-                                      type="video/mp4"
-                                    />
-                                    Your browser does not support the video tag.
-                                  </video>
-                                )}
-                                {item.type === "audio" && (
-                                  <audio controls>
-                                    <source
-                                      src={`${API.userFilePath}${item.fileData}`}
-                                      type="audio/mp3"
-                                    />
-                                    Your browser does not support the audio tag.
-                                  </audio>
-                                )}
-                                <p>{item.title}</p>
-                              </div>
-                            ))}
-                          </div>
-                           */}
-
                               <div className="portofolio-section">
                                 <div className="portofolio-title">CV</div>
                                 {cvList && cvList.length > 0 && (
@@ -2196,49 +1698,20 @@ const TalentProfile = () => {
                               </div>
                               <div className="cvAdjust padSpace">
                                 <div className="cvlist-wrapper row p-0">
-                               
-                                {cvList.map((pdf) => (
-  <div className="col-md-4 padSpace" key={pdf.id}>
-    <div className="cv-card">
-      <div className="d-flex align-items-center">
-        <i className="fa-solid fa-file"></i>
-        <div className="fileName">{pdf.title}</div>
-      </div>
-      <button className="view-cv" onClick={() => handleView(pdf)}>
-        View
-      </button>
-    </div>
-  </div>
-))}
 
-                                  {/* {cvList.map((pdf) => {
-                                    return (
-                                      <>
-                                        <>
-                                          <div className="col-md-4 padSpace">
-                                            <div
-                                              className="cv-card"
-                                              key={pdf.title}
-                                            >
-                                              <div className="d-flex align-items-center">
-                                                <i className="fa-solid fa-file"></i>
-                                                <div className="fileName">
-                                                  {pdf.title}
-                                                </div>
-                                              </div>
-                                            
-                                              <button
-                                                className="view-cv"
-                                                onClick={() => handleView(pdf)}
-                                              >
-                                                View
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </>
-                                      </>
-                                    );
-                                  })} */}
+                                  {cvList.map((pdf) => (
+                                    <div className="col-md-4 padSpace" key={pdf.id}>
+                                      <div className="cv-card">
+                                        <div className="d-flex align-items-center">
+                                          <i className="fa-solid fa-file"></i>
+                                          <div className="fileName">{pdf.title}</div>
+                                        </div>
+                                        <button className="view-cv" onClick={() => handleView(pdf)}>
+                                          View
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ))}
                                   {cvList.length === 0 && (
                                     <>
                                       <div className="msgs">No data added</div>
@@ -2292,7 +1765,7 @@ const TalentProfile = () => {
                                 photosList.length === 0 && (
                                   <>
                                     <div className="msgs">
-                                    No data added
+                                      No data added
                                     </div>
                                   </>
                                 )}
@@ -2309,325 +1782,146 @@ const TalentProfile = () => {
                             </div>
                           )}
                           {videos && (
-  <>
-    <div className="models-photos videoWraper">
-      <div className="service-list-main w-100">
-        <div className="row">
-          {/* Videos Section */}
-          <p className="pb-2">Videos</p>
-          {urlsList?.some(url => isYouTubeUrl(url) || isVimeoUrl(url) || isVideoUrl(url)) ? (
-            urlsList.map((url, index) => (
-              (isYouTubeUrl(url) || isVimeoUrl(url) || isVideoUrl(url)) && (
-                <div key={index} className="col-md-6 mb-4">
-                  <div className="media-item">
-                    {isYouTubeUrl(url) ? (
-                      <iframe
-                        src={getYouTubeEmbedUrl(url)}
-                        title={`youtube-video-${index}`}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="video-frame w-100"
-                        style={{ height: "300px" }}
-                      ></iframe>
-                    ) : isVimeoUrl(url) ? (
-                      <iframe
-                        src={getVimeoEmbedUrl(url)}
-                        title={`vimeo-video-${index}`}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="video-frame w-100"
-                        style={{ height: "300px" }}
-                      ></iframe>
-                    ) : (
-                      <video
-                        controls
-                        src={url}
-                        className="video-frame w-100"
-                        style={{ height: "300px" }}
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
-                  </div>
-                </div>
-              )
-            ))
-          ) : (
-            <div className="msgs">No data added</div>
-          )}
-
-          {/* Admin Approval Notice */}
-          {talentData?.adminApproved === false &&
-            urlsList?.length > 0 &&
-            !userId && (
-              <div className="msgs">
-                Videos will be visible only after admin approval
-              </div>
-            )}
-
-          {/* Audios Section */}
-          <p className="pb-2 mt-4">Audios</p>
-          {urlsList?.some(url => isAudioUrl(url)) ? (
-            urlsList.map((url, index) => (
-              isAudioUrl(url) && (
-                <div key={index} className="col-md-6 mb-4">
-                  <div className="media-item">
-                    <audio controls src={url} className="audio-player w-100">
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                </div>
-              )
-            ))
-          ) : (
-            <div className="msgs">No data added</div>
-          )}
-        </div>
-      </div>
-    </div>
-  </>
-)}
-
-{/* 
-                          {commtented aiswaryavideos && (
                             <>
                               <div className="models-photos videoWraper">
                                 <div className="service-list-main w-100">
                                   <div className="row">
+                                    {/* Videos Section */}
                                     <p className="pb-2">Videos</p>
-
-                                    {urlsList?.map((url, index) => (
-                                      <div
-                                        key={index}
-                                        className="col-md-6 mb-4"
-                                      >
-                                        <div className="media-item">
-                                          {isYouTubeUrl(url) ? (
-                                            <iframe
-                                              src={getYouTubeEmbedUrl(url)}
-                                              title={`youtube-video-${index}`}
-                                              frameBorder="0"
-                                              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                              allowFullScreen
-                                              className="video-frame w-100"
-                                              style={{ height: "300px" }}
-                                            ></iframe>
-                                          ) : isVimeoUrl(url) ? (
-                                            <iframe
-                                              src={getVimeoEmbedUrl(url)}
-                                              title={`vimeo-video-${index}`}
-                                              frameBorder="0"
-                                              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                              allowFullScreen
-                                              className="video-frame w-100"
-                                              style={{ height: "300px" }}
-                                            ></iframe>
-                                          ) : isVideoUrl(url) ? (
-                                            <video
-                                              controls
-                                              src={url}
-                                              className="video-frame w-100"
-                                              style={{ height: "300px" }}
-                                            >
-                                              Your browser does not support the
-                                              video tag.
-                                            </video>
-                                          ) : isAudioUrl(url) ? (
-                                            <audio
-                                              controls
-                                              src={url}
-                                              className="audio-player w-100"
-                                            >
-                                              Your browser does not support the
-                                              audio element.
-                                            </audio>
-                                          ) : (
-                                            <div className="unsupported-media">
-                                              Unsupported media type
+                                    {urlsList?.some(url => isYouTubeUrl(url) || isVimeoUrl(url) || isVideoUrl(url)) ? (
+                                      urlsList.map((url, index) => (
+                                        (isYouTubeUrl(url) || isVimeoUrl(url) || isVideoUrl(url)) && (
+                                          <div key={index} className="col-md-6 mb-4">
+                                            <div className="media-item">
+                                              {isYouTubeUrl(url) ? (
+                                                <iframe
+                                                  src={getYouTubeEmbedUrl(url)}
+                                                  title={`youtube-video-${index}`}
+                                                  frameBorder="0"
+                                                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                  allowFullScreen
+                                                  className="video-frame w-100"
+                                                  style={{ height: "300px" }}
+                                                ></iframe>
+                                              ) : isVimeoUrl(url) ? (
+                                                <iframe
+                                                  src={getVimeoEmbedUrl(url)}
+                                                  title={`vimeo-video-${index}`}
+                                                  frameBorder="0"
+                                                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                  allowFullScreen
+                                                  className="video-frame w-100"
+                                                  style={{ height: "300px" }}
+                                                ></iframe>
+                                              ) : (
+                                                <video
+                                                  controls
+                                                  src={url}
+                                                  className="video-frame w-100"
+                                                  style={{ height: "300px" }}
+                                                >
+                                                  Your browser does not support the video tag.
+                                                </video>
+                                              )}
                                             </div>
-                                          )}
-                                        </div>
-                                      </div>
-                                    ))}
+                                          </div>
+                                        )
+                                      ))
+                                    ) : (
+                                      <div className="msgs">No data added</div>
+                                    )}
 
+                                    {/* Admin Approval Notice */}
                                     {talentData?.adminApproved === false &&
                                       urlsList?.length > 0 &&
                                       !userId && (
-                                        <>
-                                          <div className="msgs">
-                                            Videos will be visible only after
-                                            admin approval
-                                          </div>
-                                        </>
+                                        <div className="msgs">
+                                          Videos will be visible only after admin approval
+                                        </div>
                                       )}
 
-                                    {urlsList?.length === 0 && (
-                                      <>
-                                        <div className="msgs">
-                                        No data added
-                                        </div>
-                                      </>
+                                    {/* Audios Section */}
+                                    <p className="pb-2 mt-4">Audios</p>
+                                    {urlsList?.some(url => isAudioUrl(url)) ? (
+                                      urlsList.map((url, index) => (
+                                        isAudioUrl(url) && (
+                                          <div key={index} className="col-md-6 mb-4">
+                                            <div className="media-item">
+                                              <audio controls src={url} className="audio-player w-100">
+                                                Your browser does not support the audio element.
+                                              </audio>
+                                            </div>
+                                          </div>
+                                        )
+                                      ))
+                                    ) : (
+                                      <div className="msgs">No data added</div>
                                     )}
                                   </div>
                                 </div>
                               </div>
                             </>
-                          )} commtented aiswarya*/}
-                         {/* {videos && (
-  <>
-    <p className="fw-bold">Audios</p>
-    <div className="service-list-main w-100">
-      <div className="row">
-        {audiosList?.length > 0 ? (
-          audiosList.map((url, index) => (
-            <div className="cv-card p-3" key={index}>
-              <div className="d-flex align-items-center mb-2">
-                <i className="fa-solid fa-file text-primary me-2"></i>
-                <div className="fileName audio-url-style text-truncate w-75">
-                  {url.split("/").pop()}
-                </div>
-              </div>
+                          )}
 
-              <audio controls className="w-100">
-                <source src={url} type="audio/mp3" />
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          ))
-        ) : (
-          <div className="msgs">Audios are not added</div>
-        )}
-
-        {talentData?.adminApproved === false && audiosList?.length > 0 && !userId && (
-          <div className="msgs">Audios will be visible only after admin approval</div>
-        )}
-      </div>
-    </div>
-  </>
-)}  */}
-
-
-                         {/* {videos && (
+                          {videos && (
                             <>
-                              <p>Audios</p>
+                              {/* <p>Audios</p> */}
                               <div className="service-list-main w-100">
                                 <div className="row">
                                   {audiosList && (
                                     <div>
                                       {audiosList.map((url) => {
+                                        const isMp3 = url.toLowerCase().endsWith(".mp3");
+                                        const fileName = url.split("/").pop(); // Extracts the file name from URL
+
                                         return (
-                                          <>
-                                            <>
-                                              <div
-                                                className="cv-card"
-                                                key={url}
-                                              >
-                                                <div className="d-flex align-items-center">
-                                                  <i className="fa-solid fa-file"></i>
-                                                  <div className="fileName audio-url-style ">
-                                                    {url}
-                                                  </div>
-                                                </div>
-                                               <button
+                                          <div className="cv-card" key={url}>
+                                            <div className="d-flex align-items-center">
+                                              <i className="fa-solid fa-file"></i>
+                                              <div className="fileName audio-url-style">{fileName}</div>
+                                            </div>
+
+                                            {isMp3 ? (
+                                              <>
+                                                <button
                                                   className="view-cv"
                                                   onClick={() =>
-                                                    window.open(url)
+                                                    setPlayingUrl(playingUrl === url ? null : url)
                                                   }
                                                 >
-                                                  Play
-                                                  
-                                                </button> 
-                                                </div>
-                                            </>
-                                          </>
+                                                  {playingUrl === url ? "Pause" : "Play"}
+                                                </button>
+
+                                                {playingUrl === url && (
+                                                  <audio
+                                                    controls
+                                                    autoPlay
+                                                    className="w-100"
+                                                    onEnded={() => setPlayingUrl(null)}
+                                                  >
+                                                    <source src={url} type="audio/mpeg" />
+                                                    Your browser does not support the audio tag.
+                                                  </audio>
+                                                )}
+                                              </>
+                                            ) : (
+                                              <button
+                                                className="view-cv"
+                                                onClick={() => window.open(url, "_blank")}
+                                              >
+                                                Play
+                                                {/* <i className="fa-solid fa-external-link"></i> */}
+                                              </button>
+                                            )}
+                                          </div>
                                         );
                                       })}
                                     </div>
                                   )}
-
-                                  {audiosList?.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        Audios are not added
-                                      </div>
-                                    </>
-                                  )}
-                                  {talentData?.adminApproved === false &&
-                                    audiosList?.length > 0 &&
-                                    !userId && (
-                                      <>
-                                        <div className="msgs">
-                                          Audios will be visible only after
-                                          admin approval
-                                        </div>
-                                      </>
-                                    )}
                                 </div>
                               </div>
                             </>
-                          )}   */}
-
-{videos && (
-  <>
-    {/* <p>Audios</p> */}
-    <div className="service-list-main w-100">
-      <div className="row">
-        {audiosList && (
-          <div>
-            {audiosList.map((url) => {
-              const isMp3 = url.toLowerCase().endsWith(".mp3");
-              const fileName = url.split("/").pop(); // Extracts the file name from URL
-
-              return (
-                <div className="cv-card" key={url}>
-                  <div className="d-flex align-items-center">
-                    <i className="fa-solid fa-file"></i>
-                    <div className="fileName audio-url-style">{fileName}</div>
-                  </div>
-
-                  {isMp3 ? (
-                    <>
-                      <button
-                        className="view-cv"
-                        onClick={() =>
-                          setPlayingUrl(playingUrl === url ? null : url)
-                        }
-                      >
-                        {playingUrl === url ? "Pause" : "Play"}
-                      </button>
-
-                      {playingUrl === url && (
-                        <audio
-                          controls
-                          autoPlay
-                          className="w-100"
-                          onEnded={() => setPlayingUrl(null)}
-                        >
-                          <source src={url} type="audio/mpeg" />
-                          Your browser does not support the audio tag.
-                        </audio>
-                      )}
-                    </>
-                  ) : (
-                    <button
-                      className="view-cv"
-                      onClick={() => window.open(url, "_blank")}
-                    >
-                      Play
-                      {/* <i className="fa-solid fa-external-link"></i> */}
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  </>
-)}
+                          )}
 
 
 
@@ -2667,7 +1961,7 @@ const TalentProfile = () => {
                               {featuresList.length === 0 && (
                                 <>
                                   <div className="msgs">
-                                  No data added
+                                    No data added
                                   </div>
                                 </>
                               )}
@@ -2846,7 +2140,7 @@ const TalentProfile = () => {
                               {reviews && (
                                 <>
                                   <div className="msgs">
-                                  Upgrade your plan to Pro or Premium to view talent reviews
+                                    Upgrade your plan to Pro or Premium to view talent reviews
                                   </div>
                                   <button
                                     className="view-cv"
@@ -2866,10 +2160,6 @@ const TalentProfile = () => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="find-more">
-                <div className="btn moreBtn">Find More</div>
-              </div> */}
             </div>
           </section>
           {isLoading && <Spinner />}

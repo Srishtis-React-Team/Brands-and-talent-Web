@@ -20,7 +20,7 @@ const JobRedirect = () => {
   const [talentData, setTalentData] = useState();
   const { currentUserId } = CurrentUser();
   const [showPopup, setShowPopup] = useState(false);
- 
+
 
   useEffect(() => {
     if (currentUserId) {
@@ -146,7 +146,7 @@ const JobRedirect = () => {
         // } else 
         if (
           talentData?.planName?.includes("Pro") ||
-          talentData?.planName == "Premium" ||talentData?.planName == "Basic"
+          talentData?.planName == "Premium" || talentData?.planName == "Basic"
         ) {
           setModalData(data);
           if (data?.isApplied != "Applied") {
@@ -163,14 +163,6 @@ const JobRedirect = () => {
           navigate(`/pricing`);
         }, 3000);
       }
-
-      // if (userType === "talent") {
-      //   navigate("/talent-dashboard");
-      // } else if (userType === "brand") {
-      //   navigate("/list-jobs");
-      // } else {
-      //   navigate("/"); // Default fallback
-      // }
     }
   };
 
@@ -233,15 +225,6 @@ const JobRedirect = () => {
     setTimeout(() => setShowPopup(false), 4000); // Auto-close after 4 seconds
   }
 
-  // const convertLinks = (text) => {
-  //   if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
-  //   const urlRegex = /(https?:\/\/[^\s<]+)/g; // Stop at whitespace or '<' to prevent trailing tags
-  //   return text.replace(urlRegex, (url) => {
-  //     // Remove any trailing encoded tags or HTML tags
-  //     const cleanUrl = url.replace(/(%3C\/p%3E|<\/p>)$/g, "");
-  //     return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
-  //   });
-  // };
   const convertLinks = (text) => {
     if (!text || typeof text !== "string") return ""; // Handle undefined, null, or non-string values
 
@@ -259,11 +242,11 @@ const JobRedirect = () => {
       return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="apply-Description">${cleanUrl}</a>`;
     });
   };
-return (
+  return (
     <>
       <>
         <Header />
-        
+
         {jobData && (
           <>
             <div className="unique-job">
@@ -362,7 +345,7 @@ return (
                                 jobData?.country,
                               ]
                                 .filter(Boolean)
-                                .join(", ")|| "No Data Added"}
+                                .join(", ") || "No Data Added"}
                             </span>
                           </span>
                         </span>
@@ -780,278 +763,115 @@ return (
                       </div>
 
                       {jobData?.jobDescription &&
-  jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
-  <div className="job-about-section">
-    <div className="job-feature-title">Job Description</div>
-    <div className="job-about-values">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
-        }}
-      />
-    </div>
-  </div>
-) : (
-  <div className="job-about-section">
-    <div className="job-feature-title">Job Descriptions</div>
-    <div className="job-about-values">No Data Added</div>
-  </div>
-)}
+                        jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
+                        <div className="job-about-section">
+                          <div className="job-feature-title">Job Description</div>
+                          <div className="job-about-values">
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+                              }}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="job-about-section">
+                          <div className="job-feature-title">Job Descriptions</div>
+                          <div className="job-about-values">No Data Added</div>
+                        </div>
+                      )}
 
+                      {jobData?.whyWorkWithUs && (
+                        <div className="job-about-section">
+                          <div className="job-feature-title">Why Work With Us</div>
+                          <div className="job-about-values">
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: jobData.whyWorkWithUs,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {jobData?.hiringCompanyDescription && (
+                        <div className="job-about-section">
+                          <div className="job-feature-title">Hiring Company Description</div>
+                          <div className="job-about-values">
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: jobData.hiringCompanyDescription,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
 
-                      {/* {jobData?.jobDescription &&
-                        jobData?.jobDescription.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Job Description
-                              </div>
-                              
-                            
-<div className="job-about-values">
-  {Array.isArray(jobData?.jobDescription) && jobData.jobDescription.length > 0 ? (
-    jobData.jobDescription.some((htmlContent) => {
-      const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-      return cleanedContent && cleanedContent !== "<p></p>";
-    }) ? (
-      jobData.jobDescription.map((htmlContent, index) => {
-        const cleanedContent = htmlContent.trim().replace(/\n/g, "");
-        return cleanedContent && cleanedContent !== "<p></p>" ? (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: cleanedContent }}
-          />
-        ) : null;
-      })
-    ) : (
-      <div>No Data Added</div>
-    )
-  ) : (
-    <div>No Data Added</div>
-  )}
-</div>
-
-
-                             
-                            </div>
-                          </>
-                        )} */}
-
-{jobData?.whyWorkWithUs && (
-  <div className="job-about-section">
-    <div className="job-feature-title">Why Work With Us</div>
-    <div className="job-about-values">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: jobData.whyWorkWithUs,
-        }}
-      />
-    </div>
-  </div>
-)}
-
-
-                      {/* {jobData?.whyWorkWithUs &&
-                        jobData?.whyWorkWithUs.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Why Work With Us
-                              </div>
-                              <div className="job-about-values">
-                                {jobData?.whyWorkWithUs &&
-                                  jobData?.whyWorkWithUs?.map(
-                                    (htmlContent, index) => (
-                                      <div
-                                        key={index}
-                                        dangerouslySetInnerHTML={{
-                                          __html: htmlContent,
-                                        }}
-                                      />
-                                    )
-                                  )}
-                              </div>
-                            </div>
-                          </>
-                        )} */}
-                        {jobData?.hiringCompanyDescription && (
-  <div className="job-about-section">
-    <div className="job-feature-title">Hiring Company Description</div>
-    <div className="job-about-values">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: jobData.hiringCompanyDescription,
-        }}
-      />
-    </div>
-  </div>
-)}
-
-
-                      {/* {jobData?.hiringCompanyDescription &&
-                        jobData?.hiringCompanyDescription?.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Hiring Company Description
-                              </div>
-                              <div className="job-about-values">
-                                {jobData?.hiringCompanyDescription &&
-                                  jobData?.hiringCompanyDescription?.map(
-                                    (htmlContent, index) => (
-                                      <div
-                                        key={index}
-                                        dangerouslySetInnerHTML={{
-                                          __html: htmlContent,
-                                        }}
-                                      />
-                                    )
-                                  )}
-                              </div>
-                            </div>
-                          </>
-                        )} */}
-                      {/* {jobData?.workSamples &&
-                        jobData?.workSamples?.length > 0 && (
-                          <>
-                            <div className="job-about-section">
-                              <div className="job-feature-title">
-                                Project brief / TOR
-                              </div>
-                              <div className="service-files-main">
-                                <div className="w-100">
-                                  {jobData?.workSamples?.length > 0 &&
-                                    jobData?.workSamples?.map((item) => {
-                                      return (
-                                        <>
-                                          <div className="update-portfolio-cards project-file-wrapper">
-                                            <div className="update-portfolio-icon">
-                                              <div className="file-section">
-                                                {item.type === "image" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-card-image"></i>
-                                                  </div>
-                                                )}
-                                                {item.type === "audio" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-mic-fill"></i>
-                                                  </div>
-                                                )}
-                                                {item.type === "video" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-play-circle-fill"></i>
-                                                  </div>
-                                                )}
-                                                {item.type === "document" && (
-                                                  <div className="fileType">
-                                                    <i className="bi bi-file-earmark-richtext"></i>
-                                                  </div>
-                                                )}
-                                                <div className="update-portfolio-fileName">
-                                                  {item.title}
-                                                </div>
-                                                <div className="update-portfolio-action">
-                                                  <i
-                                                    className="bi bi-three-dots-vertical"
-                                                    type="button"
-                                                    id="dropdownMenuButton1"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                  ></i>
-                                                  <ul
-                                                    className="dropdown-menu"
-                                                    aria-labelledby="dropdownMenuButton1"
-                                                  >
-                                                    <li>
-                                                      <a
-                                                        className="dropdown-item"
-                                                        onClick={() =>
-                                                          viewUpdateFile(item)
-                                                        }
-                                                      >
-                                                        View
-                                                      </a>
-                                                    </li>
-                                                  </ul>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="update-portfolio-action"></div>
+                      {jobData?.workSamples && (
+                        <div className="job-about-section">
+                          <div className="job-feature-title">Project brief / TOR</div>
+                          <div className="service-files-main">
+                            <div>
+                              {jobData.workSamples.length > 0 ? (
+                                jobData.workSamples.map((item, index) => (
+                                  <div className="update-portfolio-cards" key={item._id || index}>
+                                    <div className="update-portfolio-icon">
+                                      <div className="file-section">
+                                        {item.type === "image" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-card-image"></i>
                                           </div>
-                                        </>
-                                      );
-                                    })}
-                                </div>
-                              </div>
+                                        )}
+                                        {item.type === "audio" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-mic-fill"></i>
+                                          </div>
+                                        )}
+                                        {item.type === "video" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-play-circle-fill"></i>
+                                          </div>
+                                        )}
+                                        {item.type === "document" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-file-earmark-richtext"></i>
+                                          </div>
+                                        )}
+                                        <div className="update-portfolio-fileName">
+                                          {item.title}
+                                        </div>
+                                        <div className="update-portfolio-action">
+                                          <i
+                                            className="bi bi-three-dots-vertical"
+                                            type="button"
+                                            id={`dropdownMenuButton-${index}`}
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                          ></i>
+                                          <ul
+                                            className="dropdown-menu"
+                                            aria-labelledby={`dropdownMenuButton-${index}`}
+                                          >
+                                            <li>
+                                              <a
+                                                className="dropdown-item"
+                                                onClick={() => viewUpdateFile(item)}
+                                              >
+                                                View
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))
+                              ) : (
+                                <div className="text-muted">No data added</div>
+                              )}
                             </div>
-                          </>
-                        )} */}
-                        {jobData?.workSamples && (
-  <div className="job-about-section">
-    <div className="job-feature-title">Project brief / TOR</div>
-    <div className="service-files-main">
-      <div>
-        {jobData.workSamples.length > 0 ? (
-          jobData.workSamples.map((item, index) => (
-            <div className="update-portfolio-cards" key={item._id || index}>
-              <div className="update-portfolio-icon">
-                <div className="file-section">
-                  {item.type === "image" && (
-                    <div className="fileType">
-                      <i className="bi bi-card-image"></i>
-                    </div>
-                  )}
-                  {item.type === "audio" && (
-                    <div className="fileType">
-                      <i className="bi bi-mic-fill"></i>
-                    </div>
-                  )}
-                  {item.type === "video" && (
-                    <div className="fileType">
-                      <i className="bi bi-play-circle-fill"></i>
-                    </div>
-                  )}
-                  {item.type === "document" && (
-                    <div className="fileType">
-                      <i className="bi bi-file-earmark-richtext"></i>
-                    </div>
-                  )}
-                  <div className="update-portfolio-fileName">
-                    {item.title}
-                  </div>
-                  <div className="update-portfolio-action">
-                    <i
-                      className="bi bi-three-dots-vertical"
-                      type="button"
-                      id={`dropdownMenuButton-${index}`}
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    ></i>
-                    <ul
-                      className="dropdown-menu"
-                      aria-labelledby={`dropdownMenuButton-${index}`}
-                    >
-                      <li>
-                        <a
-                          className="dropdown-item"
-                          onClick={() => viewUpdateFile(item)}
-                        >
-                          View
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="text-muted">No data added</div>
-        )}
-      </div>
-    </div>
-  </div>
-)}
+                          </div>
+                        </div>
+                      )}
 
                       {jobData?.howLikeToApply !== "easy-apply" && (
                         <div className="job-about-section">

@@ -36,7 +36,7 @@ const Talentscarousel = () => {
           setTalentList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
