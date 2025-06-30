@@ -333,13 +333,13 @@ const TalentProfile = () => {
 
   const handleOpenModal = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("Please upgrade to Pro or Premium membership plan to invite this user.");
+      setMessage("Kindly upgrade to pro or premium membership to use this feature.");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);
       }, 2000);
     } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to Pro or Premium plan to use this feature");
+      setMessage("Kindly upgrade to pro or premium membership to use this feature.");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);

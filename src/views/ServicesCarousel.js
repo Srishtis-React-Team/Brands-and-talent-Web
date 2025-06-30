@@ -166,7 +166,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
     if (isOwnTalent == true) {
       if (talentData?.planName == "Basic"  ) {
         
-        setMessage("Please upgrade to pro or premium plan to use this feature");
+        setMessage("Kindly upgrade to pro or premium membership to use this feature.");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -191,7 +191,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
      
       if (brandData?.planName === "Basic" ) {
      
-        setMessage("Please upgrade to pro or premium plan to use this feature");
+        setMessage("Kindly upgrade to pro or premium membership to use this feature.");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -221,7 +221,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         talentData?.accountBlock == false && currentPlanName === "Basic" && accountBlock ==false
       ) {
        
-        setMessage("Please upgrade to pro or premium plan to use this feature");
+        setMessage("Kindly upgrade to pro or premium membership to use this feature.");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -234,7 +234,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
         talentData?.accountBlock == false && currentPlanName === "Basic"
       ) {
         
-        setMessage("Please upgrade to pro or premium plan to use this feature");
+        setMessage("Kindly upgrade to pro or premium membership to use this feature.");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -268,7 +268,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
     } else if (currentUserType == "brand") {
       if (brandData?.planName === "Basic") {
         
-        setMessage("Please upgrade to pro or premium plan to use this feature");
+        setMessage("Kindly upgrade to pro or premium membership to use this feature.");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

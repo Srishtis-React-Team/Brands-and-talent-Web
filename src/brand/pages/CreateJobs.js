@@ -854,7 +854,7 @@ const CreateJobs = () => {
     { id: "pto", name: "Paid Time Off" },
     { id: "retirement", name: "Retirement" },
     { id: "vision", name: "Vision Insurance" },
-    { id: "none", name: "None of these above" },
+    { id: "none", name: "N/A" },
   ];
 
   const [selectedBenefits, setSelectedBenefits] = useState([]);
@@ -3343,7 +3343,8 @@ const CreateJobs = () => {
                         <div className="mb-0 row">
                           <div className="kids-form-section col-md-12 mb-3">
                             <label className="form-label">
-                              Benefits <span className="mandatory">*</span>
+                              Benefits 
+                              {/* <span className="mandatory">*</span> */}
                             </label>
                             <div className="benefits-wrapper">
                               {benefitsList?.map((benefit, index) => (
