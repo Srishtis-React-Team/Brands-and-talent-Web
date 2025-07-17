@@ -1238,6 +1238,7 @@ input[type="radio"] {
   height: 260px;
   object-fit: cover;
   cursor: pointer;
+  object-position: center top;
 }
 .active-tab {
   height: 40px;

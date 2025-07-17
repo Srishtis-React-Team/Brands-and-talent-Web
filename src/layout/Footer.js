@@ -285,13 +285,13 @@ const Footer = (props) => {
 
   const handleNavigationBookedClick = () => {
     if (!currentUserId) {
-      navigate("/get-booked");
-      // setMessage("You must be logged in");
-      // setOpenPopUp(true);
-      // setTimeout(function () {
-      //   setOpenPopUp(false);
-      //   navigate("/login");
-      // }, 1000);
+     // navigate("/get-booked");
+      setMessage("You must be logged in");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
     }
     else if (currentUserType === "talent" && currentUserId) {
       navigate("/talent-dashboard");

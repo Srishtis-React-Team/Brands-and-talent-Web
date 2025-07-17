@@ -317,8 +317,14 @@ const ListJobs = () => {
   
   const shareJob = async (job) => {
     try {
+      const formattedJobTitle = job?.jobTitle
+  ?.toLowerCase()
+  .trim()
+  .replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '') // remove dangerous characters
+  .replace(/\s+/g, '-'); // replace spaces with dash
+
      
-      const formattedJobTitle = job?.jobTitle?.replace(/\s+/g, "-");
+     // const formattedJobTitle = job?.jobTitle?.replace(/\s+/g, "-");
       const currentUserId = job?.brandId; // Get brandId as userId
       const currentUserType ="brand" // Get brandId as userId
 

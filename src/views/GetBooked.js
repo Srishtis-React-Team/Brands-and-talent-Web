@@ -268,12 +268,12 @@ const GetBooked = () => {
   //   }
   // };
   const shareJob = async (item) => {
-    // const jobUrl = `https://brandsandtalent.com/jobs/view/${jobId}`;
-    // const jobUrl = `http://localhost:3000/jobs/view/${jobId}`;
-
-    
-   // const jobUrl = `${window.location.origin}/jobs/view/${item.jobTitle}/${item.jobId}`;
-   const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
+    const formattedJobTitle =  item.jobTitle
+    ?.toLowerCase()
+    .trim()
+    .replace(/[\/\\#,+()$~%.'":*?<>{}]/g, '') // remove dangerous characters
+    .replace(/\s+/g, '-'); // replace spaces with dash
+   //const formattedJobTitle = item.jobTitle.replace(/\s+/g, '-'); 
    const jobUrl = `${window.location.origin}/jobs/view/${formattedJobTitle}/${item.jobId}`;
 
    

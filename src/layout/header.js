@@ -193,17 +193,18 @@ const Header = ({ onData }) => {
     }
 
     if (data == "get-booked") {
-      // if (!currentUserId) {
-      //   setMessage("You must be logged in");
-      //   setOpenPopUp(true);
-      //   setTimeout(function () {
-      //     setOpenPopUp(false);
-      //     navigate("/login");
-      //   }, 1000);
-      // } else if (currentUser_type === "talent" && currentUserId) {
+      if (!currentUserId) {
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+      }
+      //  else if (currentUser_type === "talent" && currentUserId) {
       //   navigate("/talent-dashboard");
       // }
-      if (currentUser_type === "talent" && currentUserId) {
+      else if (currentUser_type === "talent" && currentUserId) {
         navigate("/talent-dashboard");
       } else if (currentUser_type === "brand") {
         navigate("/get-booked");

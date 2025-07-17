@@ -683,8 +683,8 @@ const TalentProfile = () => {
                           <>
                             <div
                               className={`planName ${talentData?.planName === "Premium"
-                                  ? "premium"
-                                  : "pro"
+                                ? "premium"
+                                : "pro"
                                 }`}
                             >
                               <span>
@@ -941,13 +941,17 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.tiktokFollowers ? (
+                                            {talentData?.tiktokFollowers && (
+                                              <p>{talentData.tiktokFollowers}</p>
+                                            )}
+
+                                            {/* {talentData?.tiktokFollowers ? (
                                               <p>{talentData.tiktokFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )}
+                                            )} */}
                                           </div>
                                           {talentData?.tiktokFollowers && (
                                             <div className="followers-text">
@@ -987,13 +991,17 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.linkedinFollowers ? (
+                                            {talentData?.linkedinFollowers && (
+                                              <p>{talentData.linkedinFollowers}</p>
+                                            )}
+
+                                            {/* {talentData?.linkedinFollowers ? (
                                               <p>{talentData.linkedinFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )}
+                                            )} */}
                                           </div>
                                           {talentData?.linkedinFollowers && (
                                             <div className="followers-text">
@@ -1033,13 +1041,17 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.twitterFollowers ? (
+                                            {talentData?.twitterFollowers && (
+                                              <p>{talentData.twitterFollowers}</p>
+                                            )}
+
+                                            {/* {talentData?.twitterFollowers ? (
                                               <p>{talentData.twitterFollowers}</p>
                                             ) : (
                                               <div className="click-url">
-                                                Click here
+                                                Click heredd
                                               </div>
-                                            )}
+                                            )} */}
                                           </div>
                                           {talentData?.twitterFollowers && (
                                             <div className="followers-text">
@@ -1079,13 +1091,17 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.threadsFollowers ? (
+                                            {talentData?.threadsFollowers && (
+                                              <p>{talentData.threadsFollowers}</p>
+                                            )}
+
+                                            {/* {talentData?.threadsFollowers ? (
                                               <p>{talentData.threadsFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )}
+                                            )} */}
                                           </div>
                                           {talentData?.threadsFollowers && (
                                             <div className="followers-text">
@@ -1125,13 +1141,17 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.youtubeFollowers ? (
+                                            {talentData?.youtubeFollowers && (
+                                              <p>{talentData.youtubeFollowers}</p>
+                                            )}
+
+                                            {/* {talentData?.youtubeFollowers ? (
                                               <p>{talentData.youtubeFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )}
+                                            )} */}
                                           </div>
                                           {talentData?.youtubeFollowers && (
                                             <div className="followers-text">
