@@ -99,7 +99,7 @@ const AdultFormTwo = () => {
           setIsLoading(false);
           setMessage("Updated Successfully!");
           setOpenPopUp(true);
-          updateProfileStatus();
+         // updateProfileStatus();
           setTimeout(function () {
             setOpenPopUp(false);
 

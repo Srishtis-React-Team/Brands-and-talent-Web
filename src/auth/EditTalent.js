@@ -301,8 +301,8 @@ const EditTalent = () => {
 
   const [messageNext, setMessageNext] = useState(""); // Holds the message to display in the popup
   const [showPopup, setShowPopup] = useState(false); // Controls visibility of the popup
- 
- //added
+
+  //added
 
   const [audioUrl, setAudioUrl] = useState("");
   const [checkVideoUrl, setCheckVideoUrl] = useState(false);
@@ -310,8 +310,8 @@ const EditTalent = () => {
   const [initialUrl, setInitialUrl] = useState("");
   const [urls, setUrls] = useState([]);
   const [audioUrlsList, setAudioUrlsList] = useState([]);
-  
- 
+
+
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -371,7 +371,7 @@ const EditTalent = () => {
     }
   }, [isSubmitted, selectedCategories]);
 
-  
+
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
@@ -875,7 +875,7 @@ const EditTalent = () => {
                 setOpenPopUp(false);
                 setMyState(true);
               }, 1000);
-            } 
+            }
             else if (resData.data.status === false) {
               setIsLoading(false);
               setMessage(resData.data.message);
@@ -951,7 +951,7 @@ const EditTalent = () => {
     tempDiv.innerHTML = htmlContent;
     return tempDiv.textContent || tempDiv.innerText || '';
   };
-  
+
   //aded
 
   const handleLastNameKeyPress = (e) => {
@@ -1668,7 +1668,7 @@ const EditTalent = () => {
   useEffect(() => { }, [portofolioFile]);
 
   const addService = () => {
-  
+
     setServices([
       ...services,
       {
@@ -1686,7 +1686,7 @@ const EditTalent = () => {
 
 
 
-  
+
   const submitServices = async () => {
     let hasError = false;
 
@@ -1787,22 +1787,22 @@ const EditTalent = () => {
   };
 
 
-  
+
   // // Handle the bio submission to update it
   const handleSubmit = async () => {
     let formData = {
       childAboutYou: bio,
     };
-  
+
     setIsLoading(true);
-  
+
     let apiUrl;
     if (talentData?.type === "kids") {
       apiUrl = API.editKids;
     } else if (talentData?.type === "adults") {
       apiUrl = API.updateAdults;
     }
-  
+
     try {
       const resData = await ApiHelper.post(`${apiUrl}${talentId}`, formData);
       if (resData.data.status === true) {
@@ -1811,13 +1811,13 @@ const EditTalent = () => {
         setIsEditing(false);
         scrollToTop();
         setOpenPopUp(true);
-  
+
         // ✅ Update both talentData and bio to reflect new content
         setTalentData((prev) => ({
           ...prev,
           childAboutYou: bio,
         }));
-  
+
         setTimeout(() => {
           setOpenPopUp(false);
         }, 1000);
@@ -1825,7 +1825,7 @@ const EditTalent = () => {
         setIsLoading(false);
         setMessage(resData.data.message);
         setOpenPopUp(true);
-  
+
         setTimeout(() => {
           setOpenPopUp(false);
         }, 1000);
@@ -1834,13 +1834,13 @@ const EditTalent = () => {
       setIsLoading(false);
       setMessage("Error updating bio. Please try again.");
       setOpenPopUp(true);
-  
+
       setTimeout(() => {
         setOpenPopUp(false);
       }, 1000);
     }
   };
-  
+
   // ✅ Ensure bio has the latest value when editing
   const handleEditClick = () => {
     setBio(talentData?.childAboutYou || ""); // Sync bio with latest content
@@ -1861,8 +1861,8 @@ const EditTalent = () => {
     }, 3000);
   };
 
- 
-  
+
+
 
   //added
   const submitSocialMedia = async () => {
@@ -2111,7 +2111,7 @@ const EditTalent = () => {
           : `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
       );
       // setMessage(
-        
+
       //   `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
       // );
       setOpenPopUp(true);
@@ -2193,7 +2193,7 @@ const EditTalent = () => {
         if (urls.length >= maxUrls) {
           let upgradeMessage;
           if (talentData?.planName === "Basic") {
-            upgradeMessage ="To add more videos, please upgrade to pro or premium membership plan.";/// "Upgrade to Pro or Premium to add more URLs.";
+            upgradeMessage = "To add more videos, please upgrade to pro or premium membership plan.";/// "Upgrade to Pro or Premium to add more URLs.";
           } else if (talentData?.planName === "Pro") {
             upgradeMessage = "Upgrade to Pro or Premium to add more URLs.";
           }
@@ -2504,7 +2504,7 @@ const EditTalent = () => {
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
-                 <Tab
+                <Tab
                   label="Bio"
                   {...a11yProps(2)}
                   style={{ textTransform: "capitalize" }}
@@ -2537,7 +2537,7 @@ const EditTalent = () => {
                   {...a11yProps(7)}
                   style={{ textTransform: "capitalize" }}
                 />
-               
+
 
                 <Tab
                   label="CV"
@@ -2545,14 +2545,14 @@ const EditTalent = () => {
                   style={{ textTransform: "capitalize" }}
                 />
 
-                
+
                 {/* <Tab
                   label="Reviews"
                   {...a11yProps(7)}
                   style={{ textTransform: "capitalize" }}
                 /> */}
               </Tabs>
-              
+
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="profile-image-edit-section  mt-5">
@@ -2986,7 +2986,7 @@ const EditTalent = () => {
                       onChange={handleSelectedCity}
                       isSearchable={true}
                     />
-                     {cityError && (
+                    {cityError && (
                       <div className="invalid-fields">
                         Please select City
                       </div>
@@ -3056,7 +3056,7 @@ const EditTalent = () => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label pay-info">
-                        Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion
+                          Select your profession/skills (1 to 5, max 5) that showcase your talents, experience, and passion
                           <span className="mandatory">*</span>
                         </label>
                         <div>
@@ -3239,12 +3239,13 @@ const EditTalent = () => {
                   </div>
                 </div>
                 <div className="kids-form-section col-md-12 mb-3">
-                <label className="form-label"></label>
-                {/* <div className="kids-form-title"> */}
-                Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications
+                  <label className="form-label"></label>
+                  {/* <div className="kids-form-title"> */}
+                  Select job categories (1 to 6, max 6) that best reflect your skills, experiences, and interests for your portfolio and job notifications
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">
+
                   {categoryList?.map((category, index) => (
                     <div
                       className={
@@ -3261,9 +3262,25 @@ const EditTalent = () => {
                       {category?.value}
                       <Tooltip
                         id={`tooltip-${index}`}
-                        place="top"
-                        content={category?.description}
+                        place="right"
+                        content={
+                          <div style={{ whiteSpace: "pre-line", maxWidth: "300px" }}>
+                            {
+                              category?.description?.split('. ').slice(0, 2).map((line, i) => (
+                                <div key={i}>{line.trim() + (line.endsWith('.') ? '' : '.')}</div>
+                              ))
+                            }
+                          </div>
+                        }
                       />
+
+
+                      {/* <Tooltip
+                        id={`tooltip-${index}`}
+                       
+                        // place="right"
+                        content={category?.description}
+                      /> */}
                     </div>
                   ))}
                 </div>
@@ -3345,26 +3362,23 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-              {/* added    */}
-        <CustomTabPanel value={valueTabs} index={2}>
+            {/* added    */}
+            <CustomTabPanel value={valueTabs} index={2}>
   <div className="update-portfolio-cards-wrapper">
     <div className="bio-update-container">
-      {/* Check if we are editing */}
       {isEditing ? (
-        // If in edit mode, show the textarea
         <div>
           <textarea
             value={bio}
-            onChange={handleBioChange} // Handle bio change
+            onChange={handleBioChange}
             placeholder="Tell us about yourself"
             className={bioError ? 'error' : ''}
             rows="10"
             cols="80"
-            style={{ padding: '12px' }} // Add padding here
+            style={{ padding: '12px' }}
           ></textarea>
           {bioError && <p className="error-message">Bio field cannot be empty</p>}
 
-          {/* Combined button for Update Bio and Cancel Edit */}
           <div className="bio-action-buttons">
             <Button
               onClick={handleSubmit}
@@ -3377,7 +3391,10 @@ const EditTalent = () => {
             </Button>
 
             {/* <Button
-              onClick={() => setIsEditing(false)} // Cancel edit mode
+              onClick={() => {
+                setIsEditing(false);
+                setBio('');
+              }}
               className="cancel-edit-btn"
               variant="text"
               style={{ textTransform: 'capitalize' }}
@@ -3387,26 +3404,31 @@ const EditTalent = () => {
           </div>
         </div>
       ) : (
-        // If not in edit mode, display the bio (or the default placeholder if empty)
-        <p className="bio-display-text">
-          {talentData?.childAboutYou ? removeHtmlTags(talentData?.childAboutYou) : 'No bio available'}
-        </p>
-      )}
-
-      {/* Edit button */}
-      {!isEditing && (
-        <Button
-          onClick={() => setIsEditing(true)} // Set to edit mode
-          className="edit-profileimg-btn"
-          variant="text"
-          style={{ textTransform: 'capitalize' }}
-        >
-          Edit Bio
-        </Button>
+        <>
+          <div className="bio-display-text">
+            {talentData?.childAboutYou
+              ? removeHtmlTags(talentData.childAboutYou)
+              : 'No bio available'}
+          </div>
+          <Button
+            onClick={() => {
+              const rawHtml = talentData?.childAboutYou || '';
+              const plainText = removeHtmlTags(rawHtml);
+              setBio(plainText);
+              setIsEditing(true);
+            }}
+            className="edit-profileimg-btn"
+            variant="text"
+            style={{ textTransform: 'capitalize' }}
+          >
+            Edit Bio
+          </Button>
+        </>
       )}
     </div>
   </div>
 </CustomTabPanel>
+
 
             <CustomTabPanel value={valueTabs} index={3}>
               {talentData && (
@@ -3783,7 +3805,7 @@ const EditTalent = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="row">
                     <div className="col-md-6">
                       {talentData?.videoAudioUrls?.length === 0 && (
@@ -3888,47 +3910,47 @@ const EditTalent = () => {
             </CustomTabPanel>
 
 
-         <CustomTabPanel value={valueTabs} index={6}>
-          {/* addedd */}
-  {isBasic === true && (
-    <>
-      <div className="update-portfolio-section">
-        <div className="update-service-cards-wrapper edit-service-section-main">
-          {/* Button to trigger popup for basic members */}
-          <div
-                className="add-more-services-btn"
-                onClick={handleAddServiceClick}
-                variant="text"
-              >
-                <i className="bi bi-plus-circle-fill"></i> Add Services
-              </div>
+            <CustomTabPanel value={valueTabs} index={6}>
+              {/* addedd */}
+              {isBasic === true && (
+                <>
+                  <div className="update-portfolio-section">
+                    <div className="update-service-cards-wrapper edit-service-section-main">
+                      {/* Button to trigger popup for basic members */}
+                      <div
+                        className="add-more-services-btn"
+                        onClick={handleAddServiceClick}
+                        variant="text"
+                      >
+                        <i className="bi bi-plus-circle-fill"></i> Add Services
+                      </div>
 
-          {/* Popup that shows when showPopup is true */}
-          {showPopup && (
-            <div className="popup-container">
-              <div className="popup-message">
-                <p>{messageNext}</p>
-              </div>
-            </div>
-          )}
+                      {/* Popup that shows when showPopup is true */}
+                      {showPopup && (
+                        <div className="popup-container">
+                          <div className="popup-message">
+                            <p>{messageNext}</p>
+                          </div>
+                        </div>
+                      )}
 
-          <div className="add-service-btn-flex">
-            <Button
-              onClick={submitServices}
-              className="edit-profileimg-btn"
-              variant="text"
-              style={{ textTransform: "capitalize" }}
-            >
-              Submit
-            </Button>
-          </div>
-        </div>
-      </div>
-    </>
-  )}
-      {/* addedd */}
+                      <div className="add-service-btn-flex">
+                        <Button
+                          onClick={submitServices}
+                          className="edit-profileimg-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              {/* addedd */}
 
- {isBasic == false && (
+              {isBasic == false && (
                 <>
                   <div className="update-portfolio-section">
                     <div className="update-service-cards-wrapper edit-service-section-main">
@@ -4284,10 +4306,10 @@ const EditTalent = () => {
                   </div>
                 </>
               )}
-</CustomTabPanel>
+            </CustomTabPanel>
 
 
-          
+
 
             <CustomTabPanel value={valueTabs} index={7}>
               {talentData && (
@@ -4315,7 +4337,7 @@ const EditTalent = () => {
               )}
             </CustomTabPanel>
 
-           
+
             <CustomTabPanel value={valueTabs} index={8}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
@@ -4436,7 +4458,7 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-      
+
 
             {/* <CustomTabPanel value={valueTabs} index={7}>
               Reviews

@@ -366,9 +366,24 @@ const TalentHome = () => {
                   <img className="img-fluid" src={doitnow} alt="" />
                 </div>
                 {/* aadedd */}
-                <div className="sample-profile" onClick={sampleProfileNavigate}>
-                  View Sample Profile
+                <div>
+                  <p>
+                    <strong><em>Note:</em></strong>{" "}
+                    <strong><em>
+                      BT is for real human creators and talent. Complete your profile with all
+                      details and a profile picture to get approved. See sample below:
+                    </em></strong>
+                    <br />
+                  </p>
+
+                  <div className="sample-profile" onClick={sampleProfileNavigate}>
+                    View Sample Profile
+                  </div>
                 </div>
+
+                {/* <div className="sample-profile" onClick={sampleProfileNavigate}>
+                  View Sample Profile
+                </div> */}
                 {/* aadedd */}
               </div>
             </div>

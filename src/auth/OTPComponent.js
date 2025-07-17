@@ -38,6 +38,8 @@ const OTPComponent = () => {
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
   }, []);
 
+
+ 
   // const url = window.location.href;
   // const userId = url.split("?")[1];
 
@@ -100,6 +102,7 @@ const OTPComponent = () => {
   };
 
   const otpVerification = async (newOTP) => {
+    console.log("userEmail",userEmail)
     const formData = {
       otp: newOTP,
       adultEmail: userEmail,

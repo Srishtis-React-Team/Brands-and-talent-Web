@@ -28,6 +28,12 @@ const JobRedirect = () => {
     }
   }, [currentUserId]);
 
+  useEffect(() => {
+    const favicon = document.querySelector("link[rel='icon']") || document.createElement("link");
+    favicon.rel = "icon";
+    favicon.href = "/favicon.ico"; // or "/favicon.png" if that's your file
+    document.head.appendChild(favicon);
+  }, []);
 
 
 
