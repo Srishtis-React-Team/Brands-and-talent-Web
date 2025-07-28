@@ -15,6 +15,7 @@ import Spinner from "../components/Spinner";
 import ErrorBoundary from "../components/ErrorBoundary";
 import Pricing from "../views/pricing";
 import KidsFormTwo from "../auth/KidsFormTwo";
+import AuthGuard from "../layout/authguard";
 
 // Lazy load components
 const PopUp = lazy(() => import("../components/PopUp"));
@@ -144,7 +145,7 @@ function Routing() {
       <ErrorBoundary>
         <Routes>
           {/* Normal route for Pricing */}
-          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/pricing" element={<AuthGuard><Pricing /></AuthGuard>} />
 
           <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
 
@@ -169,7 +170,8 @@ function Routing() {
             path="/find-talent"
             element={
               <Suspense fallback={<Spinner />}>
-                <FindCreators />
+                 <AuthGuard> <FindCreators /></AuthGuard>
+               
               </Suspense>
             }
           />
@@ -706,7 +708,8 @@ function Routing() {
             path="/get-booked/:jobId?"
             element={
               <Suspense fallback={<Spinner />}>
-                <GetBooked />
+                 <AuthGuard> <GetBooked /></AuthGuard>
+               
               </Suspense>
             }
           />

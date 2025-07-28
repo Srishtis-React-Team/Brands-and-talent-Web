@@ -325,7 +325,7 @@ const AdultFormTwo = () => {
                                 Rates (in USD)
                               </label>
                               <input
-                                type="number"
+                                type="type"
                                 name="amount"
                                 value={input.serviceAmount}
                                 onChange={(e) =>
@@ -336,7 +336,7 @@ const AdultFormTwo = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="$200 per hour (negotiable)"
+                               placeholder="$90 /hr or $90 /day or $90 /post or $90 /project"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">

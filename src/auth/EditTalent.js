@@ -780,7 +780,21 @@ const EditTalent = () => {
     setIsSubmitted(true);
     setMyState(false);
     if (talentData?.type === "kids") {
-      if (selectedCategories.length != 0 && selectedCategories.length <= 6) {
+      if ( selectedCategories.length > 0 &&
+        selectedCategories.length <= 6 &&
+        kidsLegalFirstName.trim() !== "" &&
+        kidsPreferedFirstName.trim() !== "" &&
+        Array.isArray(nationality) &&
+        nationality.length > 0 &&
+        ethnicity.trim() !== "" &&
+        Array.isArray(languages) &&
+        languages.length > 0 &&
+        gender.trim() !== "" &&
+        completedJobs.trim() !== "" &&
+        selectedProfessions.length > 0 &&
+        selectedProfessions.length <= 5 &&
+        dateOfBirth && dateOfBirth !== "" && !isNaN(new Date(dateOfBirth).getTime())&&
+        country !==""&& state!==""&& kidsCity!=="") {
         const formData = {
           parentFirstName: parentFirstName,
           parentLastName: parentLastName,
@@ -838,7 +852,24 @@ const EditTalent = () => {
       }
     }
     if (talentData?.type === "adults") {
-      if (selectedCategories.length !== 0 && selectedCategories.length <= 6) {
+      if (
+        selectedCategories.length > 0 &&
+        selectedCategories.length <= 6 &&
+        parentFirstName.trim() !== "" &&
+        kidsPreferedFirstName.trim() !== "" &&
+        Array.isArray(nationality) &&
+        nationality.length > 0 &&
+        ethnicity.trim() !== "" &&
+        Array.isArray(languages) &&
+        languages.length > 0 &&
+        gender.trim() !== "" &&
+        completedJobs.trim() !== "" &&
+        selectedProfessions.length > 0 &&
+        selectedProfessions.length <= 5 &&
+        dateOfBirth && dateOfBirth !== "" && !isNaN(new Date(dateOfBirth).getTime())&&
+        country !==""&& state!==""&& kidsCity!==""
+
+      ) {
         let formData = {
           adultLegalFirstName: parentFirstName,
           adultLegalLastName: parentLastName,
@@ -2597,7 +2628,7 @@ const EditTalent = () => {
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Legal First Name
-                          {/* <span className="mandatory">*</span> */}
+                          <span className="mandatory">*</span>
                         </label>
                         <input
                           type="text"
@@ -2648,7 +2679,7 @@ const EditTalent = () => {
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
                         Legal First Name
-                        {/* <span className="mandatory">*</span> */}
+                        <span className="mandatory">*</span>
                       </label>
                       <input
                         type="text"
@@ -3151,7 +3182,7 @@ const EditTalent = () => {
                                 ></input>
                               </div>
 
-                              {profession?.value == "Creator" && (
+                              {(profession?.value == "Creator" || profession?.value === "Content Creator") && (
                                 <>
                                   <div className="mb-3 col-md-2 divSep">
                                     <input
@@ -3980,7 +4011,7 @@ const EditTalent = () => {
                                   <div className="kids-form-section col-md-6 mb-3">
                                     <label className="form-label">
                                       Service Name
-                                      <span className="mandatory">*</span>
+                                      {/* <span className="mandatory">*</span> */}
                                     </label>
                                     <input
                                       type="text"
@@ -4005,15 +4036,15 @@ const EditTalent = () => {
                                   <div className="kids-form-section col-md-6 mb-3">
                                     <label className="form-label">
                                       Rates (in USD)
-                                      <span className="mandatory">*</span>
+                                      {/* <span className="mandatory">*</span> */}
                                     </label>
                                     <input
                                       min="0"
-                                      type="number"
+                                      type="text"
                                       className="form-control"
-                                      placeholder="$200 per hour (negotiable)"
+                                      placeholder="$90 /hr or $90 /day or $90 /post or $90 /project"
                                       value={eachService.serviceAmount}
-                                      onChange={(e) => {
+                                      onChange={(e) => { 
                                         handleInputChange(
                                           servicesIndex,
                                           "serviceAmount",
@@ -4483,7 +4514,7 @@ const EditTalent = () => {
                     handleNavigation("next");
                   }}
                 >
-                  <span className="edit-profile-navigation-text">Next</span>
+                  <span className="edit-profile-navigation-text"style={{ marginLeft: '-14rem' }}>Next</span>
                   <i className="bi bi-arrow-right-circle-fill"></i>
                 </div>
               )}

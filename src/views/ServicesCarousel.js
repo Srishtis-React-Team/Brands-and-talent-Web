@@ -361,7 +361,8 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                     {item?.serviceAmount && (
                       <>
                         <div className="starting-amount">
-                          ${item?.serviceAmount} per hour
+                        {/* ${item?.serviceAmount} per hour */}
+                          {item?.serviceAmount}
                         </div>
                       </>
                     )}
