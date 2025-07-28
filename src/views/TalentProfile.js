@@ -820,6 +820,46 @@ const TalentProfile = () => {
                             <>
                               <div className="talents-social-wrapper mt-4">
                                 <div className="row">
+                                  {/* {(talentData?.instaFollowers || talentData?.instagramUrl) && (
+                                    <div
+                                      className="talents-social col-md-6"
+                                      style={{
+                                        cursor: talentData?.instagramUrl && talentData?.instaFollowers ? "pointer" : "default",
+                                        position: "relative",
+                                      }}
+                                      data-tooltip={
+                                        talentData?.instagramUrl && talentData?.instaFollowers
+                                          ? "Click here"
+                                          : "No link provided"
+                                      }
+                                      onClick={() => {
+                                        if (talentData?.instagramUrl && talentData?.instaFollowers) {
+                                          window.open(talentData.instagramUrl, "_blank");
+                                        }
+                                      }}
+                                    >
+                                      <div className="logoSocial">
+                                        <img src={instaLogo} alt="Instagram" />
+                                      </div>
+                                      <div className="social-followers-count-section">
+                                        <div className="social-count">
+                                        {talentData?.instaFollowers ? (
+                                              <p>{talentData.instaFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.instaFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}   */}
+                                        
                                   {(talentData?.instaFollowers ||
                                     talentData?.instagramUrl) && (
                                       <div
@@ -864,9 +904,8 @@ const TalentProfile = () => {
                                           )}
                                         </div>
                                       </div>
-                                    )}
-
-                                  {(talentData?.facebookFollowers ||
+                                    )} 
+                                         {(talentData?.facebookFollowers ||
                                     talentData?.facebookUrl) && (
                                       <div
                                         className="talents-social col-md-6"
@@ -877,7 +916,7 @@ const TalentProfile = () => {
                                           position: "relative",
                                         }}
                                         data-tooltip={
-                                          talentData?.facebookUrl
+                                          talentData?.facebookUrl 
                                             ? "Click here"
                                             : "No link provided"
                                         }
@@ -895,7 +934,8 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.facebookFollowers ? (
+                                     
+                                  {talentData?.facebookFollowers ? (
                                               <p>{talentData.facebookFollowers}</p>
                                             ) : (
                                               <div className="click-url">
@@ -911,19 +951,66 @@ const TalentProfile = () => {
                                         </div>
                                       </div>
                                     )}
-
-                                  {(talentData?.tiktokFollowers ||
-                                    talentData?.tikTokUrl) && (
+{/* 
+                                  {(talentData?.facebookFollowers ||
+                                    talentData?.facebookUrl) && (
                                       <div
                                         className="talents-social col-md-6"
                                         style={{
-                                          cursor: talentData?.tikTokUrl
+                                          cursor: talentData?.facebookUrl && talentData?.facebookFollowers
                                             ? "pointer"
                                             : "default",
                                           position: "relative",
                                         }}
                                         data-tooltip={
-                                          talentData?.tikTokUrl
+                                          talentData?.facebookUrl && talentData?.facebookFollowers
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.facebookUrl && talentData?.facebookFollowers) {
+                                            window.open(
+                                              talentData.facebookUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={fbIcon} alt="Facebook" />
+                                        </div>
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                     
+                                  {talentData?.facebookFollowers ? (
+                                              <p>{talentData.facebookFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )}
+                                          </div>
+                                          {talentData?.facebookFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )} */}
+
+{(talentData?.tiktokFollowers ||
+                                    talentData?.tikTokUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.tikTokUrl 
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.tikTokUrl 
                                             ? "Click here"
                                             : "No link provided"
                                         }
@@ -941,18 +1028,17 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.tiktokFollowers && (
-                                              <p>{talentData.tiktokFollowers}</p>
-                                            )}
+                                     
+                                 
 
-                                            {/* {talentData?.tiktokFollowers ? (
+                                  {talentData?.tiktokFollowers ? (
                                               <p>{talentData.tiktokFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )} */}
-                                          </div>
+                                            )} 
+                                  </div>
                                           {talentData?.tiktokFollowers && (
                                             <div className="followers-text">
                                               Followers
@@ -960,25 +1046,74 @@ const TalentProfile = () => {
                                           )}
                                         </div>
                                       </div>
-                                    )}
+                                    )} 
 
-                                  {(talentData?.linkedinFollowers ||
-                                    talentData?.linkedinUrl) && (
+
+                                  {/* {(talentData?.tiktokFollowers ||
+                                    talentData?.tikTokUrl) && (
                                       <div
                                         className="talents-social col-md-6"
                                         style={{
-                                          cursor: talentData?.linkedinUrl
+                                          cursor: talentData?.tikTokUrl && talentData?.tiktokFollowers
                                             ? "pointer"
                                             : "default",
                                           position: "relative",
                                         }}
                                         data-tooltip={
-                                          talentData?.linkedinUrl
+                                          talentData?.tikTokUrl && talentData?.tiktokFollowers
                                             ? "Click here"
                                             : "No link provided"
                                         }
                                         onClick={() => {
-                                          if (talentData?.linkedinUrl) {
+                                          if (talentData?.tikTokUrl && talentData?.tiktokFollowers) {
+                                            window.open(
+                                              talentData.tikTokUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={tiktok} alt="TikTok" />
+                                        </div>
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                     
+                                 
+
+                                  {talentData?.tiktokFollowers ? (
+                                              <p>{talentData.tiktokFollowers}</p>
+                                            ) : (
+                                              <div className="click-url">
+                                                Click here
+                                              </div>
+                                            )} 
+                                  </div>
+                                          {talentData?.tiktokFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}  */}
+                                         {(talentData?.linkedinFollowers ||
+                                    talentData?.linkedinUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.linkedinUrl 
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.linkedinUrl 
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.linkedinUrl ) {
                                             window.open(
                                               talentData.linkedinUrl,
                                               "_blank"
@@ -991,17 +1126,14 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.linkedinFollowers && (
-                                              <p>{talentData.linkedinFollowers}</p>
-                                            )}
-
-                                            {/* {talentData?.linkedinFollowers ? (
+                                            
+                                          {talentData?.linkedinFollowers ? (
                                               <p>{talentData.linkedinFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )} */}
+                                            )}
                                           </div>
                                           {talentData?.linkedinFollowers && (
                                             <div className="followers-text">
@@ -1012,23 +1144,66 @@ const TalentProfile = () => {
                                       </div>
                                     )}
 
-                                  {(talentData?.twitterFollowers ||
-                                    talentData?.twitterUrl) && (
+                                  {/* {(talentData?.linkedinFollowers ||
+                                    talentData?.linkedinUrl) && (
                                       <div
                                         className="talents-social col-md-6"
                                         style={{
-                                          cursor: talentData?.twitterUrl
+                                          cursor: talentData?.linkedinUrl && talentData?.linkedinFollowers
                                             ? "pointer"
                                             : "default",
                                           position: "relative",
                                         }}
                                         data-tooltip={
-                                          talentData?.twitterUrl
+                                          talentData?.linkedinUrl && talentData?.linkedinFollowers
                                             ? "Click here"
                                             : "No link provided"
                                         }
                                         onClick={() => {
-                                          if (talentData?.twitterUrl) {
+                                          if (talentData?.linkedinUrl && talentData?.linkedinFollowers) {
+                                            window.open(
+                                              talentData.linkedinUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={linkdin} alt="LinkedIn" />
+                                        </div>
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            
+                                  {talentData?.linkedinFollowers && (
+                                              <p>{talentData.linkedinFollowers}</p>
+                                            )}
+                                          </div>
+                                          {talentData?.linkedinFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )} */}
+
+{(talentData?.twitterFollowers ||
+                                    talentData?.twitterUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.twitterUrl 
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.twitterUrl 
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.twitterUrl ) {
                                             window.open(
                                               talentData.twitterUrl,
                                               "_blank"
@@ -1041,17 +1216,14 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.twitterFollowers && (
-                                              <p>{talentData.twitterFollowers}</p>
-                                            )}
-
-                                            {/* {talentData?.twitterFollowers ? (
+                                           
+                                          {talentData?.twitterFollowers ? (
                                               <p>{talentData.twitterFollowers}</p>
                                             ) : (
                                               <div className="click-url">
-                                                Click heredd
+                                                Click here
                                               </div>
-                                            )} */}
+                                            )}
                                           </div>
                                           {talentData?.twitterFollowers && (
                                             <div className="followers-text">
@@ -1059,21 +1231,63 @@ const TalentProfile = () => {
                                             </div>
                                           )}
                                         </div>
-                                      </div>
+                                       </div>
                                     )}
 
-                                  {(talentData?.threadsFollowers ||
-                                    talentData?.threadsUrl) && (
+                                  {/* {(talentData?.twitterFollowers ||
+                                    talentData?.twitterUrl) && (
                                       <div
                                         className="talents-social col-md-6"
                                         style={{
-                                          cursor: talentData?.threadsUrl
+                                          cursor: talentData?.twitterUrl && talentData?.twitterFollowers
                                             ? "pointer"
                                             : "default",
                                           position: "relative",
                                         }}
                                         data-tooltip={
-                                          talentData?.threadsUrl
+                                          talentData?.twitterUrl && talentData?.twitterFollowers
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.twitterUrl && talentData?.twitterFollowers) {
+                                            window.open(
+                                              talentData.twitterUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={twitterLogo} alt="Twitter" />
+                                        </div>
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                           
+                                          {talentData?.twitterFollowers && (
+                                              <p>{talentData.twitterFollowers}</p>
+                                            )}
+                                          </div>
+                                          {talentData?.twitterFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                       </div>
+                                    )} */}
+                                     {(talentData?.threadsFollowers ||
+                                    talentData?.threadsUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.threadsUrl 
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.threadsUrl 
                                             ? "Click here"
                                             : "No link provided"
                                         }
@@ -1091,17 +1305,13 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.threadsFollowers && (
-                                              <p>{talentData.threadsFollowers}</p>
-                                            )}
-
-                                            {/* {talentData?.threadsFollowers ? (
+                                          {talentData?.threadsFollowers ? (
                                               <p>{talentData.threadsFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )} */}
+                                            )}
                                           </div>
                                           {talentData?.threadsFollowers && (
                                             <div className="followers-text">
@@ -1111,19 +1321,62 @@ const TalentProfile = () => {
                                         </div>
                                       </div>
                                     )}
-
-                                  {(talentData?.youtubeFollowers ||
-                                    talentData?.youTubeUrl) && (
+                                
+                                  {/* {(talentData?.threadsFollowers ||
+                                    talentData?.threadsUrl) && (
                                       <div
                                         className="talents-social col-md-6"
                                         style={{
-                                          cursor: talentData?.youTubeUrl
+                                          cursor: talentData?.threadsUrl && talentData?.threadsFollowers
                                             ? "pointer"
                                             : "default",
                                           position: "relative",
                                         }}
                                         data-tooltip={
-                                          talentData?.youTubeUrl
+                                          talentData?.threadsUrl && talentData?.threadsFollowers
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.threadsUrl && talentData?.threadsFollowers) {
+                                            window.open(
+                                              talentData.threadsUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={threadLogo} alt="Threads" />
+                                        </div>
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.threadsFollowers && (
+                                              <p>{talentData.threadsFollowers}</p>
+                                            )}
+
+                                          </div>
+                                          {talentData?.threadsFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )} */}
+
+                                    {(talentData?.youtubeFollowers ||
+                                    talentData?.youTubeUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.youTubeUrl 
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.youTubeUrl 
                                             ? "Click here"
                                             : "No link provided"
                                         }
@@ -1141,17 +1394,14 @@ const TalentProfile = () => {
                                         </div>
                                         <div className="social-followers-count-section">
                                           <div className="social-count">
-                                            {talentData?.youtubeFollowers && (
-                                              <p>{talentData.youtubeFollowers}</p>
-                                            )}
-
-                                            {/* {talentData?.youtubeFollowers ? (
+                                          {talentData?.youtubeFollowers ? (
                                               <p>{talentData.youtubeFollowers}</p>
                                             ) : (
                                               <div className="click-url">
                                                 Click here
                                               </div>
-                                            )} */}
+                                            )}
+                                           
                                           </div>
                                           {talentData?.youtubeFollowers && (
                                             <div className="followers-text">
@@ -1161,6 +1411,50 @@ const TalentProfile = () => {
                                         </div>
                                       </div>
                                     )}
+
+                                  {/* {(talentData?.youtubeFollowers ||
+                                    talentData?.youTubeUrl) && (
+                                      <div
+                                        className="talents-social col-md-6"
+                                        style={{
+                                          cursor: talentData?.youTubeUrl && talentData?.youtubeFollowers
+                                            ? "pointer"
+                                            : "default",
+                                          position: "relative",
+                                        }}
+                                        data-tooltip={
+                                          talentData?.youTubeUrl && talentData?.youtubeFollowers
+                                            ? "Click here"
+                                            : "No link provided"
+                                        }
+                                        onClick={() => {
+                                          if (talentData?.youTubeUrl && talentData?.youtubeFollowers) {
+                                            window.open(
+                                              talentData.youTubeUrl,
+                                              "_blank"
+                                            );
+                                          }
+                                        }}
+                                      >
+                                        <div className="logoSocial">
+                                          <img src={youtubeLogo} alt="YouTube" />
+                                        </div>
+                                        <div className="social-followers-count-section">
+                                          <div className="social-count">
+                                            {talentData?.youtubeFollowers && (
+                                              <p>{talentData.youtubeFollowers}</p>
+                                            )}
+
+                                           
+                                          </div>
+                                          {talentData?.youtubeFollowers && (
+                                            <div className="followers-text">
+                                              Followers
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )} */}
                                 </div>
                               </div>
                             </>

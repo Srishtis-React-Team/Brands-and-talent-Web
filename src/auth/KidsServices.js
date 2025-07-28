@@ -326,7 +326,7 @@ const KidsServices = () => {
                                 Rates (in USD)
                               </label>
                               <input
-                                type="number"
+                                type="type"
                                 name="amount"
                                 value={input.serviceAmount}
                                 onChange={(e) =>
@@ -337,7 +337,7 @@ const KidsServices = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="$200 per hour (negotiable)"
+                              placeholder="$90 /hr or $90 /day or $90 /post or $90 /project"
                                 min="1"
                               ></input>
                             </div>

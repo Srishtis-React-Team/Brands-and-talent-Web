@@ -472,12 +472,9 @@ const Footer = (props) => {
                   <Link>Get Booked</Link>
                 </li>
 
-
-                {!currentUserId && (
+                {/* client recently asked to hide this */}
+                {/* {!currentUserId && (
                   <>
-                    {/* <li>
-                      <Link onClick={handleAirtableClick}>Get Hired</Link>
-                    </li> */}
                     <li>
                       <Link to="/" onClick={() => openModal()}>
                         Get Hired
@@ -488,16 +485,13 @@ const Footer = (props) => {
 
                 {currentUserId && currentUserType == "talent" && (
                   <>
-                    {/* <li>
-                      <Link onClick={handleAirtableClick}>Get Hired</Link>
-                    </li> */}
                     <li>
                       <Link to="/talent-dashboard" onClick={handleClick}>
                         Get Hired
                       </Link>
                     </li>
                   </>
-                )}
+                )} */}
 
                
 

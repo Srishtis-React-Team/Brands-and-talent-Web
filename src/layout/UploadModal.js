@@ -238,8 +238,8 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
               <img src={idCard} alt="" />
             </div>
             <div className="id-text" htmlFor="id-upload">
-              {talentData?.type === "kids" && <>Upload Parents ID</>}
-              {talentData?.type === "adults" && <>Upload Verification ID</>}
+              {talentData?.type === "kids" && <> Upload your parent's legal ID for verification. It’s deleted after approval.</>}
+              {talentData?.type === "adults" && <> Upload your legal ID for verification. It’s deleted after approval.</>}
             </div>
             <label className="id-choose" htmlFor="id-upload">
               Choose ID
@@ -334,7 +334,7 @@ const UploadModal = ({ open, onClose, onSubmit, talentData }) => {
               className="step-continue"
               disabled={verificationID.length === 0}
             >
-              Save
+              Submit
             </button>
           </div>
         </DialogContent>

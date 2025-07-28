@@ -982,7 +982,12 @@ const AdultFormOne = () => {
                                       min="0"
                                     ></input>
                                   </div> */}
-                                  {profession?.value == "Creator" && (
+                                    {/* {(profession?.value == "Creator" || profession?.value === "Content Creator"||profession?.value === "UGC Creator"
+                                    || profession?.value === "Kids Content Creator" || profession?.value === "Kids Content Creator" || profession?.value === "Influencer"
+                                    ||  profession?.value === "Luxury Lifestyle Influencer" || profession?.value === "Watch/Accessories Reviewer" ||profession?.value === "High-End Travel Influencer" 
+                                  ) && ( */}
+                                     {(profession?.value == "Creator" || profession?.value === "Content Creator") && (
+                                
                                     <>
                                       <div className="mb-3 col-md-2 divSep">
                                         <input
@@ -1093,11 +1098,24 @@ const AdultFormOne = () => {
                         data-tooltip-id={`tooltip-${index}`}
                       >
                         {category?.value}
-                        <Tooltip
+                          <Tooltip
+                        id={`tooltip-${index}`}
+                        place="right"
+                        content={
+                          <div style={{ whiteSpace: "pre-line", maxWidth: "300px" }}>
+                            {
+                              category?.description?.split('. ').slice(0, 2).map((line, i) => (
+                                <div key={i}>{line.trim() + (line.endsWith('.') ? '' : '.')}</div>
+                              ))
+                            }
+                          </div>
+                        }
+                      />
+                        {/* <Tooltip
                           id={`tooltip-${index}`}
                           place="top"
                           content={category?.description}
-                        />
+                        /> */}
                       </div>
                     ))}
                   </div>

@@ -358,7 +358,7 @@
   width: 100%;
   min-height: 300px;
   object-fit: cover;
-  object-position: center top;
+  /* object-position: center top; */
 }
 .planName {
   position: absolute;

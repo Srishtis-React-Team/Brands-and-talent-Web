@@ -1422,7 +1422,7 @@ const KidsformOne = () => {
                                     ></input>
                                   </div>
 
-                                  {profession?.value == "Creator" && (
+                                  {(profession?.value == "Creator" || profession?.value === "Content Creator") && (
                                     <>
                                       <div className="mb-3 col-md-2 divSep">
                                         <input
@@ -1531,10 +1531,23 @@ const KidsformOne = () => {
                         >
                           {category?.value}
                           <Tooltip
+                        id={`tooltip-${index}`}
+                        place="right"
+                        content={
+                          <div style={{ whiteSpace: "pre-line", maxWidth: "300px" }}>
+                            {
+                              category?.description?.split('. ').slice(0, 2).map((line, i) => (
+                                <div key={i}>{line.trim() + (line.endsWith('.') ? '' : '.')}</div>
+                              ))
+                            }
+                          </div>
+                        }
+                      />
+                          {/* <Tooltip
                             id={`tooltip-${index}`}
                             place="top"
                             content={category?.description}
-                          />
+                          /> */}
                         </div>
                       ))}
                     </div>
