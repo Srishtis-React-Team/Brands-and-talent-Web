@@ -55,7 +55,7 @@ const AdultFormTwo = () => {
 
   useEffect(() => { }, [talentData]);
 
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
@@ -92,6 +92,7 @@ const AdultFormTwo = () => {
     let formData = {
       services: inputs,
     };
+   
 
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {

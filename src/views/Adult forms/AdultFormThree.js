@@ -83,7 +83,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
 
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const uploadIcon = require("../../assets/icons/uploadIcon.png");
   const imageType = require("../../assets/icons/imageType.png");
   const videoType = require("../../assets/icons/videoType.png");
@@ -635,7 +635,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         if (event.target.files && event.target.files[0]) {
           const fileData = event.target.files[0];
   
-          if (!allowedTypes.includes(fileData.type)) {
+          if (!allowedTypes?.includes(fileData.type)) {
             setMessage("Only images and documents are allowed.");
             setOpenPopUp(true);
             setTimeout(() => {
@@ -722,7 +722,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
+        setPortofolioFile((prevFiles) => [...(prevFiles||[]), fileObj]);
 
         setOpenPopUp(true);
         setTimeout(function () {
@@ -753,7 +753,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        setResumeFile((prevFiles) => [...prevFiles, fileObj]);
+        setResumeFile((prevFiles) => [...(prevFiles||[]), fileObj]);
 
         setOpenPopUp(true);
         setTimeout(function () {
@@ -784,7 +784,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           type: getFileType(fileData.type),
         };
         // setVerificationID(fileObj);
-        setVerificationID((prevFiles) => [...prevFiles, fileObj]);
+        setVerificationID((prevFiles) => [...(prevFiles||[]), fileObj]);
 
         setOpenPopUp(true);
         setTimeout(function () {
@@ -867,12 +867,13 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleFeaturesChange = (label, value) => {
-    const updatedValues = [...features];
+    const updatedValues = [...features||[]];
+  
     const index = updatedValues.findIndex((item) => item.label === label);
     let finalValue = value;
     if (
-      creatableInputOptions.includes(label) ||
-      creatableOptions.includes(label)
+      creatableInputOptions?.includes(label) ||
+      creatableOptions?.includes(label)
     ) {
       if (/^\d+$/.test(value)) {
         finalValue = `${value} cm`;
@@ -903,7 +904,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   const cmPlaceholderOptions = ["Height", "Chest", "Waist", "Hip Size"];
 
   const getPlaceholder = (label) => {
-    if (cmPlaceholderOptions.includes(label)) {
+    if (cmPlaceholderOptions?.includes(label)) {
       return "Type in cm";
     }
     if (
@@ -1161,7 +1162,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
                   {portofolioFile && (
                     <>
-                      {portofolioFile.map((item, index) => (
+                      {portofolioFile?.map((item, index) => (
                         <div key={index} className="uploaded-file-wrapper">
                           <div className="file-section">
                             {item.type === "image" && (
@@ -1261,7 +1262,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
                   {urls && (
                     <>
-                      {urls.map((url, index) => {
+                      {urls?.map((url, index) => {
                         return (
                           <>
                             <div key={index} className="url-file-wrapper">
@@ -1350,7 +1351,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
                   {audioUrlsList && (
                     <>
-                      {audioUrlsList.map((url, index) => {
+                      {audioUrlsList?.map((url, index) => {
                         return (
                           <>
                             <div key={index} className="url-file-wrapper">
@@ -1433,7 +1434,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
                   {resumeFile && (
                     <>
-                      {resumeFile.map((item, index) => {
+                      {resumeFile?.map((item, index) => {
                         return (
                           <>
                             <div key={index} className="uploaded-file-wrapper">
@@ -1573,7 +1574,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
                   {verificationID && (
                     <>
-                      {verificationID.map((item, index) => {
+                      {verificationID?.map((item, index) => {
                         return (
                        
                           <>

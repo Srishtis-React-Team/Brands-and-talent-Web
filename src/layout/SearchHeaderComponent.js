@@ -16,7 +16,7 @@ import { Button, Modal, Box, Typography } from "@mui/material";
 import SearchPaths from "../components/SearchPaths";
 const SearchHeaderComponent = ({ onData }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const [menuOpen, setMenuOpen] = useState(false);
   const [signupCategory, setSignupCategory] = useState("talent");

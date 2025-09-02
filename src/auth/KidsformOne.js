@@ -89,7 +89,7 @@ const KidsformOne = () => {
   }, []);
 
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const kidsImage = require("../assets/images/kidsImage.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [value, setValue] = useState(null);

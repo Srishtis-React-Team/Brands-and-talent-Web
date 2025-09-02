@@ -23,7 +23,7 @@ import MenuItem from "@mui/material/MenuItem";
 const BrandLogo = () => {
   const navigate = useNavigate();
   const uploadIcon = require("../../assets/icons/uploadIcon.png");
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const imageType = require("../../assets/icons/imageType.png");
   const videoType = require("../../assets/icons/videoType.png");
   const audiotype = require("../../assets/icons/audiotype.png");

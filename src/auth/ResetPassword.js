@@ -10,7 +10,7 @@ import "../assets/css/register.css";
 import "../assets/css/forms/kidsform-one.css";
 
 const ResetPassword = () => {
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");

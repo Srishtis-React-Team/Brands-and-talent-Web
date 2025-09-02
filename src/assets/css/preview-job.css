@@ -249,11 +249,15 @@
 
 @media (max-width: 420px) {
   .preview-main-box .company-location {
-    display: flex;
+    /* display: flex; */
     align-items: inherit;
     flex-direction: column;
     line-height: normal;
     padding: 10px 0 5px;
+    align-items:flex-start;
+    white-space:normal;
+    
+
   }
   .preview-main-box .job-feature-values,
   .preview-main-box .job-benefits-values {

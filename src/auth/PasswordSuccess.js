@@ -8,7 +8,7 @@ import Header from "../layout/header";
 import "../assets/css/register.css";
 
 const PasswordSuccess = () => {
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);

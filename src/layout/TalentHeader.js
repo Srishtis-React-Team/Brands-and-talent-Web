@@ -24,7 +24,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   const [signupCategory, setSignupCategory] = useState("talent");
   const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const cofeeIcon = require("../assets/icons/cofeeIcon.png");
   const [brand, setBrand] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

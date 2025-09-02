@@ -780,21 +780,8 @@ const EditTalent = () => {
     setIsSubmitted(true);
     setMyState(false);
     if (talentData?.type === "kids") {
-      if ( selectedCategories.length > 0 &&
-        selectedCategories.length <= 6 &&
-        kidsLegalFirstName.trim() !== "" &&
-        kidsPreferedFirstName.trim() !== "" &&
-        Array.isArray(nationality) &&
-        nationality.length > 0 &&
-        ethnicity.trim() !== "" &&
-        Array.isArray(languages) &&
-        languages.length > 0 &&
-        gender.trim() !== "" &&
-        completedJobs.trim() !== "" &&
-        selectedProfessions.length > 0 &&
-        selectedProfessions.length <= 5 &&
-        dateOfBirth && dateOfBirth !== "" && !isNaN(new Date(dateOfBirth).getTime())&&
-        country !==""&& state!==""&& kidsCity!=="") {
+      if (selectedCategories.length != 0 && selectedCategories.length <= 6) {
+       
         const formData = {
           parentFirstName: parentFirstName,
           parentLastName: parentLastName,
@@ -852,24 +839,9 @@ const EditTalent = () => {
       }
     }
     if (talentData?.type === "adults") {
-      if (
-        selectedCategories.length > 0 &&
-        selectedCategories.length <= 6 &&
-        parentFirstName.trim() !== "" &&
-        kidsPreferedFirstName.trim() !== "" &&
-        Array.isArray(nationality) &&
-        nationality.length > 0 &&
-        ethnicity.trim() !== "" &&
-        Array.isArray(languages) &&
-        languages.length > 0 &&
-        gender.trim() !== "" &&
-        completedJobs.trim() !== "" &&
-        selectedProfessions.length > 0 &&
-        selectedProfessions.length <= 5 &&
-        dateOfBirth && dateOfBirth !== "" && !isNaN(new Date(dateOfBirth).getTime())&&
-        country !==""&& state!==""&& kidsCity!==""
-
-      ) {
+      if (selectedCategories.length != 0 && selectedCategories.length <= 6)
+         {
+      
         let formData = {
           adultLegalFirstName: parentFirstName,
           adultLegalLastName: parentLastName,

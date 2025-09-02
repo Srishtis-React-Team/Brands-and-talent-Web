@@ -146,6 +146,7 @@ function Routing() {
         <Routes>
           {/* Normal route for Pricing */}
           <Route path="/pricing" element={<AuthGuard><Pricing /></AuthGuard>} />
+          <Route path="/pricing" element={<Pricing />} />
 
           <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
 
@@ -500,6 +501,7 @@ function Routing() {
             path="/brand-firstGig"
             element={
               <Suspense fallback={<Spinner />}>
+                 {/* <AuthGuard><BrandFirstGig /></AuthGuard> */}
                 <BrandFirstGig />
               </Suspense>
             }
@@ -508,7 +510,8 @@ function Routing() {
             path="/brand-details"
             element={
               <Suspense fallback={<Spinner />}>
-                <BrandDetails />
+                <AuthGuard><BrandDetails /></AuthGuard>
+                {/* <BrandDetails /> */}
               </Suspense>
             }
           />
@@ -556,7 +559,8 @@ function Routing() {
             path="/applied-jobs"
             element={
               <Suspense fallback={<Spinner />}>
-                <AppliedJobs />
+                 <AuthGuard><AppliedJobs /></AuthGuard>
+                {/* <AppliedJobs /> */}
               </Suspense>
             }
           />
@@ -564,7 +568,8 @@ function Routing() {
             path="/saved-jobs"
             element={
               <Suspense fallback={<Spinner />}>
-                <SavedJobs />
+                <AuthGuard><SavedJobs /></AuthGuard>
+                {/* <SavedJobs /> */}
               </Suspense>
             }
           />
@@ -572,7 +577,8 @@ function Routing() {
             path="/create-jobs"
             element={
               <Suspense fallback={<Spinner />}>
-                <CreateJobs />
+                <AuthGuard><CreateJobs /></AuthGuard>
+                {/* <CreateJobs /> */}
               </Suspense>
             }
           />
@@ -588,7 +594,8 @@ function Routing() {
             path="/favourite-talents"
             element={
               <Suspense fallback={<Spinner />}>
-                <BrandFavorites />
+                <AuthGuard><BrandFavorites /></AuthGuard>
+                {/* <BrandFavorites /> */}
               </Suspense>
             }
           />
@@ -620,7 +627,8 @@ function Routing() {
             path="/messages"
             element={
               <Suspense fallback={<Spinner />}>
-                <MessageTalents />
+                <AuthGuard><MessageTalents /></AuthGuard>
+                {/* <MessageTalents /> */}
               </Suspense>
             }
           />
@@ -636,7 +644,8 @@ function Routing() {
             path="/applicants"
             element={
               <Suspense fallback={<Spinner />}>
-                <Applicants />
+                <AuthGuard><Applicants /></AuthGuard>
+                {/* <Applicants /> */}
               </Suspense>
             }
           />
@@ -644,7 +653,8 @@ function Routing() {
             path="/edit-talent-profile"
             element={
               <Suspense fallback={<Spinner />}>
-                <EditTalent />
+                <AuthGuard><EditTalent /></AuthGuard>
+                {/* <EditTalent /> */}
               </Suspense>
             }
           />
@@ -652,7 +662,8 @@ function Routing() {
             path="/edit-brand-profile"
             element={
               <Suspense fallback={<Spinner />}>
-                <EditBrands />
+                <AuthGuard><EditBrands /></AuthGuard>
+                {/* <EditBrands /> */}
               </Suspense>
             }
           />
@@ -668,7 +679,8 @@ function Routing() {
             path="/talent-notification"
             element={
               <Suspense fallback={<Spinner />}>
-                <TalentNotification />
+                <AuthGuard><TalentNotification /></AuthGuard>
+                {/* <TalentNotification /> */}
               </Suspense>
             }
           />
@@ -676,7 +688,8 @@ function Routing() {
             path="/talent-settings"
             element={
               <Suspense fallback={<Spinner />}>
-                <TalentSettings />
+                   <AuthGuard><TalentSettings /></AuthGuard>
+                {/* <TalentSettings /> */}
               </Suspense>
             }
           />
@@ -684,7 +697,8 @@ function Routing() {
             path="/brand-settings"
             element={
               <Suspense fallback={<Spinner />}>
-                <BrandSettings />
+                <AuthGuard><BrandSettings /></AuthGuard>
+                {/* <BrandSettings /> */}
               </Suspense>
             }
           />
@@ -692,7 +706,7 @@ function Routing() {
             path="/talent-home"
             element={
               <Suspense fallback={<Spinner />}>
-                <TalentHome />
+               <AuthGuard> <TalentHome /></AuthGuard>
               </Suspense>
             }
           />
@@ -700,7 +714,8 @@ function Routing() {
             path="/brand-notification"
             element={
               <Suspense fallback={<Spinner />}>
-                <BrandNotification />
+                <AuthGuard><BrandNotification /></AuthGuard>
+                {/* <BrandNotification /> */}
               </Suspense>
             }
           />

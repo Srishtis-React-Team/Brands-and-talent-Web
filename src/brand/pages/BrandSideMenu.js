@@ -93,7 +93,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       .then((resData) => {
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
-        // setBrandData(resData?.data?.data);
+         setBrandData(resData?.data?.data);
       })
       .catch((err) => {});
   };
@@ -232,6 +232,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <div className="talent-plan-name">
               Plan : <span>{brandData?.planName}</span>
             </div>
+         
 
             <div className="talent-plan-name">
               campaigns : <span>{jobCountNumber && <>{jobCountNumber}</>}</span>

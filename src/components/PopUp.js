@@ -2,7 +2,7 @@ import React from "react";
 import "../assets/css/popup.css";
 
 const PopUp = (props) => {
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   return (
     <div className="popupbackground">
       <div className="popupcontainermain">
