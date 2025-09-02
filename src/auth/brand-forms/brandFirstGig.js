@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const BrandFirstGig = () => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);

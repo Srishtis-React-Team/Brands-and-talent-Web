@@ -363,7 +363,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
               {jobData?.howLikeToApply === "how_to_apply" && (
                 <div className="apply-section">
-                  <button className="apply-btn" onClick={() => setShowPopup(true)}>
+                  <button className="apply-btn"    style={{ marginRight: "50px" }} onClick={() => setShowPopup(true)}>
                     Apply
                   </button>
                 </div>
@@ -402,6 +402,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  flexDirection:"row",
                   maxWidth: "100%", // Optional: limit width if needed
                 }}
               >
@@ -414,6 +415,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     maxWidth: "100%",
+                    flexDirection:"row",
                   }}
                 >
                   {[
@@ -428,7 +430,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
               <div className="company-location">
                 <span className="font-600">
-                  Application Deadline :&nbsp;
+                  Application Deadline : &nbsp;
                 </span>
                 <span className="job-feature-values">
                   {new Date(jobData?.lastDateForApply).toLocaleDateString(
@@ -458,6 +460,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   alignItems: 'center',
                   whiteSpace: 'nowrap',
                   gap: '6px',
+                  flexDirection:"row",
                 }}
               >
                 <span className="font-600" style={{ margin: 0 }}>Category :</span>
@@ -823,8 +826,40 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   )}
               </div>
 
-
               {jobData?.jobDescription && jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+
+    <div className="job-about-values">
+      {/* Scoped CSS to enforce default hyperlink look */}
+      <style>
+        {`
+          .job-about-values a {
+            color: blue !important;       /* always blue */
+            text-decoration: underline !important; /* always underlined */
+          }
+          .job-about-values a:hover {
+            color: darkblue !important;   /* darker blue on hover (optional) */
+          }
+        `}
+      </style>
+
+      <div
+        className="job-description-content"
+        dangerouslySetInnerHTML={{
+          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+        }}
+      />
+    </div>
+  </div>
+) : (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+    <div className="job-about-values">No Data Added</div>
+  </div>
+)}
+
+              {/* {jobData?.jobDescription && jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
                 <div className="job-about-section">
                   <div className="job-feature-title">Job Description</div>
 
@@ -841,7 +876,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                   <div className="job-feature-title">Job Description</div>
                   <div className="job-about-values">No Data Added</div>
                 </div>
-              )}
+              )} */}
               {jobData?.whyWorkWithUs && (
                 <div className="job-about-section">
                   <div className="job-feature-title">Why Work With Us</div>

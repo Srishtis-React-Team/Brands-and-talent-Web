@@ -14,7 +14,7 @@ import { Button } from "@mui/material";
 
 const EditSocialMedias = ({ talentData, onValuesChange }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
   const instagram = require("../assets/icons/social-media-icons/instagram.png");
   const threads = require("../assets/icons/social-media-icons/thread-fill.png");

@@ -14,7 +14,7 @@ import Pricing from "../pricing";
 
 const AdultPricing = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const [isLoading, setIsLoading] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");

@@ -13,7 +13,7 @@ const OTPComponent = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);

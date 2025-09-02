@@ -19,7 +19,7 @@ const Header = ({ onData }) => {
   const navigate = useNavigate();
   const searchPathOptions = SearchPaths(); // Call the function/component to get the options
 
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const cofeeIcon = require("../assets/icons/cofeeIcon.png");
   const [menuOpen, setMenuOpen] = useState(false);

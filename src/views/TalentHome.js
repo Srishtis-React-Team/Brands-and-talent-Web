@@ -159,6 +159,7 @@ const TalentHome = () => {
     const formData = {
       image: "",
     };
+    console.log("formDtaa",formData)
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {

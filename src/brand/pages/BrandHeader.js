@@ -19,7 +19,7 @@ import { useLocation } from "react-router-dom";
 const BrandHeader = ({ toggleMenu, myState, from }) => {
   const { currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
   const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
 

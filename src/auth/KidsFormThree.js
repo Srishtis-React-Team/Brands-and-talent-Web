@@ -84,7 +84,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const uploadIcon = require("../assets/icons/uploadIcon.png");
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
@@ -781,7 +781,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
+        setPortofolioFile((prevFiles) => [...(prevFiles||[]), fileObj]);
 
         setOpenPopUp(true);
         setTimeout(function () {
@@ -812,7 +812,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        setResumeFile((prevFiles) => [...prevFiles, fileObj]);
+        setResumeFile((prevFiles) => [...(prevFiles||[]), fileObj]);
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -842,7 +842,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           type: getFileType(fileData.type),
         };
         // setVerificationID(fileObj);
-        setVerificationID((prevFiles) => [...prevFiles, fileObj]);
+        setVerificationID((prevFiles) => [...(prevFiles||[]), fileObj]);
 
         setOpenPopUp(true);
         setTimeout(function () {

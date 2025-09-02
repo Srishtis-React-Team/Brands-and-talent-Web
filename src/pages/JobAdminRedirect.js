@@ -12,7 +12,7 @@ import { tr } from "date-fns/locale";
 import CurrentUser from "../CurrentUser";
 
 const mobilelogo = require("../assets/images/mobilelogo.png");
-const btLogo = require("../assets/images/LOGO.png");
+const btLogo = require("../assets/images/LOGO.jpeg");
 const JobAdminRedirect = () => {
   const { jobId, jobTitle } = useParams();
   const navigate = useNavigate();
@@ -683,7 +683,43 @@ const JobAdminRedirect = () => {
                           )}
                       </div>
 
-                      {jobData?.jobDescription &&
+                      {jobData?.jobDescription && jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+    <div className="job-about-values">
+      {/* Ensure hyperlinks look blue & underlined */}
+      <style>
+        {`
+          .job-about-values a {
+            color: blue !important;
+            text-decoration: underline !important;
+          }
+          .job-about-values a:hover {
+            color: darkblue !important;
+          }
+          .job-about-values a:visited {
+            color: purple !important;
+          }
+        `}
+      </style>
+
+      <div
+        className="job-description-content"
+        dangerouslySetInnerHTML={{
+          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+        }}
+      />
+    </div>
+  </div>
+) : (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+    <div className="job-about-values">No Data Added</div>
+  </div>
+)}
+
+
+                      {/* {jobData?.jobDescription &&
                         jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
                         <div className="job-about-section">
                           <div className="job-feature-title">Job Description</div>
@@ -697,10 +733,10 @@ const JobAdminRedirect = () => {
                         </div>
                       ) : (
                         <div className="job-about-section">
-                          <div className="job-feature-title">Job Descriptions</div>
+                          <div className="job-feature-title">Job Description</div>
                           <div className="job-about-values">No Data Added</div>
                         </div>
-                      )}
+                      )} */}
 
 
 

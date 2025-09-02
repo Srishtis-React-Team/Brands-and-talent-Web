@@ -19,7 +19,7 @@ import "material-icons/iconfont/material-icons.css";
 
 const BrandDetails = () => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);

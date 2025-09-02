@@ -54,7 +54,7 @@ const AdultSignup = () => {
   };
 
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [adultName, setAdultName] = useState("");

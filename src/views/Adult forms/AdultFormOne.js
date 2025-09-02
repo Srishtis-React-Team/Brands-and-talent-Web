@@ -61,7 +61,7 @@ const AdultFormOne = () => {
   useEffect(() => {
     let selectedOptions;
     if (listOfLanguages && listOfLanguages.length > 0) {
-      selectedOptions = languages.map((language) => {
+      selectedOptions = languages?.map((language) => {
         return listOfLanguages.find((option) => option.label === language);
       });
     }
@@ -103,7 +103,7 @@ const AdultFormOne = () => {
             setLanguages(resData?.data?.data?.languages);
             setSelectedPublicUrl(resData?.data?.data?.publicUrl);
 
-            const selectedOptions = resData?.data?.data?.languages.map(
+            const selectedOptions = resData?.data?.data?.languages?.map(
               (language) => {
                 return listOfLanguages.find(
                   (option) => option.label === language
@@ -117,7 +117,7 @@ const AdultFormOne = () => {
             setKidsCity(resData?.data?.data?.childCity);
             setSelectedCategories(resData.data.data?.relevantCategories);
             setAge(resData.data.data?.age);
-            const selectedProfessionOptions = resData.data.data?.profession.map(
+            const selectedProfessionOptions = resData.data.data?.profession?.map(
               (profession) => {
                 return professionList.find(
                   (option) => option.label === profession
@@ -127,7 +127,7 @@ const AdultFormOne = () => {
             setSelectedProfessions(resData.data.data?.profession);
 
             const selectedNationalityOptions =
-              resData.data.data?.childNationality.map((language) => {
+              resData.data.data?.childNationality?.map((language) => {
                 return nationalitiesList.find(
                   (option) => option.label === language
                 );
@@ -171,7 +171,7 @@ const AdultFormOne = () => {
       },
     }),
   };
-  const btLogo = require("../../assets/images/LOGO.png");
+  const btLogo = require("../../assets/images/LOGO.jpeg");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -383,16 +383,16 @@ const AdultFormOne = () => {
     if (adultsPreferedLastName === "") {
       setAdultsPreferedLastNameError(true);
     }
-    if (selectedProfessions.length === 0) {
+    if (selectedProfessions?.length === 0) {
       setSelectedProfessionsError(true);
     }
-    if (selectedCategories.length === 0) {
+    if (selectedCategories?.length === 0) {
       setSelectedCategoriesError(true);
     }
     if (gender === "") {
       setGenderError(true);
     }
-    if (languages.length === 0) {
+    if (languages?.length === 0) {
       setLanguagesError(true);
     }
     if (dateOfBirth === "") {
@@ -422,9 +422,8 @@ const AdultFormOne = () => {
     if (completedJobs === "") {
       setJobsCompletedError(true);
     }
-    console.log("adultsPreferedFirstName", adultsPreferedFirstName)
     // Check for public URL availability if the preferred first name has changed
-    let publicUrl = adultsPreferedFirstName.replace(/ /g, "-");
+    let publicUrl = adultsPreferedFirstName?.replace(/ /g, "-");
 
     try {
       // const checkNameResponse = await ApiHelper.post(API.publicUrlCheck, {
@@ -472,11 +471,11 @@ const AdultFormOne = () => {
         adultsLegalLastName !== "" &&
         adultsPreferedFirstName !== "" &&
         adultsPreferedLastName !== "" &&
-        selectedProfessions.length !== 0 &&
-        selectedCategories.length != 0 &&
-        selectedCategories.length <= 6 &&
+        selectedProfessions?.length !== 0 &&
+        selectedCategories?.length != 0 &&
+        selectedCategories?.length <= 6 &&
         gender !== "" &&
-        languages.length !== 0 &&
+        languages?.length !== 0 &&
         dateOfBirth !== "" &&
         adultsPhone !== "" &&
         country !== "" &&
@@ -513,17 +512,19 @@ const AdultFormOne = () => {
           publicUrl: publicUrl//selectedPublicUrl,
         };
 
+        console.log("formdata",formData)
+      
+
         if (userId) {
           await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
             .then((resData) => {
               if (resData.data.status === true) {
-                console.log("kidsciryy", kidsCity)
                 setIsLoading(false);
                 setMessage("Updated Successfully!");
                 setOpenPopUp(true);
                 setTimeout(function () {
                   setOpenPopUp(false);
-                  navigate(`/talent-signup-social-medias-details?${userId}`);
+                   navigate(`/talent-signup-social-medias-details?${userId}`);
                 }, 1000);
               } else if (resData.data.status === false) {
                 setIsLoading(false);
@@ -557,7 +558,7 @@ const AdultFormOne = () => {
     // setSelectedProfessions(selectedOptions);
     // setProfessionError(false);
 
-    if (selectedOptions.length > 5) {
+    if (selectedOptions?.length > 5) {
       // setProfessionError(true);
       // Optionally show a message to the user
       setMessage("You may select a maximum of five skills");
@@ -580,30 +581,47 @@ const AdultFormOne = () => {
     setSelectedProfessions(updatedSelectedProfessions);
     setProfessionError(false);
   };
-
   const chooseCategory = (category) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(
-        selectedCategories.filter((item) => item !== category)
-      );
+    const currentCategories = selectedCategories || []; // fallback to empty array
+    
+    if (currentCategories.includes(category)) {
+      setSelectedCategories(currentCategories.filter((item) => item !== category));
     } else {
-      if (selectedCategories.length < 6) {
-        setSelectedCategories([...selectedCategories, category]);
+      if (currentCategories.length < 6) {
+        setSelectedCategories([...currentCategories, category]);
         setSelectedCategoriesError(false);
       } else {
-        // setCategoryError(true);
         setMessage("A maximum of six categories may be selected");
         setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 2000);
+        setTimeout(() => setOpenPopUp(false), 2000);
       }
     }
   };
+  
+
+  // const chooseCategory = (category) => {
+  //   if (selectedCategories?.includes(category)) {
+  //     setSelectedCategories(
+  //       selectedCategories.filter((item) => item !== category)
+  //     );
+  //   } else {
+  //     if (selectedCategories?.length < 6) {
+  //       setSelectedCategories([...selectedCategories, category]);
+  //       setSelectedCategoriesError(false);
+  //     } else {
+  //       // setCategoryError(true);
+  //       setMessage("A maximum of six categories may be selected");
+  //       setOpenPopUp(true);
+  //       setTimeout(function () {
+  //         setOpenPopUp(false);
+  //       }, 2000);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     if (isSubmitted) {
-      if (selectedCategories.length === 0) {
+      if (selectedCategories?.length === 0) {
         setSelectedCategoriesError(true);
       } else {
         setSelectedCategoriesError(false);
@@ -620,14 +638,14 @@ const AdultFormOne = () => {
   };
   const selectLanguage = (selectedOptions) => {
     setLanguagesError(false);
-    if (!selectedOptions || selectedOptions.length === 0) {
+    if (!selectedOptions || selectedOptions?.length === 0) {
       // Handle case when all options are cleared
       setLanguages([]); // Clear the languages state
       return;
     }
 
     // Extract values of all selected languages
-    const selectedLanguages = selectedOptions.map((option) => option.value);
+    const selectedLanguages = selectedOptions?.map((option) => option.value);
     setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
   // const selectNationality = (event) => {
@@ -635,7 +653,7 @@ const AdultFormOne = () => {
   // };
 
   const selectNationality = (selectedOptions) => {
-    if (!selectedOptions || selectedOptions.length === 0) {
+    if (!selectedOptions || selectedOptions?.length === 0) {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
       setSelectedNationalityOptions([]);
@@ -643,7 +661,7 @@ const AdultFormOne = () => {
       return;
     }
     // Extract values of all selected languages
-    const selectedLanguages = selectedOptions.map((option) => option.value);
+    const selectedLanguages = selectedOptions?.map((option) => option.value);
 
     setNationality(selectedLanguages); // Update languages state with all selected languages
     setSelectedNationalityOptions(selectedOptions);
@@ -892,7 +910,7 @@ const AdultFormOne = () => {
                         </div>
                       </div>
                       <div className="profession-content-section">
-                        {selectedProfessions.length > 0 && (
+                        {selectedProfessions?.length > 0 && (
                           <>
                             <p className="set-rates">
                               *Set Your Rates in USD (Choose one or more rates
@@ -900,7 +918,7 @@ const AdultFormOne = () => {
                             </p>
                           </>
                         )}
-                        {selectedProfessions.map((profession, index) => (
+                        {selectedProfessions?.map((profession, index) => (
                           <>
                             <div>
                               <label className="form-label">
@@ -1087,7 +1105,7 @@ const AdultFormOne = () => {
                     {categoryList?.map((category, index) => (
                       <div
                         className={
-                          selectedCategories.includes(category?.value)
+                          selectedCategories?.includes(category?.value)
                             ? "selected-category"
                             : "category-name"
                         }
@@ -1104,7 +1122,7 @@ const AdultFormOne = () => {
                         content={
                           <div style={{ whiteSpace: "pre-line", maxWidth: "300px" }}>
                             {
-                              category?.description?.split('. ').slice(0, 2).map((line, i) => (
+                              category?.description?.split('. ').slice(0, 2)?.map((line, i) => (
                                 <div key={i}>{line.trim() + (line.endsWith('.') ? '' : '.')}</div>
                               ))
                             }
@@ -1359,7 +1377,7 @@ const AdultFormOne = () => {
                         <option value="" disabled selected>
                           Select Marital Status
                         </option>
-                        {maritalStatusOptions.map((option, index) => (
+                        {maritalStatusOptions?.map((option, index) => (
                           <option key={index} value={option}>
                             {option}
                           </option>
@@ -1379,7 +1397,7 @@ const AdultFormOne = () => {
                         <option value="" disabled selected>
                           Select Ethnicity
                         </option>
-                        {ethnicityOptions.map((option, index) => (
+                        {ethnicityOptions?.map((option, index) => (
                           <option key={index} value={option}>
                             {option}
                           </option>

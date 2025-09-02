@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 import Spinner from "../components/Spinner";
 const ForgotPassword = () => {
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);

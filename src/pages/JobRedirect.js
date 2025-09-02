@@ -306,7 +306,7 @@ const JobRedirect = () => {
                       {/* Show Apply button if jobData?.howLikeToApply === "howtoapply" */}
                       {jobData?.howLikeToApply === "how_to_apply" && (
                         <div className="apply-section">
-                          <button className="apply-btn" onClick={() =>
+                          <button className="apply-btn"   style={{ marginRight: "100px" }} onClick={() =>
                             setShowPopup(true)}>
                             Apply
                           </button>
@@ -768,10 +768,47 @@ const JobRedirect = () => {
                           )}
                       </div>
 
-                      {jobData?.jobDescription &&
+
+                      {jobData?.jobDescription && jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+    <div className="job-about-values">
+      {/* CSS to force links to show as blue + underlined */}
+      <style>
+        {`
+          .job-about-values a {
+            color: blue !important;
+            text-decoration: underline !important;
+          }
+          .job-about-values a:hover {
+            color: darkblue !important;
+          }
+          .job-about-values a:visited {
+            color: purple !important; /* optional: browser default visited color */
+          }
+        `}
+      </style>
+
+      <div
+        className="job-description-content"
+        dangerouslySetInnerHTML={{
+          __html: jobData.jobDescription.trim().replace(/\n/g, ""),
+        }}
+      />
+    </div>
+  </div>
+) : (
+  <div className="job-about-section">
+    <div className="job-feature-title">Job Description</div>
+    <div className="job-about-values">No Data Added</div>
+  </div>
+)}
+
+
+                      {/* {jobData?.jobDescription &&
                         jobData.jobDescription.trim().replace(/\n/g, "") !== "<p></p>" ? (
                         <div className="job-about-section">
-                          <div className="job-feature-title">Job Description</div>
+                          <div className="job-feature-title">Job Descriptionsssssss</div>
                           <div className="job-about-values">
                             <div
                               dangerouslySetInnerHTML={{
@@ -782,10 +819,10 @@ const JobRedirect = () => {
                         </div>
                       ) : (
                         <div className="job-about-section">
-                          <div className="job-feature-title">Job Descriptions</div>
+                          <div className="job-feature-title">Job Descriptionsssssss</div>
                           <div className="job-about-values">No Data Added</div>
                         </div>
-                      )}
+                      )} */}
 
                       {jobData?.whyWorkWithUs && (
                         <div className="job-about-section">

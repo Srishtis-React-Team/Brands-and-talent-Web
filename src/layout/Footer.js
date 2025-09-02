@@ -18,7 +18,7 @@ const Footer = (props) => {
     fcmToken,
   } = CurrentUser();
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const socialIcons = require("../assets/icons/Social.png");
   const fbBlack = require("../assets/icons/social-media-icons/fb-black.png");
   const twitterBlack = require("../assets/icons/social-media-icons/twitter-black.png");

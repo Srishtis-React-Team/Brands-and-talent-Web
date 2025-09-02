@@ -17,7 +17,7 @@ import "../assets/css/register.css";
 
 const Register = () => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const userIcon = require("../assets/icons/user.png");
   const cameraIcon = require("../assets/icons/cameraIcon.png");
   const fbLogo = require("../assets/icons/fbLogo.png");

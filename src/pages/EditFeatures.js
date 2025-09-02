@@ -14,7 +14,7 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
     console.log(featuresStructure, "featuresStructure");
     console.log(featureValues, "featureValues");
     const initialValues = featuresStructure.map((feature) => {
-      const existingValue = featureValues.find(
+      const existingValue = featureValues?.find(
         (item) => item.label === feature.label
       );
       return {
@@ -63,7 +63,7 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
     <div className="edit-features-wrapper">
       {featuresStructure.map((feature, index) => {
         const { label, type, options } = feature;
-        const item = formValues.find((item) => item.label === label);
+        const item = formValues?.find((item) => item.label === label);
         console.log(item, "item");
         const value = item ? item.value : "";
         console.log(value, "value");

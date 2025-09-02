@@ -34,7 +34,7 @@ const Login = () => {
   }, []);
   useEffect(() => { }, []);
 
-  const btLogo = require("../assets/images/LOGO.png");
+  const btLogo = require("../assets/images/LOGO.jpeg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedItem, setSelectedItem] = useState("talent");
